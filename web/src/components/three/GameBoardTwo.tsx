@@ -30,9 +30,13 @@ export interface Item {
 export interface GameState {
   gold: number;
   pendingGold: number;
-  processingItems: Item[];
+  // processingItems: Item[];
   items: Item[];
 
+}
+
+interface ItemSnapshot {
+  x:number; y:number; distanceTraveled: number; totalLength : number;
 }
 
 const stationPositions = [
@@ -80,11 +84,13 @@ const GameBoardTwo: React.FC = () => {
     return belt.segments.reduce((total, length) => total + length, 0);
   };
 
+  
+
   const handleAddItem = (itemType: string) => {
     setGameState((prev) => ({
       ...prev,
       items: [...prev.items, {
-        id: `item${prev.items.length + 1}`,
+        id: `item${Date.now()}`,
         type: itemType,
         timestamp: Date.now(),
         value: 10
@@ -93,12 +99,12 @@ const GameBoardTwo: React.FC = () => {
     
   }
 
-  const calculatePosition = (item: Item, belt: Belt) => {
+  function calculatePosition(item: Item, belt: Belt) : ItemSnapshot {
     const currentTime = Date.now();
     const elapsedTime = (currentTime - item.timestamp) / 1000; // Convert to seconds
-    const totalLength = calculateTotalLength(belt);
+    const totalLength  = calculateTotalLength(belt);
     const speed = totalLength / belt_duration; // Speed in units per second
-    const distanceTraveled = elapsedTime * speed;
+    const distanceTraveled  = elapsedTime * speed;
 
     let remainingDistance = distanceTraveled;
     let x = 80, y = 50; // Starting coordinates
@@ -111,7 +117,7 @@ const GameBoardTwo: React.FC = () => {
         } else { // Horizontal segment
           x += remainingDistance * (i % 4 === 1 ? 1 : -1);
         }
-        return { x, y };
+        return { x, y, distanceTraveled, totalLength };
       }
       if (i % 2 === 0) { // Vertical segment
         y += segmentLength * (i % 4 === 0 ? 1 : -1);
@@ -159,7 +165,7 @@ const GameBoardTwo: React.FC = () => {
     return (
       <section>
         <svg width="512" height="512" style={{ border: "1px solid black" }}>
-          <path stroke="blue" strokeWidth="40" d="M 80 50 v 400 h 400 v -300 h -325 v 225 h 250 v -150 h -175 v 75" fill="none" strokeLinecap="round"></path>
+          <path stroke="lightgray" strokeWidth="40" d="M 80 50 v 400 h 400 v -300 h -325 v 225 h 250 v -150 h -175 v 75" fill="none" strokeLinecap="round"></path>
           <circle cx="80" cy="50" r="15" fill="black" />
           {/* Render each conveyor belt */}
 
@@ -223,7 +229,7 @@ const GameBoardTwo: React.FC = () => {
   const [gameState, setGameState] = useState<GameState>({
     gold: 0,
     pendingGold: 0,
-    processingItems: [],
+    // processingItems: [],
     items: []
   });
 
