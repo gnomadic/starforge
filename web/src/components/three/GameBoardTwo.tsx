@@ -95,20 +95,28 @@ const GameBoardTwo: React.FC<GameBoardProps> = ({ belt, items, setItems }) => {
   const [svgContent, setSvgContent] = useState<JSX.Element | null>(null);
 
   const updateGameState = (belt: Belt, items: Item[], gameState: GameState) => {
-    const newItems = items.map(item => {
+    let newItems: Item[] = [];
+    let pendingGold = gameState.pendingGold;
+  console.log("items length: ", items.length);
+    items.forEach(item => {
       const position = calculatePosition(item, belt);
-
-      belt.stations.forEach(station => {
-        if (Math.abs(position.x - station.x) < 10 && Math.abs(position.y - station.y) < 10) {
-          // item.value += 10; // Example modifier effect
-        }
-      });
-      return item;
+      if (position.distanceTraveled >= position.totalLength) {
+        // Item has reached the end of the conveyor belt
+        pendingGold += item.value;
+      } else {
+        belt.stations.forEach(station => {
+          if (Math.abs(position.x - station.x) < 10 && Math.abs(position.y - station.y) < 10) {
+            item.value += 10; // Example modifier effect
+          }
+        });
+        newItems.push(item);
+      }
     });
-
+  
     return {
       ...gameState,
       items: newItems,
+      pendingGold: pendingGold
     };
   };
 
@@ -198,14 +206,21 @@ const GameBoardTwo: React.FC<GameBoardProps> = ({ belt, items, setItems }) => {
 
   // Update the SVG content periodically
   useEffect(() => {
-    
     const interval = setInterval(() => {
-      setGameState(prevState => updateGameState(belt, items, prevState));
-      setSvgContent(generateSvgContent(belt, gameState));
-    }, 10); // Update every 100 milliseconds
+      // setGameState(prevState => {
+      //   const newState = updateGameState(belt, items, prevState);
+      //   setSvgContent(generateSvgContent(belt, newState));
+      //   return newState;
+      // });
 
-    return () => clearInterval(interval);
+
+      
+        const newState = updateGameState(belt, items, gameState);
+        setSvgContent(generateSvgContent(belt, newState));
+        setGameState(newState)
+    }, 100); // Update every 100 milliseconds
   
+    return () => clearInterval(interval);
   }, [belt, items]);
 
   return <div className="mx-auto">{svgContent}</div>;
