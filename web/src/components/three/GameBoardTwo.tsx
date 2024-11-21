@@ -22,11 +22,7 @@ export interface Belt {
 export interface Item {
   id: string;
   type: string;
-  // beltId: string;
-  // position: number; // 0 to 1, representing progress along the belt
   timestamp: number;
-  // processing: boolean;
-  value: number;
 }
 
 export interface GameState {
@@ -55,7 +51,7 @@ export interface GameBoardProps {
 }
 
 
-const belt_duration = 30
+const belt_duration = 5;
 
 const GameBoardTwo: React.FC<GameBoardProps> = ({ belt, items, setItems }) => {
 
@@ -92,7 +88,7 @@ const GameBoardTwo: React.FC<GameBoardProps> = ({ belt, items, setItems }) => {
     }
 
     // If the item has traveled the entire path, return the end position
-    return { x, y };
+    return { x, y, distanceTraveled, totalLength };
   };
 
 
@@ -101,9 +97,10 @@ const GameBoardTwo: React.FC<GameBoardProps> = ({ belt, items, setItems }) => {
   const updateGameState = (belt: Belt, items: Item[], gameState: GameState) => {
     const newItems = items.map(item => {
       const position = calculatePosition(item, belt);
+
       belt.stations.forEach(station => {
         if (Math.abs(position.x - station.x) < 10 && Math.abs(position.y - station.y) < 10) {
-          item.value += 10; // Example modifier effect
+          // item.value += 10; // Example modifier effect
         }
       });
       return item;
@@ -127,7 +124,7 @@ const GameBoardTwo: React.FC<GameBoardProps> = ({ belt, items, setItems }) => {
           <g key={belt.id}>
             
             {/* Stations on the conveyor belt */}
-            {belt.stations.map((station, idx) => (
+            {belt.stations.map((station) => (
               <g key={station.id}>
                 <circle
                   cx={stationPositions[station.position].x}
@@ -201,12 +198,14 @@ const GameBoardTwo: React.FC<GameBoardProps> = ({ belt, items, setItems }) => {
 
   // Update the SVG content periodically
   useEffect(() => {
+    
     const interval = setInterval(() => {
       setGameState(prevState => updateGameState(belt, items, prevState));
       setSvgContent(generateSvgContent(belt, gameState));
     }, 10); // Update every 100 milliseconds
 
     return () => clearInterval(interval);
+  
   }, [belt, items]);
 
   return <div className="mx-auto">{svgContent}</div>;
