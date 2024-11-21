@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import { Button } from "../ui/button";
 
 export interface Station {
   id: string;
@@ -23,6 +24,7 @@ export interface Item {
   id: string;
   type: string;
   timestamp: number;
+  value: number;
 }
 
 export interface GameState {
@@ -30,6 +32,7 @@ export interface GameState {
   pendingGold: number;
   processingItems: Item[];
   items: Item[];
+
 }
 
 const stationPositions = [
@@ -44,20 +47,51 @@ const stationPositions = [
 ];
 
 
-export interface GameBoardProps {
-  belt: Belt;
-  items: Item[];
-  setItems: React.Dispatch<React.SetStateAction<Item[]>>;
-}
+
+const belt: Belt =
+{
+  id: "belt1",
+  stations: [
+    { id: "station1", position: 0, x: 100, y: 20, modifier: "Fire", processingTime: 5000 },
+    { id: "station2", position: 1, x: 200, y: 20, modifier: "Water", processingTime: 5000 },
+    { id: "station3", position: 2, x: 200, y: 20, modifier: "Water", processingTime: 5000 },
+    { id: "station4", position: 3, x: 200, y: 20, modifier: "Water", processingTime: 5000 },
+    { id: "station5", position: 4, x: 200, y: 20, modifier: "Water", processingTime: 5000 },
+    { id: "station6", position: 5, x: 200, y: 20, modifier: "Water", processingTime: 5000 },
+    { id: "station7", position: 6, x: 200, y: 20, modifier: "Water", processingTime: 5000 },
+    { id: "station8", position: 7, x: 200, y: 20, modifier: "Water", processingTime: 5000 },
+
+  ],
+  // isMoving: false,
+  segments: [400, 400, 300, 325, 225, 250, 150, 175, 75],
+  // segments: [75, 175, 150, 250, 225, 325, 300, 400, 400],
+
+};
 
 
 const belt_duration = 5;
 
-const GameBoardTwo: React.FC<GameBoardProps> = ({ belt, items, setItems }) => {
+const GameBoardTwo: React.FC = () => {
+
+  // const [items, setItems] = useState<Item[]>([]);
+
 
   const calculateTotalLength = (belt: Belt) => {
     return belt.segments.reduce((total, length) => total + length, 0);
   };
+
+  const handleAddItem = (itemType: string) => {
+    setGameState((prev) => ({
+      ...prev,
+      items: [...prev.items, {
+        id: `item${prev.items.length + 1}`,
+        type: itemType,
+        timestamp: Date.now(),
+        value: 10
+      }]
+    }));
+    
+  }
 
   const calculatePosition = (item: Item, belt: Belt) => {
     const currentTime = Date.now();
@@ -94,11 +128,11 @@ const GameBoardTwo: React.FC<GameBoardProps> = ({ belt, items, setItems }) => {
 
   const [svgContent, setSvgContent] = useState<JSX.Element | null>(null);
 
-  const updateGameState = (belt: Belt, items: Item[], gameState: GameState) => {
-    let newItems: Item[] = [];
+  const updateGameState = (belt: Belt, gameState: GameState) => {
+    const newItems: Item[] = [];
     let pendingGold = gameState.pendingGold;
-  console.log("items length: ", items.length);
-    items.forEach(item => {
+    console.log("items length: ", gameState.items.length);
+    gameState.items.forEach(item => {
       const position = calculatePosition(item, belt);
       if (position.distanceTraveled >= position.totalLength) {
         // Item has reached the end of the conveyor belt
@@ -112,7 +146,7 @@ const GameBoardTwo: React.FC<GameBoardProps> = ({ belt, items, setItems }) => {
         newItems.push(item);
       }
     });
-  
+
     return {
       ...gameState,
       items: newItems,
@@ -124,13 +158,13 @@ const GameBoardTwo: React.FC<GameBoardProps> = ({ belt, items, setItems }) => {
   const generateSvgContent = (belt: Belt, gameState: GameState) => {
     return (
       <section>
-      <svg width="512" height="512" style={{ border: "1px solid black" }}>
-        <path stroke="blue" strokeWidth="40" d="M 80 50 v 400 h 400 v -300 h -325 v 225 h 250 v -150 h -175 v 75" fill="none" strokeLinecap="round"></path>
-        <circle cx="80" cy="50" r="15" fill="black" />
-        {/* Render each conveyor belt */}
-        
+        <svg width="512" height="512" style={{ border: "1px solid black" }}>
+          <path stroke="blue" strokeWidth="40" d="M 80 50 v 400 h 400 v -300 h -325 v 225 h 250 v -150 h -175 v 75" fill="none" strokeLinecap="round"></path>
+          <circle cx="80" cy="50" r="15" fill="black" />
+          {/* Render each conveyor belt */}
+
           <g key={belt.id}>
-            
+
             {/* Stations on the conveyor belt */}
             {belt.stations.map((station) => (
               <g key={station.id}>
@@ -176,15 +210,20 @@ const GameBoardTwo: React.FC<GameBoardProps> = ({ belt, items, setItems }) => {
                   />
                 );
               })}
-           
-          </g>
-        
-        
-      </svg>
-      <div>
 
-        {JSON.stringify(gameState, null, 2)}
-      </div>
+          </g>
+
+
+        </svg>
+        <div>      
+          <Button onClick={() => handleAddItem("potion")}>Add Potion</Button>
+          <Button onClick={() => handleAddItem("scroll")}>Add Scroll</Button>
+          <Button onClick={() => handleAddItem("gem")}>Add Gem</Button>
+        </div>
+
+        <div>
+          {JSON.stringify(gameState, null, 2)}
+        </div>
       </section>
     );
   };
@@ -193,7 +232,7 @@ const GameBoardTwo: React.FC<GameBoardProps> = ({ belt, items, setItems }) => {
     gold: 0,
     pendingGold: 0,
     processingItems: [],
-    items: items
+    items: []
   });
 
   const claimPendingGold = () => {
@@ -206,6 +245,7 @@ const GameBoardTwo: React.FC<GameBoardProps> = ({ belt, items, setItems }) => {
 
   // Update the SVG content periodically
   useEffect(() => {
+    console.log("running effect")
     const interval = setInterval(() => {
       // setGameState(prevState => {
       //   const newState = updateGameState(belt, items, prevState);
@@ -214,14 +254,14 @@ const GameBoardTwo: React.FC<GameBoardProps> = ({ belt, items, setItems }) => {
       // });
 
 
-      
-        const newState = updateGameState(belt, items, gameState);
-        setSvgContent(generateSvgContent(belt, newState));
-        setGameState(newState)
+
+      const newState = updateGameState(belt, gameState);
+      setSvgContent(generateSvgContent(belt, newState));
+      setGameState(newState)
     }, 100); // Update every 100 milliseconds
-  
+
     return () => clearInterval(interval);
-  }, [belt, items]);
+  }, [gameState.items]);
 
   return <div className="mx-auto">{svgContent}</div>;
 };
