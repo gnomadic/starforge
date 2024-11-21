@@ -215,15 +215,7 @@ const GameBoardTwo: React.FC = () => {
 
 
         </svg>
-        <div>      
-          <Button onClick={() => handleAddItem("potion")}>Add Potion</Button>
-          <Button onClick={() => handleAddItem("scroll")}>Add Scroll</Button>
-          <Button onClick={() => handleAddItem("gem")}>Add Gem</Button>
-        </div>
 
-        <div>
-          {JSON.stringify(gameState, null, 2)}
-        </div>
       </section>
     );
   };
@@ -261,9 +253,20 @@ const GameBoardTwo: React.FC = () => {
     }, 100); // Update every 100 milliseconds
 
     return () => clearInterval(interval);
-  }, [gameState.items]);
+  }, [gameState.items.length]);
 
-  return <div className="mx-auto">{svgContent}</div>;
+  return <section>
+    <div className="mx-auto">{svgContent}</div>
+    <div>      
+          <Button onClick={() => handleAddItem("potion")}>Add Potion</Button>
+          <Button onClick={() => handleAddItem("scroll")}>Add Scroll</Button>
+          <Button onClick={() => handleAddItem("gem")}>Add Gem</Button>
+        </div>
+
+        <div>
+          {JSON.stringify(gameState, null, 2)}
+        </div>
+  </section>;
 };
 
 
