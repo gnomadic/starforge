@@ -29,7 +29,16 @@ export interface Item {
   value: number;
 }
 
-
+const stationPositions = [
+  { x: 80, y: 275 },  // Center of 1 vertical segment
+  { x: 275, y: 450 }, // Center of 2 horizontal segment
+  { x: 480, y: 300 }, // Center of 3 vertical segment
+  { x: 300, y: 150 },  // Center of 4 horizontal segment
+  { x: 155, y: 275 }, // Center of 5 horizontal segment
+  { x: 275, y: 375 }, // Center of 6 horizontal segment
+  { x: 405, y: 300 },  // Center of 7 horizontal segment
+  { x: 300, y: 225 } // Center of 8 horizontal segment
+];
 
 
 export interface GameBoardProps {
@@ -88,60 +97,62 @@ const GameBoardTwo: React.FC<GameBoardProps> = ({ belt, items, setItems }) => {
       <svg width="512" height="512" style={{ border: "1px solid black" }}>
         <path stroke="blue" strokeWidth="40" d="M 80 50 v 400 h 400 v -300 h -325 v 225 h 250 v -150 h -175 v 75" fill="none" strokeLinecap="round"></path>
         {/* Render each conveyor belt */}
-        
-          <g key={belt.id}>
-            
 
-            {/* Stations on the conveyor belt */}
-            {belt.stations.map((station, idx) => (
-              <g key={station.id}>
+        <g key={belt.id}>
+
+
+          {/* Stations on the conveyor belt */}
+          {belt.stations.map((station, idx) => (
+            <g key={station.id}>
+              <circle
+                // cx={(0 * 170) + 80}
+                // cy={5 + (station.position * 100)}
+                cx={stationPositions[station.position].x}
+                cy={stationPositions[station.position].y}
+                r={15}
+                fill="red"
+                stroke="black"
+                strokeWidth="2"
+              />
+              <text
+                x={stationPositions[station.position].x}
+                y={stationPositions[station.position].y}
+                textAnchor="middle"
+                fontSize="10"
+                dy=".3em"
+              >
+                {station.modifier}
+              </text>
+            </g>
+          ))}
+
+          {/* Items on the conveyor belt */}
+          {items
+            .filter((item) => item.beltId === belt.id)
+            .map((item) => {
+              const position = calculatePosition(item, belt);
+              return (
                 <circle
-                  cx={(0 * 170) + 80}
-                  cy={5 + (station.position * 100)}
-                  r={15}
-                  fill="lightblue"
+                  key={item.id}
+                  cx={position.x}
+                  cy={position.y}
+                  r={10}
+                  fill={
+                    item.type === "potion"
+                      ? "purple"
+                      : item.type === "scroll"
+                        ? "orange"
+                        : "green"
+                  }
                   stroke="black"
                   strokeWidth="2"
                 />
-                <text
-                  x={(0 * 170) + 80}
-                  y={5 + (station.position * 100)}
-                  textAnchor="middle"
-                  fontSize="10"
-                  dy=".3em"
-                >
-                  {station.modifier}
-                </text>
-              </g>
-            ))}
+              );
+            })}
 
-            {/* Items on the conveyor belt */}
-            {items
-              .filter((item) => item.beltId === belt.id)
-              .map((item) => {
-                const position = calculatePosition(item, belt);
-                return (
-                  <circle
-                    key={item.id}
-                    cx={position.x}
-                    cy={position.y}
-                    r={10}
-                    fill={
-                      item.type === "potion"
-                        ? "purple"
-                        : item.type === "scroll"
-                          ? "orange"
-                          : "green"
-                    }
-                    stroke="black"
-                    strokeWidth="2"
-                  />
-                );
-              })}
-           
-          </g>
-        
-        
+        </g>
+
+
       </svg>
     );
   };

@@ -42,8 +42,15 @@ const Adventure: React.FC = () => {
     {
       id: "belt1",
       stations: [
-        { id: "station1", position: 1, x: 100, y: 20, modifier: "Fire", processingTime: 5000 },
-        { id: "station2", position: 2, x: 200, y: 20, modifier: "Water" , processingTime: 5000 },
+        { id: "station1", position: 0, x: 100, y: 20, modifier: "Fire", processingTime: 5000 },
+        { id: "station2", position: 1, x: 200, y: 20, modifier: "Water" , processingTime: 5000 },
+        { id: "station3", position: 2, x: 200, y: 20, modifier: "Water" , processingTime: 5000 },
+        { id: "station4", position: 3, x: 200, y: 20, modifier: "Water" , processingTime: 5000 },
+        { id: "station5", position: 4, x: 200, y: 20, modifier: "Water" , processingTime: 5000 },
+        { id: "station6", position: 5, x: 200, y: 20, modifier: "Water" , processingTime: 5000 },
+        { id: "station7", position: 6, x: 200, y: 20, modifier: "Water" , processingTime: 5000 },
+        { id: "station8", position: 7, x: 200, y: 20, modifier: "Water" , processingTime: 5000 },
+
       ],
       // isMoving: false,
       segments: [400, 400, 300, 325, 225, 250, 150, 175, 75],
