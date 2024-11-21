@@ -14,7 +14,7 @@ export interface Station {
   export interface Item {
     id: string;
     type: string;
-    beltId: string;
+    // beltId: string;
     position: number; // 0 to 1, representing progress along the belt
   }
   

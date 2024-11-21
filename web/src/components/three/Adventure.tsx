@@ -11,7 +11,7 @@ const GameBoardTwo = dynamic(() => import('./GameBoardTwo'), { ssr: false })
 const Adventure: React.FC = () => {
 
   const oneItem : Item[] = [
-    { id: "item1", type: "potion", beltId: "belt1", position: 0, timestamp: Date.now(), processing: false, value: 10 },
+    // { id: "item1", type: "potion",  position: 0, timestamp: Date.now(), processing: false, value: 10 },
     // { id: "item2", type: "scroll", beltId: "belt1", position: 0.2 },
   ];
 
@@ -23,7 +23,7 @@ const Adventure: React.FC = () => {
     setItems((prevItems) => [...prevItems, {
       id: `item${prevItems.length + 1}`,
       type: itemType,
-      beltId: "belt1",
+      // beltId: "belt1",
       position: 0,
       timestamp: Date.now(),
       processing: false,
