@@ -38,7 +38,7 @@ const Adventure: React.FC = () => {
 
 
 
-  const belts : Belt[] = [
+  const belt : Belt = 
     {
       id: "belt1",
       stations: [
@@ -49,30 +49,15 @@ const Adventure: React.FC = () => {
       segments: [400, 400, 300, 325, 225, 250, 150, 175, 75],
       // segments: [75, 175, 150, 250, 225, 325, 300, 400, 400],
 
-    },
-    // {
-    //   id: "belt2",
-    //   stations: [
-    //     { id: "station1", position: 1, x: 100, y: 20, modifier: "Fire", processingTime: 5000 },
-    //     { id: "station2", position: 2, x: 200, y: 20, modifier: "Water" , processingTime: 5000 },
-    //   ],
-    //   isMoving: false,
-    // },
-    // {
-    //   id: "belt3",
-    //   stations: [
-    //     { id: "station1", position: 1, x: 100, y: 20, modifier: "Fire", processingTime: 5000 },
-    //     { id: "station2", position: 2, x: 200, y: 20, modifier: "Water" , processingTime: 5000 },
-    //   ],
-    //   isMoving: false,
-    // },
-  ];
+    };
+
+  
   
 
 
   return (
     <div>
-      <h1>Alchemist's Armory</h1>
+      <h1>Alchemist&apos;s Armory</h1>
       <p>Gold: {gold}</p>
       <Button onClick={() => handleAddItem("potion")}>Add Potion</Button>
       <Button onClick={() => handleAddItem("scroll")}>Add Scroll</Button>
@@ -81,7 +66,7 @@ const Adventure: React.FC = () => {
       <div>added {items.length}</div>
 
 
-      <GameBoardTwo belts={belts} items={items} setItems={setItems} />       
+      <GameBoardTwo belt={belt} items={items} setItems={setItems} />       
 
     </div>
   );
