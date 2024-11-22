@@ -25,6 +25,7 @@ export interface Item {
   type: string;
   timestamp: number;
   value: number;
+  distanceTraveled: number;
 }
 
 export interface GameState {
@@ -40,7 +41,7 @@ interface ItemSnapshot {
 }
 
 const stationPositions = [
-  { x: 80, y: 275 },  // Center of 1 vertical segment
+  { x: 80,  y: 275 },  // Center of 1 vertical segment
   { x: 275, y: 450 }, // Center of 2 horizontal segment
   { x: 480, y: 300 }, // Center of 3 vertical segment
   { x: 300, y: 150 },  // Center of 4 horizontal segment
@@ -56,14 +57,14 @@ const belt: Belt =
 {
   id: "belt1",
   stations: [
-    { id: "station1", position: 0, x: 100, y: 20, modifier: "Fire", processingTime: 5000 },
-    { id: "station2", position: 1, x: 200, y: 20, modifier: "Water", processingTime: 5000 },
-    { id: "station3", position: 2, x: 200, y: 20, modifier: "Water", processingTime: 5000 },
-    { id: "station4", position: 3, x: 200, y: 20, modifier: "Water", processingTime: 5000 },
-    { id: "station5", position: 4, x: 200, y: 20, modifier: "Water", processingTime: 5000 },
-    { id: "station6", position: 5, x: 200, y: 20, modifier: "Water", processingTime: 5000 },
-    { id: "station7", position: 6, x: 200, y: 20, modifier: "Water", processingTime: 5000 },
-    { id: "station8", position: 7, x: 200, y: 20, modifier: "Water", processingTime: 5000 },
+    { id: "station1", position: 0, x: 80,  y: 275, modifier: "Fire", processingTime: 5000 },
+    { id: "station2", position: 1, x: 275, y: 450, modifier: "Water", processingTime: 5000 },
+    { id: "station3", position: 2, x: 480, y: 300, modifier: "Water", processingTime: 5000 },
+    { id: "station4", position: 3, x: 300, y: 150, modifier: "Water", processingTime: 5000 },
+    { id: "station5", position: 4, x: 155, y: 275, modifier: "Water", processingTime: 5000 },
+    { id: "station6", position: 5, x: 275, y: 375, modifier: "Water", processingTime: 5000 },
+    { id: "station7", position: 6, x: 405, y: 300, modifier: "Water", processingTime: 5000 },
+    { id: "station8", position: 7, x: 300, y: 225, modifier: "Water", processingTime: 5000 },
 
   ],
   // isMoving: false,
@@ -73,7 +74,7 @@ const belt: Belt =
 };
 
 
-const belt_duration = 5;
+const belt_duration = 60;
 
 const GameBoardTwo: React.FC = () => {
 
@@ -93,7 +94,8 @@ const GameBoardTwo: React.FC = () => {
         id: `item${Date.now()}`,
         type: itemType,
         timestamp: Date.now(),
-        value: 10
+        value: 10,
+        distanceTraveled: 0,
       }]
     }));
     
@@ -131,24 +133,30 @@ const GameBoardTwo: React.FC = () => {
     return { x, y, distanceTraveled, totalLength };
   };
 
-
   const [svgContent, setSvgContent] = useState<JSX.Element | null>(null);
 
+  const calculateDistance = (x1: number, y1: number, x2: number, y2: number) => {
+    return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+  };
+
   const updateGameState = (belt: Belt, gameState: GameState) => {
+
     const newItems: Item[] = [];
     let pendingGold = gameState.pendingGold;
     console.log("items length: ", gameState.items.length);
     gameState.items.forEach(item => {
       const position = calculatePosition(item, belt);
+      item.distanceTraveled = position.distanceTraveled;
       if (position.distanceTraveled >= position.totalLength) {
         // Item has reached the end of the conveyor belt
         pendingGold += item.value;
       } else {
         belt.stations.forEach(station => {
-          if (Math.abs(position.x - station.x) < 10 && Math.abs(position.y - station.y) < 10) {
+          const distance = calculateDistance(position.x, position.y, station.x, station.y);
+          if (distance < 10) { // Example threshold distance
             item.value += 10; // Example modifier effect
           }
-        });
+        });        
         newItems.push(item);
       }
     });
@@ -233,16 +241,19 @@ const GameBoardTwo: React.FC = () => {
     items: []
   });
 
-  const claimPendingGold = () => {
-    setGameState((prev) => ({
-      ...prev,
-      gold: prev.gold + prev.pendingGold,
-      pendingGold: 0
-    }));
-  }
+  // const claimPendingGold = () => {
+  //   setGameState((prev) => ({
+  //     ...prev,
+  //     gold: prev.gold + prev.pendingGold,
+  //     pendingGold: 0
+  //   }));
+  // }
 
   // Update the SVG content periodically
   useEffect(() => {
+    // if (paused) {
+    //   return;
+    // }
     console.log("running effect")
     const interval = setInterval(() => {
       // setGameState(prevState => {
@@ -251,15 +262,15 @@ const GameBoardTwo: React.FC = () => {
       //   return newState;
       // });
 
-
-
       const newState = updateGameState(belt, gameState);
       setSvgContent(generateSvgContent(belt, newState));
       setGameState(newState)
+
     }, 100); // Update every 100 milliseconds
 
     return () => clearInterval(interval);
   }, [gameState.items.length]);
+
 
   return <section>
     <div className="mx-auto">{svgContent}</div>
