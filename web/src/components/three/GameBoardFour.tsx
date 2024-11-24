@@ -64,8 +64,8 @@ const GameBoardFour: React.FC = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       console.log("interval")
-      console.log("new items: " + items.length);
-      console.log("state items: " + state.items.length);
+      // console.log("new items: " + items.length);
+      // console.log("state items: " + state.items.length);
       setTime(Date.now())}, 1000);
     return () => {
       clearInterval(interval);

@@ -45,7 +45,7 @@ export function UseData(date: number, belt: Belt,  newItems: Item[], setNewItems
         console.log("hook, new items: " + newItems.length);
         console.log("hook, state items: " + state.items.length);
 
-        const now = new Date(date).getTime() / 1000;
+        const now = new Date(date).getTime();
 
 
         // ok so everytime the clock ticks, we need to update the state
@@ -53,11 +53,13 @@ export function UseData(date: number, belt: Belt,  newItems: Item[], setNewItems
         // every item on the belt ticks at the same time
         // and then if they're done, we add the gold to the pending gold
 
-        console.log("now: " + now + " last: " + state.time);
+        // console.log("now: " + now + " last: " + state.time);
 
         if (now > state.time) {
 
             const elapsedTime = (now - state.time) / 1000; // Elapsed time in seconds
+            // console.log("now: " + now + " last: " + state.time);
+            console.log("elapsed time: " + elapsedTime);
 
             const { updatedItems, pendingGold } = resolveItems(state.items, belt, elapsedTime);
           
@@ -124,7 +126,8 @@ export function UseData(date: number, belt: Belt,  newItems: Item[], setNewItems
         let pendingGold = 0;
 
         items.forEach((item) => {
-            const distanceTraveled = calculateDistanceTraveled(item, elapsedTime, totalLength);
+            let itemElapsed = (new Date(date).getTime() - item.timestamp) / 1000
+            const distanceTraveled = calculateDistanceTraveled(item, itemElapsed, totalLength);
 
             if (distanceTraveled >= totalLength) {
                 // Item has completed its journey
