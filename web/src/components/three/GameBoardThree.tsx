@@ -39,7 +39,9 @@ const belt: Belt = {
     { id: "station2", x: 275, y: 450, modifier: "Water", processingTime: 5000 },
     { id: "station3", x: 480, y: 300, modifier: "Earth", processingTime: 5000 },
   ],
-  segments: [400, 400, 300],
+  // segments: [400, 400, 300],
+  segments: [400, 400, 300, 325, 225, 250, 150, 175, 75],
+
 };
 
 // Total duration for the belt loop
@@ -51,6 +53,55 @@ const GameBoardRefactored: React.FC = () => {
     pendingGold: 0,
     items: [],
   });
+
+  const loadGame = () => {
+    const saveDataString = localStorage.getItem("gameSave");
+    if (!saveDataString) {
+      console.log("No saved game found.");
+      return;
+    }
+  
+    const savedState = JSON.parse(saveDataString) as GameState & { lastSaveTime: number };
+    const now = Date.now();
+    const elapsedTime = (now - savedState.lastSaveTime) / 1000; // Elapsed time in seconds
+  
+    const totalLength = calculateTotalLength(belt);
+    const speed = totalLength / beltDuration;
+  
+    const updatedItems: Item[] = [];
+    let pendingGold = savedState.pendingGold;
+  
+    savedState.items.forEach((item) => {
+      const distanceTraveled = elapsedTime * speed;
+  
+      if (distanceTraveled >= totalLength) {
+        // Item would have completed its journey
+        pendingGold += item.value;
+      } else {
+        updatedItems.push(item); // Still on the belt
+      }
+    });
+  
+    setGameState({
+      ...savedState,
+      items: updatedItems,
+      gold: savedState.gold,
+      pendingGold: pendingGold,
+    });
+  
+    console.log("Game loaded!");
+  };
+
+  const saveGame = () => {
+    const saveData = {
+      ...gameState,
+      lastSaveTime: Date.now(),
+    };
+  
+    localStorage.setItem("gameSave", JSON.stringify(saveData));
+    console.log("Game saved!");
+  };
+  
 
   const calculateTotalLength = (belt: Belt) =>
     belt.segments.reduce((total, length) => total + length, 0);
@@ -65,18 +116,37 @@ const GameBoardRefactored: React.FC = () => {
     let x = 80, y = 50; // Starting point
 
     for (let i = 0; i < belt.segments.length; i++) {
+
       const segmentLength = belt.segments[i];
       if (remainingDistance <= segmentLength) {
-        if (i % 2 === 0) {
-          y += remainingDistance; // Vertical movement
-        } else {
-          x += remainingDistance; // Horizontal movement
+        if (i % 2 === 0) { // Vertical segment
+          y += remainingDistance * (i % 4 === 0 ? 1 : -1);
+        } else { // Horizontal segment
+          x += remainingDistance * (i % 4 === 1 ? 1 : -1);
         }
         break;
       }
+      if (i % 2 === 0) { // Vertical segment
+        y += segmentLength * (i % 4 === 0 ? 1 : -1);
+      } else { // Horizontal segment
+        x += segmentLength * (i % 4 === 1 ? 1 : -1);
+      }
       remainingDistance -= segmentLength;
-      if (i % 2 === 0) y += segmentLength;
-      else x += segmentLength;
+
+
+
+      // const segmentLength = belt.segments[i];
+      // if (remainingDistance <= segmentLength) {
+      //   if (i % 2 === 0) {
+      //     y += remainingDistance; // Vertical movement
+      //   } else {
+      //     x += remainingDistance; // Horizontal movement
+      //   }
+      //   break;
+      // }
+      // remainingDistance -= segmentLength;
+      // if (i % 2 === 0) y += segmentLength * (i % 4 === 0 ? 1 : -1);
+      // else x += segmentLength  * (i % 4 === 1 ? 1 : -1);
     }
 
     return { x, y };
@@ -130,10 +200,14 @@ const GameBoardRefactored: React.FC = () => {
       <path
         stroke="lightgray"
         strokeWidth="40"
-        d="M 80 50 v 400 h 400"
+        d="M 80 50 v 400 h 400 v -300 h -325 v 225 h 250 v -150 h -175 v 75"
         fill="none"
         strokeLinecap="round"
       />
+
+
+      {/* <path stroke="lightgray" strokeWidth="40" d="M 80 50 v 400 h 400 v -300 h -325 v 225 h 250 v -150 h -175 v 75" fill="none" strokeLinecap="round"></path> */}
+
       {gameState.items.map((item) => {
         const position = calculatePosition(item, belt);
         return (
@@ -171,6 +245,10 @@ const GameBoardRefactored: React.FC = () => {
         <p>Gold: {gameState.gold}</p>
         <p>Pending Gold: {gameState.pendingGold}</p>
       </div>
+      <div>
+  <Button onClick={saveGame}>Save Game</Button>
+  <Button onClick={loadGame}>Load Game</Button>
+</div>
     </div>
   );
 };

@@ -6,6 +6,7 @@ import  { Belt, Item } from "./GameBoardTwo";
 
 import dynamic from 'next/dynamic'
 import GameBoardRefactored from "./GameBoardThree";
+import GameBoardFour from "./GameBoardFour";
 const GameBoardTwo = dynamic(() => import('./GameBoardTwo'), { ssr: false })
 
 
@@ -75,7 +76,7 @@ const Adventure: React.FC = () => {
 
 
       {/* <GameBoardTwo  />      */}
-      <GameBoardRefactored/>  
+      <GameBoardFour/>  
 
     </div>
   );
