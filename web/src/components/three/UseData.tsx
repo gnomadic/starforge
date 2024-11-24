@@ -3,13 +3,9 @@ import { useEffect, useState } from 'react';
 
 
 
-export function UseData(date: number, belt: Belt,  newItems: Item[], setNewItems: (items: Item[]) => void) {
+export function UseData(date: number, belt: Belt, newItems: Item[], setNewItems: (items: Item[]) => void) {
 
     const beltDuration = 10; // Total duration for the belt loop
-
-    //now is the current date to the second
-
-    // const now = Date.now() / 1000
 
     const [lastTick, setLastTick] = useState(0);
 
@@ -20,8 +16,6 @@ export function UseData(date: number, belt: Belt,  newItems: Item[], setNewItems
         time: Date.now() / 1000
     });
 
-    // const [batch, setBatch] = useState<ComponentMetadata[]>([]);
-    // const [lastRun, setLastRun] = useState(0);
 
     useEffect(() => {
 
@@ -34,73 +28,34 @@ export function UseData(date: number, belt: Belt,  newItems: Item[], setNewItems
         updatedItems.push(...newItems);
         setNewItems([]);
 
-        
-        
         // add the new items to the state
         setState({
             ...state,
             items: updatedItems
         });
 
-        console.log("hook, new items: " + newItems.length);
-        console.log("hook, state items: " + state.items.length);
-
         const now = new Date(date).getTime();
-
-
-        // ok so everytime the clock ticks, we need to update the state
-        // check that now is greater than the last time we updated the state
-        // every item on the belt ticks at the same time
-        // and then if they're done, we add the gold to the pending gold
-
-        // console.log("now: " + now + " last: " + state.time);
 
         if (now > state.time) {
 
-            const elapsedTime = (now - state.time) / 1000; // Elapsed time in seconds
-            // console.log("now: " + now + " last: " + state.time);
-            console.log("elapsed time: " + elapsedTime);
-
+            const elapsedTime = (now - state.time) / 1000;
+            // console.log("elapsed time: " + elapsedTime);
             const { updatedItems, pendingGold } = resolveItems(state.items, belt, elapsedTime);
-          
+
             setState({
-              ...state,
-              items: updatedItems,
-              gold: state.gold,
-              pendingGold: pendingGold,
+                ...state,
+                items: updatedItems,
+                gold: state.gold,
+                pendingGold: pendingGold + state.pendingGold,
                 time: now,
             });
-
-
-
-            // state.items.forEach((item) => {
-
-            //     // calculate the distance traveled
-            //     const elapsedTime = now - item.timestamp;
-            //     const speed = 1;
-            //     const distanceTraveled = elapsedTime * speed;
-
-            //     // if the item has traveled the entire path, add the value to the pending gold
-            //     // also remove the item
-            //     if (distanceTraveled >= 100) {
-            //         setState({
-            //             ...state,
-            //             items: state.items.filter((i) => i.id !== item.id),
-            //             pendingGold: state.pendingGold + item.value
-            //         });
-            //     }
-
-            //     // if the item has not traveled the entire path, update the distance traveled
-            //     else {
-            //         item.distanceTraveled = distanceTraveled;
-            //     }
-            // });
         }
     }, [date, newItems]);
 
 
     const calculateTotalLength = (belt: Belt) =>
         belt.segments.reduce((total, length) => total + length, 0);
+
 
     const calculateDistanceTraveled = (item: Item, elapsedTime: number, totalLength: number) => {
         const speed = totalLength / beltDuration; // Speed in units per second
