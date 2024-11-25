@@ -186,9 +186,6 @@ const GameBoardFour: React.FC = () => {
       </div>
       <div>
         <Button onClick={() => setStation(0, StationModifier.Fire)}>Station One</Button>
-
-        {/* <Button onClick={saveGame}>Save Game</Button> */}
-        {/* <Button onClick={loadGame}>Load Game</Button> */}
       </div>
 
       <div className="grid grid-cols-9">
@@ -203,7 +200,6 @@ const GameBoardFour: React.FC = () => {
 
 
           return (
-
             <ItemCard key={item.id} item={item} onStationClick={() => { }} />
           );
 

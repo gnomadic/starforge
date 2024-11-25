@@ -7,7 +7,7 @@ const Adventure: React.FC = () => {
 
   return (
     <div>
-      <h1>Alchemist&apos;s Armory</h1>
+      <h1>Adventure Alchemist</h1>
 
       <GameBoardFour />
 
