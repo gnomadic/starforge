@@ -3,21 +3,31 @@
 import React, { useState, useEffect } from "react";
 import { Button } from "../ui/button";
 import { UseData } from "./UseData";
-import { Belt, Item, ItemType, Station } from "@/domain/types";
+import { Belt, Item, ItemType, Station, StationModifier } from "@/domain/types";
 
 const belt: Belt = {
   id: "belt1",
   segments: [400, 400, 300, 325, 225, 250, 150, 175, 75],
-};
+  stationSlots: [
+    { x: 80, y: 275, distance: 200 },
+    { x: 275, y: 450, distance: 600 },
+    { x: 480, y: 300, distance: 950 },
+    { x: 300, y: 150, distance: 5000 },
+    { x: 155, y: 275, distance: 5000 },
+    { x: 275, y: 375, distance: 5000 },
+    { x: 405, y: 300, distance: 5000 },
+    { x: 300, y: 225, distance: 5000 }
 
+  ],
+};
 
 const GameBoardFour: React.FC = () => {
 
   const [items, setItems] = useState<Item[]>([]);
-  const [stations, setStations] = useState<Station[]>([]);
+  const [stations, setStations] = useState<Station[]>(Array.from({ length: belt.stationSlots.length }));
 
   const [time, setTime] = useState(Date.now());
-  const { state } = UseData(time, belt, items, setItems, stations, setStations);
+  const { state } = UseData(time, belt, stations, items, setItems);
 
 
   useEffect(() => {
@@ -26,7 +36,7 @@ const GameBoardFour: React.FC = () => {
       // console.log("new items: " + items.length);
       // console.log("state items: " + state.items.length);
       setTime(Date.now())
-    }, 10000);
+    }, 1000);
     return () => {
       clearInterval(interval);
     };
@@ -45,9 +55,21 @@ const GameBoardFour: React.FC = () => {
       y: 50,
       distanceTraveled: 0,
       enhancements: [],
+      appliedStations: 0,
     });
     setItems(newItems);
   };
+
+  const setStation = (slotIndex: number, modifier: StationModifier) => {
+    const newStations = stations;
+    newStations[slotIndex] = {
+      id: `station${slotIndex}`,
+      modifier: modifier,
+      valueMultiplier: 1,
+      valueAddition: 5,
+    };
+    setStations(newStations);
+  }
 
   // const setStationModifier = (stationId: string, newModifier: string) => {
   //   const station = state.stations.find((s) => s.id === stationId);
@@ -80,6 +102,35 @@ const GameBoardFour: React.FC = () => {
           />
         );
       })}
+
+      {belt.stationSlots.map((station, index) => {
+        return (
+          <g key={index}>
+            <rect
+              x={station.x - 15}
+              y={station.y - 15}
+              width={30}
+              height={30}
+              fill="red"
+              opacity={0.1}
+            />
+     
+            {(state.stations[index] !== undefined) ? (
+              <rect
+                x={station.x - 15}
+                y={station.y - 15}
+                width={15}
+                height={15}
+                fill="blue"
+              />
+
+
+            ) : (<></>)}
+          </g>
+
+        );
+
+      })};
     </svg>
   );
 
@@ -96,9 +147,13 @@ const GameBoardFour: React.FC = () => {
         <p>Pending Gold: {state.pendingGold}</p>
       </div>
       <div>
+      <Button onClick={() => setStation(0, StationModifier.Fire)}>Station One</Button>
+
         {/* <Button onClick={saveGame}>Save Game</Button> */}
         {/* <Button onClick={loadGame}>Load Game</Button> */}
       </div>
+      <div>{JSON.stringify(stations)}</div>
+      <div>{JSON.stringify(state.stations)}</div>
 
     </div>
   );

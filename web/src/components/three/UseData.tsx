@@ -6,10 +6,9 @@ import { useEffect, useState } from 'react';
 export function UseData(
     date: number, 
     belt: Belt, 
+    stations: Station[],
     newItems: Item[], 
     setNewItems: (items: Item[]) => void,
-    stations: Station[],
-    setStations: (stations: Station[]) => void
 ) {
 
     const beltDuration = 10; // Total duration for the belt loop
@@ -37,9 +36,11 @@ export function UseData(
         setNewItems([]);
 
         // add the new items to the state
+        console.log("use data station 0: " , stations[0]);
         setState({
             ...state,
-            items: updatedItems
+            items: updatedItems,
+            stations: stations,
         });
 
         
@@ -54,6 +55,7 @@ export function UseData(
 
             setState({
                 ...state,
+                stations: stations,
                 items: updatedItems,
                 gold: state.gold,
                 pendingGold: pendingGold + state.pendingGold,
@@ -96,14 +98,17 @@ export function UseData(
 
             if (distanceTraveled >= totalLength) {
                 // Item has completed its journey
-                pendingGold += item.value;
+                const modItem = applyStationModifiers(item, distanceTraveled);
+                pendingGold += modItem.value;
             } else {
                 // Item is still on the belt
                 const { segmentIndex, segmentDistance } = determineSegment(distanceTraveled, belt);
 
                 if (segmentIndex >= 0) {
                     const position = calculatePositionOnSegment(segmentIndex, segmentDistance, belt);
-                    updatedItems.push({ ...item, ...position, distanceTraveled });
+                    const modItem = applyStationModifiers(item, distanceTraveled);
+
+                    updatedItems.push({ ...modItem, ...position, distanceTraveled });
                 }
             }
         });
@@ -112,6 +117,30 @@ export function UseData(
 
         return { updatedItems, pendingGold };
     };
+
+    const applyStationModifiers = (item: Item, distanceTraveled: number) => {
+        let valueMultiplier = 1;
+        let valueAddition = 0;
+
+        belt.stationSlots.forEach((slot, index) => {
+            if (item.appliedStations <= index) {
+            if (distanceTraveled >= slot.distance){
+                const station = stations[index];
+                if (station !== undefined) {
+                    valueMultiplier *= station.valueMultiplier;
+                    valueAddition += station.valueAddition;
+                    item.appliedStations++;
+                }
+            }
+        }
+        });
+
+
+        item.value = Math.floor(item.value + valueAddition) * valueMultiplier;
+        return item;
+
+
+    }
 
 
     const calculatePositionOnSegment = (segmentIndex: number, segmentDistance: number, belt: Belt) => {
@@ -135,9 +164,6 @@ export function UseData(
 
         return { x, y };
     };
-
-
-
 
 
     return { state };

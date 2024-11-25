@@ -5,6 +5,7 @@ export enum ItemType {
 }
 
 export enum StationModifier {
+  None = "None",
   Fire = "Fire",
   Water = "Water",
   Earth = "Earth",
@@ -23,12 +24,11 @@ export interface StationSlot {
   x: number;
   y: number;
   distance: number;
-  station: Station | undefined;
 }
 
 export interface Belt {
   id: string;
-  // stations: Station[];
+  stationSlots: StationSlot[];
   segments: number[];
 }
 
@@ -41,6 +41,7 @@ export interface Item {
   distanceTraveled: number;
   x: number;
   y: number;
+  appliedStations: number;
 }
 
 export interface GameState {
