@@ -7,11 +7,13 @@ export function UseData(
     date: number, 
     belt: Belt, 
     stations: Station[],
+    selectedItem: Item,
     newItems: Item[], 
     setNewItems: (items: Item[]) => void,
 ) {
 
     const beltDuration = 10; // Total duration for the belt loop
+    const newItemRate = 2; // Number of seconds to wait before dropping an item
 
     const [lastTick, setLastTick] = useState(0);
 
@@ -20,7 +22,9 @@ export function UseData(
         pendingGold: 0,
         items: [],
         stations: [],
-        time: Date.now() / 1000
+        time: Date.now(),
+        lastItemSpawned: Date.now(),
+        selectedItem: selectedItem,
     });
 
 
@@ -36,7 +40,7 @@ export function UseData(
         setNewItems([]);
 
         // add the new items to the state
-        console.log("use data station 0: " , stations[0]);
+        // console.log("use data station 0: " , stations[0]);
         setState({
             ...state,
             items: updatedItems,
@@ -49,9 +53,45 @@ export function UseData(
 
         if (now > state.time) {
 
-            const elapsedTime = (now - state.time) / 1000;
+
+            const processingItems = state.items;
+            let lastSpawn = state.lastItemSpawned;
+            const secondspassed = (now - lastSpawn) / 1000
+
+            if (secondspassed > newItemRate) {
+                const newItem = {
+                    id: `item${Date.now()}`,
+                    type: selectedItem.type,
+                    timestamp: now,
+                    value: 10,
+                    x: 80,
+                    y: 50,
+                    distanceTraveled: 0,
+                    enhancements: [],
+                    appliedStations: 0,
+                };
+
+                processingItems.push(newItem);
+                lastSpawn = now;
+
+
+                
+                // state.lastItemSpawned = now;
+            }
+
+            console.log("seconds passed: " + secondspassed + " " + newItemRate);
+
+            // // let lastSpawn = state.lastItemSpawned
+            // console.log("time since last spawn: " + (now - state.lastItemSpawned) + " " + newItemRate * 1000)
+
+            // const itemSpawns = Math.floor(( now - state.lastItemSpawned) / (newItemRate * 1000));
+            // console.log("should spawn " + itemSpawns + " " + state.selectedItem?.type );
+            // // state.lastItemSpawned = now;
+
+            // const elapsedTime = (now - state.time) / 1000;
+
             // console.log("elapsed time: " + elapsedTime);
-            const { updatedItems, pendingGold } = resolveItems(state.items, belt, elapsedTime);
+            const { updatedItems, pendingGold } = resolveItems(now, processingItems, belt);
 
             setState({
                 ...state,
@@ -60,6 +100,7 @@ export function UseData(
                 gold: state.gold,
                 pendingGold: pendingGold + state.pendingGold,
                 time: now,
+                lastItemSpawned: lastSpawn
             });
         }
     }, [date, newItems]);
@@ -87,13 +128,13 @@ export function UseData(
         return { segmentIndex: -1, segmentDistance: 0 }; // Beyond the belt
     };
 
-    const resolveItems = (items: Item[], belt: Belt, elapsedTime: number) => {
+    const resolveItems = (now: number, items: Item[], belt: Belt) => {
         const totalLength = calculateTotalLength(belt);
         const updatedItems: Item[] = [];
         let pendingGold = 0;
 
         items.forEach((item) => {
-            let itemElapsed = (new Date(date).getTime() - item.timestamp) / 1000
+            let itemElapsed = (now - item.timestamp) / 1000
             const distanceTraveled = calculateDistanceTraveled(item, itemElapsed, totalLength);
 
             if (distanceTraveled >= totalLength) {

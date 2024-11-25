@@ -47,6 +47,8 @@ export interface Item {
 export interface GameState {
   gold: number;
   pendingGold: number;
+  selectedItem: Item;
+  lastItemSpawned: number;
   items: Item[];
   stations: Station[];
   time: number;

@@ -21,13 +21,27 @@ const belt: Belt = {
   ],
 };
 
+const starterPotion: Item = {
+  
+    id: `item${Date.now()}`,
+    type: ItemType.Potion,
+    timestamp: Date.now(),
+    value: 10,
+    x: 80,
+    y: 50,
+    distanceTraveled: 0,
+    enhancements: [],
+    appliedStations: 0,
+  };
+
 const GameBoardFour: React.FC = () => {
 
   const [items, setItems] = useState<Item[]>([]);
   const [stations, setStations] = useState<Station[]>(Array.from({ length: belt.stationSlots.length }));
+  const [selectedItem, setSelectedItem] = useState<Item>(starterPotion);
 
   const [time, setTime] = useState(Date.now());
-  const { state } = UseData(time, belt, stations, items, setItems);
+  const { state } = UseData(time, belt, stations, selectedItem, items, setItems);
 
 
   useEffect(() => {
@@ -36,7 +50,7 @@ const GameBoardFour: React.FC = () => {
       // console.log("new items: " + items.length);
       // console.log("state items: " + state.items.length);
       setTime(Date.now())
-    }, 1000);
+    }, 100);
     return () => {
       clearInterval(interval);
     };
