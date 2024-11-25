@@ -22,26 +22,26 @@ const belt: Belt = {
 };
 
 const starterPotion: Item = {
-  
-    id: `item${Date.now()}`,
-    type: ItemType.Potion,
-    timestamp: Date.now(),
-    value: 10,
-    x: 80,
-    y: 50,
-    distanceTraveled: 0,
-    enhancements: [],
-    appliedStations: 0,
-  };
+
+  id: `item${Date.now()}`,
+  type: ItemType.Potion,
+  timestamp: Date.now(),
+  value: 10,
+  x: 80,
+  y: 50,
+  distanceTraveled: 0,
+  enhancements: [],
+  appliedStations: 0,
+};
 
 const GameBoardFour: React.FC = () => {
 
-  const [items, setItems] = useState<Item[]>([]);
+  // const [items, setItems] = useState<Item[]>([]);
   const [stations, setStations] = useState<Station[]>(Array.from({ length: belt.stationSlots.length }));
   const [selectedItem, setSelectedItem] = useState<Item>(starterPotion);
 
   const [time, setTime] = useState(Date.now());
-  const { state } = UseData(time, belt, stations, selectedItem, items, setItems);
+  const { state } = UseData(time, belt, stations, selectedItem);
 
 
   useEffect(() => {
@@ -57,22 +57,22 @@ const GameBoardFour: React.FC = () => {
   }, []);
 
 
-  const handleAddItem = (type: ItemType) => {
+  // const handleAddItem = (type: ItemType) => {
 
-    const newItems = items;
-    newItems.push({
-      id: `item${Date.now()}`,
-      type: type,
-      timestamp: Date.now(),
-      value: 10,
-      x: 80,
-      y: 50,
-      distanceTraveled: 0,
-      enhancements: [],
-      appliedStations: 0,
-    });
-    setItems(newItems);
-  };
+  //   const newItems = items;
+  //   newItems.push({
+  //     id: `item${Date.now()}`,
+  //     type: type,
+  //     timestamp: Date.now(),
+  //     value: 10,
+  //     x: 80,
+  //     y: 50,
+  //     distanceTraveled: 0,
+  //     enhancements: [],
+  //     appliedStations: 0,
+  //   });
+  //   setItems(newItems);
+  // };
 
   const setStation = (slotIndex: number, modifier: StationModifier) => {
     const newStations = stations;
@@ -110,7 +110,7 @@ const GameBoardFour: React.FC = () => {
             cx={item.x}
             cy={item.y}
             r={10}
-            fill={item.type === "potion" ? "purple" : "orange"}
+            fill={item.type === ItemType.Potion ? "purple" : "orange"}
             stroke="black"
             strokeWidth="2"
           />
@@ -128,7 +128,7 @@ const GameBoardFour: React.FC = () => {
               fill="red"
               opacity={0.1}
             />
-     
+
             {(state.stations[index] !== undefined) ? (
               <rect
                 x={station.x - 15}
@@ -153,15 +153,37 @@ const GameBoardFour: React.FC = () => {
     <div>
       <div>{renderSvg()}</div>
       <div>
-        <Button onClick={() => handleAddItem(ItemType.Potion)}>Add Potion</Button>
-        <Button onClick={() => handleAddItem(ItemType.Scroll)}>Add Scroll</Button>
+        <Button onClick={() => setSelectedItem({
+
+          id: `item${Date.now()}`,
+          type: ItemType.Potion,
+          timestamp: Date.now(),
+          value: 10,
+          x: 80,
+          y: 50,
+          distanceTraveled: 0,
+          enhancements: [],
+          appliedStations: 0,
+        })}>Add Potion</Button>
+        <Button onClick={() => setSelectedItem({
+
+          id: `item${Date.now()}`,
+          type: ItemType.Scroll,
+          timestamp: Date.now(),
+          value: 10,
+          x: 80,
+          y: 50,
+          distanceTraveled: 0,
+          enhancements: [],
+          appliedStations: 0,
+        })}>Add Scroll</Button>
       </div>
       <div>
         <p>Gold: {state.gold}</p>
         <p>Pending Gold: {state.pendingGold}</p>
       </div>
       <div>
-      <Button onClick={() => setStation(0, StationModifier.Fire)}>Station One</Button>
+        <Button onClick={() => setStation(0, StationModifier.Fire)}>Station One</Button>
 
         {/* <Button onClick={saveGame}>Save Game</Button> */}
         {/* <Button onClick={loadGame}>Load Game</Button> */}

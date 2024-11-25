@@ -8,8 +8,6 @@ export function UseData(
     belt: Belt, 
     stations: Station[],
     selectedItem: Item,
-    newItems: Item[], 
-    setNewItems: (items: Item[]) => void,
 ) {
 
     const beltDuration = 10; // Total duration for the belt loop
@@ -35,15 +33,15 @@ export function UseData(
         }
         setLastTick(date);
 
-        const updatedItems = state.items;
-        updatedItems.push(...newItems);
-        setNewItems([]);
+        // const updatedItems = state.items;
+        // updatedItems.push(...newItems);
+        // setNewItems([]);
 
         // add the new items to the state
         // console.log("use data station 0: " , stations[0]);
         setState({
             ...state,
-            items: updatedItems,
+            // items: updatedItems,
             stations: stations,
         });
 
@@ -103,7 +101,7 @@ export function UseData(
                 lastItemSpawned: lastSpawn
             });
         }
-    }, [date, newItems]);
+    }, [date]);
 
 
     const calculateTotalLength = (belt: Belt) =>
