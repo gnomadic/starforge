@@ -3,28 +3,21 @@
 import React, { useState, useEffect } from "react";
 import { Button } from "../ui/button";
 import { UseData } from "./UseData";
-import { Belt, GameState, Item } from "@/domain/types";
+import { Belt, Item, ItemType, Station } from "@/domain/types";
 
 const belt: Belt = {
   id: "belt1",
-  stations: [
-    { id: "station1", x: 80, y: 275, modifier: "Fire", processingTime: 5000 },
-    { id: "station2", x: 275, y: 450, modifier: "Water", processingTime: 5000 },
-    { id: "station3", x: 480, y: 300, modifier: "Earth", processingTime: 5000 },
-  ],
   segments: [400, 400, 300, 325, 225, 250, 150, 175, 75],
-
 };
-
-// Total duration for the belt loop
-const beltDuration = 10;
 
 
 const GameBoardFour: React.FC = () => {
 
   const [items, setItems] = useState<Item[]>([]);
+  const [stations, setStations] = useState<Station[]>([]);
+
   const [time, setTime] = useState(Date.now());
-  const { state } = UseData(time, belt, items, setItems);
+  const { state } = UseData(time, belt, items, setItems, stations, setStations);
 
 
   useEffect(() => {
@@ -40,9 +33,9 @@ const GameBoardFour: React.FC = () => {
   }, []);
 
 
-  const handleAddItem = (type: string) => {
+  const handleAddItem = (type: ItemType) => {
 
-    let newItems = items;
+    const newItems = items;
     newItems.push({
       id: `item${Date.now()}`,
       type: type,
@@ -51,10 +44,18 @@ const GameBoardFour: React.FC = () => {
       x: 80,
       y: 50,
       distanceTraveled: 0,
-
+      enhancements: [],
     });
     setItems(newItems);
   };
+
+  // const setStationModifier = (stationId: string, newModifier: string) => {
+  //   const station = state.stations.find((s) => s.id === stationId);
+  //   if (station) {
+  //     station.modifier = newModifier;
+  //     // setBelt({ ...belt }); // Trigger state update
+  //   }
+  // };
 
   const renderSvg = () => (
     <svg width="512" height="512" style={{ border: "1px solid black" }}>
@@ -87,8 +88,8 @@ const GameBoardFour: React.FC = () => {
     <div>
       <div>{renderSvg()}</div>
       <div>
-        <Button onClick={() => handleAddItem("potion")}>Add Potion</Button>
-        <Button onClick={() => handleAddItem("scroll")}>Add Scroll</Button>
+        <Button onClick={() => handleAddItem(ItemType.Potion)}>Add Potion</Button>
+        <Button onClick={() => handleAddItem(ItemType.Scroll)}>Add Scroll</Button>
       </div>
       <div>
         <p>Gold: {state.gold}</p>
@@ -98,6 +99,7 @@ const GameBoardFour: React.FC = () => {
         {/* <Button onClick={saveGame}>Save Game</Button> */}
         {/* <Button onClick={loadGame}>Load Game</Button> */}
       </div>
+
     </div>
   );
 };

@@ -1,82 +1,15 @@
 "use client";
-import React, { useState } from "react";
-import { Button } from "../ui/button";
-import  { Belt, Item } from "./GameBoardTwo";
-
-
-import dynamic from 'next/dynamic'
-import GameBoardRefactored from "./GameBoardThree";
+import React from "react";
 import GameBoardFour from "./GameBoardFour";
-const GameBoardTwo = dynamic(() => import('./GameBoardTwo'), { ssr: false })
 
 
 const Adventure: React.FC = () => {
 
-  const oneItem : Item[] = [
-    // { id: "item1", type: "potion",  position: 0, timestamp: Date.now(), processing: false, value: 10 },
-    // { id: "item2", type: "scroll", beltId: "belt1", position: 0.2 },
-  ];
-
-
-  const [gold, setGold] = useState(0);
-  // const [items, setItems] = useState(oneItem);
-
-  // const handleAddItem = (itemType: string) => {
-  //   setItems((prevItems) => [...prevItems, {
-  //     id: `item${prevItems.length + 1}`,
-  //     type: itemType,
-  //     // beltId: "belt1",
-  //     position: 0,
-  //     timestamp: Date.now(),
-  //     processing: false,
-  //     value: 10,
-  //   }]);
-    
-  // };
-
-  const handleItemProcessed = (goldEarned: number) => {
-    setGold((prevGold) => prevGold + goldEarned);
-  };
-
-
-
-  const belt : Belt = 
-    {
-      id: "belt1",
-      stations: [
-        { id: "station1", position: 0, modifier: "Fire", processingTime: 5000 },
-        { id: "station2", position: 1, modifier: "Water" , processingTime: 5000 },
-        { id: "station3", position: 2, modifier: "Water" , processingTime: 5000 },
-        { id: "station4", position: 3, modifier: "Water" , processingTime: 5000 },
-        { id: "station5", position: 4, modifier: "Water" , processingTime: 5000 },
-        { id: "station6", position: 5, modifier: "Water" , processingTime: 5000 },
-        { id: "station7", position: 6, modifier: "Water" , processingTime: 5000 },
-        { id: "station8", position: 7, modifier: "Water" , processingTime: 5000 },
-
-      ],
-      // isMoving: false,
-      segments: [400, 400, 300, 325, 225, 250, 150, 175, 75],
-      // segments: [75, 175, 150, 250, 225, 325, 300, 400, 400],
-
-    };
-
-  
-  
-
-
   return (
     <div>
       <h1>Alchemist&apos;s Armory</h1>
-      <p>Gold: {gold}</p>
-      {/* <Button onClick={() => handleAddItem("potion")}>Add Potion</Button>
-      <Button onClick={() => handleAddItem("scroll")}>Add Scroll</Button>
-      <Button onClick={() => handleAddItem("gem")}>Add Gem</Button> */}
 
-      {/* <div>added {items.length}</div> */}
-
-
-      {/* <GameBoardTwo  />      */}
-      <GameBoardFour/>  
+      <GameBoardFour />
 
     </div>
   );

@@ -1,9 +1,16 @@
-import { Belt, GameState, Item } from '@/domain/types';
+import { Belt, GameState, Item, Station } from '@/domain/types';
 import { useEffect, useState } from 'react';
 
 
 
-export function UseData(date: number, belt: Belt, newItems: Item[], setNewItems: (items: Item[]) => void) {
+export function UseData(
+    date: number, 
+    belt: Belt, 
+    newItems: Item[], 
+    setNewItems: (items: Item[]) => void,
+    stations: Station[],
+    setStations: (stations: Station[]) => void
+) {
 
     const beltDuration = 10; // Total duration for the belt loop
 
@@ -13,6 +20,7 @@ export function UseData(date: number, belt: Belt, newItems: Item[], setNewItems:
         gold: 0,
         pendingGold: 0,
         items: [],
+        stations: [],
         time: Date.now() / 1000
     });
 
@@ -33,6 +41,8 @@ export function UseData(date: number, belt: Belt, newItems: Item[], setNewItems:
             ...state,
             items: updatedItems
         });
+
+        
 
         const now = new Date(date).getTime();
 
@@ -125,6 +135,7 @@ export function UseData(date: number, belt: Belt, newItems: Item[], setNewItems:
 
         return { x, y };
     };
+
 
 
 
