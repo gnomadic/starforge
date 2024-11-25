@@ -4,8 +4,8 @@ import { useEffect, useState } from 'react';
 
 
 export function UseData(
-    date: number, 
-    belt: Belt, 
+    date: number,
+    belt: Belt,
     stations: Station[],
     selectedItem: Item,
 ) {
@@ -45,7 +45,7 @@ export function UseData(
             stations: stations,
         });
 
-        
+
 
         const now = new Date(date).getTime();
 
@@ -73,7 +73,7 @@ export function UseData(
                 lastSpawn = now;
 
 
-                
+
                 // state.lastItemSpawned = now;
             }
 
@@ -163,15 +163,15 @@ export function UseData(
 
         belt.stationSlots.forEach((slot, index) => {
             if (item.appliedStations <= index) {
-            if (distanceTraveled >= slot.distance){
-                const station = stations[index];
-                if (station !== undefined) {
-                    valueMultiplier *= station.valueMultiplier;
-                    valueAddition += station.valueAddition;
-                    item.appliedStations++;
+                if (distanceTraveled >= slot.distance) {
+                    const station = stations[index];
+                    if (station !== undefined) {
+                        valueMultiplier *= station.valueMultiplier;
+                        valueAddition += station.valueAddition;
+                        item.appliedStations++;
+                    }
                 }
             }
-        }
         });
 
 

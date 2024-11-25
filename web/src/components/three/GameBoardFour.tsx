@@ -4,6 +4,8 @@ import React, { useState, useEffect } from "react";
 import { Button } from "../ui/button";
 import { UseData } from "./UseData";
 import { Belt, Item, ItemType, Station, StationModifier } from "@/domain/types";
+import { StationCard } from "../StationCard";
+import { ItemCard } from "../ItemCard";
 
 const belt: Belt = {
   id: "belt1",
@@ -150,7 +152,7 @@ const GameBoardFour: React.FC = () => {
 
 
   return (
-    <div>
+    <section className="pb-12">
       <div>{renderSvg()}</div>
       <div>
         <Button onClick={() => setSelectedItem({
@@ -188,10 +190,28 @@ const GameBoardFour: React.FC = () => {
         {/* <Button onClick={saveGame}>Save Game</Button> */}
         {/* <Button onClick={loadGame}>Load Game</Button> */}
       </div>
-      <div>{JSON.stringify(stations)}</div>
-      <div>{JSON.stringify(state.stations)}</div>
 
-    </div>
+      <div className="grid grid-cols-9">
+        {state.stations?.map((station, index) => {
+          return <StationCard key={index} station={station} onStationClick={() => { }} />
+        })}
+      </div>
+
+
+      <div className="grid grid-cols-1">
+        {state.items?.map((item, index) => {
+
+
+          return (
+
+            <ItemCard key={item.id} item={item} onStationClick={() => { }} />
+          );
+
+        })}
+      </div>
+
+
+    </section>
   );
 };
 
