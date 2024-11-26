@@ -14,7 +14,7 @@ export enum StationModifier {
 
 
 export interface Station {
-  id: string;
+  id: number;
   modifier: StationModifier;
   valueMultiplier: number;
   valueAddition: number;
@@ -27,7 +27,6 @@ export interface StationSlot {
 }
 
 export interface Belt {
-  id: string;
   stationSlots: StationSlot[];
   segments: number[];
 }

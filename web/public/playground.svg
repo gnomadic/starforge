@@ -1,0 +1,15 @@
+<svg width="512" height="512" style={{ border: "1px solid black" }}>
+    <defs>
+        <marker id="arrow" viewBox="0 0 60 50" refX="20" refY="10" markerUnits="userSpaceOnUse" markerWidth="40"
+            markerHeight="40" orient="auto" fill="#32a93e">
+            <path d="M0 0 10 0 20 10 10 20 0 20 10 10 0 0M16 0 26 10 16 20H26L36 10 26 0H16M32 0 42 10 32 20H42L52 10 42 0H32"></path>
+        </marker>
+    </defs>
+
+    <path stroke-width="40"
+        d="M80 50q-16 47 0 100 16 50 0 100v100 100h100 100 100 100v-100-100-100h-115-105-105v112 113h125 125v-75-75h-87-88v75"
+        fill="none" stroke-linecap="round" marker-start="url(#arrow)" marker-end="url(#arrow)" marker-mid="url(#arrow)"
+        stroke="#eee" />
+
+
+</svg>

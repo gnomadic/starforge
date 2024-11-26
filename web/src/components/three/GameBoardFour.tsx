@@ -8,17 +8,16 @@ import { StationCard } from "../StationCard";
 import { ItemCard } from "../ItemCard";
 
 const belt: Belt = {
-  id: "belt1",
   segments: [400, 400, 300, 325, 225, 250, 150, 175, 75],
   stationSlots: [
     { x: 80, y: 275, distance: 200 },
-    { x: 275, y: 450, distance: 600 },
+    // { x: 275, y: 450, distance: 600 },
     { x: 480, y: 300, distance: 950 },
-    { x: 300, y: 150, distance: 5000 },
+    // { x: 300, y: 150, distance: 5000 },
     { x: 155, y: 275, distance: 5000 },
-    { x: 275, y: 375, distance: 5000 },
+    // { x: 275, y: 375, distance: 5000 },
     { x: 405, y: 300, distance: 5000 },
-    { x: 300, y: 225, distance: 5000 }
+    // { x: 300, y: 225, distance: 5000 }
 
   ],
 };
@@ -38,7 +37,6 @@ const starterPotion: Item = {
 
 const GameBoardFour: React.FC = () => {
 
-  // const [items, setItems] = useState<Item[]>([]);
   const [stations, setStations] = useState<Station[]>(Array.from({ length: belt.stationSlots.length }));
   const [selectedItem, setSelectedItem] = useState<Item>(starterPotion);
 
@@ -48,9 +46,7 @@ const GameBoardFour: React.FC = () => {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      console.log("interval")
-      // console.log("new items: " + items.length);
-      // console.log("state items: " + state.items.length);
+      // console.log("interval")
       setTime(Date.now())
     }, 100);
     return () => {
@@ -58,28 +54,10 @@ const GameBoardFour: React.FC = () => {
     };
   }, []);
 
-
-  // const handleAddItem = (type: ItemType) => {
-
-  //   const newItems = items;
-  //   newItems.push({
-  //     id: `item${Date.now()}`,
-  //     type: type,
-  //     timestamp: Date.now(),
-  //     value: 10,
-  //     x: 80,
-  //     y: 50,
-  //     distanceTraveled: 0,
-  //     enhancements: [],
-  //     appliedStations: 0,
-  //   });
-  //   setItems(newItems);
-  // };
-
   const setStation = (slotIndex: number, modifier: StationModifier) => {
     const newStations = stations;
     newStations[slotIndex] = {
-      id: `station${slotIndex}`,
+      id: slotIndex,
       modifier: modifier,
       valueMultiplier: 1,
       valueAddition: 5,
@@ -87,23 +65,27 @@ const GameBoardFour: React.FC = () => {
     setStations(newStations);
   }
 
-  // const setStationModifier = (stationId: string, newModifier: string) => {
-  //   const station = state.stations.find((s) => s.id === stationId);
-  //   if (station) {
-  //     station.modifier = newModifier;
-  //     // setBelt({ ...belt }); // Trigger state update
-  //   }
-  // };
-
   const renderSvg = () => (
     <svg width="512" height="512" style={{ border: "1px solid black" }}>
+      <defs>
+        <marker id="arrow" viewBox="0 0 60 50" refX="20" refY="10" markerUnits="userSpaceOnUse" markerWidth="40"
+          markerHeight="40" orient="auto" fill="#32a93e">
+          <path d="M0 0 10 0 20 10 10 20 0 20 10 10 0 0M16 0 26 10 16 20H26L36 10 26 0H16M32 0 42 10 32 20H42L52 10 42 0H32"></path>
+        </marker>
+      </defs>
       <path
-        stroke="lightgray"
         strokeWidth="40"
         d="M 80 50 v 400 h 400 v -300 h -325 v 225 h 250 v -150 h -175 v 75"
         fill="none"
         strokeLinecap="round"
+        stroke="#eee"
       />
+
+
+      {/* <path stroke-width="40"
+        d="M80 50q0 50 0 100 16 50 0 100-18 51 0 100v100h100 100 100 100v-100-100-100h-115-105-105v112 113h125 125v-75-75h-87-88v75"
+        fill="none" stroke-linecap="round" marker-start="url(#arrow)" marker-end="url(#arrow)" marker-mid="url(#arrow)"
+        stroke="#eee" /> */}
 
       {state.items.map((item) => {
         return (
@@ -143,7 +125,6 @@ const GameBoardFour: React.FC = () => {
 
             ) : (<></>)}
           </g>
-
         );
 
       })};
@@ -152,11 +133,21 @@ const GameBoardFour: React.FC = () => {
 
 
   return (
-    <section className="pb-12">
-      <div>{renderSvg()}</div>
+    <section className="p-12">
+      <div className="grid grid-cols-1 md:grid-cols-2">
+        <div>{renderSvg()}</div>
+        <div className="grid grid-cols-3">
+          {state.stations?.map((station, index) => {
+            return <StationCard
+              key={index}
+              index={index}
+              station={station}
+              onStationClick={(mod) => { setStation(index, mod) }} />
+          })}
+        </div>
+      </div>
       <div>
         <Button onClick={() => setSelectedItem({
-
           id: `item${Date.now()}`,
           type: ItemType.Potion,
           timestamp: Date.now(),
@@ -168,7 +159,6 @@ const GameBoardFour: React.FC = () => {
           appliedStations: 0,
         })}>Add Potion</Button>
         <Button onClick={() => setSelectedItem({
-
           id: `item${Date.now()}`,
           type: ItemType.Scroll,
           timestamp: Date.now(),
@@ -185,28 +175,18 @@ const GameBoardFour: React.FC = () => {
         <p>Pending Gold: {state.pendingGold}</p>
       </div>
       <div>
-        <Button onClick={() => setStation(0, StationModifier.Fire)}>Station One</Button>
+        {/* <Button onClick={() => setStation(0, StationModifier.Fire)}>Station One</Button> */}
       </div>
 
-      <div className="grid grid-cols-9">
-        {state.stations?.map((station, index) => {
-          return <StationCard key={index} station={station} onStationClick={() => { }} />
-        })}
-      </div>
 
 
       <div className="grid grid-cols-1">
         {state.items?.map((item, index) => {
-
-
           return (
             <ItemCard key={item.id} item={item} onStationClick={() => { }} />
           );
-
         })}
       </div>
-
-
     </section>
   );
 };

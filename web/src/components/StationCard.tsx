@@ -1,63 +1,57 @@
-import { Station } from "@/domain/types";
+import { Station, StationModifier } from "@/domain/types";
 import { match, P } from "ts-pattern";
 import { Card, CardContent, CardHeader } from "./ui/card";
+import { Button } from "./ui/button";
 
 
 interface StationCardProps {
-    station: Station | undefined;
-    onStationClick: (station: Station) => void;
+  station: Station | undefined;
+  index: number;
+  onStationClick: (mod: StationModifier) => void;
 }
 
 
 export function StationCard(props: StationCardProps) {
-    return match(props)
-      .with({ station: P.nullish}, (station) => <EmptyStations></EmptyStations>)
-      .with({ station: P.nonNullable}, (station) => <Station station={station}/>)
-      .otherwise(() => <EmptyStations></EmptyStations>);
-        
-  }
+  return match(props)
+    .with({ station: P.nullish }, (station) => <EmptyStations props={props} />)
+    .with({ station: P.nonNullable }, (station) => <PresentStationCard props={station} />)
+    .otherwise(() => <EmptyStations props={props} />);
+
+}
 
 
-  export function EmptyStations() {
-    return (
-        <Card className="block max-w-sm overflow-hidden">
-            <CardHeader>
-                <h2 className="text-2xl font-bold">Empty Station</h2>
-                <h2 className="mb-2 font-sans text-2xl font-bold">nothing</h2>
-            </CardHeader>
-          {/* <div className="relative">
-            <BannerImage ipfsCID={data.bannerImg} />
-            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2">
-              <Avatar ipfsCID={data.logoImg} size={60} />
-            </div>
-          </div> */}
-          <CardContent className="pt-12">
-            
-            <p className="text-grey-400 line-clamp-4 font-sans">really nothing</p>
-          </CardContent>
-        </Card>
-    );
-  }
-
-
-  export function Station({ station }: { station: StationCardProps }) {
-
-    return (
-        <Card className="block max-w-sm overflow-hidden">
-        <CardHeader>
-            <h2 className="text-2xl font-bold">{station.station?.modifier} </h2>
-            <h2 className="mb-2 font-sans text-2xl font-bold">nothing</h2>
-        </CardHeader>
-      {/* <div className="relative">
-        <BannerImage ipfsCID={data.bannerImg} />
-        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2">
-          <Avatar ipfsCID={data.logoImg} size={60} />
-        </div>
-      </div> */}
-      <CardContent className="pt-12">
-        
-        <p className="text-grey-400 line-clamp-4 font-sans">really nothing</p>
-      </CardContent>
+export function EmptyStations({ props }: { props: StationCardProps }) {
+  return (
+    <Card className="overflow-hidden">
+      <CardHeader>
+        <h2 className="text-xl font-bold">Empty Station</h2>
+      </CardHeader>
+      <ButtonRow props={props} />
     </Card>
-    );
-  }
+  );
+}
+
+
+export function PresentStationCard({ props }: { props: StationCardProps }) {
+
+  return (
+    <Card className="overflow-hidden">
+      <CardHeader>
+        <h2 className="text-xl font-bold">{props.station?.modifier}</h2>
+      </CardHeader>
+      <ButtonRow props={props} />
+
+    </Card>
+  );
+}
+
+function ButtonRow({props}: {props:StationCardProps}) {
+  return (
+    <CardContent className="grid grid-cols-4">
+      <Button onClick={() => props.onStationClick(StationModifier.Fire)}>fire</Button>
+      <Button onClick={() => props.onStationClick(StationModifier.Water)}>water</Button>
+      <Button onClick={() => props.onStationClick(StationModifier.Earth)}>earth</Button>
+      <Button onClick={() => props.onStationClick(StationModifier.Air)}>air</Button>
+    </CardContent>
+  );
+}
