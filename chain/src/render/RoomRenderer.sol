@@ -31,7 +31,7 @@ contract RoomRenderer is IStepRenderer {
         bg = string.concat(
             bg,
             "<g>",
-            '<rect fill="url(#floorplank)" width="512" height="512" />',
+            '<path fill="url(#floorplank)" d="M0 0h512v512H0z"/>'
             "</g>"
         );
 

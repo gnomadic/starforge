@@ -32,7 +32,7 @@ contract BeltRenderer is IStepRenderer {
     }
 
     function earlyImage(uint256 tokenId) external view returns (string memory) {
-        string memory bg = '<path fill="black" d="M0 0h512v512H0z"/>';
+        string memory bg = '';
         return bg;
     }
 }
