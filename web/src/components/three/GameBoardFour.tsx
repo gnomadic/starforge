@@ -6,6 +6,7 @@ import { UseData } from "./UseData";
 import { Belt, Item, ItemType, Station, StationModifier } from "@/domain/types";
 import { StationCard } from "../StationCard";
 import { ItemCard } from "../ItemCard";
+import { ControlTabs } from "../ControlTabs";
 
 const belt: Belt = {
   segments: [400, 400, 300, 325, 225, 250, 150, 175, 75],
@@ -72,13 +73,20 @@ const GameBoardFour: React.FC = () => {
           markerHeight="40" orient="auto" fill="#32a93e">
           <path d="M0 0 10 0 20 10 10 20 0 20 10 10 0 0M16 0 26 10 16 20H26L36 10 26 0H16M32 0 42 10 32 20H42L52 10 42 0H32"></path>
         </marker>
+        <pattern id="evenrow" x="0" y="0" width=".098" height=".078">
+            <rect x="0" y="0" width="50" height="20" fill="#d39716" stroke="black" />
+            <rect x="-25" y="20" width="50" height="20" fill="#d39716" stroke="black" />
+            <rect x="25" y="20" width="50" height="20" fill="#d39716" stroke="black" />
+        </pattern>
       </defs>
+      <rect fill="url(#evenrow)" width="512" height="512" />
+
       <path
         strokeWidth="40"
         d="M 80 50 v 400 h 400 v -300 h -325 v 225 h 250 v -150 h -175 v 75"
         fill="none"
         strokeLinecap="round"
-        stroke="#eee"
+        stroke="#565656"
       />
 
 
@@ -136,16 +144,18 @@ const GameBoardFour: React.FC = () => {
     <section className="p-12">
       <div className="grid grid-cols-1 md:grid-cols-2">
         <div>{renderSvg()}</div>
-        <div className="grid grid-cols-3">
-          {state.stations?.map((station, index) => {
-            return <StationCard
-              key={index}
-              index={index}
-              station={station}
-              onStationClick={(mod) => { setStation(index, mod) }} />
-          })}
-        </div>
+        <ControlTabs state={state} setStation={setStation} />
+
       </div>
+      {/* <div className="grid grid-cols-3">
+        {state.stations?.map((station, index) => {
+          return <StationCard
+            key={index}
+            index={index}
+            station={station}
+            onStationClick={(mod) => { setStation(index, mod) }} />
+        })}
+      </div> */}
       <div>
         <Button onClick={() => setSelectedItem({
           id: `item${Date.now()}`,

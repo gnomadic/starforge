@@ -9,107 +9,60 @@ module.exports = async (hre) => {
 
   
     // ------------------------------------- deploy
-  
-    const color = await deploy("Color", {
-      from: deployer,
-      log: true,
-    });
 
+    console.log("----- deploying -----")
+
+  
     const colorUtils = await deploy("ColorUtils", {
       from: deployer,
       log: true,
     });
 
-    const starshipRenderer = await deploy("StarshipRenderer", {
+    const labRenderer = await deploy("LabRenderer", {
       from: deployer,
-      libraries: {
-        Color: color.address
-      },
-      log: true,
-    });
-  
-    const starship = await deploy("Starship", {
-      from: deployer,
-      args: [starshipRenderer.address],
-      libraries: {
-        Color: color.address,
-      },
       log: true,
     });
 
-    const beamRenderer = await deploy("BeamRenderer", {
+    const beltRenderer = await deploy("BeltRenderer", {
       from: deployer,
-      libraries: {
-        Color: color.address
-      },
       log: true,
-      args: [colorUtils.address]
     });
-
-    const cloudRenderer = await deploy("CloudRenderer", {
+    const roomRenderer = await deploy("RoomRenderer", {
       from: deployer,
-      libraries: {
-        Color: color.address
-      },
-      log: true,
-      args: [colorUtils.address]
-    });
-
-    const starRenderer = await deploy("StarRenderer", {
-      from: deployer,
-      libraries: {
-        Color: color.address
-      },
       log: true,
     });
 
-    const ufoRenderer = await deploy("UFORenderer", {
+    const lab = await deploy("Lab", {
       from: deployer,
-      libraries: {
-        Color: color.address
-      },
       log: true,
-      args: [colorUtils.address]
     });
 
-    console.log("getting deployment")
+   
 
-    const deployment = await deployments.get("StarshipRenderer");
-    const deployedRenderer =  await ethers.getContractAt("StarshipRenderer", deployment.address);
-    // const deployedRenderer = await getDeployedContract(hre, "StarshipRenderer");
-    console.log("got deployment")
+    console.log("----- loading renderer -----")
 
-    let tx = await deployedRenderer.addStepRenderer(starRenderer.address);
+    const deployment = await deployments.get("LabRenderer");
+    const deployedRenderer =  await ethers.getContractAt("LabRenderer", deployment.address);
+    
+    
+    console.log("----- configuring renderer -----")
+
+    let tx = await deployedRenderer.addStepRenderer(roomRenderer.address);
     await tx.wait();
 
-    tx = await deployedRenderer.addStepRenderer(beamRenderer.address);
+    tx = await deployedRenderer.addStepRenderer(beltRenderer.address);
     await tx.wait();
 
-    tx = await deployedRenderer.addStepRenderer(cloudRenderer.address);
-    await tx.wait();
-
-
-    tx = await deployedRenderer.addStepRenderer(ufoRenderer.address);
-    await tx.wait();
-
-    // tx = await deployedRenderer.addStepRenderer(shipRenderer.address);
-    // await tx.wait();
-
-
-
-
-
-  
-  
+    
     // ------------------------------------- write address megafile
   
     let networkName = hre.network.name;
     networkName === "hardhat" ? (networkName = "localhost") : (networkName = hre.network.name);
   
     const object = {};
-    object.starship = starship.address;
+    object.lab = lab.address;
 
-    const filename = "../deployments/" + networkName + "/twomoons-deployment.json";
+    const filename = "../deployments/" + networkName + "/AA-deployment.json";
 
 
     await fs.writeFileSync(filename, JSON.stringify(object, null, 2));
@@ -120,13 +73,13 @@ module.exports = async (hre) => {
     console.log("done deploying");
     if (chainId !== "31337" && hre.network.name !== "localhost" && hre.network.name !== "1337") {
       console.log("verifing");
-      await verify(hre, color.address, "Color");
-      await verify(hre, starshipRenderer.address, "StarshipRenderer", "renderers/");
-      await verify(hre, starship.address, "Starship", "starships/", [starshipRenderer.address]);
+      // await verify(hre, color.address, "Color");
+      // await verify(hre, starshipRenderer.address, "StarshipRenderer", "renderers/");
+      await verify(hre, lab.address, "Lab", "", [lab.address]);
 
     }
   
   };
   
-  module.exports.tags = ["tokens", "starships"];
+  module.exports.tags = ["tokens", "labs"];
   
