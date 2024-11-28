@@ -12,6 +12,7 @@
     "@radix-ui/react-avatar": "^1.1.1",
     "@radix-ui/react-slot": "^1.1.0",
     "@radix-ui/react-tabs": "^1.1.1",
+    "@wagmi/cli": "^2.1.18",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "d3": "^7.9.0",
@@ -22,7 +23,9 @@
     "react-force-graph": "^1.44.7",
     "tailwind-merge": "^2.5.4",
     "tailwindcss-animate": "^1.0.7",
-    "ts-pattern": "^5.5.0"
+    "ts-pattern": "^5.5.0",
+    "viem": "^2.21.51",
+    "wagmi": "^2.13.2"
   },
   "devDependencies": {
     "@types/node": "^20",

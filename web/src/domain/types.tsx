@@ -1,3 +1,6 @@
+import { Address, Chain, Transport } from "viem";
+
+
 export enum ItemType {
   Potion = "potion",
   Scroll = "scroll",
@@ -51,4 +54,16 @@ export interface GameState {
   items: Item[];
   stations: Station[];
   time: number;
+}
+
+export type Deployment = {
+  lab: Address;
+  craftSystem: Address;
+  displayName: string;
+  currency: string;
+  chain: string;
+  chainId: string;
+  scan: string;
+  viemChain: Chain;
+  viemTransport: Transport;
 }

@@ -50,7 +50,7 @@ module.exports = async (hre) => {
 
   console.log("----- done")
 
-  console.log("----- configuring systems
+  console.log("----- configuring systems");
 
   const LabDeployment = await deployments.get("Lab");
   const deployedLab = await ethers.getContractAt("Lab", LabDeployment.address);
@@ -101,6 +101,7 @@ module.exports = async (hre) => {
 
   const object = {};
   object.lab = lab.address;
+  object.craftSystem = craft.address;
 
   const filename = "../deployments/" + networkName + "/AA-deployment.json";
 
