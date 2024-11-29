@@ -1,19 +1,19 @@
 'use client';
 
-// import { ConnectButton } from '@rainbow-me/rainbowkit';
+import { ConnectButton } from '@rainbow-me/rainbowkit';
 import Link from 'next/link';
 import { Fragment, useEffect, useState } from 'react';
-import { usePathname } from 'next/navigation'
-import { NavItems } from '@/domain/Nav';
 import MobileNav from './MobileNav';
-import { MoveUpRight } from 'lucide-react';
-import { Button } from './ui/button';
-// import Image from 'next/image';
-// import logo from '../images/logo-unopt.svg';
+import { ArrowUpRightIcon } from '@heroicons/react/20/solid';
+import { NavItems } from '../domain/Nav';
+import useDeployment from '../hooks/useDeployment';
+import { usePathname } from 'next/navigation'
+import Image from 'next/image';
+import logo from '../images/logo-unopt.svg';
 
 export default function Navbar() {
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
-
+  const { deploy } = useDeployment();
   const pathname = usePathname();
 
   const handleMobileNavClick = () => {
@@ -26,8 +26,11 @@ export default function Navbar() {
         <div className='flex items-center self-stretch justify-between'>
           <div className='flex items-start'>
             <Link href='/'>
-              <div className='text-3xl text-white font-outfit'>
-                Adventure Alchemist
+              <div className='text-xl text-white font-nunito text-center'>
+                Adventure
+              </div>
+              <div className='text-3xl text-white font-nunito text-center'>
+                Alchemist
               </div>
             </Link>
           </div>
@@ -44,7 +47,7 @@ export default function Navbar() {
                   </div>
                 );
               })}
-              <div className='text-sm text-lightgrey' >
+              {/* <div className='text-sm text-lightgrey' >
                 <a
                   target="_blank"
                   rel="noopener noreferrer"
@@ -52,50 +55,48 @@ export default function Navbar() {
                 >
                   <div className="relative cursor-pointer">
                     docs
-                    <MoveUpRight />
-                    {/* <ArrowUpRightIcon
+                    <ArrowUpRightIcon
                       className="h-3 mb-2 "
                       style={{ display: "inline" }}
-                    /> */}
+                    />
                   </div>
                 </a>
-              </div>
+              </div> */}
             </div>
-     
+
             <div className='flex items-start justify-center gap-8' >
-              {/* <ConnectButton
+              <ConnectButton
                 chainStatus='icon'
                 accountStatus='avatar'
                 showBalance={false}
-              /> */}
-              <Button>Connect</Button>
+              />
             </div>
             <div className='self-center md:hidden'>
-            <button
-              onClick={() => {
-                handleMobileNavClick();
-              }}
-            >
-              <svg
-                width='24'
-                height='24'
-                viewBox='0 0 24 24'
-                fill='none'
-                xmlns='http://www.w3.org/2000/svg'
+              <button
+                onClick={() => {
+                  handleMobileNavClick();
+                }}
               >
-                <rect y='6' width='24' height='2' fill='white'></rect>
-                <rect y='11' width='24' height='2' fill='white'></rect>
-                <rect y='16' width='24' height='2' fill='white'></rect>
-              </svg>
-            </button>
-            {isMobileNavOpen ? (
-              <>
-                <MobileNav onClick={handleMobileNavClick} />
-              </>
-            ) : (
-              <></>
-            )}
-          </div>
+                <svg
+                  width='24'
+                  height='24'
+                  viewBox='0 0 24 24'
+                  fill='none'
+                  xmlns='http://www.w3.org/2000/svg'
+                >
+                  <rect y='6' width='24' height='2' fill='white'></rect>
+                  <rect y='11' width='24' height='2' fill='white'></rect>
+                  <rect y='16' width='24' height='2' fill='white'></rect>
+                </svg>
+              </button>
+              {isMobileNavOpen ? (
+                <>
+                  <MobileNav onClick={handleMobileNavClick} />
+                </>
+              ) : (
+                <></>
+              )}
+            </div>
           </div>
         </div>
       </div>

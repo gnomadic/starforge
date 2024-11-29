@@ -1,12 +1,11 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Button } from "../ui/button";
-import { UseData } from "./UseData";
+import { Button } from "@/components/ui/button";
+import { UseData } from "@/hooks/UseData";
 import { Belt, Item, ItemType, Station, StationModifier } from "@/domain/types";
-import { StationCard } from "../StationCard";
-import { ItemCard } from "../ItemCard";
-import { ControlTabs } from "../ControlTabs";
+import { ItemCard } from "@/components/ItemCard";
+import { ControlTabs } from "@/components/ControlTabs";
 
 const belt: Belt = {
   segments: [400, 400, 300, 325, 225, 250, 150, 175, 75],

@@ -1,15 +1,18 @@
-import Adventure from "@/components/three/Adventure";
+
+import React from 'react';
+
+import Adventure from "@/components/Adventure";
 
 
 
 export default function Play() {
-      
+
     return (
         <section>
 
-            
 
-            <Adventure/>
+
+            <Adventure />
         </section>
     );
 }

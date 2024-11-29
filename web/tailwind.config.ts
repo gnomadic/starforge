@@ -1,14 +1,23 @@
-import type { Config } from "tailwindcss";
+import type { Config } from 'tailwindcss';
 
-export default {
-    darkMode: ["class"],
+const config: Config = {
+    darkMode: ['class'],
     content: [
-    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+    './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/components/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
   	extend: {
+  		backgroundImage: {
+  			'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+  			'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))'
+  		},
+  		borderRadius: {
+  			lg: 'var(--radius)',
+  			md: 'calc(var(--radius) - 2px)',
+  			sm: 'calc(var(--radius) - 4px)'
+  		},
   		colors: {
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
@@ -50,13 +59,28 @@ export default {
   				'4': 'hsl(var(--chart-4))',
   				'5': 'hsl(var(--chart-5))'
   			}
-  		},
-  		borderRadius: {
-  			lg: 'var(--radius)',
-  			md: 'calc(var(--radius) - 2px)',
-  			sm: 'calc(var(--radius) - 4px)'
   		}
+  	},
+  	colors: {
+  		tavernGreen: '#14E943',
+  		lightgrey: '#858080',
+  		darkgrey: '#1B1B1D',
+  		white: '#FFFFFF',
+  		black: '#000000',
+  		red: '#E94714',
+  		unselected: '#858080',
+  		selected: '#E3A9FF',
+  		subtext: '#CECECE',
+  		tavernOrange: '#FF7347'
+  	},
+  	fontFamily: {
+  		roboto: ['Roboto Condensed', 'sans-serif'],
+  		anon: ['Anonymous Pro', 'monospace'],
+  		signika: ['var(--font-signika)'],
+  		outfit: ['var(--font-outfit)'],
+		nunito: ['var(--font-nunito)']
   	}
   },
   plugins: [require("tailwindcss-animate")],
-} satisfies Config;
+};
+export default config;

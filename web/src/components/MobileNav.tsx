@@ -1,10 +1,10 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import logo from '../images/logo-unopt.svg';
-// import { ConnectButton } from '@rainbow-me/rainbowkit';
+import { ConnectButton } from '@rainbow-me/rainbowkit';
+import { ArrowUpRightIcon } from '@heroicons/react/20/solid';
+import { NavItems } from '../domain/Nav';
 import { Fragment } from 'react';
-import { MoveUpRight } from 'lucide-react';
-import { NavItems } from '@/domain/Nav';
 
 type MobileNavProps = {
   onClick: () => void;
@@ -19,8 +19,11 @@ export default function MobileNav(props: MobileNavProps) {
       ></div>
       <nav className='relative flex flex-col w-full h-full px-10 py-8 overflow-y-auto border-r bg-slate-900'>
         <Link href='/' onClick={props.onClick}>
-          <div className='text-3xl text-white font-outfit'>
-            Adventure Alchemist
+          <div className='text-xl text-white font-nunito text-center'>
+            Adventure
+          </div>
+          <div className='text-3xl text-white font-nunito text-center'>
+            Alchemist
           </div>
         </Link>
         <ul className='gap-8 pt-12 tracking-wider b-32 font-anon text-lightgrey'>
@@ -58,7 +61,7 @@ export default function MobileNav(props: MobileNavProps) {
             </a>
           </li> */}
 
-          <li className=''>
+          {/* <li className=''>
             <a
               target="_blank"
               rel="noopener noreferrer"
@@ -66,14 +69,13 @@ export default function MobileNav(props: MobileNavProps) {
             >
               <div className="relative text-lightgrey">
                 docs
-                <MoveUpRight />
-                {/* <ArrowUpRightIcon
+                <ArrowUpRightIcon
                   className="w-4 h-4 mb-1 -ml-1"
                   style={{ display: "inline" }}
-                /> */}
+                />
               </div>
             </a>
-          </li>
+          </li> */}
         </ul>
       </nav>
     </div>
