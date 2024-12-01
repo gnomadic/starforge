@@ -43,6 +43,7 @@
     "swr": "^2.2.5",
     "tailwind-merge": "^2.5.5",
     "tailwindcss-animate": "^1.0.7",
+    "ts-pattern": "^5.5.0",
     "viem": "^2.9.9",
     "wagmi": "^2.5.18"
   },
