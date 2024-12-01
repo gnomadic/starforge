@@ -1,23 +1,26 @@
 import Image from 'next/image';
 // import useNFTImage from '@/hooks/useNFTImage';
-import placeholder from "../images/cardback.png";
+import placeholder from "@/images/cardback.png";
 import { useReadLabGenerateSvg, useWriteLabMint } from '@/generated';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { useAccount, useWaitForTransactionReceipt } from 'wagmi';
-import { Deployment } from '@/domain/types';
+// import { Deployment } from '@/domain/types';
 import { Button } from './ui/button';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
+import useDeployment from '@/hooks/useDeployment';
 
 
 type MintLabProps = {
-    deployment: Deployment;
+    // deployment: Deployment;
 
 }
 
 export default function MintLab(props: MintLabProps) {
 
     const { address } = useAccount();
+        const { deploy } = useDeployment();
+
 
     const { data: image, isLoading: loadingImage } = useReadLabGenerateSvg({ address: props.deployment.lab, args: [BigInt(0)] });
     const [preview, setPreview] = useState<string>("");
