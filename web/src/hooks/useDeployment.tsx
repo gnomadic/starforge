@@ -1,6 +1,6 @@
 'use client';
-import { Deployments } from '../domain/deployments';
 import { Deployment } from '@/domain/types';
+import { Deployments } from '@/domain/deployments';
 import { useEffect, useState } from 'react';
 import { useAccount } from 'wagmi';
 
