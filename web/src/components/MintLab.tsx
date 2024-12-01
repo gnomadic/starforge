@@ -1,3 +1,5 @@
+"use client";
+
 import Image from 'next/image';
 // import useNFTImage from '@/hooks/useNFTImage';
 import placeholder from "@/images/cardback.png";
@@ -22,7 +24,7 @@ export default function MintLab(props: MintLabProps) {
         const { deploy } = useDeployment();
 
 
-    const { data: image, isLoading: loadingImage } = useReadLabGenerateSvg({ address: props.deployment.lab, args: [BigInt(0)] });
+    const { data: image, isLoading: loadingImage } = useReadLabGenerateSvg({ address: deploy.lab, args: [BigInt(0)] });
     const [preview, setPreview] = useState<string>("");
 
 
@@ -77,7 +79,7 @@ export default function MintLab(props: MintLabProps) {
 
                 {address ?
                     <Button className='mx-auto'
-                        onClick={() => writeContract({ address: props.deployment.lab, args: [address] })}>
+                        onClick={() => writeContract({ address: deploy.lab, args: [address] })}>
                         mint
                     </Button>
                     :
