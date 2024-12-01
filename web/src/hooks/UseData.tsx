@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 
 
 
-export function UseData(
+export function useData(
     date: number,
     belt: Belt,
     stations: Station[],

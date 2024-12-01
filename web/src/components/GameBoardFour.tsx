@@ -2,10 +2,10 @@
 
 import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { UseData } from "@/hooks/UseData";
-import { Belt, Item, ItemType, Station, StationModifier } from "@/domain/types";
 import { ItemCard } from "@/components/ItemCard";
 import { ControlTabs } from "@/components/ControlTabs";
+import { useData } from "@/hooks/useData";
+import { Belt, Item, ItemType, Station, StationModifier } from "@/domain/types";
 
 const belt: Belt = {
   segments: [400, 400, 300, 325, 225, 250, 150, 175, 75],
@@ -41,7 +41,7 @@ const GameBoardFour: React.FC = () => {
   const [selectedItem, setSelectedItem] = useState<Item>(starterPotion);
 
   const [time, setTime] = useState(Date.now());
-  const { state } = UseData(time, belt, stations, selectedItem);
+  const { state } = useData(time, belt, stations, selectedItem);
 
 
   useEffect(() => {

@@ -8,7 +8,7 @@ import { toast } from 'react-toastify';
 import { useAccount, useWaitForTransactionReceipt } from 'wagmi';
 import { Button } from './ui/button';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
-import useDeployment from '@/hooks/useDeployment';
+import { useDeployment } from '@/hooks/useDeployment';
 
 
 type MintLabProps = {
@@ -19,7 +19,7 @@ type MintLabProps = {
 export default function MintLab(props: MintLabProps) {
 
     const { address } = useAccount();
-        const { deploy } = useDeployment();
+    const { deploy } = useDeployment();
 
 
     const { data: image, isLoading: loadingImage } = useReadLabGenerateSvg({ address: deploy.lab, args: [BigInt(0)] });
@@ -81,7 +81,7 @@ export default function MintLab(props: MintLabProps) {
                         mint
                     </Button>
                     :
-                    <div className='mx-auto'><ConnectButton/></div>
+                    <div className='mx-auto'><ConnectButton /></div>
                 }
 
 
