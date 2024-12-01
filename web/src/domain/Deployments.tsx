@@ -1,6 +1,6 @@
-import { Address, http } from 'viem';
+import { http } from 'viem';
 
-import { baseSepolia, localhost, sepolia } from 'viem/chains';
+import { baseSepolia, localhost } from 'viem/chains';
 import { Deployment } from './types';
 
 
