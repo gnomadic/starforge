@@ -1,25 +1,9 @@
 'use client';
 
-import { ConnectButton } from '@rainbow-me/rainbowkit';
 import Link from 'next/link';
-import { Fragment, useEffect, useState } from 'react';
-import MobileNav from './MobileNav';
-import { ArrowUpRightIcon } from '@heroicons/react/20/solid';
-import { NavItems } from '../domain/Nav';
-import useDeployment from '../hooks/useDeployment';
-import { usePathname } from 'next/navigation'
-import Image from 'next/image';
-import logo from '../images/logo-unopt.svg';
 
 export default function Footer() {
-  const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
-  const { deploy } = useDeployment();
-  const pathname = usePathname();
-
-  const handleMobileNavClick = () => {
-    setIsMobileNavOpen(!isMobileNavOpen);
-  };
-
+ 
   return (
     <header className='w-full pt-48 pb-12 mt-8 font-signika'>
       <div className='flex px-6 lg:px-16 min-h-[18] items-center flex-shrink-0 flex-col justify-center'>
