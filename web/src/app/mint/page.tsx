@@ -1,8 +1,9 @@
 'use client';
 // import Divider from '@/components/Divider';
 import React from 'react';
-import MintLab from '@/components/MintLab';
-import useDeployment from '@/hooks/useDeployment';
+// import MintLab from '@/components/MintLab';
+import MintLab from '../../components/MintLab';
+import useDeployment from '../../hooks/useDeployment';
 
 export default function Home() {
     const { deploy } = useDeployment();
