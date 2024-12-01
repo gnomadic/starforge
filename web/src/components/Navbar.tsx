@@ -2,18 +2,14 @@
 
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import Link from 'next/link';
-import { Fragment, useEffect, useState } from 'react';
+import { useState } from 'react';
 import MobileNav from './MobileNav';
-import { ArrowUpRightIcon } from '@heroicons/react/20/solid';
-import { NavItems } from '../domain/Nav';
-import useDeployment from '../hooks/useDeployment';
+import { NavItems } from '@/domain/Nav';
 import { usePathname } from 'next/navigation'
-import Image from 'next/image';
-import logo from '../images/logo-unopt.svg';
+
 
 export default function Navbar() {
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
-  const { deploy } = useDeployment();
   const pathname = usePathname();
 
   const handleMobileNavClick = () => {
