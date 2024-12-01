@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Outfit, Signika } from 'next/font/google';
+import { Outfit, PT_Serif, Signika, Ultra } from 'next/font/google';
 import { Nunito, PT_Sans } from 'next/font/google';
 import './globals.css';
 
@@ -38,12 +38,26 @@ const nunito = Nunito({
   subsets: ['latin'], weight: "400", variable: '--font-nunito',
 });
 
+const ptsans = PT_Sans({
+  subsets: ['latin'], weight: "400", variable: '--font-ptsans',
+});
+
+const ultra = Ultra({
+  subsets: ['latin'], weight: "400", variable: '--font-ultra',
+});
+
+const ptser = PT_Serif({
+  subsets: ['latin'], weight: "400", variable: '--font-ptserif',
+});
+
+
+
 export const metadata: Metadata = {
-  title: 'Tavern',
-  description: 'Build community by gaming and hanging out',
+  title: 'Adventure Alchemist',
+  description: 'Craft. Enchant. Conquer.',
   openGraph: {
-    title: 'Tavern',
-    description: 'Build community by gaming and hanging out',
+    title: 'Adventure Alchemis',
+    description: 'Craft. Enchant. Conquer.',
   },
 };
 
@@ -56,7 +70,7 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <Head>
-        <title>TAVERN</title>
+        <title>Adventure Alchemist</title>
       </Head>
 
       {/* <Header/> */}
@@ -69,7 +83,7 @@ export default function RootLayout({
       </Head> */}
       {/* <div className="flex flex-col min-h-screen"> */}
 
-      <body className={`${signika.variable} ${outfit.variable} ${nunito.variable} font-sans bg-black text-white`}>
+      <body className={`${signika.variable} ${outfit.variable} ${nunito.variable} ${ptsans.variable} ${ultra.variable} ${ptser.variable} font-sans bg-black text-white`}>
         <Providers>
           {/* <Header /> */}
           <Navbar />

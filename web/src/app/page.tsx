@@ -8,7 +8,7 @@ import PVE from '@/images/homepage/PVE.png'
 export default function Home() {
 
   return (
-    <main className='items-center py-12 md:py-24 font-outfit'>
+    <main className='items-center py-12 md:py-24 font-ptser'>
       <section className='min-w-full pt-12 '>
         <Image
           className='mx-auto'
@@ -18,11 +18,10 @@ export default function Home() {
           height={300}
         />
         <div className='mx-auto text-3xl text-center text-white'>
-          Discover the magic <br /> within
+        Craft. <br /> Enchant.  <br /> Conquer.
         </div>
         <div className='pt-4 mx-auto text-xl text-center text-lightgrey'>
-          An onchain idle game <br />
-          leveraging web3 primitives
+        An onchain idle game 
         </div>
         <div className='mx-auto text-center'>
           <Link
@@ -46,18 +45,19 @@ export default function Home() {
         </div>
         <div className='mx-auto'>
           <div className='text-3xl '>
-            Super easy to get started. <br /> Seriously, no code.
+          Start Your Journey.
           </div>
           <div className='text-xl text-lightgrey'>
-            All it takes is submitting transactions. <br />  Choose your gameplay, customize it, and launch it.
+            Choose your lab, customize it, and launch it. <br /> Play to unlock new customizations and upgrades.
           </div>
         </div>
         <div className='mx-auto'>
           <div className='text-3xl '>
-            We believe in the power of play. <br />
+            Support your local adventurers <br />
           </div>
           <div className='text-xl text-lightgrey'>
-            Communities are stronger when they play together.
+            The potions and items you create can be sold for gold, <br />
+            which can be used to buy more items and upgrades
           </div>
         </div>
         <div className='mx-auto' >
@@ -82,7 +82,7 @@ export default function Home() {
           </div>
           <div className='text-xl text-lightgrey'>
             Data, gameplay, and rules are all stored onchain. <br />
-            This means your game is transparent, secure, and unstoppable. <br />
+            This means your Lab is transparent, secure, and unstoppable. <br />
             And it means you don&apos;t have to worry about a server.
           </div>
         </div>
@@ -90,19 +90,19 @@ export default function Home() {
       <section className='min-w-full pt-12 md:pt-48 '>
 
         <div className='mx-auto text-3xl text-center text-white'>
-          Want a custom solution?
+          Want to play?
         </div>
         <div className='pt-4 mx-auto text-xl text-center text-lightgrey'>
-          We help developers and NFT collections build custom games  <br />
-          that are white labeled with our protocol
+          We&apos;re just getting started  <br />
+          and you can join us to shape the game
         </div>
         <div className='mx-auto text-center'>
           <Link
-            href='/intro'>
+            href='/mint'>
             <button
               className='px-4 py-2 mx-auto mt-8 text-black rounded-lg bg-tavernOrange'
             >
-              Contact Us
+              Mint now
             </button>
           </Link>
         </div>

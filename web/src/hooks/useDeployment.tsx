@@ -1,8 +1,8 @@
 'use client';
 import { useEffect, useState } from 'react';
 import { useAccount } from 'wagmi';
-import { Deployment } from '../domain/Domain';
 import { Deployments } from '../domain/deployments';
+import { Deployment } from '@/domain/types';
 
 const useDeployment = () => {
   const { chain } = useAccount();
@@ -14,7 +14,7 @@ const useDeployment = () => {
     chain?.name && Deployments.hasOwnProperty(chainName)
       ? setDeploy(Deployments[chainName])
       : setDeploy(Deployments['basesep']);
-  }, [chain, deploy?.gameFactory]);
+  }, [chain, deploy?.lab]);
 
   // console.log("returning deployment: ", deploy.chain)
   return { deploy };

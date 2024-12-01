@@ -6,7 +6,7 @@ const { wallets } = getDefaultWallets();
 
 
 export const config = getDefaultConfig({
-    appName: 'TAVERN PROTOCOL',
+    appName: 'ADVENTURE ALCHEMIST',
     projectId: 'YOUR_PROJECT_ID',
     wallets: [
       ...wallets,

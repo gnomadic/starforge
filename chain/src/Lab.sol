@@ -33,7 +33,7 @@ contract Lab is ERC721AQueryable, Renderable721, Ownable {
     function _mint(address to) internal {
         uint256 tokenId = nextTokenId;
         nextTokenId++;
-        _safeMint(to, tokenId);
+        _safeMint(to, 1);
 
         for (uint i = 0; i < systems.length; i++) {
             System(systems[i]).init(tokenId);

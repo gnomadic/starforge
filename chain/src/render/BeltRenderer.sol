@@ -25,7 +25,7 @@ contract BeltRenderer is IStepRenderer {
         string memory bg = "";
         bg = string.concat(
             bg,
-            '<path stroke-width="40" d="M 80 50 v 400 h 400 v -300 h -325 v 225 h 250 v -150 h -175 v 75" fill="none"',
+            '<path stroke-width="40" d="M 80 50 v 400 h 400 v -300 h -325 v 225 h 250 v -150 h -175 v 75" fill="none" ',
             'stroke-linecap="round" stroke="#565656" />'
         );
         return bg;
