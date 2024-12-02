@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { ItemCard } from "@/components/ItemCard";
 import { ControlTabs } from "@/components/ControlTabs";
-import { useData } from "@/hooks/useData";
+// import { useData } from "@/hooks/useData";
 import { Belt, Item, ItemType, Station, StationModifier } from "@/domain/types";
 
 const belt: Belt = {
@@ -41,7 +41,7 @@ const GameBoardFour: React.FC = () => {
   const [selectedItem, setSelectedItem] = useState<Item>(starterPotion);
 
   const [time, setTime] = useState(Date.now());
-  const { state } = useData(time, belt, stations, selectedItem);
+  // const { state } = useData(time, belt, stations, selectedItem);
 
 
   useEffect(() => {
@@ -94,7 +94,7 @@ const GameBoardFour: React.FC = () => {
         fill="none" stroke-linecap="round" marker-start="url(#arrow)" marker-end="url(#arrow)" marker-mid="url(#arrow)"
         stroke="#eee" /> */}
 
-      {state.items.map((item) => {
+      {/* {state.items.map((item) => {
         return (
           <circle
             key={item.id}
@@ -106,7 +106,7 @@ const GameBoardFour: React.FC = () => {
             strokeWidth="2"
           />
         );
-      })}
+      })} */}
 
       {belt.stationSlots.map((station, index) => {
         return (
@@ -120,7 +120,7 @@ const GameBoardFour: React.FC = () => {
               opacity={0.1}
             />
 
-            {(state.stations[index] !== undefined) ? (
+            {/* {(state.stations[index] !== undefined) ? (
               <rect
                 x={station.x - 15}
                 y={station.y - 15}
@@ -130,7 +130,7 @@ const GameBoardFour: React.FC = () => {
               />
 
 
-            ) : (<></>)}
+            ) : (<></>)} */}
           </g>
         );
 
@@ -143,7 +143,7 @@ const GameBoardFour: React.FC = () => {
     <section className="p-12">
       <div className="grid grid-cols-1 md:grid-cols-2">
         <div>{renderSvg()}</div>
-        <ControlTabs state={state} setStation={setStation} />
+        {/* <ControlTabs state={state} setStation={setStation} /> */}
 
       </div>
       {/* <div className="grid grid-cols-3">
@@ -180,8 +180,9 @@ const GameBoardFour: React.FC = () => {
         })}>Add Scroll</Button>
       </div>
       <div>
+      {/* 
         <p>Gold: {state.gold}</p>
-        <p>Pending Gold: {state.pendingGold}</p>
+        <p>Pending Gold: {state.pendingGold}</p> */}
       </div>
       <div>
         {/* <Button onClick={() => setStation(0, StationModifier.Fire)}>Station One</Button> */}
@@ -189,13 +190,13 @@ const GameBoardFour: React.FC = () => {
 
 
 
-      <div className="grid grid-cols-1">
+      {/* <div className="grid grid-cols-1">
         {state.items?.map((item, index) => {
           return (
             <ItemCard key={item.id} item={item} onStationClick={() => { }} />
           );
         })}
-      </div>
+      </div> */}
     </section>
   );
 };
