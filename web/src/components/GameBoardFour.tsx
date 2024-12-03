@@ -69,10 +69,10 @@ const GameBoardFour: React.FC = () => {
   const renderSvg = () => (
     <svg width="512" height="512" style={{ border: "1px solid black" }}>
       <defs>
-        <marker id="arrow" viewBox="0 0 60 50" refX="20" refY="10" markerUnits="userSpaceOnUse" markerWidth="40"
+        {/* <marker id="arrow" viewBox="0 0 60 50" refX="20" refY="10" markerUnits="userSpaceOnUse" markerWidth="40"
           markerHeight="40" orient="auto" fill="#32a93e">
           <path d="M0 0 10 0 20 10 10 20 0 20 10 10 0 0M16 0 26 10 16 20H26L36 10 26 0H16M32 0 42 10 32 20H42L52 10 42 0H32"></path>
-        </marker>
+        </marker> */}
         <pattern id="evenrow" x="0" y="0" width=".098" height=".078">
             <rect x="0" y="0" width="50" height="20" fill="#d39716" stroke="black" />
             <rect x="-25" y="20" width="50" height="20" fill="#d39716" stroke="black" />
@@ -89,13 +89,13 @@ const GameBoardFour: React.FC = () => {
         stroke="#565656"
       />
 
-
-      {/* <path stroke-width="40"
+{/* 
+      <path stroke-width="40"
         d="M80 50q0 50 0 100 16 50 0 100-18 51 0 100v100h100 100 100 100v-100-100-100h-115-105-105v112 113h125 125v-75-75h-87-88v75"
         fill="none" stroke-linecap="round" marker-start="url(#arrow)" marker-end="url(#arrow)" marker-mid="url(#arrow)"
-        stroke="#eee" /> */}
+        stroke="#eee" />  */}
 
-      {/* {state.items.map((item) => {
+      {state.items.map((item) => {
         return (
           <circle
             key={item.id}
@@ -107,7 +107,7 @@ const GameBoardFour: React.FC = () => {
             strokeWidth="2"
           />
         );
-      })} */}
+      })}
 
       {belt.stationSlots.map((station, index) => {
         return (
@@ -121,7 +121,7 @@ const GameBoardFour: React.FC = () => {
               opacity={0.1}
             />
 
-            {/* {(state.stations[index] !== undefined) ? (
+           {(state.stations[index] !== undefined) ? (
               <rect
                 x={station.x - 15}
                 y={station.y - 15}
@@ -131,7 +131,7 @@ const GameBoardFour: React.FC = () => {
               />
 
 
-            ) : (<></>)} */}
+            ) : (<></>)}
           </g>
         );
 
@@ -144,7 +144,7 @@ const GameBoardFour: React.FC = () => {
     <section className="p-12">
       <div className="grid grid-cols-1 md:grid-cols-2">
         <div>{renderSvg()}</div>
-        {/* <ControlTabs state={state} setStation={setStation} /> */}
+        <ControlTabs state={state} setStation={setStation} />
 
       </div>
       {/* <div className="grid grid-cols-3">
