@@ -10,6 +10,12 @@ import { Button } from '@/components/ui/button';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import useDeployment from '@/hooks/useDeployment';
 import MintPreview from './MintPreview';
+import { Box } from '../ui/box';
+import Hue from '@uiw/react-color-hue';
+import { extractFloorColor, replaceFloorPlanks } from '@/services/SVGCombiner';
+import Colorful from '@uiw/react-color-colorful';
+import { ColorResult, hslaToHsva } from '@uiw/color-convert'
+
 
 type MintLabProps = {
 }
@@ -23,6 +29,15 @@ export default function MintLab(props: MintLabProps) {
     const [preview, setPreview] = useState<string>("");
     const { data: hash, error: writeError, writeContract } = useWriteLabMint();
     const { isLoading, isSuccess, data } = useWaitForTransactionReceipt({ hash })
+
+    function floorChange(newHue: ColorResult) {
+
+        let newSVG = replaceFloorPlanks(preview, newHue.hsl.h, newHue.hsl.s, newHue.hsl.l);
+
+        setPreview(window.btoa(String(newSVG)));
+
+
+    }
 
     useEffect(() => {
         if (writeError) {
@@ -49,32 +64,60 @@ export default function MintLab(props: MintLabProps) {
         }
         // console.log("image: " + image);
         // console.log("wat: ", window.btoa(String(image)));
+        setHsla(extractFloorColor(image));
         setPreview(window.btoa(String(image)));
 
 
     }, [image]);
 
+    const [hsla, setHsla] = useState({ h: 0, s: 0, l: 68, a: 1 });
+    // const [hsla, setHsla] = useState(extractFloorColor(image));
+
+
     return (
-        <section id='hero' className='relative items-center'>
-            <section className="grid grid-cols-2 gap-8">
-                <MintPreview preview={preview} />
-                <section id='connect' className='relative pt-48 items-center'>
-                   Mint your lab, and start your adventure.
-                </section>
+        <section id='hero' className='relative items-center pt-12'>
+            <section className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full">
+                <Box className='mx-auto'>
+                    <MintPreview preview={preview} />
+                </Box>
+                <Box>
+                    <div> floor tiles</div>
+
+
+                    <Colorful
+                        className="mx-auto"
+                        color={hslaToHsva(hsla)}
+                        disableAlpha={true}
+                        onChange={(color) => {
+                            setHsla(color.hsla);
+                            floorChange(color);
+
+                        }}
+                    />
+
+                    {/* <Hue
+                        hue={hsla.h}
+                        onChange={(newHue) => {
+                            floorChange(newHue.h);
+                            // setHsva({ ...hsva, ...newHue });
+                        }}
+                    /> */}
+
+                </Box>
             </section>
 
 
 
 
 
-      
+
             <div className='flex pt-8'>
 
 
                 {address ?
                     <Button className='mx-auto'
                         onClick={() => writeContract({ address: deploy.lab, args: [address] })}
-                        >
+                    >
                         mint
                     </Button>
                     :

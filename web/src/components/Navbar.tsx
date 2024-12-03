@@ -60,7 +60,7 @@ export default function Navbar() {
               </div> */}
             </div>
 
-            <div className='flex items-start justify-center gap-8' >
+            <div className='flex items-start justify-center gap-8 hidden md:block'  >
               <ConnectButton
                 chainStatus='icon'
                 accountStatus='avatar'

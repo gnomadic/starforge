@@ -5,7 +5,7 @@ import React from 'react';
 export default function Home() {
 
     return (
-        <main className='font-anon flex flex-col items-center justify-between p-24'>
+        <main className='font-anon '>
 
             <MintLab />
 

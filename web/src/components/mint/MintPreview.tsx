@@ -15,31 +15,23 @@ type MintPreviewProps = {
     preview: string;
 }
 
-export default function MintPreview({ preview } :  MintPreviewProps) {
+export default function MintPreview({ preview }: MintPreviewProps) {
 
-  
+
 
     return (
-        <Card>
-            <CardHeader>
-                hi 
-                </CardHeader>
-        {/* <section id='hero' className='relative items-center'> */}
-            <CardContent>
-            <Image
-                alt="minting"
-                src={
-                     preview == ""
-                        ? placeholder
-                        : "data:image/svg+xml;base64," + preview!
-                }
-                className="mx-auto rounded-lg shadow-2xl"
-                width={512}
-                height={512}
-            />
-            </CardContent>
-      
-        {/* </section> */}
-        </Card>
+
+        <Image
+            alt="minting"
+            src={
+                preview == ""
+                    ? placeholder
+                    : "data:image/svg+xml;base64," + preview!
+            }
+            className="mx-auto rounded-lg shadow-2xl"
+            width={512}
+            height={512}
+        />
+
     );
 }
