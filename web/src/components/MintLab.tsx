@@ -1,45 +1,50 @@
+"use client";
+
 import Image from 'next/image';
-// import useNFTImage from '@/hooks/useNFTImage';
-import placeholder from "../images/cardback.png";
+import placeholder from "@/images/cardback.png";
 import { useReadLabGenerateSvg, useWriteLabMint } from '@/generated';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { useAccount, useWaitForTransactionReceipt } from 'wagmi';
-import { Deployment } from '@/domain/types';
 import { Button } from './ui/button';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
+// import { useDeployment } from '@/hooks/useDeployment';
 
 
 type MintLabProps = {
-    deployment: Deployment;
+    // deployment: Deployment;
 
 }
 
 export default function MintLab(props: MintLabProps) {
 
     const { address } = useAccount();
+    // const { deploy } = useDeployment();
 
-    const { data: image, isLoading: loadingImage } = useReadLabGenerateSvg({ address: props.deployment.lab, args: [BigInt(0)] });
+
+    // const { data: image, isLoading: loadingImage } = useReadLabGenerateSvg({ address: deploy.lab, args: [BigInt(0)] });
     const [preview, setPreview] = useState<string>("");
+    const [loadingImage, setIsLoading] = useState<boolean>(true);
+    const [image, setImage] = useState<string | undefined>(undefined);
 
 
-    const { data: hash, error: writeError, writeContract } = useWriteLabMint();
-    const { isLoading, isSuccess, data } = useWaitForTransactionReceipt({ hash })
+    // const { data: hash, error: writeError, writeContract } = useWriteLabMint();
+    // const { isLoading, isSuccess, data } = useWaitForTransactionReceipt({ hash })
 
-    useEffect(() => {
-        if (writeError) {
-            toast.error(writeError.message);
-        }
+    // useEffect(() => {
+    //     if (writeError) {
+    //         toast.error(writeError.message);
+    //     }
 
-        if (isLoading) {
-            toast.info("Transaction is pending");
+    //     if (isLoading) {
+    //         toast.info("Transaction is pending");
 
-        }
-        if (isSuccess) {
-            toast.success("Transaction is successful");
-        }
+    //     }
+    //     if (isSuccess) {
+    //         toast.success("Transaction is successful");
+    //     }
 
-    }, [writeError, isLoading, isSuccess]);
+    // }, [writeError, isLoading, isSuccess]);
 
 
 
@@ -74,11 +79,12 @@ export default function MintLab(props: MintLabProps) {
 
                 {address ?
                     <Button className='mx-auto'
-                        onClick={() => writeContract({ address: props.deployment.lab, args: [address] })}>
+                        // onClick={() => writeContract({ address: deploy.lab, args: [address] })}
+                        >
                         mint
                     </Button>
                     :
-                    <div className='mx-auto'><ConnectButton/></div>
+                    <div className='mx-auto'><ConnectButton /></div>
                 }
 
 

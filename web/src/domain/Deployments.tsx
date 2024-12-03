@@ -1,7 +1,7 @@
 import { http } from 'viem';
 
 import { baseSepolia, localhost } from 'viem/chains';
-import { Deployment } from './types';
+import { Deployment } from '@/domain/types';
 
 
 
