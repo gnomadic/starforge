@@ -69,9 +69,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='en'>
-      <Head>
+      {/* <Head>
         <title>Adventure Alchemist</title>
-      </Head>
+      </Head> */}
 
       {/* <Header/> */}
       {/* <NavigationHeader /> */}

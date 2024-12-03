@@ -1,6 +1,6 @@
 
+import MintLab from '@/components/mint/MintLab';
 import React from 'react';
-import MintLab from '../../components/MintLab';
 
 export default function Home() {
 

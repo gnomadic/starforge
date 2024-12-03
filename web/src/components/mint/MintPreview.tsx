@@ -6,29 +6,21 @@ import { useReadLabGenerateSvg, useWriteLabMint } from '@/generated';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { useAccount, useWaitForTransactionReceipt } from 'wagmi';
-import { Button } from './ui/button';
+import { Button } from '@/components/ui/button';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import useDeployment from '@/hooks/useDeployment';
-// import { useDeployment } from '@/hooks/useDeployment';
 
-
-type MintLabProps = {
-    // deployment: Deployment;
+type MintPreviewProps = {
 
 }
 
-export default function MintLab(props: MintLabProps) {
+export default function MintPreview(props: MintPreviewProps) {
 
     const { address } = useAccount();
     const { deploy } = useDeployment();
 
-
     const { data: image, isLoading: loadingImage } = useReadLabGenerateSvg({ address: deploy.lab, args: [BigInt(0)] });
     const [preview, setPreview] = useState<string>("");
-    // const [loadingImage, setIsLoading] = useState<boolean>(true);
-    // const [image, setImage] = useState<string | undefined>(undefined);
-
-
     const { data: hash, error: writeError, writeContract } = useWriteLabMint();
     const { isLoading, isSuccess, data } = useWaitForTransactionReceipt({ hash })
 

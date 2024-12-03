@@ -4,9 +4,16 @@ import Link from 'next/link';
 import EXPLORE from '@/images/homepage/EXPLORE.png'
 import PLAY from '@/images/homepage/PLAY.png'
 import PVE from '@/images/homepage/PVE.png'
+import type { Metadata } from 'next'
+
+
+
+export const metadata: Metadata = {
+  title: 'Adventure Alchemist',
+}
+
 
 export default function Home() {
-
   return (
     <main className='items-center py-12 md:py-24 font-ptser'>
       <section className='min-w-full pt-12 '>
