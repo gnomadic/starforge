@@ -9,57 +9,27 @@ import { useAccount, useWaitForTransactionReceipt } from 'wagmi';
 import { Button } from '@/components/ui/button';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import useDeployment from '@/hooks/useDeployment';
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
 
 type MintPreviewProps = {
-
+    preview: string;
 }
 
-export default function MintPreview(props: MintPreviewProps) {
+export default function MintPreview({ preview } :  MintPreviewProps) {
 
-    const { address } = useAccount();
-    const { deploy } = useDeployment();
-
-    const { data: image, isLoading: loadingImage } = useReadLabGenerateSvg({ address: deploy.lab, args: [BigInt(0)] });
-    const [preview, setPreview] = useState<string>("");
-    const { data: hash, error: writeError, writeContract } = useWriteLabMint();
-    const { isLoading, isSuccess, data } = useWaitForTransactionReceipt({ hash })
-
-    useEffect(() => {
-        if (writeError) {
-            toast.error(writeError.message);
-        }
-
-        if (isLoading) {
-            toast.info("Transaction is pending");
-
-        }
-        if (isSuccess) {
-            toast.success("Transaction is successful");
-        }
-
-    }, [writeError, isLoading, isSuccess]);
-
-
-
-
-
-    useEffect(() => {
-        if (image == undefined) {
-            return;
-        }
-        // console.log("image: " + image);
-        // console.log("wat: ", window.btoa(String(image)));
-        setPreview(window.btoa(String(image)));
-
-
-    }, [image]);
+  
 
     return (
-        <section id='hero' className='relative items-center'>
+        <Card>
+            <CardHeader>
+                hi 
+                </CardHeader>
+        {/* <section id='hero' className='relative items-center'> */}
+            <CardContent>
             <Image
                 alt="minting"
                 src={
-                    loadingImage || preview == ""
+                     preview == ""
                         ? placeholder
                         : "data:image/svg+xml;base64," + preview!
                 }
@@ -67,22 +37,9 @@ export default function MintPreview(props: MintPreviewProps) {
                 width={512}
                 height={512}
             />
-            <div className='flex pt-8'>
-
-
-                {address ?
-                    <Button className='mx-auto'
-                        onClick={() => writeContract({ address: deploy.lab, args: [address] })}
-                        >
-                        mint
-                    </Button>
-                    :
-                    <div className='mx-auto'><ConnectButton /></div>
-                }
-
-
-
-            </div>
-        </section>
+            </CardContent>
+      
+        {/* </section> */}
+        </Card>
     );
 }

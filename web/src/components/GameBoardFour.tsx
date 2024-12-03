@@ -6,6 +6,7 @@ import { ItemCard } from "@/components/ItemCard";
 import { ControlTabs } from "@/components/ControlTabs";
 // import { useData } from "@/hooks/useData";
 import { Belt, Item, ItemType, Station, StationModifier } from "@/domain/types";
+import { useData } from "@/hooks/UseData";
 
 const belt: Belt = {
   segments: [400, 400, 300, 325, 225, 250, 150, 175, 75],
@@ -41,7 +42,7 @@ const GameBoardFour: React.FC = () => {
   const [selectedItem, setSelectedItem] = useState<Item>(starterPotion);
 
   const [time, setTime] = useState(Date.now());
-  // const { state } = useData(time, belt, stations, selectedItem);
+  const { state } = useData(time, belt, stations, selectedItem);
 
 
   useEffect(() => {

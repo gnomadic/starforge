@@ -9,9 +9,9 @@ import { useAccount, useWaitForTransactionReceipt } from 'wagmi';
 import { Button } from '@/components/ui/button';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import useDeployment from '@/hooks/useDeployment';
+import MintPreview from './MintPreview';
 
 type MintLabProps = {
-
 }
 
 export default function MintLab(props: MintLabProps) {
@@ -56,17 +56,18 @@ export default function MintLab(props: MintLabProps) {
 
     return (
         <section id='hero' className='relative items-center'>
-            <Image
-                alt="minting"
-                src={
-                    loadingImage || preview == ""
-                        ? placeholder
-                        : "data:image/svg+xml;base64," + preview!
-                }
-                className="mx-auto rounded-lg shadow-2xl"
-                width={512}
-                height={512}
-            />
+            <section className="grid grid-cols-2 gap-8">
+                <MintPreview preview={preview} />
+                <section id='connect' className='relative pt-48 items-center'>
+                   Mint your lab, and start your adventure.
+                </section>
+            </section>
+
+
+
+
+
+      
             <div className='flex pt-8'>
 
 
