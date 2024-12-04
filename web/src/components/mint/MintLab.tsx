@@ -12,7 +12,7 @@ import useDeployment from '@/hooks/useDeployment';
 import MintPreview from './MintPreview';
 import { Box } from '../ui/box';
 import Hue from '@uiw/react-color-hue';
-import { extractFloorColor, replaceFloorPlanks } from '@/services/SVGCombiner';
+import { extractEdgeColor, replaceNetworkEdges } from '@/services/SVGCombiner';
 import Colorful from '@uiw/react-color-colorful';
 import { ColorResult, hslaToHsva } from '@uiw/color-convert'
 
@@ -30,13 +30,9 @@ export default function MintLab(props: MintLabProps) {
     const { data: hash, error: writeError, writeContract } = useWriteLabMint();
     const { isLoading, isSuccess, data } = useWaitForTransactionReceipt({ hash })
 
-    function floorChange(newHue: ColorResult) {
-
-        let newSVG = replaceFloorPlanks(preview, newHue.hsl.h, newHue.hsl.s, newHue.hsl.l);
-
+    function edgeChange(newHue: number) {
+        let newSVG = replaceNetworkEdges(preview, newHue);
         setPreview(window.btoa(String(newSVG)));
-
-
     }
 
     useEffect(() => {
@@ -64,14 +60,13 @@ export default function MintLab(props: MintLabProps) {
         }
         // console.log("image: " + image);
         // console.log("wat: ", window.btoa(String(image)));
-        setHsla(extractFloorColor(image));
+        setEdgeColor(extractEdgeColor(image));
         setPreview(window.btoa(String(image)));
 
 
     }, [image]);
 
-    const [hsla, setHsla] = useState({ h: 0, s: 0, l: 68, a: 1 });
-    // const [hsla, setHsla] = useState(extractFloorColor(image));
+    const [edgeColor, setEdgeColor] = useState({ h: 0, s: 0, l: 68, a: 1 });
 
 
     return (
@@ -81,27 +76,28 @@ export default function MintLab(props: MintLabProps) {
                     <MintPreview preview={preview} />
                 </Box>
                 <Box>
-                    <div> floor tiles</div>
+                    <div> Network Edges</div>
 
 
-                    <Colorful
+                    {/* <Colorful
                         className="mx-auto"
                         color={hslaToHsva(hsla)}
                         disableAlpha={true}
                         onChange={(color) => {
                             setHsla(color.hsla);
-                            floorChange(color);
+                            edgeChange(color);
 
-                        }}
-                    />
-
-                    {/* <Hue
-                        hue={hsla.h}
-                        onChange={(newHue) => {
-                            floorChange(newHue.h);
-                            // setHsva({ ...hsva, ...newHue });
                         }}
                     /> */}
+
+                    <Hue
+                        hue={edgeColor.h}
+                        onChange={(newHue) => {
+                            setEdgeColor({ ...edgeColor, h: newHue.h });
+                            edgeChange(newHue.h);
+                            // setHsva({ ...hsva, ...newHue });
+                        }}
+                    />
 
                 </Box>
             </section>

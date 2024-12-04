@@ -1,4 +1,5 @@
 import { DOMParser, XMLSerializer } from "@xmldom/xmldom";
+import { parse } from "path";
 
 export function replaceTag(svg: string, newGroup: string, tag: string) {
   const parsed = extractSVG(svg);
@@ -22,14 +23,14 @@ export function extractSVG(image: string) {
   return window.atob(String(image).split("base64,").pop()!);
 }
 
-export function replaceFloorPlanks(svg: string, H: number, S: number, L: number) {
+export function replaceNetworkEdges(svg: string, newHue: number) {
   const parsed = extractSVG(svg);
   const doc = new DOMParser().parseFromString(parsed, "text/xml");
 
-  const planks = doc.getElementById("floorplank");
+  const planks = doc.getElementById("edges");
 
   if (planks) {
-    planks.setAttribute('fill', `hsl(${H},${S}%,${L}%)`);
+    planks.setAttribute('stroke', `hsl(${newHue},100%,50%)`);
   }
 
   let ok = new XMLSerializer().serializeToString(doc);
@@ -37,16 +38,20 @@ export function replaceFloorPlanks(svg: string, H: number, S: number, L: number)
   return ok;
 }
 
-export function extractFloorColor(svg: string | undefined) {
+
+
+export function extractEdgeColor(svg: string | undefined) {
 
   if (!svg) return { h: 0, s: 0, l: 0, a: 0 };
+
+
   // console.log("extracting: " + svg);
   // const parsed = extractSVG(svg);
   const doc = new DOMParser().parseFromString(svg, "text/xml");
-  const planks = doc.getElementById("floorplank");
+  const planks = doc.getElementById("edges");
   // console.log('planks: ', planks);
 
-  const fill = planks?.getAttribute('fill');
+  const fill = planks?.getAttribute('stroke');
   // console.log('fill: ', fill);
   let HSL = { h: 0, s: 0, l: 0, a: 0 };
   const hslString = fill?.substring(fill.indexOf("hsl("), fill.indexOf(")"));

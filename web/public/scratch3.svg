@@ -1,0 +1,22 @@
+<svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+    <clipPath id="box">
+        <path d="M0 0h512v512H0z" />
+    </clipPath>
+    <defs></defs><svg viewBox="0 0 512 512" clip-path="url(#box)">
+        <path fill="black" d="M0 0h512v512H0z" />
+        <g>
+            <path fill="#2f2f2f" d="M0 0h512v512H0z" />
+            <path fill="#b9b8b8" d="M12 12q-24 160 0 374 232 24 488 0 24-160 0-374-232-24-488 0" />
+            <path fill="#575757" d="M24 24Q0 184 24 374q232 24 464 0 24-160 0-350Q256 0 24 24m0 396h469l41 130H-26z" />
+        </g>
+        <g id="edges" stroke="hsl(126, 100%, 50%)">
+            <path
+                d="m88 180 38-50m-38 50 38 50m62-100 38-50m-38 50 38 50m-38-50 38 150m-38-50 38-150m-38 150 38-50m-38 50 38 50m62-200 38 50m-38-50 38 150m-38-50 38-50m-38 50 38 50m-38 50 38-150m-38 150 38-50m62-100 38 50m-38 50 38-50"
+                stroke-width="5" fill="none" stroke-linecap="round" />
+        </g>
+        <g id="stations" stroke="hsl(126, 100%, 50%)" stroke-dasharray=" 0 5 0" >
+            <path
+                d="M32 156h48v48H32zm100-50h48v48h-48zm0 100h48v48h-48zM232 56h48v48h-48zm0 100h48v48h-48zm0 100h48v48h-48zm100-150h48v48h-48zm0 100h48v48h-48zm100-50h48v48h-48z" />
+        </g>
+    </svg>
+</svg>

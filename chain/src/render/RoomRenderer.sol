@@ -12,14 +12,15 @@ contract RoomRenderer is IStepRenderer {
     function generateDefs(
         uint256 tokenId
     ) external view returns (string memory) {
-        return
-            string.concat(
-                '<pattern id="floorplank" x="0" y="0" width=".098" height=".078">',
-                '<rect x="0" y="0" width="50" height="20" fill="#b37a01" stroke="black" />',
-                '<rect x="-25" y="20" width="50" height="20" fill="#b37a01" stroke="black" />',
-                '<rect x="25" y="20" width="50" height="20" fill="#b37a01" stroke="black" />',
-                "</pattern>"
-            );
+        return "";
+        // return
+        //     string.concat(
+        //         '<pattern id="floorplank" x="0" y="0" width=".098" height=".078" fill="hsl(171, 32%, 32%)" stroke="black">',
+        //         '<rect x="0" y="0" width="50" height="20" />',
+        //         '<rect x="-25" y="20" width="50" height="20" />',
+        //         '<rect x="25" y="20" width="50" height="20" />',
+        //         "</pattern>"
+        //     );
     }
 
     function generateImages(
@@ -31,7 +32,10 @@ contract RoomRenderer is IStepRenderer {
         bg = string.concat(
             bg,
             "<g>",
-            '<path fill="url(#floorplank)" d="M0 0h512v512H0z"/>'
+            '<path fill="#2f2f2f" d="M0 0h512v512H0z"/>',
+            '<path fill="#b9b8b8" d="M12 12q-24 160 0 374 232 24 488 0 24-160 0-374-232-24-488 0"/>',
+            '<path fill="#575757" d="M24 24Q0 184 24 374q232 24 464 0 24-160 0-350Q256 0 24 24m0 396h469l41 130H-26z"/>',
+            // '<path fill="url(#floorplank)" d="M0 0h512v512H0z"/>'
             "</g>"
         );
 
