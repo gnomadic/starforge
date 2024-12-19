@@ -1,7 +1,7 @@
 import { Station, StationModifier } from "@/domain/types";
 import { match, P } from "ts-pattern";
-import { Card, CardContent, CardHeader } from "./ui/card";
-import { Button } from "./ui/button";
+import { Card, CardContent, CardHeader } from "../ui/card";
+import { Button } from "../ui/button";
 
 
 interface StationCardProps {
@@ -24,7 +24,7 @@ export function EmptyStations({ props }: { props: StationCardProps }) {
   return (
     <Card className="overflow-hidden">
       <CardHeader>
-        <h2 className="text-xl font-bold">Empty Station</h2>
+        <h2 className="text-xl font-bold">Founding City</h2>
       </CardHeader>
       <ButtonRow props={props} />
     </Card>
@@ -48,9 +48,9 @@ export function PresentStationCard({ props }: { props: StationCardProps }) {
 function ButtonRow({props}: {props:StationCardProps}) {
   return (
     <CardContent className="grid grid-cols-4">
-      <Button onClick={() => props.onStationClick(StationModifier.Fire)}>fire</Button>
-      <Button onClick={() => props.onStationClick(StationModifier.Water)}>water</Button>
-      <Button onClick={() => props.onStationClick(StationModifier.Earth)}>earth</Button>
+      <Button onClick={() => props.onStationClick(StationModifier.Fire)}>housing</Button>
+      <Button onClick={() => props.onStationClick(StationModifier.Water)}>greenery</Button>
+      <Button onClick={() => props.onStationClick(StationModifier.Earth)}>factories</Button>
       <Button onClick={() => props.onStationClick(StationModifier.Air)}>air</Button>
     </CardContent>
   );

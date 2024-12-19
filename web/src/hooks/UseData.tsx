@@ -77,7 +77,7 @@ export function useData(
                 // state.lastItemSpawned = now;
             }
 
-            console.log("seconds passed: " + secondspassed + " " + newItemRate);
+            // console.log("seconds passed: " + secondspassed + " " + newItemRate);
 
             // // let lastSpawn = state.lastItemSpawned
             // console.log("time since last spawn: " + (now - state.lastItemSpawned) + " " + newItemRate * 1000)
@@ -152,7 +152,7 @@ export function useData(
             }
         });
 
-        console.log("updated items: " + updatedItems.length);
+        // console.log("updated items: " + updatedItems.length);
 
         return { updatedItems, pendingGold };
     };

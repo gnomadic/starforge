@@ -56,6 +56,15 @@ export interface GameState {
   time: number;
 }
 
+export  interface CraftingSystemGameState {
+  
+    lastTick : bigint;
+    newItemRate : bigint;
+    beltDuration : bigint;
+    activeItem : bigint;
+
+}
+
 export type Deployment = {
   lab: Address;
   craftSystem: Address;

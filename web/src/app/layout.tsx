@@ -53,11 +53,11 @@ const ptser = PT_Serif({
 
 
 export const metadata: Metadata = {
-  title: 'Adventure Alchemist',
-  description: 'Craft. Enchant. Conquer.',
+  title: 'Untitled Planet Game',
+  description: 'Mint your planet.',
   openGraph: {
-    title: 'Adventure Alchemis',
-    description: 'Craft. Enchant. Conquer.',
+    title: 'Untitled Planet Game',
+    description: 'Mint your planet.',
   },
 };
 

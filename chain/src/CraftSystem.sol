@@ -9,6 +9,7 @@ contract CraftSystem is Ownable, ICraftSystem {
         uint256 lastTick;
         uint256 newItemRate;
         uint256 beltDuration;
+        uint256 activeItem;
     }
 
     struct Item {
@@ -29,13 +30,14 @@ contract CraftSystem is Ownable, ICraftSystem {
         gameStates[tokenId].lastTick = block.timestamp;
         gameStates[tokenId].newItemRate = 2;
         gameStates[tokenId].beltDuration = 10;
+        gameStates[tokenId].activeItem = 0;
     }
 
     function tick(uint256 tokenId) public {
         // run simulate tick, update pending gold and update timestamps
     }
 
-    function simulateTick(uint256 tokenId) public view {
+    function simulateTick(uint256 tokenId) public view returns (uint256) {
         // see how long it's been since the last real tick
         uint256 elapsed = (block.timestamp - gameStates[tokenId].lastTick) /
             1000;
@@ -45,9 +47,21 @@ contract CraftSystem is Ownable, ICraftSystem {
         uint256 itemsFinished = (elapsed - gameStates[tokenId].beltDuration) /
             gameStates[tokenId].newItemRate;
 
+        uint256 pendingGold = itemsFinished * items[gameStates[tokenId].activeItem].baseValue;
+
+        return pendingGold;
+
         // apply stations to finished items
 
         // update inventory
+    }
+
+    function getGameState(uint256 tokenId)
+        external
+        view
+        returns (GameState memory)
+    {
+        return gameStates[tokenId];
     }
 
     function addItem(uint256 index, uint256 baseValue) public {

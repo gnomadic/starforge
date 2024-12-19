@@ -3,6 +3,7 @@ import { foundry } from '@wagmi/cli/plugins'
 import { hardhat } from '@wagmi/cli/plugins'
 import { react } from '@wagmi/cli/plugins'
 import { actions } from '@wagmi/cli/plugins'
+/** @type {import('@wagmi/cli').Config} */
 
 
 export default defineConfig({

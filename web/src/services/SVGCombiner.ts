@@ -39,10 +39,26 @@ export function replaceNetworkEdges(svg: string, newHue: number) {
 }
 
 
+export function replaceStationFrame(svg: string, newHue: number) {
+  const parsed = extractSVG(svg);
+  const doc = new DOMParser().parseFromString(parsed, "text/xml");
+
+  const planks = doc.getElementById("stations");
+
+  if (planks) {
+    planks.setAttribute('stroke', `hsl(${newHue},100%,50%)`);
+  }
+
+  let ok = new XMLSerializer().serializeToString(doc);
+  // console.log("new: " + ok);
+  return ok;
+}
+
+
 
 export function extractEdgeColor(svg: string | undefined) {
 
-  if (!svg) return { h: 0, s: 0, l: 0, a: 0 };
+  if (!svg) return 0;
 
 
   // console.log("extracting: " + svg);
@@ -53,14 +69,37 @@ export function extractEdgeColor(svg: string | undefined) {
 
   const fill = planks?.getAttribute('stroke');
   // console.log('fill: ', fill);
-  let HSL = { h: 0, s: 0, l: 0, a: 0 };
+  let HSL = 0;
   const hslString = fill?.substring(fill.indexOf("hsl("), fill.indexOf(")"));
   // console.log('hslString: ', hslString);
   if (hslString) {
     const hsl = hslString.split(",");
-    HSL = { h: parseInt(hsl[0].substring(4)), s: parseInt(hsl[1]), l: parseInt(hsl[2]), a: parseInt(hsl[3]) };
+    HSL = parseInt(hsl[0].substring(4))
   }
 
   return HSL;
 }
 
+export function extractStationColor(svg: string | undefined) {
+
+  if (!svg) return 0;
+
+
+  // console.log("extracting: " + svg);
+  // const parsed = extractSVG(svg);
+  const doc = new DOMParser().parseFromString(svg, "text/xml");
+  const planks = doc.getElementById("stations");
+  // console.log('planks: ', planks);
+
+  const fill = planks?.getAttribute('stroke');
+  // console.log('fill: ', fill);
+  let HSL = 0;
+  const hslString = fill?.substring(fill.indexOf("hsl("), fill.indexOf(")"));
+  // console.log('hslString: ', hslString);
+  if (hslString) {
+    const hsl = hslString.split(",");
+    HSL = parseInt(hsl[0].substring(4))
+  }
+
+  return HSL;
+}

@@ -25,10 +25,10 @@ export default function Home() {
           height={300}
         />
         <div className='mx-auto text-3xl text-center text-white'>
-        Craft. <br /> Enchant.  <br /> Conquer.
+        untitled. <br /> planet.  <br /> game.
         </div>
         <div className='pt-4 mx-auto text-xl text-center text-lightgrey'>
-        An onchain idle game 
+        An onchain game 
         </div>
         <div className='mx-auto text-center'>
           <Link
@@ -52,19 +52,18 @@ export default function Home() {
         </div>
         <div className='mx-auto'>
           <div className='text-3xl '>
-          Start Your Journey.
+          untitled planet game.
           </div>
           <div className='text-xl text-lightgrey'>
-            Choose your lab, customize it, and launch it. <br /> Play to unlock new customizations and upgrades.
+          Mauris eu risus sed ligula tempor consectetur eget quis velit. Donec volutpat ante vulputate, euismod mauris sit amet, semper metus. Donec mattis auctor quam, vel commodo purus finibus ut. Aenean posuere lorem sed risus rhoncus interdum. Donec sodales, tortor non tincidunt egestas, velit lorem sodales lorem, vitae vehicula ipsum nibh ut quam
           </div>
         </div>
         <div className='mx-auto'>
           <div className='text-3xl '>
-            Support your local adventurers <br />
+          untitled planet game. <br />
           </div>
           <div className='text-xl text-lightgrey'>
-            The potions and items you create can be sold for gold, <br />
-            which can be used to buy more items and upgrades
+          Donec purus eros, condimentum ac malesuada et, venenatis eu dui. Nulla luctus augue urna. Vestibulum volutpat tortor vel purus eleifend venenatis. In et turpis ac ligula gravida ullamcorper. Nulla consectetur, lacus eu aliquet molestie, neque enim consectetur justo, eget vehicula mi nibh a neque. Curabitur ornare enim eget massa maximus, eget consectetur lacus consequat. Donec eu posuere enim.
           </div>
         </div>
         <div className='mx-auto' >
@@ -85,12 +84,10 @@ export default function Home() {
         </div>
         <div className='mx-auto '>
           <div className='text-3xl'>
-            Completely onchain <br />
+          untitled planet game. <br />
           </div>
           <div className='text-xl text-lightgrey'>
-            Data, gameplay, and rules are all stored onchain. <br />
-            This means your Lab is transparent, secure, and unstoppable. <br />
-            And it means you don&apos;t have to worry about a server.
+          Sed dictum non metus blandit tempus. Phasellus scelerisque aliquet arcu ut blandit. Maecenas lorem ante, ullamcorper quis venenatis id, rhoncus ut nisi. Fusce vel justo dui.
           </div>
         </div>
       </section>

@@ -1,0 +1,69 @@
+"use client"
+
+import React, { useState } from 'react'
+import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+
+interface Investment {
+  name: string
+  level: number
+  description: string
+}
+
+const initialInvestments: Investment[] = [
+  { name: "Infrastructure", level: 1, description: "Improve your city's roads and utilities" },
+  { name: "Manufacturing", level: 1, description: "Increase production capacity" },
+  { name: "Research", level: 1, description: "Develop new technologies" },
+  { name: "Military", level: 1, description: "Strengthen your defenses" },
+  { name: "Factories", level: 1, description: "Build more production facilities" },
+]
+
+export default function InvestmentTab() {
+  const [day, setDay] = useState(1)
+  const [investments, setInvestments] = useState<Investment[]>(initialInvestments)
+  const [investedToday, setInvestedToday] = useState(false)
+
+  const handleInvestment = (index: number) => {
+    if (investedToday) return
+
+    const updatedInvestments = [...investments]
+    updatedInvestments[index].level += 1
+    setInvestments(updatedInvestments)
+    setInvestedToday(true)
+  }
+
+  const nextDay = () => {
+    setDay(day + 1)
+    setInvestedToday(false)
+  }
+
+  return (
+    <div className="container mx-auto p-4">
+      <h1 className="text-3xl font-bold mb-4">Daily Investment Game</h1>
+      <p className="text-xl mb-4">Day: {day}</p>
+      <div className="grid grid-cols-1 grid-cols-1 gap-4">
+        {investments.map((investment, index) => (
+          <Card key={investment.name}>
+            <CardHeader>
+              <CardTitle>{investment.name}</CardTitle>
+              <CardDescription>Level: {investment.level}</CardDescription>
+            </CardHeader>
+            <CardContent className="flex justify-between items-center">
+              <div>
+                <p>{investment.description}</p>
+              </div>
+              <Button 
+                onClick={() => handleInvestment(index)} 
+                disabled={investedToday}
+                className="ml-4"
+              >
+                Invest
+              </Button>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+      <Button className="mt-4" onClick={nextDay}>Next Day</Button>
+    </div>
+  )
+}

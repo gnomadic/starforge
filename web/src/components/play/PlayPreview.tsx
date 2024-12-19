@@ -7,7 +7,7 @@ type MintPreviewProps = {
     preview: string | undefined;
 }
 
-export default function MintPreview({ preview }: MintPreviewProps) {
+export default function PlayPreview({ preview }: MintPreviewProps) {
 
 
 

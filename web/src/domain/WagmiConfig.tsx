@@ -5,6 +5,13 @@ import { base, baseSepolia, localhost, mainnet, sepolia } from "viem/chains";
 const { wallets } = getDefaultWallets();
 
 
+declare module 'wagmi' {
+  interface Register {
+    config: typeof config
+  }
+}
+
+
 export const config = getDefaultConfig({
     appName: 'ADVENTURE ALCHEMIST',
     projectId: 'YOUR_PROJECT_ID',

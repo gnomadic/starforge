@@ -17,7 +17,7 @@ import {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 export const craftSystemAbi = [
-  { stateMutability: 'nonpayable', type: 'constructor', inputs: [] },
+  { type: 'constructor', inputs: [], stateMutability: 'nonpayable' },
   {
     type: 'error',
     inputs: [{ name: 'owner', internalType: 'address', type: 'address' }],
@@ -49,7 +49,6 @@ export const craftSystemAbi = [
     name: 'OwnershipTransferred',
   },
   {
-    stateMutability: 'nonpayable',
     type: 'function',
     inputs: [
       { name: 'index', internalType: 'uint256', type: 'uint256' },
@@ -57,9 +56,9 @@ export const craftSystemAbi = [
     ],
     name: 'addItem',
     outputs: [],
+    stateMutability: 'nonpayable',
   },
   {
-    stateMutability: 'nonpayable',
     type: 'function',
     inputs: [
       { name: 'index', internalType: 'uint256', type: 'uint256' },
@@ -67,9 +66,9 @@ export const craftSystemAbi = [
     ],
     name: 'addStation',
     outputs: [],
+    stateMutability: 'nonpayable',
   },
   {
-    stateMutability: 'view',
     type: 'function',
     inputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
     name: 'gameStates',
@@ -77,70 +76,91 @@ export const craftSystemAbi = [
       { name: 'lastTick', internalType: 'uint256', type: 'uint256' },
       { name: 'newItemRate', internalType: 'uint256', type: 'uint256' },
       { name: 'beltDuration', internalType: 'uint256', type: 'uint256' },
+      { name: 'activeItem', internalType: 'uint256', type: 'uint256' },
     ],
+    stateMutability: 'view',
   },
   {
-    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [{ name: 'tokenId', internalType: 'uint256', type: 'uint256' }],
+    name: 'getGameState',
+    outputs: [
+      {
+        name: '',
+        internalType: 'struct CraftSystem.GameState',
+        type: 'tuple',
+        components: [
+          { name: 'lastTick', internalType: 'uint256', type: 'uint256' },
+          { name: 'newItemRate', internalType: 'uint256', type: 'uint256' },
+          { name: 'beltDuration', internalType: 'uint256', type: 'uint256' },
+          { name: 'activeItem', internalType: 'uint256', type: 'uint256' },
+        ],
+      },
+    ],
+    stateMutability: 'view',
+  },
+  {
     type: 'function',
     inputs: [{ name: 'tokenId', internalType: 'uint256', type: 'uint256' }],
     name: 'init',
     outputs: [],
+    stateMutability: 'nonpayable',
   },
   {
-    stateMutability: 'view',
     type: 'function',
     inputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
     name: 'items',
     outputs: [{ name: 'baseValue', internalType: 'uint256', type: 'uint256' }],
+    stateMutability: 'view',
   },
   {
-    stateMutability: 'view',
     type: 'function',
     inputs: [],
     name: 'owner',
     outputs: [{ name: '', internalType: 'address', type: 'address' }],
+    stateMutability: 'view',
   },
   {
-    stateMutability: 'nonpayable',
     type: 'function',
     inputs: [],
     name: 'renounceOwnership',
     outputs: [],
+    stateMutability: 'nonpayable',
   },
   {
-    stateMutability: 'nonpayable',
     type: 'function',
     inputs: [{ name: '_loader', internalType: 'address', type: 'address' }],
     name: 'setLoader',
     outputs: [],
+    stateMutability: 'nonpayable',
   },
   {
-    stateMutability: 'view',
     type: 'function',
     inputs: [{ name: 'tokenId', internalType: 'uint256', type: 'uint256' }],
     name: 'simulateTick',
-    outputs: [],
+    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+    stateMutability: 'view',
   },
   {
-    stateMutability: 'view',
     type: 'function',
     inputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
     name: 'stations',
     outputs: [{ name: 'valueAdd', internalType: 'uint256', type: 'uint256' }],
+    stateMutability: 'view',
   },
   {
-    stateMutability: 'nonpayable',
     type: 'function',
     inputs: [{ name: 'tokenId', internalType: 'uint256', type: 'uint256' }],
     name: 'tick',
     outputs: [],
+    stateMutability: 'nonpayable',
   },
   {
-    stateMutability: 'nonpayable',
     type: 'function',
     inputs: [{ name: 'newOwner', internalType: 'address', type: 'address' }],
     name: 'transferOwnership',
     outputs: [],
+    stateMutability: 'nonpayable',
   },
 ] as const
 
@@ -150,9 +170,9 @@ export const craftSystemAbi = [
 
 export const labAbi = [
   {
-    stateMutability: 'nonpayable',
     type: 'constructor',
     inputs: [{ name: 'renderer', internalType: 'address', type: 'address' }],
+    stateMutability: 'nonpayable',
   },
   { type: 'error', inputs: [], name: 'ApprovalCallerNotOwnerNorApproved' },
   { type: 'error', inputs: [], name: 'ApprovalQueryForNonexistentToken' },
@@ -287,21 +307,20 @@ export const labAbi = [
     name: 'Transfer',
   },
   {
-    stateMutability: 'nonpayable',
     type: 'function',
     inputs: [{ name: 'renderer', internalType: 'address', type: 'address' }],
     name: 'addRenderer',
     outputs: [],
+    stateMutability: 'nonpayable',
   },
   {
-    stateMutability: 'nonpayable',
     type: 'function',
     inputs: [{ name: 'newSystem', internalType: 'address', type: 'address' }],
     name: 'addSystem',
     outputs: [],
+    stateMutability: 'nonpayable',
   },
   {
-    stateMutability: 'payable',
     type: 'function',
     inputs: [
       { name: 'to', internalType: 'address', type: 'address' },
@@ -309,37 +328,37 @@ export const labAbi = [
     ],
     name: 'approve',
     outputs: [],
+    stateMutability: 'payable',
   },
   {
-    stateMutability: 'view',
     type: 'function',
     inputs: [{ name: 'owner', internalType: 'address', type: 'address' }],
     name: 'balanceOf',
     outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+    stateMutability: 'view',
   },
   {
-    stateMutability: 'nonpayable',
     type: 'function',
     inputs: [],
     name: 'clearSystems',
     outputs: [],
+    stateMutability: 'nonpayable',
   },
   {
-    stateMutability: 'view',
     type: 'function',
     inputs: [],
     name: 'contractURI',
     outputs: [{ name: '', internalType: 'string', type: 'string' }],
+    stateMutability: 'view',
   },
   {
-    stateMutability: 'view',
     type: 'function',
     inputs: [],
     name: 'customizeCost',
     outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+    stateMutability: 'view',
   },
   {
-    stateMutability: 'view',
     type: 'function',
     inputs: [{ name: 'tokenId', internalType: 'uint256', type: 'uint256' }],
     name: 'explicitOwnershipOf',
@@ -356,9 +375,9 @@ export const labAbi = [
         ],
       },
     ],
+    stateMutability: 'view',
   },
   {
-    stateMutability: 'view',
     type: 'function',
     inputs: [
       { name: 'tokenIds', internalType: 'uint256[]', type: 'uint256[]' },
@@ -377,30 +396,30 @@ export const labAbi = [
         ],
       },
     ],
+    stateMutability: 'view',
   },
   {
-    stateMutability: 'view',
     type: 'function',
     inputs: [{ name: 'tokenId', internalType: 'uint256', type: 'uint256' }],
     name: 'generateCharacter',
     outputs: [{ name: '', internalType: 'string', type: 'string' }],
+    stateMutability: 'view',
   },
   {
-    stateMutability: 'view',
     type: 'function',
     inputs: [{ name: '_tokenId', internalType: 'uint256', type: 'uint256' }],
     name: 'generateSVG',
     outputs: [{ name: '', internalType: 'string', type: 'string' }],
+    stateMutability: 'view',
   },
   {
-    stateMutability: 'view',
     type: 'function',
     inputs: [{ name: 'tokenId', internalType: 'uint256', type: 'uint256' }],
     name: 'getApproved',
     outputs: [{ name: '', internalType: 'address', type: 'address' }],
+    stateMutability: 'view',
   },
   {
-    stateMutability: 'view',
     type: 'function',
     inputs: [
       { name: 'owner', internalType: 'address', type: 'address' },
@@ -408,67 +427,67 @@ export const labAbi = [
     ],
     name: 'isApprovedForAll',
     outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'view',
   },
   {
-    stateMutability: 'payable',
     type: 'function',
     inputs: [{ name: 'to', internalType: 'address', type: 'address' }],
     name: 'mint',
     outputs: [],
+    stateMutability: 'payable',
   },
   {
-    stateMutability: 'view',
     type: 'function',
     inputs: [],
     name: 'mintCost',
     outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+    stateMutability: 'view',
   },
   {
-    stateMutability: 'view',
     type: 'function',
     inputs: [],
     name: 'name',
     outputs: [{ name: '', internalType: 'string', type: 'string' }],
+    stateMutability: 'view',
   },
   {
-    stateMutability: 'view',
     type: 'function',
     inputs: [],
     name: 'nextTokenId',
     outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+    stateMutability: 'view',
   },
   {
-    stateMutability: 'view',
     type: 'function',
     inputs: [],
     name: 'owner',
     outputs: [{ name: '', internalType: 'address', type: 'address' }],
+    stateMutability: 'view',
   },
   {
-    stateMutability: 'view',
     type: 'function',
     inputs: [{ name: 'tokenId', internalType: 'uint256', type: 'uint256' }],
     name: 'ownerOf',
     outputs: [{ name: '', internalType: 'address', type: 'address' }],
+    stateMutability: 'view',
   },
   {
-    stateMutability: 'view',
     type: 'function',
     inputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
     name: 'renderers',
     outputs: [
       { name: '', internalType: 'contract IRenderer', type: 'address' },
     ],
+    stateMutability: 'view',
   },
   {
-    stateMutability: 'nonpayable',
     type: 'function',
     inputs: [],
     name: 'renounceOwnership',
     outputs: [],
+    stateMutability: 'nonpayable',
   },
   {
-    stateMutability: 'payable',
     type: 'function',
     inputs: [
       { name: 'from', internalType: 'address', type: 'address' },
@@ -477,9 +496,9 @@ export const labAbi = [
     ],
     name: 'safeTransferFrom',
     outputs: [],
+    stateMutability: 'payable',
   },
   {
-    stateMutability: 'payable',
     type: 'function',
     inputs: [
       { name: 'from', internalType: 'address', type: 'address' },
@@ -489,9 +508,9 @@ export const labAbi = [
     ],
     name: 'safeTransferFrom',
     outputs: [],
+    stateMutability: 'payable',
   },
   {
-    stateMutability: 'nonpayable',
     type: 'function',
     inputs: [
       { name: 'tokenId', internalType: 'uint256', type: 'uint256' },
@@ -499,9 +518,9 @@ export const labAbi = [
     ],
     name: 'selectRenderer',
     outputs: [],
+    stateMutability: 'nonpayable',
   },
   {
-    stateMutability: 'nonpayable',
     type: 'function',
     inputs: [
       { name: 'operator', internalType: 'address', type: 'address' },
@@ -509,44 +528,44 @@ export const labAbi = [
     ],
     name: 'setApprovalForAll',
     outputs: [],
+    stateMutability: 'nonpayable',
   },
   {
-    stateMutability: 'view',
     type: 'function',
     inputs: [{ name: 'interfaceId', internalType: 'bytes4', type: 'bytes4' }],
     name: 'supportsInterface',
     outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'view',
   },
   {
-    stateMutability: 'view',
     type: 'function',
     inputs: [],
     name: 'symbol',
     outputs: [{ name: '', internalType: 'string', type: 'string' }],
+    stateMutability: 'view',
   },
   {
-    stateMutability: 'view',
     type: 'function',
     inputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
     name: 'systems',
     outputs: [{ name: '', internalType: 'address', type: 'address' }],
+    stateMutability: 'view',
   },
   {
-    stateMutability: 'view',
     type: 'function',
     inputs: [{ name: 'tokenId', internalType: 'uint256', type: 'uint256' }],
     name: 'tokenURI',
     outputs: [{ name: '', internalType: 'string', type: 'string' }],
+    stateMutability: 'view',
   },
   {
-    stateMutability: 'view',
     type: 'function',
     inputs: [{ name: 'owner', internalType: 'address', type: 'address' }],
     name: 'tokensOfOwner',
     outputs: [{ name: '', internalType: 'uint256[]', type: 'uint256[]' }],
+    stateMutability: 'view',
   },
   {
-    stateMutability: 'view',
     type: 'function',
     inputs: [
       { name: 'owner', internalType: 'address', type: 'address' },
@@ -555,16 +574,16 @@ export const labAbi = [
     ],
     name: 'tokensOfOwnerIn',
     outputs: [{ name: '', internalType: 'uint256[]', type: 'uint256[]' }],
+    stateMutability: 'view',
   },
   {
-    stateMutability: 'view',
     type: 'function',
     inputs: [],
     name: 'totalSupply',
     outputs: [{ name: 'result', internalType: 'uint256', type: 'uint256' }],
+    stateMutability: 'view',
   },
   {
-    stateMutability: 'payable',
     type: 'function',
     inputs: [
       { name: 'from', internalType: 'address', type: 'address' },
@@ -573,13 +592,14 @@ export const labAbi = [
     ],
     name: 'transferFrom',
     outputs: [],
+    stateMutability: 'payable',
   },
   {
-    stateMutability: 'nonpayable',
     type: 'function',
     inputs: [{ name: 'newOwner', internalType: 'address', type: 'address' }],
     name: 'transferOwnership',
     outputs: [],
+    stateMutability: 'nonpayable',
   },
 ] as const
 
@@ -589,11 +609,11 @@ export const labAbi = [
 
 export const systemAbi = [
   {
-    stateMutability: 'nonpayable',
     type: 'function',
     inputs: [{ name: 'tokenId', internalType: 'uint256', type: 'uint256' }],
     name: 'init',
     outputs: [],
+    stateMutability: 'nonpayable',
   },
 ] as const
 
@@ -614,6 +634,15 @@ export const useReadCraftSystem = /*#__PURE__*/ createUseReadContract({
 export const useReadCraftSystemGameStates = /*#__PURE__*/ createUseReadContract(
   { abi: craftSystemAbi, functionName: 'gameStates' },
 )
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link craftSystemAbi}__ and `functionName` set to `"getGameState"`
+ */
+export const useReadCraftSystemGetGameState =
+  /*#__PURE__*/ createUseReadContract({
+    abi: craftSystemAbi,
+    functionName: 'getGameState',
+  })
 
 /**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link craftSystemAbi}__ and `functionName` set to `"items"`
@@ -1280,6 +1309,14 @@ export const readCraftSystem = /*#__PURE__*/ createReadContract({
 export const readCraftSystemGameStates = /*#__PURE__*/ createReadContract({
   abi: craftSystemAbi,
   functionName: 'gameStates',
+})
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link craftSystemAbi}__ and `functionName` set to `"getGameState"`
+ */
+export const readCraftSystemGetGameState = /*#__PURE__*/ createReadContract({
+  abi: craftSystemAbi,
+  functionName: 'getGameState',
 })
 
 /**

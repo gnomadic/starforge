@@ -12,7 +12,7 @@ import useDeployment from '@/hooks/useDeployment';
 import MintPreview from './MintPreview';
 import { Box } from '../ui/box';
 import Hue from '@uiw/react-color-hue';
-import { extractEdgeColor, replaceNetworkEdges } from '@/services/SVGCombiner';
+import { extractEdgeColor, extractStationColor, replaceNetworkEdges, replaceStationFrame } from '@/services/SVGCombiner';
 import Colorful from '@uiw/react-color-colorful';
 import { ColorResult, hslaToHsva } from '@uiw/color-convert'
 
@@ -35,6 +35,11 @@ export default function MintLab(props: MintLabProps) {
         setPreview(window.btoa(String(newSVG)));
     }
 
+    function stationChange(newHue: number) {
+        let newSVG = replaceStationFrame(preview, newHue);
+        setPreview(window.btoa(String(newSVG)));
+    }
+
     useEffect(() => {
         if (writeError) {
             toast.error(writeError.message);
@@ -51,9 +56,6 @@ export default function MintLab(props: MintLabProps) {
     }, [writeError, isLoading, isSuccess]);
 
 
-
-
-
     useEffect(() => {
         if (image == undefined) {
             return;
@@ -61,12 +63,14 @@ export default function MintLab(props: MintLabProps) {
         // console.log("image: " + image);
         // console.log("wat: ", window.btoa(String(image)));
         setEdgeColor(extractEdgeColor(image));
+        setStationColor(extractStationColor(image));
         setPreview(window.btoa(String(image)));
 
 
     }, [image]);
 
-    const [edgeColor, setEdgeColor] = useState({ h: 0, s: 0, l: 68, a: 1 });
+    const [edgeColor, setEdgeColor] = useState(0);
+    const [stationColor, setStationColor] = useState(0);
 
 
     return (
@@ -77,39 +81,26 @@ export default function MintLab(props: MintLabProps) {
                 </Box>
                 <Box>
                     <div> Network Edges</div>
-
-
-                    {/* <Colorful
-                        className="mx-auto"
-                        color={hslaToHsva(hsla)}
-                        disableAlpha={true}
-                        onChange={(color) => {
-                            setHsla(color.hsla);
-                            edgeChange(color);
-
-                        }}
-                    /> */}
-
                     <Hue
-                        hue={edgeColor.h}
+                        hue={edgeColor}
                         onChange={(newHue) => {
-                            setEdgeColor({ ...edgeColor, h: newHue.h });
+                            setEdgeColor(newHue.h);
                             edgeChange(newHue.h);
-                            // setHsva({ ...hsva, ...newHue });
                         }}
                     />
 
+                    <div> Station Frames </div>
+                    <Hue
+                        hue={stationColor}
+                        onChange={(newHue) => {
+                            setStationColor(newHue.h);
+                            stationChange(newHue.h);
+                        }}
+                    />
                 </Box>
             </section>
 
-
-
-
-
-
             <div className='flex pt-8'>
-
-
                 {address ?
                     <Button className='mx-auto'
                         onClick={() => writeContract({ address: deploy.lab, args: [address] })}
@@ -119,9 +110,6 @@ export default function MintLab(props: MintLabProps) {
                     :
                     <div className='mx-auto'><ConnectButton /></div>
                 }
-
-
-
             </div>
         </section>
     );

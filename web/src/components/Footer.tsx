@@ -12,9 +12,9 @@ export default function Footer() {
             <Link href='/'>
     
               <div className='text-4xl text-white font-ultra text-center tracking-wider'>
-                Adventure Alchemist
+               untitled planet game
               </div>
-              <div className='mx-5 text-xl uppercase text-subtext'>discover the magic within.</div>
+              <div className='mx-5 text-xl uppercase text-subtext'>mint your planet.</div>
             </Link>
           </div>
 

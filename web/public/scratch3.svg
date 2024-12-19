@@ -11,12 +11,35 @@
         </g>
         <g id="edges" stroke="hsl(126, 100%, 50%)">
             <path
-                d="m88 180 38-50m-38 50 38 50m62-100 38-50m-38 50 38 50m-38-50 38 150m-38-50 38-150m-38 150 38-50m-38 50 38 50m62-200 38 50m-38-50 38 150m-38-50 38-50m-38 50 38 50m-38 50 38-150m-38 150 38-50m62-100 38 50m-38 50 38-50"
+                d="m88 230 38-50m-38 50 38 50m62-100 38-50m-38 50 38 50m-38-50 38 150m-38-50 38-150m-38 150 38-50m-38 50 38 50m62-200 38 50m-38-50 38 150m-38-50 38-50m-38 50 38 50m-38 50 38-150m-38 150 38-50m62-100 38 50m-38 50 38-50"
                 stroke-width="5" fill="none" stroke-linecap="round" />
+
         </g>
-        <g id="stations" stroke="hsl(126, 100%, 50%)" stroke-dasharray=" 0 5 0" >
+        <g id="stations" stroke="hsl(126, 100%, 50%)" stroke-dasharray=" 0 5 0" stroke-width="2">
             <path
-                d="M32 156h48v48H32zm100-50h48v48h-48zm0 100h48v48h-48zM232 56h48v48h-48zm0 100h48v48h-48zm0 100h48v48h-48zm100-150h48v48h-48zm0 100h48v48h-48zm100-50h48v48h-48z" />
+                d="M32 206h48v48H32zm100-50h48v48h-48zm0 100h48v48h-48zM232 106h48v48h-48zm0 100h48v48h-48zm0 100h48v48h-48zm100-150h48v48h-48zm0 100h48v48h-48zm100-50h48v48h-48z" />
+
+            <!-- <animate attributeName="cx" from="0" to="500" dur="5s" repeatCount="indefinite" /> -->
         </g>
+        <g fill="hsl(126, 100%, 50%)">
+            <rect x="50"  y="40" width="10" height="10" />
+            <rect x="70"  y="60" width="10" height="10" />
+            <rect x="90"  y="40" width="10" height="10" />
+            <rect x="110" y="60" width="10" height="10" />
+            <rect x="130" y="40" width="10" height="10" />
+            <rect x="150" y="60" width="10" height="10" />
+            <rect x="170" y="40" width="10" height="10" />
+            <rect x="190" y="60" width="10" height="10" />
+            <rect x="210" y="40" width="10" height="10" />
+            <rect x="230" y="60" width="10" height="10" />
+
+        </g>
+
+        <!-- <g fill="hsl(126, 100%, 50%)">
+            <circle r="12" cx="25" cy="20">
+                <animateMotion dur="10s" repeatCount="indefinite"
+                    path="m88 180 38-50m-38 50 38 50m62-100 38-50m-38 50 38 50m-38-50 38 150m-38-50 38-150m-38 150 38-50m-38 50 38 50m62-200 38 50m-38-50 38 150m-38-50 38-50m-38 50 38 50m-38 50 38-150m-38 150 38-50m62-100 38 50m-38 50 38-50" />
+            </circle>
+        </g> -->
     </svg>
 </svg>

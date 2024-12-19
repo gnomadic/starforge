@@ -23,10 +23,10 @@ export default function Navbar() {
           <div className='flex items-start'>
             <Link href='/'>
               <div className='text-xl text-white font-ultra text-center tracking-wider'>
-                Adventure
+                untitled
               </div>
               <div className='text-3xl text-white font-ultra text-center tracking-wider text-tavernOrange'>
-                Alchemist
+                planet game
               </div>
             </Link>
           </div>
