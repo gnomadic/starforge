@@ -101,12 +101,14 @@ export default function MintLab(props: MintLabProps) {
 
 
     return (
-        <section id='hero' className='relative items-center pt-12'>
-            <section className="grid grid-cols-1 md:grid-cols-2 gap-8 ">
-                <Card className='mx-auto'>
-                    <MintPreview preview={preview} />
-                </Card>
-                <Card>
+        <section className="p-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+          <div className='mx-auto'>
+          <MintPreview preview={preview} />
+          </div>
+          <div className='max-w-lg min-w-lg'>
+            {/* <div> information is simulated, sync to apply  </div> */}
+            <Card>
                     <div> Sky Colors</div>
                     <div className='py-4 px-12'>
                         <Hue
@@ -162,10 +164,7 @@ export default function MintLab(props: MintLabProps) {
                             }}
                         />
                     </div>
-                </Card>
-            </section>
-
-            <div className='flex pt-8'>
+                    <div className='flex pt-8'>
                 {address ?
                     <Button className='mx-auto'
                         onClick={() => writeContract({ address: deploy.lab, args: [address] })}
@@ -176,6 +175,18 @@ export default function MintLab(props: MintLabProps) {
                     <div className='mx-auto'><ConnectButton /></div>
                 }
             </div>
+                </Card>
+          </div>
+  
+        </div>
+  
+
+
+
+
+       
+
+  
         </section>
     );
 }

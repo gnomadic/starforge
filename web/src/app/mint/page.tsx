@@ -1,14 +1,12 @@
 
-import MintLab from '@/components/mint/MintLab';
 import React from 'react';
+import MintLab from '@/components/mint/MintLab';
 
 export default function Home() {
 
     return (
-        <main className='font-anon '>
-
+        <section >
             <MintLab />
-
-        </main>
+        </section>
     );
 }
