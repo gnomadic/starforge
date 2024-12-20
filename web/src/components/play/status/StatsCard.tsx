@@ -19,14 +19,13 @@ export default function StatsCard({ stats }: PlanetStatsProps) {
     return (
 
         <div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-1 gap-6">
                 <div className="w-full h-[300px] col-span-2">
                     <ResponsiveContainer width="100%" height="100%">
                         <RadarChart cx="50%" cy="50%" outerRadius="80%" data={stats}>
                             <PolarGrid />
                             <PolarAngleAxis dataKey="name" />
-                            <PolarRadiusAxis angle={30} domain={[0, maxStatValue]} />
+                            <PolarRadiusAxis angle={45} domain={[0, maxStatValue]} />
                             <Radar name="Stats" dataKey="value" stroke="#8884d8" fill="#8884d8" fillOpacity={0.6} />
                         </RadarChart>
                     </ResponsiveContainer>

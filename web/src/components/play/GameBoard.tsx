@@ -5,7 +5,7 @@ import { ControlTabs } from "@/components/play/ControlTabs";
 import { Belt, Item, ItemType, Station, StationModifier } from "@/domain/types";
 import { useData } from "@/hooks/UseData";
 import useDeployment from "@/hooks/useDeployment";
-import { useReadCraftSystemGameStates, useReadCraftSystemSimulateTick, useReadLabBalanceOf, useReadLabTokensOfOwner } from "@/generated";
+import { useReadCraftSystemGameStates, useReadCraftSystemSimulateTick, useReadLabBalanceOf, useReadLabGenerateSvg, useReadLabTokensOfOwner } from "@/generated";
 import PlayPreview from "./PlayPreview";
 import { svg } from "@/domain/TestingData";
 
@@ -52,11 +52,11 @@ const GameBoard = (props: GameBoardProps) => {
 
 
   const { deploy } = useDeployment();
-  // const { data: image, isLoading: loadingImage } = useReadLabGenerateSvg({ address: deploy.lab, args: [props.tokenId] });
+  const { data: image, isLoading: loadingImage } = useReadLabGenerateSvg({ address: deploy.lab, args: [props.tokenId] });
   const { data: gameState, status, error } = useReadCraftSystemGameStates({ address: deploy.craftSystem, args: [props.tokenId] })
 
 
-  const image = svg;
+  // const image = svg;
 
   const planetName = "DG-429";
 
@@ -97,11 +97,12 @@ const GameBoard = (props: GameBoardProps) => {
 
   return (
     <section className="p-12">
-      <div className="grid grid-cols-1 md:grid-cols-2">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
         <div className='mx-auto'>
           <PlayPreview preview={preview} />
         </div>
-        <div className='mx-auto'>
+        <div className='max-w-lg min-w-lg'>
+          {/* <div> information is simulated, sync to apply  </div> */}
           <ControlTabs state={gameState}
             setStation={setStation}
             simulatedState={simulatedState}

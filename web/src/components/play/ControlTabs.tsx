@@ -1,12 +1,3 @@
-import { Button } from "@/components/ui/button"
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
 import {
   Tabs,
   TabsContent,
@@ -14,11 +5,10 @@ import {
   TabsTrigger,
 } from "@/components/ui/tabs"
 import { GameState, StationModifier } from "@/domain/types"
-import { StationCard } from "./StationCard"
-import InfoCard from "../InfoCard"
-import { bigIntReplacer } from "@/domain/utils"
+
 import StatusTab from "./status/StatusTab"
 import InvestmentTab from "@/components/play/investments/InvestmentTab"
+import ResourceTab from "./resources/ResourceTab"
 
 interface ControlTabsProps {
   state: readonly [bigint, bigint, bigint, bigint] | undefined;
@@ -30,21 +20,25 @@ interface ControlTabsProps {
 export function ControlTabs({ state, setStation, simulatedState, planetName }: ControlTabsProps) {
 
   return (
-    <Tabs defaultValue="Status" className="max-w-lg min-w-lg">
-      <TabsList className="grid w-full grid-cols-2">
-        <TabsTrigger value="Status">Status</TabsTrigger>
-        <TabsTrigger value="Investment">Investments</TabsTrigger>
+    <Tabs defaultValue="status" className="">
+      <TabsList className="grid w-full grid-cols-3">
+        <TabsTrigger value="status">Status</TabsTrigger>
+        <TabsTrigger value="investment">Investments</TabsTrigger>
+        <TabsTrigger value="resources">Resources</TabsTrigger>
       </TabsList>
-      <TabsContent value="Status">
-        <StatusTab state={state} simulatedState={simulatedState} planetName={planetName}/>
 
+      <TabsContent value="status" >
+        <StatusTab state={state} simulatedState={simulatedState} planetName={planetName} />
       </TabsContent>
 
-      <TabsContent value="Investment">
-        {/* <InvestmentTab state={state} setStation={setStation} simulatedState={simulatedState} /> */}
-        <InvestmentTab />
- 
+      <TabsContent value="investment">
+        <InvestmentTab planetName={planetName} />
       </TabsContent>
+      
+      <TabsContent value="resources">
+        <ResourceTab planetName={planetName} />
+      </TabsContent>
+      
     </Tabs>
   )
 }

@@ -54,6 +54,25 @@ export function replaceStationFrame(svg: string, newHue: number) {
   return ok;
 }
 
+export const replacePlanet = (svg: string, colorOne: number, colorTwo: number, colorThree: number) => {
+
+  const parsed = extractSVG(svg);
+  const doc = new DOMParser().parseFromString(parsed, "text/xml");
+
+  const one = doc.getElementById("planetOne");
+  one?.setAttribute('fill', `hsl(${colorOne},46%,66%)`);
+
+  const two = doc.getElementById("planetTwo");
+  two?.setAttribute('fill', `hsl(${colorTwo},7%,43%)`);
+
+  const three = doc.getElementById("planetThree");
+  three?.setAttribute('fill', `hsl(${colorThree},17%,30%)`);
+
+
+  return new XMLSerializer().serializeToString(doc);
+
+}
+
 
 
 export function extractEdgeColor(svg: string | undefined) {
@@ -103,3 +122,108 @@ export function extractStationColor(svg: string | undefined) {
 
   return HSL;
 }
+
+
+export function extractSkyColors(svg: string) {
+  // const parsed = extractSVG(svg);
+  const doc = new DOMParser().parseFromString(svg, "text/xml");
+  const gradient = doc.getElementById("skyGradient");
+  // // gradient?.childNodes[0].
+  const first = new XMLSerializer().serializeToString(gradient!.childNodes[0]);
+  const second = new XMLSerializer().serializeToString(gradient!.childNodes[1]);
+
+  const firstValue = first.substring(first.indexOf("hsl(") + 4, first.indexOf(","));
+  const secondValue = second.substring(second.indexOf("hsl(") + 4, second.indexOf(","));
+  // console.log("pulled: ", value);
+  return [Number(firstValue), Number(secondValue)];
+}
+
+export function extractPlanetColors(svg: string) {
+  // const parsed = extractSVG(svg);
+  const doc = new DOMParser().parseFromString(svg, "text/xml");
+  const one = doc.getElementById("planetOne");
+  let row = new XMLSerializer().serializeToString(one!);
+  const firstValue = row.substring(row.indexOf("hsl(") + 4, row.indexOf(","));
+
+  const two = doc.getElementById("planetTwo");
+  row = new XMLSerializer().serializeToString(two!);
+  const secondValue = row.substring(row.indexOf("hsl(") + 4, row.indexOf(","));
+
+  const three = doc.getElementById("planetThree");
+  row = new XMLSerializer().serializeToString(three!);
+  const thirdValue = row.substring(row.indexOf("hsl(") + 4, row.indexOf(","));
+
+
+  // // // gradient?.childNodes[0].
+  // const first = new XMLSerializer().serializeToString(gradient!.childNodes[0]);
+  // const second = new XMLSerializer().serializeToString(gradient!.childNodes[1]);
+
+  // const firstValue = first.substring(first.indexOf("hsl(") + 4, first.indexOf(","));
+  // const secondValue = second.substring(second.indexOf("hsl(") + 4, second.indexOf(","));
+  // console.log("pulled: ", value);
+  return [Number(firstValue), Number(secondValue), Number(thirdValue)];
+}
+
+export function replaceSkyGradients(
+  svg: string,
+  newPrimary: number,
+  newSecondary: number
+) {
+  const parsed = extractSVG(svg);
+  const doc = new DOMParser().parseFromString(parsed, "text/xml");
+
+  const night = doc.getElementById("skyGradient");
+  // const day = doc.getElementById("dayGradient");
+
+  if (newPrimary) {
+    const primaryNight =
+      'stop offset="0%" stop-color="hsl(' + newPrimary + ',100%,30%)"';
+    night?.replaceChild(doc.createElement(primaryNight), night.childNodes[0]);
+
+    // const primaryDay =
+    //   'stop offset="0%" stop-color="hsl(' +
+    //   rotateColor(newPrimary, 240) +
+    //   ',100%,90%)"';
+
+    // day?.replaceChild(doc.createElement(primaryDay), day!.childNodes[0]);
+  }
+
+  if (newSecondary) {
+    const secondaryNight =
+      'stop offset="100%" stop-color="hsl(' + newSecondary + ',100%,30%)"';
+    night?.replaceChild(doc.createElement(secondaryNight), night.childNodes[1]);
+
+    // const secondaryDay =
+    //   'stop offset="100%" stop-color="hsl(' +
+    //   rotateColor(newSecondary, 180) +
+    //   ',100%,30%)"';
+
+    // day?.replaceChild(doc.createElement(secondaryDay), day!.childNodes[1]);
+  }
+
+  return new XMLSerializer().serializeToString(doc);
+}
+
+// export function extractFirstSkyColor(svg: string) {
+//   // const parsed = extractSVG(svg);
+//   const doc = new DOMParser().parseFromString(svg, "text/xml");
+//   const gradient = doc.getElementById("skyGradient");
+//   // // gradient?.childNodes[0].
+//   const first = new XMLSerializer().serializeToString(gradient!.childNodes[0]);
+
+//   const value = first.substring(first.indexOf("hsl(") + 4, first.indexOf(","));
+//   // console.log("pulled: ", value);
+//   return value;
+// }
+
+// export function extractSecondSkyColor(svg: string) {
+//   // const parsed = extractSVG(svg);
+//   const doc = new DOMParser().parseFromString(svg, "text/xml");
+//   const gradient = doc.getElementById("skyGradient");
+//   // // gradient?.childNodes[0].
+//   const first = new XMLSerializer().serializeToString(gradient!.childNodes[1]);
+
+//   const value = first.substring(first.indexOf("hsl(") + 4, first.indexOf(","));
+//   // console.log("pulled: ", value);
+//   return value;
+// }

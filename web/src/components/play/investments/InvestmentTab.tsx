@@ -18,7 +18,13 @@ const initialInvestments: Investment[] = [
   { name: "Factories", level: 1, description: "Build more production facilities" },
 ]
 
-export default function InvestmentTab() {
+type InvestmentTabProps = {
+  planetName: string;
+  // state: readonly [bigint, bigint, bigint, bigint] | undefined;
+  // simulatedState: GameState;
+}
+
+export default function InvestmentTab({ planetName }: InvestmentTabProps) {
   const [day, setDay] = useState(1)
   const [investments, setInvestments] = useState<Investment[]>(initialInvestments)
   const [investedToday, setInvestedToday] = useState(false)
@@ -38,32 +44,44 @@ export default function InvestmentTab() {
   }
 
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-3xl font-bold mb-4">Daily Investment Game</h1>
-      <p className="text-xl mb-4">Day: {day}</p>
-      <div className="grid grid-cols-1 grid-cols-1 gap-4">
-        {investments.map((investment, index) => (
-          <Card key={investment.name}>
-            <CardHeader>
-              <CardTitle>{investment.name}</CardTitle>
-              <CardDescription>Level: {investment.level}</CardDescription>
-            </CardHeader>
-            <CardContent className="flex justify-between items-center">
-              <div>
-                <p>{investment.description}</p>
-              </div>
-              <Button 
-                onClick={() => handleInvestment(index)} 
-                disabled={investedToday}
-                className="ml-4"
-              >
-                Invest
-              </Button>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
-      <Button className="mt-4" onClick={nextDay}>Next Day</Button>
-    </div>
+    <Card>
+      <CardHeader>
+        <CardTitle>{planetName} Investments</CardTitle>
+        <CardDescription className="flex justify-between items-center">
+          <div>
+            Welcome back.  Information is <span className="italic text-red">simulated</span> and must be synced with your client regularly.
+          </div>
+          <Button>Sync Data</Button>
+        </CardDescription>
+      </CardHeader>
+      
+      <CardContent >
+        
+        <p className="text-xl mb-4">Day: {day}</p>
+        <div className="grid grid-cols-1 grid-cols-1 gap-4">
+          {investments.map((investment, index) => (
+            <Card key={investment.name}>
+              <CardHeader>
+                <CardTitle>{investment.name}</CardTitle>
+                <CardDescription>Level: {investment.level}</CardDescription>
+              </CardHeader>
+              <CardContent className="flex justify-between items-center">
+                <div>
+                  <p>{investment.description}</p>
+                </div>
+                <Button
+                  onClick={() => handleInvestment(index)}
+                  disabled={investedToday}
+                  className="ml-4"
+                >
+                  Invest
+                </Button>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+        <Button className="mt-4" onClick={nextDay}>Next Day</Button>
+      </CardContent>
+    </Card>
   )
 }

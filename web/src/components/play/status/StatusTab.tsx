@@ -10,7 +10,7 @@ import { Button } from '@/components/ui/button';
 import { GameState, StationModifier } from '@/domain/types';
 import StatsCard from './StatsCard';
 import { planetStats } from '@/domain/TestingData';
-import Resources from './Resources';
+import Resources from '../resources/ResourceTab';
 
 type StatusTabProps = {
   planetName: string;
@@ -26,35 +26,24 @@ export default function StatusTab({ state, simulatedState, planetName }: StatusT
 
     <Card>
       <CardHeader>
-        
-        <CardTitle>{planetName}</CardTitle>
-        <CardDescription><Button>Sync Data</Button></CardDescription>
-        
+        <CardTitle>{planetName} Status</CardTitle>
+        <CardDescription className="flex justify-between items-center">
+          <div>
+            Welcome back.  Information is <span className="italic text-red">simulated</span> and must be synced with your client regularly.
+          </div>
+          <Button>Sync Data</Button>
+        </CardDescription>
       </CardHeader>
-      <CardContent className="space-y-2">
-
-        {/* <div>{JSON.stringify(state, bigIntReplacer)}</div> */}
+      <CardContent className="space-y-2 pt-8">
         <StatsCard stats={planetStats} />
-
-        <div className="grid grid-cols-2 gap-2">
-          {/* <InfoCard title="Last Sync" value={state ? state[0] : "--"} simulatedValue={simulatedState.time} /> */}
-          {/* <InfoCard title="Population" value={simulatedState.gold} simulatedValue={simulatedState.pendingGold} /> */}
-          {/* <InfoCard title="Packet Rate" value={state ? state[1] : "--"} simulatedValue={2} /> */}
-          {/* <InfoCard title="Processing Rate" value={state ? state[2] : "--"} simulatedValue={10} /> */}
-
-
-        </div>
-
-        <Resources />
-
       </CardContent>
       <CardFooter>
-        <CardDescription>
+        {/* <CardDescription>
           Information is <span className="italic text-red">simulated</span>.
         </CardDescription>
         <CardDescription>
           <Button>Sync Data</Button>
-        </CardDescription>
+        </CardDescription> */}
       </CardFooter>
     </Card>
   );
