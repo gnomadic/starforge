@@ -10,11 +10,8 @@ import { Button } from '@/components/ui/button';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import useDeployment from '@/hooks/useDeployment';
 import MintPreview from './MintPreview';
-import { Box } from '../ui/box';
 import Hue from '@uiw/react-color-hue';
-import { extractEdgeColor, extractPlanetColors, extractSkyColors, extractStationColor, replaceNetworkEdges, replacePlanet, replaceSky, replaceSkyGradients, replaceStationFrame } from '@/services/SVGCombiner';
-import Colorful from '@uiw/react-color-colorful';
-import { ColorResult, hslaToHsva } from '@uiw/color-convert'
+import {  extractPlanetColors, extractSkyColors, replaceNetworkEdges, replacePlanet, replaceSkyGradients, replaceStationFrame } from '@/services/SVGCombiner';
 import { Card } from '../ui/card';
 
 

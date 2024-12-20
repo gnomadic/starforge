@@ -1,16 +1,11 @@
 "use client";
 
-import Image from 'next/image';
-import placeholder from "@/images/cardback.png";
 import { Card, CardHeader, CardTitle, CardContent, CardDescription, CardFooter } from '@/components/ui/card';
-import { CalendarDays, MapPin, Users } from "lucide-react";
-import { bigIntReplacer } from '@/domain/utils';
-import InfoCard from '@/components/InfoCard';
 import { Button } from '@/components/ui/button';
-import { GameState, StationModifier } from '@/domain/types';
+import { GameState } from '@/domain/types';
 import StatsCard from './StatsCard';
 import { planetStats } from '@/domain/TestingData';
-import Resources from '../resources/ResourceTab';
+
 
 type StatusTabProps = {
   planetName: string;

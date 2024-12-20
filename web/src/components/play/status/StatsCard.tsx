@@ -1,9 +1,5 @@
 "use client";
 
-import Image from 'next/image';
-import placeholder from "@/images/cardback.png";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { CalendarDays, MapPin, Users } from "lucide-react";
 import { PlanetStat } from '@/domain/TestingData';
 import { RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar, ResponsiveContainer } from 'recharts'
 import { Badge } from "@/components/ui/badge"

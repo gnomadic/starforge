@@ -5,9 +5,8 @@ import { ControlTabs } from "@/components/play/ControlTabs";
 import { Belt, Item, ItemType, Station, StationModifier } from "@/domain/types";
 import { useData } from "@/hooks/UseData";
 import useDeployment from "@/hooks/useDeployment";
-import { useReadCraftSystemGameStates, useReadCraftSystemSimulateTick, useReadLabBalanceOf, useReadLabGenerateSvg, useReadLabTokensOfOwner } from "@/generated";
+import { useReadCraftSystemGameStates, useReadLabGenerateSvg } from "@/generated";
 import PlayPreview from "./PlayPreview";
-import { svg } from "@/domain/TestingData";
 
 
 const belt: Belt = {
