@@ -22,12 +22,12 @@ export default function Navbar() {
         <div className='flex items-center self-stretch justify-between'>
           <div className='flex items-start'>
             <Link href='/'>
-              <div className='text-xl text-white font-ultra text-center tracking-wider'>
-                untitled
+              <div className='text-xl text-white font-mono text-center tracking-wider'>
+              S T A R | L O O M
               </div>
-              <div className='text-3xl text-white font-ultra text-center tracking-wider text-tavernOrange'>
-                planet game
-              </div>
+              {/* <div className='text-3xl text-white font-ultra text-center tracking-wider text-tavernOrange'>
+              S T A R | L O O M
+              </div> */}
             </Link>
           </div>
           <div className='flex items-center justify-center gap-8'>

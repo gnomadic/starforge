@@ -53,11 +53,11 @@ const ptser = PT_Serif({
 
 
 export const metadata: Metadata = {
-  title: 'Untitled Planet Game',
-  description: 'Mint your planet.',
+  title: 'STAR LOOM',
+  description: 'Weave the stars.  Forge Empires.  Uncover the truth.',
   openGraph: {
-    title: 'Untitled Planet Game',
-    description: 'Mint your planet.',
+    title: 'STAR LOOM',
+    description: 'Weave the stars.  Forge Empires.  Uncover the truth.',
   },
 };
 

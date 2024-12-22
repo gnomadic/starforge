@@ -19,12 +19,12 @@ export default function MobileNav(props: MobileNavProps) {
       ></div>
       <nav className='relative flex flex-col w-full h-full px-10 py-8 overflow-y-auto border-r bg-slate-900'>
         <Link href='/' onClick={props.onClick}>
-          <div className='text-xl text-white font-nunito text-center'>
-            untitled
+          <div className='text-xl text-white font-mono text-center'>
+          S T A R | L O O M
           </div>
-          <div className='text-3xl text-white font-nunito text-center'>
-            planet game
-          </div>
+          {/* <div className='text-3xl text-white font-nunito text-center'>
+          S T A R | L O O M
+          </div> */}
         </Link>
         <ul className='gap-8 pt-12 tracking-wider b-32 font-anon text-lightgrey'>
           {NavItems.map((element, i) => {

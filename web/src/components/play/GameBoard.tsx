@@ -57,7 +57,7 @@ const GameBoard = (props: GameBoardProps) => {
 
   // const image = svg;
 
-  const planetName = "DG-429";
+  const planetName = "KEZ-1280";
 
 
   useEffect(() => {
