@@ -1,0 +1,225 @@
+<svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+    <clipPath id="box">
+        <path d="M0 0h512v512H0z" />
+    </clipPath>
+    <style>
+        .small {
+            font: 18px monospace;
+        }
+    </style>
+    <defs>
+        <linearGradient id="skyGradient" gradientTransform="rotate(31)">
+            <stop offset="20%" stop-color="hsl(21,100%,20%)" />
+            <stop offset="100%" stop-color="hsl(141,100%,20%)" />
+            <!-- <stop offset="0%" stop-color="#325a32" /> -->
+            <!-- <stop offset="100%" stop-color="#343654" /> -->
+        </linearGradient>
+        <linearGradient id="cloudGradient" gradientTransform="rotate(20)">
+            <stop stop-opacity="0" offset="65%" />
+            <stop stop-opacity=".3" offset="75%" />
+            <stop stop-opacity="0" offset="86%" />
+        </linearGradient>
+
+        <filter id="stars">
+            <feTurbulence baseFrequency=".35" seed="4426" />
+            <feColorMatrix values="
+            0 0 0 9 -4 
+            0 0 0 9 -4 
+            0 0 0 9 -4 
+            0 0 0 0 1" />
+        </filter>
+        <filter id="clouds" x="-50%" y="-50%" height="200%" width="200%">
+            <feGaussianBlur in="sky" stdDeviation="20" result="skyblur" />
+            <feTurbulence type="fractalNoise" baseFrequency=".01" numOctaves="5" result="skynoise" seed="4426" />
+            <feColorMatrix values="1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 3 -1 -1 0 0" />
+            <feComposite operator="in" in2="SourceGraphic" />
+        </filter>
+
+
+
+        <filter id="glow" x="-100%" y="-100%" width="400%" height="400%" filterUnits="objectBoundingBox"
+            primitiveUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+            <feGaussianBlur stdDeviation="17" x="0%" y="0%" width="100%" height="100%" in="SourceGraphic"
+                edgeMode="none" result="blur"></feGaussianBlur>
+        </filter>
+
+        <filter id="planet">
+            <feTurbulence type="fractalNoise" baseFrequency=".01" numOctaves="10" seed="102" />
+            <feDisplacementMap in="SourceGraphic" scale="500" />
+            <feGaussianBlur stdDeviation="0" />
+        </filter>
+        <filter id="planetset">
+            <feTurbulence type="fractalNoise" baseFrequency=".01" numOctaves="10" seed="89" />
+            <feDisplacementMap in="SourceGraphic" scale="500" />
+            <feGaussianBlur stdDeviation="0" />
+        </filter>
+        <mask id="planetmask">
+            <circle cx="256" cy="256" r="100" fill="white" />
+        </mask>
+
+        <mask id="mapmask">
+            <!-- <rect width="100%" height="100%" fill="white" /> -->
+            <g fill="#fff">
+
+                <!-- <circle cx="67" cy="67" r="55" /> -->
+                <!-- <circle cx="145" cy="45" r="25" /> -->
+                <!-- <circle cx="45" cy="145" r="25" /> -->
+                <circle cx="38" cy="182" r="12" />
+                <circle cx="38" cy="152" r="12" />
+                <circle cx="38" cy="122" r="12" />
+                <circle cx="38" cy="92" r="12" />
+                <circle cx="38" cy="62" r="12" />
+                <circle cx="38" cy="32" r="12" />
+                <!-- <circle cx="182" cy="38" r="12" /> -->
+
+
+                <circle cx="445" cy="67" r="55" />
+                <!-- <circle cx="367" cy="45" r="25" /> -->
+                <!-- <circle cx="467" cy="145" r="25" /> -->
+                <!-- <circle cx="474" cy="182" r="12" /> -->
+                <!-- <circle cx="330" cy="38" r="12" /> -->
+
+
+                <circle cx="67" cy="445" r="55" />
+                <circle cx="45" cy="367" r="25" />
+                <circle cx="145" cy="467" r="25" />
+                <circle cx="38" cy="330" r="12" />
+                <circle cx="182" cy="474" r="12" />
+
+
+                <circle cx="445" cy="445" r="55" />
+                <circle cx="367" cy="467" r="25" />
+                <circle cx="467" cy="367" r="25" />
+                <circle cx="474" cy="330" r="12" />
+                <circle cx="330" cy="474" r="12" />
+
+                <circle cx="256" cy="256" r="210" fill="white" />
+            </g>
+
+        </mask>
+
+
+        <filter id="paper">
+            <feTurbulence baseFrequency=".18" type="fractalNoise" numOctaves="1" seed="" result="turb" />
+            <feColorMatrix in="turb" result="col" type="matrix" values=".33 .33 .33 0 0 
+             .33 .33 .33 0 0 
+             .33 .33 .33 0 0 
+             0 0 0 1 0" />
+            <feComponentTransfer in="col" result="comp">
+                <feFuncA type="discrete" tableValues="0 0 0 0 0 0 0 .15 .4 .9 1 1"></feFuncA>
+            </feComponentTransfer>
+            <feComposite operator="in" in2="comp" result="RESULT" />
+        </filter>
+
+
+        <pattern id="lines" viewBox="0,0,10,10" width="2%" height="2%">
+            <!-- <polygon points="0,0 2,5 0,10 5,8 10,10 8,5 10,0 5,2" /> -->
+            <line x1="0" y1="5" x2="10" y2="5" stroke-width="1" stroke="black" />
+        </pattern>
+
+
+    </defs>
+    <svg viewBox="0 0 512 512" clip-path="url(#box)">
+        <rect width="100%" height="100%" fill="#d5d0ba" />
+
+
+        <rect x="10" y='10' stroke="black" fill="#426786" stroke-width="2" width="492" height="492"
+            mask="url(#mapmask)" />
+        <rect x="10" y='10' stroke="black" fill="none" stroke-width="2" width="492" height="492" />
+        <!-- <rect x="20" y='20' stroke="black" fill="#426786" stroke-width="1" width="472" height="472" -->
+        <!-- mask="url(#mapmask)" /> -->
+
+        <rect width="100%" height="100%" filter="url(#paper)" opacity="1" />
+        <path fill="url(#cloudGradient)" filter="url(#clouds)" d="M-512-512h1536v1536h-2048z" />
+        <circle cx="256" cy="256" r="200" stroke="black" fill="none" stroke-width="2" filter="url(#planet)" />
+        <!-- <circle cx="256" cy="256" r="220" stroke="black" fill="none" stroke-width="1" />
+        <circle cx="256" cy="256" r="230" stroke="black" fill="none" stroke-width="1" /> -->
+        <circle cx="256" cy="256" r="170" stroke-width="40" stroke="url(#lines)" fill="none" />
+        <!-- <circle cx="256" cy="256" r="230" stroke="black" fill="none" stroke-width="1" /> -->
+
+        <g stroke="black" fill="none" stroke-width="1">
+            <!-- <circle cx="67" cy="67" r="55" /> -->
+            <!-- <circle cx="145" cy="45" r="25" /> -->
+            <!-- <circle cx="45" cy="145" r="25" /> -->
+            <!-- <circle cx="38" cy="182" r="12" /> -->
+
+            <!-- <circle cx="182" cy="38" r="12" /> -->
+
+                <circle cx="38" cy="182" r="12" />
+                <circle cx="38" cy="152" r="12" />
+                <circle cx="38" cy="122" r="12" />
+                <circle cx="38" cy="92" r="12" />
+                <circle cx="38" cy="62" r="12" />
+                <circle cx="38" cy="32" r="12" />
+
+
+            <circle cx="445" cy="67" r="55" />
+            <!-- <circle cx="367" cy="45" r="25" /> -->
+            <!-- <circle cx="467" cy="145" r="25" /> -->
+            <!-- <circle cx="474" cy="182" r="12" /> -->
+            <!-- <circle cx="330" cy="38" r="12" /> -->
+
+
+            <circle cx="67" cy="445" r="55" />
+            <circle cx="45" cy="367" r="25" />
+            <circle cx="145" cy="467" r="25" />
+            <circle cx="38" cy="330" r="12" />
+            <circle cx="182" cy="474" r="12" />
+
+
+            <circle cx="445" cy="445" r="55" />
+            <circle cx="367" cy="467" r="25" />
+            <circle cx="467" cy="367" r="25" />
+            <circle cx="474" cy="330" r="12" />
+            <circle cx="330" cy="474" r="12" />
+            <circle cx="256" cy="256" r="210" />
+
+
+        </g>
+
+
+
+
+
+        <!-- <circle cx="70" cy="70" r="50" stroke="black" fill="none" stroke-width="1" /> -->
+        <!-- <circle cx="442" cy="70" r="50" stroke="black" fill="none" stroke-width="1" /> -->
+        <!-- <circle cx="70" cy="442" r="50" stroke="black" fill="none" stroke-width="1" /> -->
+        <!-- <circle cx="442" cy="442" r="50" stroke="black" fill="none" stroke-width="1" /> -->
+
+        <!-- <circle cx="256" cy="256" r="190" stroke="white" fill="none" stroke-width="1" /> -->
+
+
+        <circle cx="256" cy="256" r="103" fill="black" stroke-width="5" />
+        <circle cx="256" cy="256" r="100" fill="hsl(120, 25%, 80%)" opacity="1" />
+
+
+        <circle cx="256" cy="256" r="120" fill="none" />
+        <circle cx="256" cy="256" r="100" stroke="black" fill="hsl(180, 25%, 80%)" stroke-width="12"
+            filter="url(#planet)" mask="url(#planetmask)" />
+
+
+        <!-- <circle cx="50" cy="50" r="50" fill="url(#star)" stroke="red" /> -->
+        <!-- <circle cx="180" cy="50" r="40" fill="none" stroke-width="20" stroke="url(#star)" /> -->
+
+        <!-- <circle cx="256" cy="256" r="220" stroke="#d5d0ba" fill="none" stroke-width="20" /> -->
+
+
+
+        <path d="
+m325 40c-47 11-95 12-142 0v30c47 12 94 12 142-1v-29m-1-3c-12 3-24 6-35 6v-11l35 5m3 17 34 2-12-12 12-14-72-1 38 7v19m-142-17c10 2 21 4 31 6v-14l-31 8m-3 18-30 1 13-15-15-14 67-1-35 9v20
+" stroke="black" stroke-width="1" fill="#d5d0ba" />
+
+
+
+
+        <!-- <line x1="256" x2="256" y1="0" y2="512" stroke-width="4" stroke="black" /> -->
+        <!-- <line x1="356" x2="356" y1="0" y2="512" stroke-width="4" stroke="black" /> -->
+        <!-- <line x1="156" x2="156" y1="0" y2="512" stroke-width="4" stroke="black" /> -->
+
+        <text x="212" y="68" class="small">KEZ-1280</text>
+
+
+        <!-- <path d="M 36 194 c-5 62 -5 62 0 124 " stroke-width="2" stroke="black" fill="none" /> -->
+
+    </svg>
+</svg>

@@ -54,19 +54,20 @@ export function replaceStationFrame(svg: string, newHue: number) {
   return ok;
 }
 
-export const replacePlanet = (svg: string, colorOne: number, colorTwo: number, colorThree: number) => {
+export const replacePlanet = (svg: string, colorOne: number, colorTwo: number) => {
 
   const parsed = extractSVG(svg);
   const doc = new DOMParser().parseFromString(parsed, "text/xml");
 
-  const one = doc.getElementById("planetOne");
-  one?.setAttribute('fill', `hsl(${colorOne},46%,66%)`);
+  const one = doc.getElementById("water");
+  // one?.setAttribute('fill', `hsl(${colorOne},46%,66%)`);
+  one?.setAttribute('fill', `hsl(${colorOne},25%,80%)`);
 
-  const two = doc.getElementById("planetTwo");
-  two?.setAttribute('fill', `hsl(${colorTwo},7%,43%)`);
-
-  const three = doc.getElementById("planetThree");
-  three?.setAttribute('fill', `hsl(${colorThree},17%,30%)`);
+  const two = doc.getElementById("ground");
+  // two?.setAttribute('fill', `hsl(${colorTwo},7%,43%)`);
+  two?.setAttribute('fill', `hsl(${colorTwo},25%,80%)`);
+  // const three = doc.getElementById("planetThree");
+  // three?.setAttribute('fill', `hsl(${colorThree},17%,30%)`);
 
 
   return new XMLSerializer().serializeToString(doc);
@@ -141,17 +142,17 @@ export function extractSkyColors(svg: string) {
 export function extractPlanetColors(svg: string) {
   // const parsed = extractSVG(svg);
   const doc = new DOMParser().parseFromString(svg, "text/xml");
-  const one = doc.getElementById("planetOne");
+  const one = doc.getElementById("water");
   let row = new XMLSerializer().serializeToString(one!);
   const firstValue = row.substring(row.indexOf("hsl(") + 4, row.indexOf(","));
 
-  const two = doc.getElementById("planetTwo");
+  const two = doc.getElementById("ground");
   row = new XMLSerializer().serializeToString(two!);
   const secondValue = row.substring(row.indexOf("hsl(") + 4, row.indexOf(","));
 
-  const three = doc.getElementById("planetThree");
-  row = new XMLSerializer().serializeToString(three!);
-  const thirdValue = row.substring(row.indexOf("hsl(") + 4, row.indexOf(","));
+  // const three = doc.getElementById("planetThree");
+  // row = new XMLSerializer().serializeToString(three!);
+  // const thirdValue = row.substring(row.indexOf("hsl(") + 4, row.indexOf(","));
 
 
   // // // gradient?.childNodes[0].
@@ -161,7 +162,7 @@ export function extractPlanetColors(svg: string) {
   // const firstValue = first.substring(first.indexOf("hsl(") + 4, first.indexOf(","));
   // const secondValue = second.substring(second.indexOf("hsl(") + 4, second.indexOf(","));
   // console.log("pulled: ", value);
-  return [Number(firstValue), Number(secondValue), Number(thirdValue)];
+  return [Number(firstValue), Number(secondValue)];
 }
 
 export function replaceSkyGradients(

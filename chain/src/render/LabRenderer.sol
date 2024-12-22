@@ -11,6 +11,7 @@ contract LabRenderer is IRenderer {
     function generateSVG(uint256 tokenId) public view returns (string memory) {
         string
             memory svg = '<svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><clipPath id="box"><path d="M0 0h512v512H0z"/></clipPath><defs>';
+            svg = string.concat(svg, '<style> .title { font: 18px monospace;} </style>');
         for (uint256 i = 0; i < stepRenderers.length; i++) {
             svg = string.concat(svg, stepRenderers[i].generateDefs(tokenId));
         }

@@ -28,15 +28,6 @@ export default function MintLab(props: MintLabProps) {
     const { data: hash, error: writeError, writeContract } = useWriteLabMint();
     const { isLoading, isSuccess, data } = useWaitForTransactionReceipt({ hash })
 
-    function edgeChange(newHue: number) {
-        let newSVG = replaceNetworkEdges(preview, newHue);
-        setPreview(window.btoa(String(newSVG)));
-    }
-
-    function stationChange(newHue: number) {
-        let newSVG = replaceStationFrame(preview, newHue);
-        setPreview(window.btoa(String(newSVG)));
-    }
 
     useEffect(() => {
         if (writeError) {
@@ -58,16 +49,17 @@ export default function MintLab(props: MintLabProps) {
         if (image == undefined) {
             return;
         }
-        // console.log("image: " + image);
-        // console.log("wat: ", window.btoa(String(image)));
-        const skyColors = extractSkyColors(image);
-        setSkyColorOne(skyColors[0]);
-        setSkyColorTwo(skyColors[1]);
+        console.log("image: " + image);
+        console.log("wat: ", window.btoa(String(image)));
+        
+        // const skyColors = extractSkyColors(image);
+        // setSkyColorOne(skyColors[0]);
+        // setSkyColorTwo(skyColors[1]);
 
         const planetColors = extractPlanetColors(image);
         setPlanetColorOne(planetColors[0]);
         setPlanetColorTwo(planetColors[1]);
-        setPlanetColorThree(planetColors[2]);
+        // setPlanetColorThree(planetColors[2]);
 
         // setEdgeColor(extractEdgeColor(image));
         // setStationColor(extractStationColor(image));
@@ -106,7 +98,7 @@ export default function MintLab(props: MintLabProps) {
           <div className='max-w-lg min-w-lg'>
             {/* <div> information is simulated, sync to apply  </div> */}
             <Card>
-                    <div> Sky Colors</div>
+                    {/* <div> Sky Colors</div>
                     <div className='py-4 px-12'>
                         <Hue
                             hue={skyColorOne}
@@ -129,7 +121,7 @@ export default function MintLab(props: MintLabProps) {
                                 // edgeChange(newHue.h);
                             }}
                         />
-                    </div>
+                    </div> */}
 
                     <div> Planet Colors</div>
                     <div className='py-4 px-12'>
@@ -151,7 +143,7 @@ export default function MintLab(props: MintLabProps) {
                         />
                     </div>
 
-
+{/* 
                     <div className='py-4 px-12'>
                         <Hue
                             hue={planetColorThree}
@@ -160,7 +152,7 @@ export default function MintLab(props: MintLabProps) {
                                 planetColorChange(planetColorOne, planetColorTwo, newHue.h);
                             }}
                         />
-                    </div>
+                    </div> */}
                     <div className='flex pt-8'>
                 {address ?
                     <Button className='mx-auto'
