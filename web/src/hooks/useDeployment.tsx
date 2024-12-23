@@ -4,7 +4,7 @@ import { Deployments } from '@/domain/Deployments';
 import { useEffect, useState } from 'react';
 import { useAccount } from 'wagmi';
 
-export const useDeployment = () => {
+const useDeployment = () => {
   const { chain } = useAccount();
   const [deploy, setDeploy] = useState<Deployment>(Deployments['basesep']);
 
@@ -19,3 +19,5 @@ export const useDeployment = () => {
   // console.log("returning deployment: ", deploy.chain)
   return { deploy };
 };
+
+export default useDeployment;

@@ -74,6 +74,7 @@ const config: Config = {
   	fontFamily: {
   		roboto: ['Roboto Condensed', 'sans-serif'],
   		anon: ['Anonymous Pro', 'monospace'],
+		mono: ['Roboto Mono', 'monospace'],
   		signika: ['var(--font-signika)'],
   		outfit: ['var(--font-outfit)'],
 		nunito: ['var(--font-nunito)'],

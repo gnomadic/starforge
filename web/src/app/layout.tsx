@@ -53,11 +53,11 @@ const ptser = PT_Serif({
 
 
 export const metadata: Metadata = {
-  title: 'Adventure Alchemist',
-  description: 'Craft. Enchant. Conquer.',
+  title: 'STAR LOOM',
+  description: 'Weave the stars.  Forge Empires.  Uncover the truth.',
   openGraph: {
-    title: 'Adventure Alchemis',
-    description: 'Craft. Enchant. Conquer.',
+    title: 'STAR LOOM',
+    description: 'Weave the stars.  Forge Empires.  Uncover the truth.',
   },
 };
 
@@ -69,9 +69,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='en'>
-      <Head>
+      {/* <Head>
         <title>Adventure Alchemist</title>
-      </Head>
+      </Head> */}
 
       {/* <Header/> */}
       {/* <NavigationHeader /> */}

@@ -115,7 +115,8 @@ body {
   :root {
     --background: 0 0% 100%;
     --foreground: 20 14.3% 4.1%;
-    --card: 0 0% 100%;
+    /* --card: 0 0% 100%; */
+    --card: 49 24% 78%;
     --card-foreground: 20 14.3% 4.1%;
     --popover: 0 0% 100%;
     --popover-foreground: 20 14.3% 4.1%;

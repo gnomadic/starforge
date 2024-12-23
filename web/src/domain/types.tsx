@@ -56,6 +56,15 @@ export interface GameState {
   time: number;
 }
 
+export  interface CraftingSystemGameState {
+  
+    lastTick : bigint;
+    newItemRate : bigint;
+    beltDuration : bigint;
+    activeItem : bigint;
+
+}
+
 export type Deployment = {
   lab: Address;
   craftSystem: Address;
@@ -66,4 +75,11 @@ export type Deployment = {
   scan: string;
   viemChain: Chain;
   viemTransport: Transport;
+}
+
+export type HSL = {
+  h: number;
+  s: number;
+  l: number;
+  a: number;
 }
