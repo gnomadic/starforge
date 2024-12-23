@@ -130,7 +130,7 @@ export default function MintLab(props: MintLabProps) {
                                     </CardDescription>
                                 </CardHeader>
 
-                          
+
                                 <div className='flex py-8'>
                                     {address ?
                                         <Button className='mx-auto px-12 py-4'
@@ -187,14 +187,14 @@ export default function MintLab(props: MintLabProps) {
                                 </Box>
 
                                 <div className='py-4 px-12'>
-                                        <Hue
-                                            hue={noiseSeed}
-                                            onChange={(newHue) => {
-                                                setNoiseSeed(newHue.h);
-                                                planetGenChange(newHue.h);
-                                            }}
-                                        />
-                                    </div>
+                                    <Hue
+                                        hue={noiseSeed}
+                                        onChange={(newHue) => {
+                                            setNoiseSeed(newHue.h);
+                                            planetGenChange(newHue.h);
+                                        }}
+                                    />
+                                </div>
 
                                 {/* 
 <div className='py-4 px-12'>
