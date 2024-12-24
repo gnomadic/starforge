@@ -53,10 +53,10 @@ const ptser = PT_Serif({
 
 
 export const metadata: Metadata = {
-  title: 'STAR LOOM',
+  title: 'STAR FORGE',
   description: 'Weave the stars.  Forge Empires.  Uncover the truth.',
   openGraph: {
-    title: 'STAR LOOM',
+    title: 'STAR FORGE',
     description: 'Weave the stars.  Forge Empires.  Uncover the truth.',
   },
 };

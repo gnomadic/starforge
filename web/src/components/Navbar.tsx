@@ -23,10 +23,10 @@ export default function Navbar() {
           <div className='flex items-start'>
             <Link href='/'>
               <div className='text-xl text-white font-mono text-center tracking-wider'>
-              S T A R | L O O M
+              S T A R | F O R G E
               </div>
               {/* <div className='text-3xl text-white font-ultra text-center tracking-wider text-tavernOrange'>
-              S T A R | L O O M
+              S T A R | F O R G E
               </div> */}
             </Link>
           </div>

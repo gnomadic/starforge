@@ -25,7 +25,7 @@ export default function Home() {
           height={300}
         />
         <div className='mx-auto text-3xl text-center text-white'>
-        S T A R | L O O M
+        S T A R | F O R G E
         </div>
         <div className='pt-4 mx-auto text-xl text-center text-lightgrey'>
         An onchain game 
@@ -52,7 +52,7 @@ export default function Home() {
         </div>
         <div className='mx-auto'>
           <div className='text-3xl '>
-          S T A R | L O O M
+          S T A R | F O R G E
           </div>
           <div className='text-xl text-lightgrey'>
           Mauris eu risus sed ligula tempor consectetur eget quis velit. Donec volutpat ante vulputate, euismod mauris sit amet, semper metus. Donec mattis auctor quam, vel commodo purus finibus ut. Aenean posuere lorem sed risus rhoncus interdum. Donec sodales, tortor non tincidunt egestas, velit lorem sodales lorem, vitae vehicula ipsum nibh ut quam
@@ -60,7 +60,7 @@ export default function Home() {
         </div>
         <div className='mx-auto'>
           <div className='text-3xl '>
-          S T A R | L O O M
+          S T A R | F O R G E
           </div>
           <div className='text-xl text-lightgrey'>
           Donec purus eros, condimentum ac malesuada et, venenatis eu dui. Nulla luctus augue urna. Vestibulum volutpat tortor vel purus eleifend venenatis. In et turpis ac ligula gravida ullamcorper. Nulla consectetur, lacus eu aliquet molestie, neque enim consectetur justo, eget vehicula mi nibh a neque. Curabitur ornare enim eget massa maximus, eget consectetur lacus consequat. Donec eu posuere enim.
@@ -84,7 +84,7 @@ export default function Home() {
         </div>
         <div className='mx-auto '>
           <div className='text-3xl'>
-          S T A R | L O O M
+          S T A R | F O R G E
           </div>
           <div className='text-xl text-lightgrey'>
           Sed dictum non metus blandit tempus. Phasellus scelerisque aliquet arcu ut blandit. Maecenas lorem ante, ullamcorper quis venenatis id, rhoncus ut nisi. Fusce vel justo dui.

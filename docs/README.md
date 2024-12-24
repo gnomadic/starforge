@@ -20,9 +20,9 @@ layout:
 
 # Welcome
 
-Welcome to Star Loom.
+Welcome to Star Forge.
 
-Star Loom is a web3 idle RPG, where you, the player, take control of newly charted planets across the vast universe. &#x20;
+Star Forge is a web3 idle RPG, where you, the player, take control of newly charted planets across the vast universe. &#x20;
 
 
 
