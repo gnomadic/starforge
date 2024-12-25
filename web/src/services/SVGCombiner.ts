@@ -54,18 +54,18 @@ export function extractSVG(image: string) {
 //   return ok;
 // }
 
-export const replacePlanet = (svg: string, colorOne: number, colorTwo: number) => {
+export const replacePlanet = (svg: string, colorOne: number, colorTwo: number, sat: number, light: number) => {
 
   const parsed = extractSVG(svg);
   const doc = new DOMParser().parseFromString(parsed, "text/xml");
 
   const one = doc.getElementById("water");
   // one?.setAttribute('fill', `hsl(${colorOne},46%,66%)`);
-  one?.setAttribute('fill', `hsl(${colorOne},25%,80%)`);
+  one?.setAttribute('fill', `hsl(${colorOne},${sat}%,${light}%)`);
 
   const two = doc.getElementById("ground");
   // two?.setAttribute('fill', `hsl(${colorTwo},7%,43%)`);
-  two?.setAttribute('fill', `hsl(${colorTwo},25%,80%)`);
+  two?.setAttribute('fill', `hsl(${colorTwo},${sat}%,${light}%)`);
   // const three = doc.getElementById("planetThree");
   // three?.setAttribute('fill', `hsl(${colorThree},17%,30%)`);
 
@@ -73,6 +73,28 @@ export const replacePlanet = (svg: string, colorOne: number, colorTwo: number) =
   return new XMLSerializer().serializeToString(doc);
 
 }
+
+// export const replacePlanetSL = (svg: string, saturation: number, lightness: number) => {
+
+//   const parsed = extractSVG(svg);
+//   const doc = new DOMParser().parseFromString(parsed, "text/xml");
+
+//   const one = doc.getElementById("water");
+
+//   const [colorOne, colorTwo] = extractPlanetColors(svg);
+//   // one?.setAttribute('fill', `hsl(${colorOne},46%,66%)`);
+//   one?.setAttribute('fill', `hsl(${colorOne},${saturation}%,${lightness}%)`);
+
+//   const two = doc.getElementById("ground");
+//   // two?.setAttribute('fill', `hsl(${colorTwo},7%,43%)`);
+//   two?.setAttribute('fill', `hsl(${colorTwo},${saturation}%,${lightness}%)`);
+//   // const three = doc.getElementById("planetThree");
+//   // three?.setAttribute('fill', `hsl(${colorThree},17%,30%)`);
+
+
+//   return new XMLSerializer().serializeToString(doc);
+
+// }
 
 export const replaceNoiseSeed = (svg: string, seed: number) => {
 
@@ -82,14 +104,14 @@ export const replaceNoiseSeed = (svg: string, seed: number) => {
   const one = doc.getElementById("planet");
   const turb = one!.childNodes[0] as unknown as Element;
   // turb.
-// 
+  // 
   // <feTurbulence type="fractalNoise" baseFrequency=".01" numOctaves="10" seed="102" />
 
   turb.setAttribute('seed', `${seed}`);
 
-    // const primaryNight =
-    //   'stop offset="0%" stop-color="hsl(' + newPrimary + ',100%,30%)"';
-    // night?.replaceChild(doc.createElement(primaryNight), night.childNodes[0]);
+  // const primaryNight =
+  //   'stop offset="0%" stop-color="hsl(' + newPrimary + ',100%,30%)"';
+  // night?.replaceChild(doc.createElement(primaryNight), night.childNodes[0]);
 
 
   // one?.setAttribute('fill', `hsl(${colorOne},46%,66%)`);
@@ -103,6 +125,16 @@ export const replaceNoiseSeed = (svg: string, seed: number) => {
 
 
   return new XMLSerializer().serializeToString(doc);
+}
+
+export const extractNoiseSeed = (svg: string) => {
+  const doc = new DOMParser().parseFromString(svg, "text/xml");
+
+
+  const one = doc.getElementById("planet");
+  const turb = one!.childNodes[0] as unknown as Element;
+  return turb.getAttribute('seed');
+  // turb.
 }
 
 
@@ -195,6 +227,44 @@ export function extractPlanetColors(svg: string) {
   // console.log("pulled: ", value);
   return [Number(firstValue), Number(secondValue)];
 }
+
+export function extractPlanetSL(svg: string) {
+  // const parsed = extractSVG(svg);
+  const doc = new DOMParser().parseFromString(svg, "text/xml");
+  const one = doc.getElementById("water");
+  let row = new XMLSerializer().serializeToString(one!);
+  const firstValue = row.substring(row.indexOf("hsl(") + 4, row.indexOf(","));
+  let color = row.substring(row.indexOf("hsl("), row.indexOf(")") + 1);
+  const firstSat = color.substring(color.indexOf(",") + 1, color.lastIndexOf(","));
+  const firstLight = color.substring(color.lastIndexOf(",") + 1, color.lastIndexOf(")"));
+
+  // const two = doc.getElementById("ground");
+  // row = new XMLSerializer().serializeToString(two!);
+  // const secondValue = row.substring(row.indexOf("hsl(") + 4, row.indexOf(","));
+  // const color2 = row.substring(row.indexOf("hsl("), row.indexOf(")") + 1);
+  // const secondSat = color2.substring(color2.indexOf(",") + 1, color2.lastIndexOf(","));
+  // const secondLight = color2.substring(color2.lastIndexOf(",") + 1, color2.lastIndexOf(")"));
+
+  // const three = doc.getElementById("planetThree");
+  // row = new XMLSerializer().serializeToString(three!);
+  // const thirdValue = row.substring(row.indexOf("hsl(") + 4, row.indexOf(","));
+
+
+  // // // gradient?.childNodes[0].
+  // const first = new XMLSerializer().serializeToString(gradient!.childNodes[0]);
+  // const second = new XMLSerializer().serializeToString(gradient!.childNodes[1]);
+
+  // const firstValue = first.substring(first.indexOf("hsl(") + 4, first.indexOf(","));
+  // const secondValue = second.substring(second.indexOf("hsl(") + 4, second.indexOf(","));
+  // console.log("pulled: ", value);
+  return [Number(firstSat), Number(firstLight)];
+
+
+
+}
+
+
+
 
 
 
