@@ -12,9 +12,11 @@ type HueControlProps = {
     reset: () => void
     step?: number | undefined
     maxValue?: number | undefined
+    statOne: string
+    statTwo: string
 }
 
-export default function HueControl({ title, value, newHue, reset, step = 1, maxValue= 360 }: HueControlProps) {
+export default function StatControl({ title, value, newHue, reset, step = 1, maxValue= 360, statOne, statTwo }: HueControlProps) {
 
     const [curValue, setCurValue] = useState(value);
 
@@ -47,9 +49,15 @@ export default function HueControl({ title, value, newHue, reset, step = 1, maxV
                         }}
                         className='px-4'
                     />
-                    <p className="text-xs text-muted-foreground text-right pt-2 ">
-                        Value: {curValue}
+                    <div className='grid grid-cols-2'>
+                    <p className="text-xs text-muted-foreground text-left pt-2 pl-2 ">
+                        {statOne}: {curValue}
                     </p>
+
+                    <p className="text-xs text-muted-foreground text-right pt-2 ">
+                        {statTwo}: {20 - curValue}
+                    </p>
+                    </div>
                 </div>
             </div>
         </div>

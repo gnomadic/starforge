@@ -1,7 +1,6 @@
 "use client";
 
-import Image from 'next/image';
-import placeholder from "@/images/cardback.png";
+
 import { useReadLabGenerateSvg, useWriteLabMint } from '@/generated';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
@@ -10,8 +9,7 @@ import { Button } from '@/components/ui/button';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import useDeployment from '@/hooks/useDeployment';
 import MintPreview from './MintPreview';
-import Hue from '@uiw/react-color-hue';
-import { extractNoiseSeed, extractPlanetColors, extractPlanetSL, replaceNoiseSeed, replacePlanet, replacePlanetSL } from '@/services/SVGCombiner';
+import { extractNoiseSeed, extractPlanetColors, replaceNoiseSeed, replacePlanet } from '@/services/SVGCombiner';
 import { Card, CardDescription, CardHeader, CardTitle } from '../ui/card';
 import Box from '../box';
 import {
@@ -20,10 +18,8 @@ import {
     TabsList,
     TabsTrigger,
 } from "@/components/ui/tabs"
-import { RotateCcw } from 'lucide-react';
-import ShadeSlider from '@uiw/react-color-shade-slider';
-import Slider from '@uiw/react-color-slider';
 import HueControl from './HueControl';
+import StatControl from './StatControl';
 
 
 type MintLabProps = {
@@ -39,14 +35,14 @@ export default function MintLab(props: MintLabProps) {
     const { data: hash, error: writeError, writeContract } = useWriteLabMint();
     const { isLoading, isSuccess, data } = useWaitForTransactionReceipt({ hash })
 
-    const [satLight, setSatLight] = useState({ sat: 25, light: 80, meter: 80 });
+    const [satLight, setSatLight] = useState({ sat: 25, light: 80, meter: 80, index: 0 });
 
     const satLightDefs = [
-        { sat: 25, light: 80, meter: 80 },
-        { sat: 47, light: 58, meter: 65 },
-        { sat: 30, light: 50, meter: 50 },
-        { sat: 32, light: 46, meter: 35 },
-        { sat: 66, light: 35, meter: 20 },
+        { sat: 25, light: 80, meter: 80, index: 0 },
+        { sat: 47, light: 58, meter: 65, index: 1 },
+        { sat: 30, light: 50, meter: 50, index: 2 },
+        { sat: 32, light: 46, meter: 35, index: 3 },
+        { sat: 66, light: 35, meter: 20, index: 4 },
 
     ]
 
@@ -109,6 +105,10 @@ export default function MintLab(props: MintLabProps) {
     const [originalColorTwo, setOriginalColorTwo] = useState(0);
     const [planetColorOne, setPlanetColorOne] = useState(0);
     const [planetColorTwo, setPlanetColorTwo] = useState(0);
+
+    const [mineralStat, setMineralStat] = useState(10);
+    const [anomalyStat, setAnomalyStat] = useState(10);
+    const [energyStat, setEnergyStat] = useState(10);
     // const [planetSat, setPlanetSat] = useState(0);
     // const [planetLight, setPlanetLight] = useState(0);
 
@@ -159,7 +159,6 @@ export default function MintLab(props: MintLabProps) {
                                     <CardTitle> Random Assignment  </CardTitle>
                                     <CardDescription className="flex justify-between">
                                         <div>
-                                            {/* When you accept your assignment, you can perform one investment every 20 hours.  Your investments will result in resource allocation which you can use to serve the greater good. */}
                                             You will receive a random assignment of your next planetary operation.
                                         </div>
 
@@ -197,36 +196,14 @@ export default function MintLab(props: MintLabProps) {
                                 </CardHeader>
 
 
-                                <Box className='mx-12 py-4 font-mono'>
-                                    {/* <p className="py-2 px-5">Primary Color</p>
-                                    <div className="flex mx-auto px-2 ">
-                                        <div
-                                            className=" border-black border-[2px] mr-4"
-                                            onClick={() => {
-                                                //   resetFirstColor();
-                                            }}
-                                        >
+                                <Box className='mx-2 py-4 font-mono'>
 
-                                            <RotateCcw className='w-10 h-10 mx-auto ' />
-
-                                        </div>
-
-                                        <div className="flex-auto p-3 border-black border-[2px] mx-auto">
-                                            <Hue
-                                                hue={planetColorOne}
-                                                onChange={(newHue) => {
-                                                    setPlanetColorOne(newHue.h);
-                                                    planetColorChange(newHue.h, planetColorTwo, satLight.sat, satLight.light);
-                                                }}
-                                            />
-                                        </div>
-                                    </div> */}
 
                                     <HueControl
                                         reset={() => {
                                             setPlanetColorOne(originalColorOne);
                                             planetColorChange(originalColorOne, planetColorTwo, satLight.sat, satLight.light);
-                                         }}
+                                        }}
                                         title="Primary Color"
                                         value={planetColorOne}
                                         newHue={(h) => {
@@ -235,32 +212,13 @@ export default function MintLab(props: MintLabProps) {
                                         }}
                                     />
 
-                                    {/* <p className="py-2 px-5">Secondary Color</p>
-                                    <div className="flex mx-auto px-2 ">
-                                        <div
-                                            className=" border-black border-[2px] mr-4"
-                                            onClick={() => {
-                                                //   resetFirstColor();
-                                            }}
-                                        >
-
-                                            <RotateCcw className='w-10 h-10 mx-auto ' />
-
-                                        </div>
-
-                                        <div className="flex-auto p-3 border-black border-[2px] mx-auto">
-                                            <Hue
-                                                hue={planetColorTwo}
-                                                onChange={(newHue) => {
-                                                    setPlanetColorTwo(newHue.h);
-                                                    planetColorChange(planetColorOne, newHue.h, satLight.sat, satLight.light);
-                                                }}
-                                            />
-                                        </div>
-                                    </div> */}
 
                                     <HueControl
-                                        reset={() => { }}
+                                        reset={() => {
+                                            setPlanetColorTwo(originalColorTwo);
+                                            planetColorChange(planetColorOne, originalColorTwo, satLight.sat, satLight.light);
+
+                                        }}
                                         title="Secondary Color"
                                         value={planetColorTwo}
                                         newHue={(h) => {
@@ -269,7 +227,7 @@ export default function MintLab(props: MintLabProps) {
                                         }}
                                     />
 
-                                    <p className="py-2 px-5">Saturation</p>
+                                    {/* <p className="py-2 px-5">Saturation</p>
                                     <div className="flex mx-auto px-2 ">
                                         <div
                                             className=" border-black border-[2px] mr-4"
@@ -297,149 +255,114 @@ export default function MintLab(props: MintLabProps) {
 
                                                 }}
                                             />
-                                            {/* <Hue
-                                                hue={planetSat}
-                                                onChange={(newHue) => {
-                                                    // setPlanetColorOne(newHue.h);
-                                                    setPlanetSat(newHue.h);
-                                                    planetColorChange(planetColorOne, planetColorTwo, newHue.h, planetLight);
-                                                }}
-                                            /> */}
-                                        </div>
-                                    </div>
-
-                                    {/* <p className="py-2 px-5">Lightness Color</p> */}
-                                    {/* <div className="flex mx-auto px-2 ">
-                                        <div
-                                            className=" border-black border-[2px] mr-4"
-                                            onClick={() => {
-                                                //   resetFirstColor();
-                                            }}
-                                        >
-
-                                            <RotateCcw className='w-10 h-10 mx-auto ' />
-
-                                        </div> */}
-
-                                    {/* <div className="flex-auto p-3 border-black border-[2px] mx-auto"> */}
-                                    {/* <Hue
-                                                hue={planetColorOne}
-                                                onChange={(newHue) => {
-                                                    setPlanetColorOne(newHue.h);
-                                                    planetColorChange(newHue.h, planetColorTwo, planetSat, newHue.h);
-                                                }}
-                                            /> */}
-                                    {/* 
-                                            <Hue
-                                                hue={planetLight}
-                                                onChange={(newHue) => {
-                                                    // setPlanetColorOne(newHue.h);
-                                                    setPlanetLight(newHue.h);
-                                                    planetColorChange(planetColorOne, planetColorTwo, planetSat, newHue.h);
-                                                }}
-                                            /> */}
-
-                                    {/* <ShadeSlider
-
-                                                hsva={{ h: planetColorOne, s: planetSat, v: planetLight, a: 1 }}
-                                                onChange={(newShade) => {
-                                                    // setHsva({ ...hsva, ...newShade });
-                                                    setPlanetLight(newShade.v);
-                                                    planetColorChange(planetColorOne, planetColorTwo, planetSat, newShade.v);
-
-                                                }}
-                                            /> */}
-                                    {/* </div> */}
-                                    {/* </div> */}
-
-                                    <p className="py-2 px-5">Terrain</p>
-                                    <div className="flex mx-auto px-2 ">
-                                        <div
-                                            className=" border-black border-[2px] mr-4"
-                                            onClick={() => {
-                                                //   resetFirstColor();
-                                            }}
-                                        >
-
-                                            <RotateCcw className='w-10 h-10 mx-auto ' />
 
                                         </div>
-
-                                        <div className="flex-auto p-3 border-black border-[2px] mx-auto">
-                                            <Hue
-                                                hue={noiseSeed}
-                                                onChange={(newHue) => {
-                                                    setNoiseSeed(newHue.h);
-                                                    planetGenChange(newHue.h);
-                                                }}
-                                            />
-                                        </div>
-                                    </div>
-
-
-                                    {/* <div className='py-4 px-12'>
-
-                                        <p >primary</p>
-
-                                        <RotateCcw />
-                                        <Hue
-                                            hue={planetColorOne}
-                                            onChange={(newHue) => {
-                                                setPlanetColorOne(newHue.h);
-                                                planetColorChange(newHue.h, planetColorTwo);
-                                            }}
-                                        />
                                     </div> */}
-                                    {/* <div className='py-4 px-12'>
-                                        <Hue
-                                            hue={planetColorTwo}
-                                            onChange={(newHue) => {
-                                                setPlanetColorTwo(newHue.h);
-                                                planetColorChange(planetColorOne, newHue.h);
-                                            }}
-                                        />
-                                    </div> */}
+
+
+                                    <HueControl
+                                        reset={() => {
+                                            setNoiseSeed(originalSeed);
+                                            planetGenChange(originalSeed);
+                                        }}
+                                        title="Saturation"
+                                        value={satLightDefs.findIndex((sl) => sl.sat == satLight.sat)}
+                                        newHue={(h) => {
+                                            const SL = satLightDefs[h];
+                                            setSatLight(SL);
+                                            planetColorChange(planetColorOne, planetColorTwo, SL.sat, SL.light);
+
+
+                                            // setNoiseSeed(h);
+                                            // planetGenChange(h);
+                                        }}
+                                        maxValue={4}
+                                    />
+
+
+                                    <HueControl
+                                        reset={() => {
+                                            setNoiseSeed(originalSeed);
+                                            planetGenChange(originalSeed);
+                                        }}
+                                        title="Terrain"
+                                        value={noiseSeed}
+                                        newHue={(h) => {
+                                            setNoiseSeed(h);
+                                            planetGenChange(h);
+                                        }}
+                                    />
                                 </Box>
-                                {/* 
-                                <Box className='mx-12 py-4 mt-6'>
-                                    <div className='font-mono text-center'>
-                                        Terrain
-                                    </div>
-                                    <div className='py-4 px-12'>
-                                        <Hue
-                                            hue={noiseSeed}
-                                            onChange={(newHue) => {
-                                                setNoiseSeed(newHue.h);
-                                                planetGenChange(newHue.h);
-                                            }}
-                                        />
-                                    </div>
-                                </Box> */}
-
-                                <Box className='mx-12 py-4 mt-6'>
-                                    <div className='font-mono text-center'>
+                                <Box className='mx-2 py-4 font-mono mt-4'>
+                                    {/* <div className='font-mono text-center'>
                                         Stats
-                                    </div>
-                                    <div className='py-4 px-12'>
+                                    </div> */}
+
+                                    <StatControl
+                                        reset={() => {
+                                            // setNoiseSeed(originalSeed);
+                                            // planetGenChange(originalSeed);
+                                            setMineralStat(10);
+                                        }}
+                                        title="Surface"
+                                        value={mineralStat}
+                                        newHue={(h) => {
+                                            // setNoiseSeed(h);
+                                            // planetGenChange(h);
+                                            setMineralStat(h);
+                                        }}
+                                        maxValue={20}
+                                        statOne='Biome Diversity'
+                                        statTwo='Mineral Density'
+                                    />
+
+                                    <StatControl
+                                        reset={() => {
+                                            // setNoiseSeed(originalSeed);
+                                            // planetGenChange(originalSeed);
+                                            setAnomalyStat(10);
+                                        }}
+                                        title="Environment"
+                                        value={anomalyStat}
+                                        newHue={(h) => {
+                                            // setNoiseSeed(h);
+                                            // planetGenChange(h);
+                                            setAnomalyStat(h);
+                                        }}
+                                        maxValue={20}
+                                        statOne='Bioavailability'
+                                        statTwo='Anomaly'
+                                    />
+
+                                    <StatControl
+                                        reset={() => {
+                                            // setNoiseSeed(originalSeed);
+                                            // planetGenChange(originalSeed);
+                                            setEnergyStat(10);
+                                        }}
+                                        title="Atmosphere"
+                                        value={energyStat}
+                                        newHue={(h) => {
+                                            // setNoiseSeed(h);
+                                            // planetGenChange(h);
+                                            setEnergyStat(h);
+                                        }}
+                                        maxValue={20}
+                                        statOne='Orbital Position'
+                                        statTwo='Energy Potential'
+                                    />
+                                    {/* <div className='py-4 px-12'>
                                         <Hue
                                             hue={noiseSeed}
                                             onChange={(newHue) => {
                                                 setNoiseSeed(newHue.h);
                                                 planetGenChange(newHue.h);
+
                                             }}
                                         />
-                                    </div>
+                                    </div> */}
                                 </Box>
-                                {/* 
-<div className='py-4 px-12'>
-<Hue
-    hue={planetColorThree}
-    onChange={(newHue) => {
-        setPlanetColorThree(newHue.h);
-        planetColorChange(planetColorOne, planetColorTwo, newHue.h);
-    }}
-/>
-</div> */}
+
                                 <div className='flex py-8'>
                                     {address ?
                                         <Button className='mx-auto px-12 py-4'
