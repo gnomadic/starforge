@@ -12,7 +12,7 @@ export default function Footer() {
             <Link href='/'>
     
               <div className='text-4xl text-white font-mono text-center tracking-wider'>
-              S T A R | F O R G E
+              E N T R O P I C A L
               </div>
               <div className='mx-5 text-xl uppercase text-subtext'>Forge the stars. Forge Empires. Forge the truth.  </div>
             </Link>

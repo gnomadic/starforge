@@ -6,7 +6,7 @@ import "../interfaces/IStepRenderer.sol";
 
 import "hardhat/console.sol";
 
-contract BeltRenderer is IStepRenderer {
+contract SurfaceRenderer is IStepRenderer {
     constructor() {}
 
     function generateDefs(

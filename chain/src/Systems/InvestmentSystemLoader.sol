@@ -2,15 +2,15 @@
 pragma solidity ^0.8.24;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
-import {ICraftSystem} from "./interfaces/ICraftSystem.sol";
+import {IInvestmentSystem} from "../interfaces/IInvestmentSystem.sol";
 
 
-contract CraftSystemLoader is Ownable  {
+contract InvestmentSystem is Ownable  {
 
     constructor() Ownable(_msgSender()) {}  
 
-    function load(address craftsystem) public onlyOwner() {
-        ICraftSystem craft = ICraftSystem(craftsystem);
+    function load(address investmentSystem) public onlyOwner() {
+        IInvestmentSystem craft = IInvestmentSystem(investmentSystem);
 
         craft.addItem(0, 100);
         craft.addItem(1, 200);

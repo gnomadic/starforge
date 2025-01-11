@@ -20,9 +20,9 @@ layout:
 
 # Welcome
 
-Welcome to Star Forge.
+Welcome to Entropical.
 
-Star Forge is a web3 idle RPG, where you, the player, take control of newly charted planets across the vast universe. &#x20;
+Entropical is a web3 RPG, where you, the player, take control of newly charted planets across the vast universe. &#x20;
 
 
 

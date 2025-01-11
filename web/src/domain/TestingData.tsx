@@ -37,11 +37,12 @@ export interface PlanetStat {
 
 
 export const planetStats = [
-    { name: "Atmosphere", value: 13 },
-    { name: "Density", value: 16 },
-    { name: "Anomalous", value: 15 },
-    { name: "Energy", value: 8 },
-    { name: "Biome", value: 14 },
+    { name: "Livability", value: 13 },
+    { name: "Mineral Density", value: 7 },
+    { name: "Biome Diversity", value: 12 },
+    { name: "Anomalousness", value: 8 },
+    { name: "Orbital Position", value: 14 },
+    { name: "Energy Potential", value: 6 },
     // { name: "Temperature", value: 6 },
     // { name: "Composition", value: 7 },
     // { name: "Biome Diversity", value: 9 },

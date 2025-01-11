@@ -13,82 +13,100 @@ module.exports = async (hre) => {
   console.log("----- deploying")
 
 
-  const colorUtils = await deploy("ColorUtils", {
+  // const colorUtils = await deploy("ColorUtils", {
+  //   from: deployer,
+  //   log: true,
+  // });
+
+  const PlanetRenderer = await deploy("PlanetRenderer", {
     from: deployer,
     log: true,
   });
 
-  const labRenderer = await deploy("LabRenderer", {
+  const SurfaceRenderer = await deploy("SurfaceRenderer", {
+    from: deployer,
+    log: true,
+  });
+  const MapRenderer = await deploy("MapRenderer", {
     from: deployer,
     log: true,
   });
 
-  const beltRenderer = await deploy("BeltRenderer", {
-    from: deployer,
-    log: true,
-  });
-  const roomRenderer = await deploy("RoomRenderer", {
+  const SystemController = await deploy("SystemController", {
     from: deployer,
     log: true,
   });
 
-  const lab = await deploy("Lab", {
+  const Planet = await deploy("Planet", {
     from: deployer,
     log: true,
-    args: [labRenderer.address],
+    args: [PlanetRenderer.address, SystemController.address],
   });
 
-  const craft = await deploy("CraftSystem", {
-    from: deployer,
-    log: true
-  });
 
-  const craftLoader = await deploy("CraftSystemLoader", {
-    from: deployer,
-    log: true,
-  });
+
+
+
+
+
+  // const craft = await deploy("CraftSystem", {
+  //   from: deployer,
+  //   log: true
+  // });
+
+  // const craftLoader = await deploy("CraftSystemLoader", {
+  //   from: deployer,
+  //   log: true,
+  // });
 
   console.log("----- done")
 
   console.log("----- configuring systems");
 
-  const LabDeployment = await deployments.get("Lab");
-  const deployedLab = await ethers.getContractAt("Lab", LabDeployment.address);
+  const SysControllerDeployment = await deployments.get("SystemController");
+  const deployedSysController = await ethers.getContractAt("SystemController", SysControllerDeployment.address);
 
-  const CraftDeployment = await deployments.get("CraftSystem");
-  const deployedCraft = await ethers.getContractAt("CraftSystem", CraftDeployment.address);
+  const PlanetDeployment = await deployments.get("Planet");
+  const deployedPlanet = await ethers.getContractAt("Planet", PlanetDeployment.address);
 
-  const CraftLoaderDeployment = await deployments.get("CraftSystemLoader");
-  const deployedCraftLoader = await ethers.getContractAt("CraftSystemLoader", CraftLoaderDeployment.address);
+  // const CraftDeployment = await deployments.get("CraftSystem");
+  // const deployedCraft = await ethers.getContractAt("CraftSystem", CraftDeployment.address);
 
-  let tx = await deployedLab.addSystem(craft.address);
+  // const CraftLoaderDeployment = await deployments.get("CraftSystemLoader");
+  // const deployedCraftLoader = await ethers.getContractAt("CraftSystemLoader", CraftLoaderDeployment.address);
+
+
+  let tx = await deployedSysController.setTokenAddress(Planet.address);
   await tx.wait();
 
-  tx = await deployedCraft.setLoader(craftLoader.address);
-  await tx.wait();
+  // let tx = await deployedPlanet.addSystem(craft.address);
+  // await tx.wait();
+
+  // tx = await deployedCraft.setLoader(craftLoader.address);
+  // await tx.wait();
 
   console.log("----- done")
 
   console.log("----- loading prefabs")
 
-  tx = await deployedCraftLoader.load(craft.address);
-  await tx.wait();
+  // tx = await deployedCraftLoader.load(craft.address);
+  // await tx.wait();
 
   console.log("----- done")
 
   console.log("----- loading renderer")
 
-  const LabRendererDeployment = await deployments.get("LabRenderer");
-  const deployedRenderer = await ethers.getContractAt("LabRenderer", LabRendererDeployment.address);
+  const PlanetRendererDeployment = await deployments.get("PlanetRenderer");
+  const deployedRenderer = await ethers.getContractAt("PlanetRenderer", PlanetRendererDeployment.address);
 
   console.log("----- done")
 
   console.log("----- configuring renderer")
 
-  tx = await deployedRenderer.addStepRenderer(roomRenderer.address);
+  tx = await deployedRenderer.addStepRenderer(MapRenderer.address);
   await tx.wait();
 
-  tx = await deployedRenderer.addStepRenderer(beltRenderer.address);
+  tx = await deployedRenderer.addStepRenderer(SurfaceRenderer.address);
   await tx.wait();
 
   console.log("----- done")
@@ -100,8 +118,8 @@ module.exports = async (hre) => {
   networkName === "hardhat" ? (networkName = "localhost") : (networkName = hre.network.name);
 
   const object = {};
-  object.lab = lab.address;
-  object.craftSystem = craft.address;
+  object.Planet = Planet.address;
+  // object.craftSystem = craft.address;
 
   const filename = "../deployments/" + networkName + "/AA-deployment.json";
 
@@ -116,18 +134,18 @@ module.exports = async (hre) => {
     console.log("verifing");
     // await verify(hre, color.address, "Color");
     // await verify(hre, starshipRenderer.address, "StarshipRenderer", "renderers/");
-    await verify(hre, lab.address, "Lab", "", [lab.address]);
+    await verify(hre, Planet.address, "Planet", "", [Planet.address]);
 
   }
 
-  console.log ('mint because metamask is annoying');
-  
-  tx = await deployedLab.mint("0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266")
+  console.log('mint because metamask is annoying');
+
+  tx = await deployedPlanet.mint("0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266")
   await tx.wait();
 
-  tx = await deployedLab.mint("0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266")
+  tx = await deployedPlanet.mint("0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266")
   await tx.wait();
 
 };
 
-module.exports.tags = ["tokens", "labs"];
+module.exports.tags = ["tokens", "Planets"];

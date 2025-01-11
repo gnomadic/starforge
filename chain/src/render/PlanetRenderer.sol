@@ -5,7 +5,7 @@ import "../ColorUtils.sol";
 import "../interfaces/IRenderer.sol";
 import "../interfaces/IStepRenderer.sol";
 
-contract LabRenderer is IRenderer {
+contract PlanetRenderer is IRenderer {
     IStepRenderer[] public stepRenderers;
 
     function generateSVG(uint256 tokenId) public view returns (string memory) {

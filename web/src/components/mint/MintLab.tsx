@@ -331,7 +331,7 @@ export default function MintLab(props: MintLabProps) {
                                         }}
                                         maxValue={20}
                                         statOne='Bioavailability'
-                                        statTwo='Anomaly'
+                                        statTwo='Anomalousness'
                                     />
 
                                     <StatControl

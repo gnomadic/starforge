@@ -7,8 +7,9 @@ import {IRenderer} from "./interfaces/IRenderer.sol";
 import {Renderable721} from "./interfaces/Renderable721.sol";
 import {Base64} from "@openzeppelin/contracts/utils/Base64.sol";
 import {Strings} from "@openzeppelin/contracts/utils/Strings.sol";
+import {ISystemController} from "./interfaces/ISystem.sol";
 
-contract Lab is ERC721AQueryable, Renderable721, Ownable {
+contract Planet is ERC721AQueryable, Renderable721, Ownable {
     using Strings for uint256;
 
     uint256 public nextTokenId;
@@ -16,15 +17,19 @@ contract Lab is ERC721AQueryable, Renderable721, Ownable {
     uint256 public mintCost = 0;
     uint256 public customizeCost = 0; // 5 * 10 ** 15;
 
-    address[] public systems;
+    // address[] public systems;
+    ISystemController public systemController;
 
     constructor(
-        address renderer
+        address renderer,
+        address systems
     )
         Renderable721(renderer)
-        ERC721A("Adventure Alchemist", "AA")
+        ERC721A("STAR FORGE | PLANET", "Planet")
         Ownable(_msgSender())
-    {}
+    {
+        systemController = ISystemController(systems);
+    }
 
     function mint(address to) external payable {
         _mint(to);
@@ -35,9 +40,8 @@ contract Lab is ERC721AQueryable, Renderable721, Ownable {
         nextTokenId++;
         _safeMint(to, 1);
 
-        for (uint i = 0; i < systems.length; i++) {
-            System(systems[i]).init(tokenId);
-        }
+        systemController.initAll(tokenId);
+
     }
 
     function ownerOf(
@@ -53,10 +57,10 @@ contract Lab is ERC721AQueryable, Renderable721, Ownable {
 
         bytes memory dataURI = abi.encodePacked(
             "{",
-            '"name": "Adventure Alchemist Lab #',
+            '"name": "STAR FORGE | PLANET #',
             tokenId.toString(),
             '",',
-            '"description": "What are you creating today",',
+            '"description": "Forge the future",',
             '"image": "',
             generateCharacter(tokenId),
             '"',
@@ -74,8 +78,8 @@ contract Lab is ERC721AQueryable, Renderable721, Ownable {
     function contractURI() public view returns (string memory) {
         bytes memory dataURI = abi.encodePacked(
             "{",
-            '"name": "Adventure Alchemist",',
-            '"description": "Play Adventure Alchemist",',
+            '"name": "STAR FORGE | PLANETS",',
+            '"description": "play STAR FORGE.  Forge your planet in this incremental onchain game.",',
             '"external_url": "nope",',
             '"image": "',
             generateCharacter(0),
@@ -93,15 +97,5 @@ contract Lab is ERC721AQueryable, Renderable721, Ownable {
 
     error NotMinted();
 
-    function addSystem(address newSystem) public onlyOwner() {
-        systems.push(newSystem);
-    }
-
-    function clearSystems() public onlyOwner() {
-        delete systems;
-    }
 }
 
-interface System {
-    function init(uint256 tokenId) external;
-}

@@ -2,9 +2,9 @@
 pragma solidity ^0.8.24;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
-import {ICraftSystem} from "./interfaces/ICraftSystem.sol";
+import {IInvestmentSystem} from "../interfaces/IInvestmentSystem.sol";
 
-contract CraftSystem is Ownable, ICraftSystem {
+contract InvestmentSystem is Ownable, IInvestmentSystem {
     struct GameState {
         uint256 lastTick;
         uint256 newItemRate;

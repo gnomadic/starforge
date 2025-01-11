@@ -6,7 +6,7 @@ import "../interfaces/IStepRenderer.sol";
 
 import "hardhat/console.sol";
 
-contract RoomRenderer is IStepRenderer {
+contract MapRenderer is IStepRenderer {
     constructor() {}
 
     function generateDefs(

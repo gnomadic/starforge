@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.24;
 
-interface ICraftSystem {
+interface IInvestmentSystem {
     function init(uint256 tokenId) external;
 
     function addItem(uint256 index, uint256 baseValue) external;
