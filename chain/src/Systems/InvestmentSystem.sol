@@ -3,83 +3,45 @@ pragma solidity ^0.8.24;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
 import {IInvestmentSystem} from "../interfaces/IInvestmentSystem.sol";
+import {ISystem, ISystemController} from "../interfaces/ISystem.sol";
+import {IERC721} from "../interfaces/IERC721.sol";
+import {IGlobalProgress} from "../interfaces/IGlobalProgress.sol";
 
-contract InvestmentSystem is Ownable, IInvestmentSystem {
-    struct GameState {
-        uint256 lastTick;
-        uint256 newItemRate;
-        uint256 beltDuration;
-        uint256 activeItem;
+contract InvestmentSystem is Ownable, IInvestmentSystem, ISystem{
+    IERC721 public planet;
+
+    mapping(uint256 => Stats) public stats;
+
+    ISystemController public controller;
+
+    struct Stats {
+        uint256 lastGaze;
+        uint16 gazes;
     }
 
-    struct Item {
-        uint256 baseValue;
+    constructor(address _planet) Ownable(_msgSender()) {
+        planet = IERC721(_planet);
     }
 
-    struct Station {
-        uint256 valueAdd;
+    function init(ISystemController _controller, uint256 tokenId) external override {
+        controller = _controller;
+        stats[tokenId].lastGaze = block.timestamp;
+        stats[tokenId].gazes = 0;
     }
 
-    mapping(uint256 => GameState) public gameStates; //maps token to game state
-    mapping(uint256 => Station) public stations;
-    mapping(uint256 => Item) public items;
+    function invest(uint256 tokenId) public {
+        if (planet.ownerOf(tokenId) != msg.sender) revert NotTheOwner();
+        if (block.timestamp - stats[tokenId].lastGaze < 14 hours) revert NotEnoughTimePassed();
+        stats[tokenId].gazes = stats[tokenId].gazes + 1;
+        stats[tokenId].lastGaze = block.timestamp;
 
-    constructor() Ownable(_msgSender()) {}
-
-    function init(uint256 tokenId) external override {
-        gameStates[tokenId].lastTick = block.timestamp;
-        gameStates[tokenId].newItemRate = 2;
-        gameStates[tokenId].beltDuration = 10;
-        gameStates[tokenId].activeItem = 0;
+        ISystem global = controller.getSystem(0);
+        if (address(global) != address(0)) {
+            IGlobalProgress(address(global)).countEvent("investment");
+        }
+        
     }
 
-    function tick(uint256 tokenId) public {
-        // run simulate tick, update pending gold and update timestamps
-    }
-
-    function simulateTick(uint256 tokenId) public view returns (uint256) {
-        // see how long it's been since the last real tick
-        uint256 elapsed = (block.timestamp - gameStates[tokenId].lastTick) /
-            1000;
-
-        //figure out how many items finished
-
-        uint256 itemsFinished = (elapsed - gameStates[tokenId].beltDuration) /
-            gameStates[tokenId].newItemRate;
-
-        uint256 pendingGold = itemsFinished * items[gameStates[tokenId].activeItem].baseValue;
-
-        return pendingGold;
-
-        // apply stations to finished items
-
-        // update inventory
-    }
-
-    function getGameState(uint256 tokenId)
-        external
-        view
-        returns (GameState memory)
-    {
-        return gameStates[tokenId];
-    }
-
-    function addItem(uint256 index, uint256 baseValue) public {
-        if (msg.sender != loader) revert UNAUTHORIZED();
-
-        items[index] = Item(baseValue);
-    }
-
-    function addStation(uint256 index, uint256 valueAdd) public {
-        if (msg.sender != loader) revert UNAUTHORIZED();
-        stations[index] = Station(valueAdd);
-    }
-
-    address loader;
-
-    function setLoader(address _loader) public onlyOwner {
-        loader = _loader;
-    }
-
-    error UNAUTHORIZED();
+    error NotTheOwner();
+    error NotEnoughTimePassed();
 }

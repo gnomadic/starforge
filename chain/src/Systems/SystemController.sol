@@ -5,22 +5,28 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 import "../interfaces/ISystem.sol";
 
 
-contract SystemController is Ownable {
+contract SystemController is Ownable, ISystemController {
     ISystem[] public systems;
+    mapping (uint8 => ISystem) public systemMap;
+
+    address public tokenAddress;
 
     constructor() Ownable(_msgSender()) {}
 
-    function registerSystem(ISystem system) external onlyOwner {
+    function registerSystem(uint8 id, ISystem system) external onlyOwner {
         systems.push(system);
+        systemMap[id] = system;
     }
 
     function initAll(uint256 _planet) external onlyToken {
         for (uint256 i = 0; i < systems.length; i++) {
-            systems[i].init(_planet);
+            systems[i].init(this, _planet);
         }
     }
 
-    address public tokenAddress;
+    function getSystem(uint8 id) external view returns (ISystem) {
+        return systemMap[id];
+    }
 
     modifier onlyToken() {
         require(msg.sender == address(tokenAddress), "Only token can call this function");

@@ -43,6 +43,20 @@ module.exports = async (hre) => {
     args: [PlanetRenderer.address, SystemController.address],
   });
 
+  const InvestmentSystem = await deploy("InvestmentSystem", {
+    from: deployer,
+    log: true,
+    args: [Planet.address]
+  });
+
+  const GlobalProgress = await deploy("GlobalProgress", {
+    from: deployer,
+    log: true,
+  });
+
+
+  
+
 
 
 
@@ -79,8 +93,11 @@ module.exports = async (hre) => {
   let tx = await deployedSysController.setTokenAddress(Planet.address);
   await tx.wait();
 
-  // let tx = await deployedPlanet.addSystem(craft.address);
-  // await tx.wait();
+  tx = await deployedSysController.registerSystem(1, GlobalProgress.address);
+  await tx.wait();
+
+  tx = await deployedSysController.registerSystem(2, InvestmentSystem.address);
+  await tx.wait();
 
   // tx = await deployedCraft.setLoader(craftLoader.address);
   // await tx.wait();
@@ -119,6 +136,9 @@ module.exports = async (hre) => {
 
   const object = {};
   object.Planet = Planet.address;
+  object.SystemController = SystemController.address;
+  object.InvestmentSystem = InvestmentSystem.address;
+  object.GlobalProgress = GlobalProgress.address;
   // object.craftSystem = craft.address;
 
   const filename = "../deployments/" + networkName + "/AA-deployment.json";
