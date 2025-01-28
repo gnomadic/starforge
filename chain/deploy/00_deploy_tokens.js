@@ -158,7 +158,7 @@ module.exports = async (hre) => {
 
   }
 
-  console.log('mint because metamask is annoying');
+  console.log('mint because metamask is annoying on localhost');
 
   tx = await deployedPlanet.mint("0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266")
   await tx.wait();
