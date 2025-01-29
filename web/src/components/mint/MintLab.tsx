@@ -1,7 +1,7 @@
 "use client";
 
 
-import { useReadLabGenerateSvg, useWriteLabMint } from '@/generated';
+import { useReadPlanetGenerateSvg, useWritePlanetMint } from '@/generated';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { useAccount, useWaitForTransactionReceipt } from 'wagmi';
@@ -30,9 +30,9 @@ export default function MintLab(props: MintLabProps) {
     const { address } = useAccount();
     const { deploy } = useDeployment();
 
-    const { data: image, isLoading: loadingImage } = useReadLabGenerateSvg({ address: deploy.lab, args: [BigInt(0)] });
+    const { data: image, isLoading: loadingImage } = useReadPlanetGenerateSvg({ address: deploy.Planet, args: [BigInt(0)] });
     const [preview, setPreview] = useState<string>("");
-    const { data: hash, error: writeError, writeContract } = useWriteLabMint();
+    const { data: hash, error: writeError, writeContract } = useWritePlanetMint();
     const { isLoading, isSuccess, data } = useWaitForTransactionReceipt({ hash })
 
     const [satLight, setSatLight] = useState({ sat: 25, light: 80, meter: 80, index: 0 });
@@ -169,7 +169,7 @@ export default function MintLab(props: MintLabProps) {
                                 <div className='flex py-8'>
                                     {address ?
                                         <Button className='mx-auto px-12 py-4'
-                                            onClick={() => writeContract({ address: deploy.lab, args: [address] })}
+                                            onClick={() => writeContract({ address: deploy.Planet, args: [address] })}
                                         >
                                             Accept Assignment 0.0025 ETH
                                         </Button>
@@ -366,7 +366,7 @@ export default function MintLab(props: MintLabProps) {
                                 <div className='flex py-8'>
                                     {address ?
                                         <Button className='mx-auto px-12 py-4'
-                                            onClick={() => writeContract({ address: deploy.lab, args: [address] })}
+                                            onClick={() => writeContract({ address: deploy.Planet, args: [address] })}
                                         >
                                             Accept Assignment 0.0025 ETH
                                         </Button>

@@ -14,7 +14,7 @@ const useDeployment = () => {
     chain?.name && Deployments.hasOwnProperty(chainName)
       ? setDeploy(Deployments[chainName])
       : setDeploy(Deployments['basesep']);
-  }, [chain, deploy?.lab]);
+  }, [chain, deploy?.Planet]);
 
   // console.log("returning deployment: ", deploy.chain)
   return { deploy };

@@ -5,7 +5,7 @@ import { ControlTabs } from "@/components/play/ControlTabs";
 import { Belt, Item, ItemType, Station, StationModifier } from "@/domain/types";
 import { useData } from "@/hooks/UseData";
 import useDeployment from "@/hooks/useDeployment";
-import { useReadCraftSystemGameStates, useReadLabGenerateSvg } from "@/generated";
+import { useReadPlanetGenerateSvg } from "@/generated";
 import { CouncilTabs } from "./CouncilTabs";
 import PlayPreview from "../play/PlayPreview";
 
@@ -23,8 +23,8 @@ const CouncilBoard = (props: CouncilBoardProps) => {
 
 
   const { deploy } = useDeployment();
-  const { data: image, isLoading: loadingImage } = useReadLabGenerateSvg({ address: deploy.lab, args: [props.tokenId] });
-  const { data: gameState, status, error } = useReadCraftSystemGameStates({ address: deploy.craftSystem, args: [props.tokenId] })
+  const { data: image, isLoading: loadingImage } = useReadPlanetGenerateSvg({ address: deploy.Planet, args: [props.tokenId] });
+  // const { data: gameState, status, error } = useReadCraftSystemGameStates({ address: deploy.craftSystem, args: [props.tokenId] })
 
 
   // const image = svg;

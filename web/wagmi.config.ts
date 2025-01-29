@@ -13,8 +13,10 @@ export default defineConfig({
     hardhat({
       project: '../chain',
       include: [
-        'Lab.sol/**',
-        'CraftSystem.sol/**',
+        'Planet.sol/**',
+        'InvestmentSystem.sol/**',
+        'GlobalProgress.sol/**',
+        'SystemController.sol/**'
       ],
     }),
     react(),

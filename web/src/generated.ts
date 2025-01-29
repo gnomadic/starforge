@@ -13,10 +13,10 @@ import {
 } from 'wagmi/codegen'
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// CraftSystem
+// GlobalProgress
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-export const craftSystemAbi = [
+export const globalProgressAbi = [
   { type: 'constructor', inputs: [], stateMutability: 'nonpayable' },
   {
     type: 'error',
@@ -28,7 +28,6 @@ export const craftSystemAbi = [
     inputs: [{ name: 'account', internalType: 'address', type: 'address' }],
     name: 'OwnableUnauthorizedAccount',
   },
-  { type: 'error', inputs: [], name: 'UNAUTHORIZED' },
   {
     type: 'event',
     anonymous: false,
@@ -50,68 +49,24 @@ export const craftSystemAbi = [
   },
   {
     type: 'function',
-    inputs: [
-      { name: 'index', internalType: 'uint256', type: 'uint256' },
-      { name: 'baseValue', internalType: 'uint256', type: 'uint256' },
-    ],
-    name: 'addItem',
+    inputs: [{ name: '_event', internalType: 'string', type: 'string' }],
+    name: 'countEvent',
     outputs: [],
     stateMutability: 'nonpayable',
   },
   {
     type: 'function',
     inputs: [
-      { name: 'index', internalType: 'uint256', type: 'uint256' },
-      { name: 'valueAdd', internalType: 'uint256', type: 'uint256' },
-    ],
-    name: 'addStation',
-    outputs: [],
-    stateMutability: 'nonpayable',
-  },
-  {
-    type: 'function',
-    inputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
-    name: 'gameStates',
-    outputs: [
-      { name: 'lastTick', internalType: 'uint256', type: 'uint256' },
-      { name: 'newItemRate', internalType: 'uint256', type: 'uint256' },
-      { name: 'beltDuration', internalType: 'uint256', type: 'uint256' },
-      { name: 'activeItem', internalType: 'uint256', type: 'uint256' },
-    ],
-    stateMutability: 'view',
-  },
-  {
-    type: 'function',
-    inputs: [{ name: 'tokenId', internalType: 'uint256', type: 'uint256' }],
-    name: 'getGameState',
-    outputs: [
       {
-        name: '',
-        internalType: 'struct CraftSystem.GameState',
-        type: 'tuple',
-        components: [
-          { name: 'lastTick', internalType: 'uint256', type: 'uint256' },
-          { name: 'newItemRate', internalType: 'uint256', type: 'uint256' },
-          { name: 'beltDuration', internalType: 'uint256', type: 'uint256' },
-          { name: 'activeItem', internalType: 'uint256', type: 'uint256' },
-        ],
+        name: 'controller',
+        internalType: 'contract ISystemController',
+        type: 'address',
       },
+      { name: 'tokenId', internalType: 'uint256', type: 'uint256' },
     ],
-    stateMutability: 'view',
-  },
-  {
-    type: 'function',
-    inputs: [{ name: 'tokenId', internalType: 'uint256', type: 'uint256' }],
     name: 'init',
     outputs: [],
     stateMutability: 'nonpayable',
-  },
-  {
-    type: 'function',
-    inputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
-    name: 'items',
-    outputs: [{ name: 'baseValue', internalType: 'uint256', type: 'uint256' }],
-    stateMutability: 'view',
   },
   {
     type: 'function',
@@ -129,31 +84,114 @@ export const craftSystemAbi = [
   },
   {
     type: 'function',
-    inputs: [{ name: '_loader', internalType: 'address', type: 'address' }],
-    name: 'setLoader',
+    inputs: [{ name: 'newOwner', internalType: 'address', type: 'address' }],
+    name: 'transferOwnership',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+] as const
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// InvestmentSystem
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+export const investmentSystemAbi = [
+  {
+    type: 'constructor',
+    inputs: [{ name: '_planet', internalType: 'address', type: 'address' }],
+    stateMutability: 'nonpayable',
+  },
+  { type: 'error', inputs: [], name: 'NotEnoughTimePassed' },
+  { type: 'error', inputs: [], name: 'NotTheOwner' },
+  {
+    type: 'error',
+    inputs: [{ name: 'owner', internalType: 'address', type: 'address' }],
+    name: 'OwnableInvalidOwner',
+  },
+  {
+    type: 'error',
+    inputs: [{ name: 'account', internalType: 'address', type: 'address' }],
+    name: 'OwnableUnauthorizedAccount',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
+        name: 'previousOwner',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'newOwner',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+    ],
+    name: 'OwnershipTransferred',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'controller',
+    outputs: [
+      { name: '', internalType: 'contract ISystemController', type: 'address' },
+    ],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      {
+        name: '_controller',
+        internalType: 'contract ISystemController',
+        type: 'address',
+      },
+      { name: 'tokenId', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'init',
     outputs: [],
     stateMutability: 'nonpayable',
   },
   {
     type: 'function',
     inputs: [{ name: 'tokenId', internalType: 'uint256', type: 'uint256' }],
-    name: 'simulateTick',
-    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+    name: 'invest',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'owner',
+    outputs: [{ name: '', internalType: 'address', type: 'address' }],
     stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'planet',
+    outputs: [{ name: '', internalType: 'contract IERC721', type: 'address' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'renounceOwnership',
+    outputs: [],
+    stateMutability: 'nonpayable',
   },
   {
     type: 'function',
     inputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
-    name: 'stations',
-    outputs: [{ name: 'valueAdd', internalType: 'uint256', type: 'uint256' }],
+    name: 'stats',
+    outputs: [
+      { name: 'lastGaze', internalType: 'uint256', type: 'uint256' },
+      { name: 'gazes', internalType: 'uint16', type: 'uint16' },
+    ],
     stateMutability: 'view',
-  },
-  {
-    type: 'function',
-    inputs: [{ name: 'tokenId', internalType: 'uint256', type: 'uint256' }],
-    name: 'tick',
-    outputs: [],
-    stateMutability: 'nonpayable',
   },
   {
     type: 'function',
@@ -165,13 +203,16 @@ export const craftSystemAbi = [
 ] as const
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Lab
+// Planet
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-export const labAbi = [
+export const planetAbi = [
   {
     type: 'constructor',
-    inputs: [{ name: 'renderer', internalType: 'address', type: 'address' }],
+    inputs: [
+      { name: 'renderer', internalType: 'address', type: 'address' },
+      { name: 'systems', internalType: 'address', type: 'address' },
+    ],
     stateMutability: 'nonpayable',
   },
   { type: 'error', inputs: [], name: 'ApprovalCallerNotOwnerNorApproved' },
@@ -315,13 +356,6 @@ export const labAbi = [
   },
   {
     type: 'function',
-    inputs: [{ name: 'newSystem', internalType: 'address', type: 'address' }],
-    name: 'addSystem',
-    outputs: [],
-    stateMutability: 'nonpayable',
-  },
-  {
-    type: 'function',
     inputs: [
       { name: 'to', internalType: 'address', type: 'address' },
       { name: 'tokenId', internalType: 'uint256', type: 'uint256' },
@@ -336,13 +370,6 @@ export const labAbi = [
     name: 'balanceOf',
     outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
     stateMutability: 'view',
-  },
-  {
-    type: 'function',
-    inputs: [],
-    name: 'clearSystems',
-    outputs: [],
-    stateMutability: 'nonpayable',
   },
   {
     type: 'function',
@@ -546,9 +573,11 @@ export const labAbi = [
   },
   {
     type: 'function',
-    inputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
-    name: 'systems',
-    outputs: [{ name: '', internalType: 'address', type: 'address' }],
+    inputs: [],
+    name: 'systemController',
+    outputs: [
+      { name: '', internalType: 'contract ISystemController', type: 'address' },
+    ],
     stateMutability: 'view',
   },
   {
@@ -604,14 +633,112 @@ export const labAbi = [
 ] as const
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// System
+// SystemController
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-export const systemAbi = [
+export const systemControllerAbi = [
+  { type: 'constructor', inputs: [], stateMutability: 'nonpayable' },
+  {
+    type: 'error',
+    inputs: [{ name: 'owner', internalType: 'address', type: 'address' }],
+    name: 'OwnableInvalidOwner',
+  },
+  {
+    type: 'error',
+    inputs: [{ name: 'account', internalType: 'address', type: 'address' }],
+    name: 'OwnableUnauthorizedAccount',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
+        name: 'previousOwner',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'newOwner',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+    ],
+    name: 'OwnershipTransferred',
+  },
   {
     type: 'function',
-    inputs: [{ name: 'tokenId', internalType: 'uint256', type: 'uint256' }],
-    name: 'init',
+    inputs: [{ name: 'id', internalType: 'uint8', type: 'uint8' }],
+    name: 'getSystem',
+    outputs: [{ name: '', internalType: 'contract ISystem', type: 'address' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: '_planet', internalType: 'uint256', type: 'uint256' }],
+    name: 'initAll',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'owner',
+    outputs: [{ name: '', internalType: 'address', type: 'address' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'id', internalType: 'uint8', type: 'uint8' },
+      { name: 'system', internalType: 'contract ISystem', type: 'address' },
+    ],
+    name: 'registerSystem',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'renounceOwnership',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: '_tokenAddress', internalType: 'address', type: 'address' },
+    ],
+    name: 'setTokenAddress',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: '', internalType: 'uint8', type: 'uint8' }],
+    name: 'systemMap',
+    outputs: [{ name: '', internalType: 'contract ISystem', type: 'address' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+    name: 'systems',
+    outputs: [{ name: '', internalType: 'contract ISystem', type: 'address' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'tokenAddress',
+    outputs: [{ name: '', internalType: 'address', type: 'address' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: 'newOwner', internalType: 'address', type: 'address' }],
+    name: 'transferOwnership',
     outputs: [],
     stateMutability: 'nonpayable',
   },
@@ -622,1326 +749,1645 @@ export const systemAbi = [
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link craftSystemAbi}__
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link globalProgressAbi}__
  */
-export const useReadCraftSystem = /*#__PURE__*/ createUseReadContract({
-  abi: craftSystemAbi,
+export const useReadGlobalProgress = /*#__PURE__*/ createUseReadContract({
+  abi: globalProgressAbi,
 })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link craftSystemAbi}__ and `functionName` set to `"gameStates"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link globalProgressAbi}__ and `functionName` set to `"owner"`
  */
-export const useReadCraftSystemGameStates = /*#__PURE__*/ createUseReadContract(
-  { abi: craftSystemAbi, functionName: 'gameStates' },
-)
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link craftSystemAbi}__ and `functionName` set to `"getGameState"`
- */
-export const useReadCraftSystemGetGameState =
-  /*#__PURE__*/ createUseReadContract({
-    abi: craftSystemAbi,
-    functionName: 'getGameState',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link craftSystemAbi}__ and `functionName` set to `"items"`
- */
-export const useReadCraftSystemItems = /*#__PURE__*/ createUseReadContract({
-  abi: craftSystemAbi,
-  functionName: 'items',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link craftSystemAbi}__ and `functionName` set to `"owner"`
- */
-export const useReadCraftSystemOwner = /*#__PURE__*/ createUseReadContract({
-  abi: craftSystemAbi,
+export const useReadGlobalProgressOwner = /*#__PURE__*/ createUseReadContract({
+  abi: globalProgressAbi,
   functionName: 'owner',
 })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link craftSystemAbi}__ and `functionName` set to `"simulateTick"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link globalProgressAbi}__
  */
-export const useReadCraftSystemSimulateTick =
-  /*#__PURE__*/ createUseReadContract({
-    abi: craftSystemAbi,
-    functionName: 'simulateTick',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link craftSystemAbi}__ and `functionName` set to `"stations"`
- */
-export const useReadCraftSystemStations = /*#__PURE__*/ createUseReadContract({
-  abi: craftSystemAbi,
-  functionName: 'stations',
+export const useWriteGlobalProgress = /*#__PURE__*/ createUseWriteContract({
+  abi: globalProgressAbi,
 })
 
 /**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link craftSystemAbi}__
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link globalProgressAbi}__ and `functionName` set to `"countEvent"`
  */
-export const useWriteCraftSystem = /*#__PURE__*/ createUseWriteContract({
-  abi: craftSystemAbi,
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link craftSystemAbi}__ and `functionName` set to `"addItem"`
- */
-export const useWriteCraftSystemAddItem = /*#__PURE__*/ createUseWriteContract({
-  abi: craftSystemAbi,
-  functionName: 'addItem',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link craftSystemAbi}__ and `functionName` set to `"addStation"`
- */
-export const useWriteCraftSystemAddStation =
+export const useWriteGlobalProgressCountEvent =
   /*#__PURE__*/ createUseWriteContract({
-    abi: craftSystemAbi,
-    functionName: 'addStation',
+    abi: globalProgressAbi,
+    functionName: 'countEvent',
   })
 
 /**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link craftSystemAbi}__ and `functionName` set to `"init"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link globalProgressAbi}__ and `functionName` set to `"init"`
  */
-export const useWriteCraftSystemInit = /*#__PURE__*/ createUseWriteContract({
-  abi: craftSystemAbi,
+export const useWriteGlobalProgressInit = /*#__PURE__*/ createUseWriteContract({
+  abi: globalProgressAbi,
   functionName: 'init',
 })
 
 /**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link craftSystemAbi}__ and `functionName` set to `"renounceOwnership"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link globalProgressAbi}__ and `functionName` set to `"renounceOwnership"`
  */
-export const useWriteCraftSystemRenounceOwnership =
+export const useWriteGlobalProgressRenounceOwnership =
   /*#__PURE__*/ createUseWriteContract({
-    abi: craftSystemAbi,
+    abi: globalProgressAbi,
     functionName: 'renounceOwnership',
   })
 
 /**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link craftSystemAbi}__ and `functionName` set to `"setLoader"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link globalProgressAbi}__ and `functionName` set to `"transferOwnership"`
  */
-export const useWriteCraftSystemSetLoader =
+export const useWriteGlobalProgressTransferOwnership =
   /*#__PURE__*/ createUseWriteContract({
-    abi: craftSystemAbi,
-    functionName: 'setLoader',
-  })
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link craftSystemAbi}__ and `functionName` set to `"tick"`
- */
-export const useWriteCraftSystemTick = /*#__PURE__*/ createUseWriteContract({
-  abi: craftSystemAbi,
-  functionName: 'tick',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link craftSystemAbi}__ and `functionName` set to `"transferOwnership"`
- */
-export const useWriteCraftSystemTransferOwnership =
-  /*#__PURE__*/ createUseWriteContract({
-    abi: craftSystemAbi,
+    abi: globalProgressAbi,
     functionName: 'transferOwnership',
   })
 
 /**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link craftSystemAbi}__
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link globalProgressAbi}__
  */
-export const useSimulateCraftSystem = /*#__PURE__*/ createUseSimulateContract({
-  abi: craftSystemAbi,
-})
+export const useSimulateGlobalProgress =
+  /*#__PURE__*/ createUseSimulateContract({ abi: globalProgressAbi })
 
 /**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link craftSystemAbi}__ and `functionName` set to `"addItem"`
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link globalProgressAbi}__ and `functionName` set to `"countEvent"`
  */
-export const useSimulateCraftSystemAddItem =
+export const useSimulateGlobalProgressCountEvent =
   /*#__PURE__*/ createUseSimulateContract({
-    abi: craftSystemAbi,
-    functionName: 'addItem',
+    abi: globalProgressAbi,
+    functionName: 'countEvent',
   })
 
 /**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link craftSystemAbi}__ and `functionName` set to `"addStation"`
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link globalProgressAbi}__ and `functionName` set to `"init"`
  */
-export const useSimulateCraftSystemAddStation =
+export const useSimulateGlobalProgressInit =
   /*#__PURE__*/ createUseSimulateContract({
-    abi: craftSystemAbi,
-    functionName: 'addStation',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link craftSystemAbi}__ and `functionName` set to `"init"`
- */
-export const useSimulateCraftSystemInit =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: craftSystemAbi,
+    abi: globalProgressAbi,
     functionName: 'init',
   })
 
 /**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link craftSystemAbi}__ and `functionName` set to `"renounceOwnership"`
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link globalProgressAbi}__ and `functionName` set to `"renounceOwnership"`
  */
-export const useSimulateCraftSystemRenounceOwnership =
+export const useSimulateGlobalProgressRenounceOwnership =
   /*#__PURE__*/ createUseSimulateContract({
-    abi: craftSystemAbi,
+    abi: globalProgressAbi,
     functionName: 'renounceOwnership',
   })
 
 /**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link craftSystemAbi}__ and `functionName` set to `"setLoader"`
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link globalProgressAbi}__ and `functionName` set to `"transferOwnership"`
  */
-export const useSimulateCraftSystemSetLoader =
+export const useSimulateGlobalProgressTransferOwnership =
   /*#__PURE__*/ createUseSimulateContract({
-    abi: craftSystemAbi,
-    functionName: 'setLoader',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link craftSystemAbi}__ and `functionName` set to `"tick"`
- */
-export const useSimulateCraftSystemTick =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: craftSystemAbi,
-    functionName: 'tick',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link craftSystemAbi}__ and `functionName` set to `"transferOwnership"`
- */
-export const useSimulateCraftSystemTransferOwnership =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: craftSystemAbi,
+    abi: globalProgressAbi,
     functionName: 'transferOwnership',
   })
 
 /**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link craftSystemAbi}__
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link globalProgressAbi}__
  */
-export const useWatchCraftSystemEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({ abi: craftSystemAbi })
+export const useWatchGlobalProgressEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({ abi: globalProgressAbi })
 
 /**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link craftSystemAbi}__ and `eventName` set to `"OwnershipTransferred"`
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link globalProgressAbi}__ and `eventName` set to `"OwnershipTransferred"`
  */
-export const useWatchCraftSystemOwnershipTransferredEvent =
+export const useWatchGlobalProgressOwnershipTransferredEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
-    abi: craftSystemAbi,
+    abi: globalProgressAbi,
     eventName: 'OwnershipTransferred',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link labAbi}__
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link investmentSystemAbi}__
  */
-export const useReadLab = /*#__PURE__*/ createUseReadContract({ abi: labAbi })
+export const useReadInvestmentSystem = /*#__PURE__*/ createUseReadContract({
+  abi: investmentSystemAbi,
+})
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link labAbi}__ and `functionName` set to `"balanceOf"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link investmentSystemAbi}__ and `functionName` set to `"controller"`
  */
-export const useReadLabBalanceOf = /*#__PURE__*/ createUseReadContract({
-  abi: labAbi,
+export const useReadInvestmentSystemController =
+  /*#__PURE__*/ createUseReadContract({
+    abi: investmentSystemAbi,
+    functionName: 'controller',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link investmentSystemAbi}__ and `functionName` set to `"owner"`
+ */
+export const useReadInvestmentSystemOwner = /*#__PURE__*/ createUseReadContract(
+  { abi: investmentSystemAbi, functionName: 'owner' },
+)
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link investmentSystemAbi}__ and `functionName` set to `"planet"`
+ */
+export const useReadInvestmentSystemPlanet =
+  /*#__PURE__*/ createUseReadContract({
+    abi: investmentSystemAbi,
+    functionName: 'planet',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link investmentSystemAbi}__ and `functionName` set to `"stats"`
+ */
+export const useReadInvestmentSystemStats = /*#__PURE__*/ createUseReadContract(
+  { abi: investmentSystemAbi, functionName: 'stats' },
+)
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link investmentSystemAbi}__
+ */
+export const useWriteInvestmentSystem = /*#__PURE__*/ createUseWriteContract({
+  abi: investmentSystemAbi,
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link investmentSystemAbi}__ and `functionName` set to `"init"`
+ */
+export const useWriteInvestmentSystemInit =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: investmentSystemAbi,
+    functionName: 'init',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link investmentSystemAbi}__ and `functionName` set to `"invest"`
+ */
+export const useWriteInvestmentSystemInvest =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: investmentSystemAbi,
+    functionName: 'invest',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link investmentSystemAbi}__ and `functionName` set to `"renounceOwnership"`
+ */
+export const useWriteInvestmentSystemRenounceOwnership =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: investmentSystemAbi,
+    functionName: 'renounceOwnership',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link investmentSystemAbi}__ and `functionName` set to `"transferOwnership"`
+ */
+export const useWriteInvestmentSystemTransferOwnership =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: investmentSystemAbi,
+    functionName: 'transferOwnership',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link investmentSystemAbi}__
+ */
+export const useSimulateInvestmentSystem =
+  /*#__PURE__*/ createUseSimulateContract({ abi: investmentSystemAbi })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link investmentSystemAbi}__ and `functionName` set to `"init"`
+ */
+export const useSimulateInvestmentSystemInit =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: investmentSystemAbi,
+    functionName: 'init',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link investmentSystemAbi}__ and `functionName` set to `"invest"`
+ */
+export const useSimulateInvestmentSystemInvest =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: investmentSystemAbi,
+    functionName: 'invest',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link investmentSystemAbi}__ and `functionName` set to `"renounceOwnership"`
+ */
+export const useSimulateInvestmentSystemRenounceOwnership =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: investmentSystemAbi,
+    functionName: 'renounceOwnership',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link investmentSystemAbi}__ and `functionName` set to `"transferOwnership"`
+ */
+export const useSimulateInvestmentSystemTransferOwnership =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: investmentSystemAbi,
+    functionName: 'transferOwnership',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link investmentSystemAbi}__
+ */
+export const useWatchInvestmentSystemEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({ abi: investmentSystemAbi })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link investmentSystemAbi}__ and `eventName` set to `"OwnershipTransferred"`
+ */
+export const useWatchInvestmentSystemOwnershipTransferredEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: investmentSystemAbi,
+    eventName: 'OwnershipTransferred',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link planetAbi}__
+ */
+export const useReadPlanet = /*#__PURE__*/ createUseReadContract({
+  abi: planetAbi,
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link planetAbi}__ and `functionName` set to `"balanceOf"`
+ */
+export const useReadPlanetBalanceOf = /*#__PURE__*/ createUseReadContract({
+  abi: planetAbi,
   functionName: 'balanceOf',
 })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link labAbi}__ and `functionName` set to `"contractURI"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link planetAbi}__ and `functionName` set to `"contractURI"`
  */
-export const useReadLabContractUri = /*#__PURE__*/ createUseReadContract({
-  abi: labAbi,
+export const useReadPlanetContractUri = /*#__PURE__*/ createUseReadContract({
+  abi: planetAbi,
   functionName: 'contractURI',
 })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link labAbi}__ and `functionName` set to `"customizeCost"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link planetAbi}__ and `functionName` set to `"customizeCost"`
  */
-export const useReadLabCustomizeCost = /*#__PURE__*/ createUseReadContract({
-  abi: labAbi,
+export const useReadPlanetCustomizeCost = /*#__PURE__*/ createUseReadContract({
+  abi: planetAbi,
   functionName: 'customizeCost',
 })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link labAbi}__ and `functionName` set to `"explicitOwnershipOf"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link planetAbi}__ and `functionName` set to `"explicitOwnershipOf"`
  */
-export const useReadLabExplicitOwnershipOf =
+export const useReadPlanetExplicitOwnershipOf =
   /*#__PURE__*/ createUseReadContract({
-    abi: labAbi,
+    abi: planetAbi,
     functionName: 'explicitOwnershipOf',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link labAbi}__ and `functionName` set to `"explicitOwnershipsOf"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link planetAbi}__ and `functionName` set to `"explicitOwnershipsOf"`
  */
-export const useReadLabExplicitOwnershipsOf =
+export const useReadPlanetExplicitOwnershipsOf =
   /*#__PURE__*/ createUseReadContract({
-    abi: labAbi,
+    abi: planetAbi,
     functionName: 'explicitOwnershipsOf',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link labAbi}__ and `functionName` set to `"generateCharacter"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link planetAbi}__ and `functionName` set to `"generateCharacter"`
  */
-export const useReadLabGenerateCharacter = /*#__PURE__*/ createUseReadContract({
-  abi: labAbi,
-  functionName: 'generateCharacter',
-})
+export const useReadPlanetGenerateCharacter =
+  /*#__PURE__*/ createUseReadContract({
+    abi: planetAbi,
+    functionName: 'generateCharacter',
+  })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link labAbi}__ and `functionName` set to `"generateSVG"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link planetAbi}__ and `functionName` set to `"generateSVG"`
  */
-export const useReadLabGenerateSvg = /*#__PURE__*/ createUseReadContract({
-  abi: labAbi,
+export const useReadPlanetGenerateSvg = /*#__PURE__*/ createUseReadContract({
+  abi: planetAbi,
   functionName: 'generateSVG',
 })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link labAbi}__ and `functionName` set to `"getApproved"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link planetAbi}__ and `functionName` set to `"getApproved"`
  */
-export const useReadLabGetApproved = /*#__PURE__*/ createUseReadContract({
-  abi: labAbi,
+export const useReadPlanetGetApproved = /*#__PURE__*/ createUseReadContract({
+  abi: planetAbi,
   functionName: 'getApproved',
 })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link labAbi}__ and `functionName` set to `"isApprovedForAll"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link planetAbi}__ and `functionName` set to `"isApprovedForAll"`
  */
-export const useReadLabIsApprovedForAll = /*#__PURE__*/ createUseReadContract({
-  abi: labAbi,
-  functionName: 'isApprovedForAll',
-})
+export const useReadPlanetIsApprovedForAll =
+  /*#__PURE__*/ createUseReadContract({
+    abi: planetAbi,
+    functionName: 'isApprovedForAll',
+  })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link labAbi}__ and `functionName` set to `"mintCost"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link planetAbi}__ and `functionName` set to `"mintCost"`
  */
-export const useReadLabMintCost = /*#__PURE__*/ createUseReadContract({
-  abi: labAbi,
+export const useReadPlanetMintCost = /*#__PURE__*/ createUseReadContract({
+  abi: planetAbi,
   functionName: 'mintCost',
 })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link labAbi}__ and `functionName` set to `"name"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link planetAbi}__ and `functionName` set to `"name"`
  */
-export const useReadLabName = /*#__PURE__*/ createUseReadContract({
-  abi: labAbi,
+export const useReadPlanetName = /*#__PURE__*/ createUseReadContract({
+  abi: planetAbi,
   functionName: 'name',
 })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link labAbi}__ and `functionName` set to `"nextTokenId"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link planetAbi}__ and `functionName` set to `"nextTokenId"`
  */
-export const useReadLabNextTokenId = /*#__PURE__*/ createUseReadContract({
-  abi: labAbi,
+export const useReadPlanetNextTokenId = /*#__PURE__*/ createUseReadContract({
+  abi: planetAbi,
   functionName: 'nextTokenId',
 })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link labAbi}__ and `functionName` set to `"owner"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link planetAbi}__ and `functionName` set to `"owner"`
  */
-export const useReadLabOwner = /*#__PURE__*/ createUseReadContract({
-  abi: labAbi,
+export const useReadPlanetOwner = /*#__PURE__*/ createUseReadContract({
+  abi: planetAbi,
   functionName: 'owner',
 })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link labAbi}__ and `functionName` set to `"ownerOf"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link planetAbi}__ and `functionName` set to `"ownerOf"`
  */
-export const useReadLabOwnerOf = /*#__PURE__*/ createUseReadContract({
-  abi: labAbi,
+export const useReadPlanetOwnerOf = /*#__PURE__*/ createUseReadContract({
+  abi: planetAbi,
   functionName: 'ownerOf',
 })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link labAbi}__ and `functionName` set to `"renderers"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link planetAbi}__ and `functionName` set to `"renderers"`
  */
-export const useReadLabRenderers = /*#__PURE__*/ createUseReadContract({
-  abi: labAbi,
+export const useReadPlanetRenderers = /*#__PURE__*/ createUseReadContract({
+  abi: planetAbi,
   functionName: 'renderers',
 })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link labAbi}__ and `functionName` set to `"supportsInterface"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link planetAbi}__ and `functionName` set to `"supportsInterface"`
  */
-export const useReadLabSupportsInterface = /*#__PURE__*/ createUseReadContract({
-  abi: labAbi,
-  functionName: 'supportsInterface',
-})
+export const useReadPlanetSupportsInterface =
+  /*#__PURE__*/ createUseReadContract({
+    abi: planetAbi,
+    functionName: 'supportsInterface',
+  })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link labAbi}__ and `functionName` set to `"symbol"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link planetAbi}__ and `functionName` set to `"symbol"`
  */
-export const useReadLabSymbol = /*#__PURE__*/ createUseReadContract({
-  abi: labAbi,
+export const useReadPlanetSymbol = /*#__PURE__*/ createUseReadContract({
+  abi: planetAbi,
   functionName: 'symbol',
 })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link labAbi}__ and `functionName` set to `"systems"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link planetAbi}__ and `functionName` set to `"systemController"`
  */
-export const useReadLabSystems = /*#__PURE__*/ createUseReadContract({
-  abi: labAbi,
-  functionName: 'systems',
-})
+export const useReadPlanetSystemController =
+  /*#__PURE__*/ createUseReadContract({
+    abi: planetAbi,
+    functionName: 'systemController',
+  })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link labAbi}__ and `functionName` set to `"tokenURI"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link planetAbi}__ and `functionName` set to `"tokenURI"`
  */
-export const useReadLabTokenUri = /*#__PURE__*/ createUseReadContract({
-  abi: labAbi,
+export const useReadPlanetTokenUri = /*#__PURE__*/ createUseReadContract({
+  abi: planetAbi,
   functionName: 'tokenURI',
 })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link labAbi}__ and `functionName` set to `"tokensOfOwner"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link planetAbi}__ and `functionName` set to `"tokensOfOwner"`
  */
-export const useReadLabTokensOfOwner = /*#__PURE__*/ createUseReadContract({
-  abi: labAbi,
+export const useReadPlanetTokensOfOwner = /*#__PURE__*/ createUseReadContract({
+  abi: planetAbi,
   functionName: 'tokensOfOwner',
 })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link labAbi}__ and `functionName` set to `"tokensOfOwnerIn"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link planetAbi}__ and `functionName` set to `"tokensOfOwnerIn"`
  */
-export const useReadLabTokensOfOwnerIn = /*#__PURE__*/ createUseReadContract({
-  abi: labAbi,
-  functionName: 'tokensOfOwnerIn',
-})
+export const useReadPlanetTokensOfOwnerIn = /*#__PURE__*/ createUseReadContract(
+  { abi: planetAbi, functionName: 'tokensOfOwnerIn' },
+)
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link labAbi}__ and `functionName` set to `"totalSupply"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link planetAbi}__ and `functionName` set to `"totalSupply"`
  */
-export const useReadLabTotalSupply = /*#__PURE__*/ createUseReadContract({
-  abi: labAbi,
+export const useReadPlanetTotalSupply = /*#__PURE__*/ createUseReadContract({
+  abi: planetAbi,
   functionName: 'totalSupply',
 })
 
 /**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link labAbi}__
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link planetAbi}__
  */
-export const useWriteLab = /*#__PURE__*/ createUseWriteContract({ abi: labAbi })
+export const useWritePlanet = /*#__PURE__*/ createUseWriteContract({
+  abi: planetAbi,
+})
 
 /**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link labAbi}__ and `functionName` set to `"addRenderer"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link planetAbi}__ and `functionName` set to `"addRenderer"`
  */
-export const useWriteLabAddRenderer = /*#__PURE__*/ createUseWriteContract({
-  abi: labAbi,
+export const useWritePlanetAddRenderer = /*#__PURE__*/ createUseWriteContract({
+  abi: planetAbi,
   functionName: 'addRenderer',
 })
 
 /**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link labAbi}__ and `functionName` set to `"addSystem"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link planetAbi}__ and `functionName` set to `"approve"`
  */
-export const useWriteLabAddSystem = /*#__PURE__*/ createUseWriteContract({
-  abi: labAbi,
-  functionName: 'addSystem',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link labAbi}__ and `functionName` set to `"approve"`
- */
-export const useWriteLabApprove = /*#__PURE__*/ createUseWriteContract({
-  abi: labAbi,
+export const useWritePlanetApprove = /*#__PURE__*/ createUseWriteContract({
+  abi: planetAbi,
   functionName: 'approve',
 })
 
 /**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link labAbi}__ and `functionName` set to `"clearSystems"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link planetAbi}__ and `functionName` set to `"mint"`
  */
-export const useWriteLabClearSystems = /*#__PURE__*/ createUseWriteContract({
-  abi: labAbi,
-  functionName: 'clearSystems',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link labAbi}__ and `functionName` set to `"mint"`
- */
-export const useWriteLabMint = /*#__PURE__*/ createUseWriteContract({
-  abi: labAbi,
+export const useWritePlanetMint = /*#__PURE__*/ createUseWriteContract({
+  abi: planetAbi,
   functionName: 'mint',
 })
 
 /**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link labAbi}__ and `functionName` set to `"renounceOwnership"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link planetAbi}__ and `functionName` set to `"renounceOwnership"`
  */
-export const useWriteLabRenounceOwnership =
+export const useWritePlanetRenounceOwnership =
   /*#__PURE__*/ createUseWriteContract({
-    abi: labAbi,
+    abi: planetAbi,
     functionName: 'renounceOwnership',
   })
 
 /**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link labAbi}__ and `functionName` set to `"safeTransferFrom"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link planetAbi}__ and `functionName` set to `"safeTransferFrom"`
  */
-export const useWriteLabSafeTransferFrom = /*#__PURE__*/ createUseWriteContract(
-  { abi: labAbi, functionName: 'safeTransferFrom' },
-)
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link labAbi}__ and `functionName` set to `"selectRenderer"`
- */
-export const useWriteLabSelectRenderer = /*#__PURE__*/ createUseWriteContract({
-  abi: labAbi,
-  functionName: 'selectRenderer',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link labAbi}__ and `functionName` set to `"setApprovalForAll"`
- */
-export const useWriteLabSetApprovalForAll =
+export const useWritePlanetSafeTransferFrom =
   /*#__PURE__*/ createUseWriteContract({
-    abi: labAbi,
-    functionName: 'setApprovalForAll',
-  })
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link labAbi}__ and `functionName` set to `"transferFrom"`
- */
-export const useWriteLabTransferFrom = /*#__PURE__*/ createUseWriteContract({
-  abi: labAbi,
-  functionName: 'transferFrom',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link labAbi}__ and `functionName` set to `"transferOwnership"`
- */
-export const useWriteLabTransferOwnership =
-  /*#__PURE__*/ createUseWriteContract({
-    abi: labAbi,
-    functionName: 'transferOwnership',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link labAbi}__
- */
-export const useSimulateLab = /*#__PURE__*/ createUseSimulateContract({
-  abi: labAbi,
-})
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link labAbi}__ and `functionName` set to `"addRenderer"`
- */
-export const useSimulateLabAddRenderer =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: labAbi,
-    functionName: 'addRenderer',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link labAbi}__ and `functionName` set to `"addSystem"`
- */
-export const useSimulateLabAddSystem = /*#__PURE__*/ createUseSimulateContract({
-  abi: labAbi,
-  functionName: 'addSystem',
-})
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link labAbi}__ and `functionName` set to `"approve"`
- */
-export const useSimulateLabApprove = /*#__PURE__*/ createUseSimulateContract({
-  abi: labAbi,
-  functionName: 'approve',
-})
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link labAbi}__ and `functionName` set to `"clearSystems"`
- */
-export const useSimulateLabClearSystems =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: labAbi,
-    functionName: 'clearSystems',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link labAbi}__ and `functionName` set to `"mint"`
- */
-export const useSimulateLabMint = /*#__PURE__*/ createUseSimulateContract({
-  abi: labAbi,
-  functionName: 'mint',
-})
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link labAbi}__ and `functionName` set to `"renounceOwnership"`
- */
-export const useSimulateLabRenounceOwnership =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: labAbi,
-    functionName: 'renounceOwnership',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link labAbi}__ and `functionName` set to `"safeTransferFrom"`
- */
-export const useSimulateLabSafeTransferFrom =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: labAbi,
+    abi: planetAbi,
     functionName: 'safeTransferFrom',
   })
 
 /**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link labAbi}__ and `functionName` set to `"selectRenderer"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link planetAbi}__ and `functionName` set to `"selectRenderer"`
  */
-export const useSimulateLabSelectRenderer =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: labAbi,
+export const useWritePlanetSelectRenderer =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: planetAbi,
     functionName: 'selectRenderer',
   })
 
 /**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link labAbi}__ and `functionName` set to `"setApprovalForAll"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link planetAbi}__ and `functionName` set to `"setApprovalForAll"`
  */
-export const useSimulateLabSetApprovalForAll =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: labAbi,
+export const useWritePlanetSetApprovalForAll =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: planetAbi,
     functionName: 'setApprovalForAll',
   })
 
 /**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link labAbi}__ and `functionName` set to `"transferFrom"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link planetAbi}__ and `functionName` set to `"transferFrom"`
  */
-export const useSimulateLabTransferFrom =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: labAbi,
-    functionName: 'transferFrom',
-  })
+export const useWritePlanetTransferFrom = /*#__PURE__*/ createUseWriteContract({
+  abi: planetAbi,
+  functionName: 'transferFrom',
+})
 
 /**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link labAbi}__ and `functionName` set to `"transferOwnership"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link planetAbi}__ and `functionName` set to `"transferOwnership"`
  */
-export const useSimulateLabTransferOwnership =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: labAbi,
+export const useWritePlanetTransferOwnership =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: planetAbi,
     functionName: 'transferOwnership',
   })
 
 /**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link labAbi}__
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link planetAbi}__
  */
-export const useWatchLabEvent = /*#__PURE__*/ createUseWatchContractEvent({
-  abi: labAbi,
+export const useSimulatePlanet = /*#__PURE__*/ createUseSimulateContract({
+  abi: planetAbi,
 })
 
 /**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link labAbi}__ and `eventName` set to `"Approval"`
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link planetAbi}__ and `functionName` set to `"addRenderer"`
  */
-export const useWatchLabApprovalEvent =
+export const useSimulatePlanetAddRenderer =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: planetAbi,
+    functionName: 'addRenderer',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link planetAbi}__ and `functionName` set to `"approve"`
+ */
+export const useSimulatePlanetApprove = /*#__PURE__*/ createUseSimulateContract(
+  { abi: planetAbi, functionName: 'approve' },
+)
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link planetAbi}__ and `functionName` set to `"mint"`
+ */
+export const useSimulatePlanetMint = /*#__PURE__*/ createUseSimulateContract({
+  abi: planetAbi,
+  functionName: 'mint',
+})
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link planetAbi}__ and `functionName` set to `"renounceOwnership"`
+ */
+export const useSimulatePlanetRenounceOwnership =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: planetAbi,
+    functionName: 'renounceOwnership',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link planetAbi}__ and `functionName` set to `"safeTransferFrom"`
+ */
+export const useSimulatePlanetSafeTransferFrom =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: planetAbi,
+    functionName: 'safeTransferFrom',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link planetAbi}__ and `functionName` set to `"selectRenderer"`
+ */
+export const useSimulatePlanetSelectRenderer =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: planetAbi,
+    functionName: 'selectRenderer',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link planetAbi}__ and `functionName` set to `"setApprovalForAll"`
+ */
+export const useSimulatePlanetSetApprovalForAll =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: planetAbi,
+    functionName: 'setApprovalForAll',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link planetAbi}__ and `functionName` set to `"transferFrom"`
+ */
+export const useSimulatePlanetTransferFrom =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: planetAbi,
+    functionName: 'transferFrom',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link planetAbi}__ and `functionName` set to `"transferOwnership"`
+ */
+export const useSimulatePlanetTransferOwnership =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: planetAbi,
+    functionName: 'transferOwnership',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link planetAbi}__
+ */
+export const useWatchPlanetEvent = /*#__PURE__*/ createUseWatchContractEvent({
+  abi: planetAbi,
+})
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link planetAbi}__ and `eventName` set to `"Approval"`
+ */
+export const useWatchPlanetApprovalEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
-    abi: labAbi,
+    abi: planetAbi,
     eventName: 'Approval',
   })
 
 /**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link labAbi}__ and `eventName` set to `"ApprovalForAll"`
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link planetAbi}__ and `eventName` set to `"ApprovalForAll"`
  */
-export const useWatchLabApprovalForAllEvent =
+export const useWatchPlanetApprovalForAllEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
-    abi: labAbi,
+    abi: planetAbi,
     eventName: 'ApprovalForAll',
   })
 
 /**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link labAbi}__ and `eventName` set to `"ConsecutiveTransfer"`
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link planetAbi}__ and `eventName` set to `"ConsecutiveTransfer"`
  */
-export const useWatchLabConsecutiveTransferEvent =
+export const useWatchPlanetConsecutiveTransferEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
-    abi: labAbi,
+    abi: planetAbi,
     eventName: 'ConsecutiveTransfer',
   })
 
 /**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link labAbi}__ and `eventName` set to `"OwnershipTransferred"`
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link planetAbi}__ and `eventName` set to `"OwnershipTransferred"`
  */
-export const useWatchLabOwnershipTransferredEvent =
+export const useWatchPlanetOwnershipTransferredEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
-    abi: labAbi,
+    abi: planetAbi,
     eventName: 'OwnershipTransferred',
   })
 
 /**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link labAbi}__ and `eventName` set to `"Transfer"`
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link planetAbi}__ and `eventName` set to `"Transfer"`
  */
-export const useWatchLabTransferEvent =
+export const useWatchPlanetTransferEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
-    abi: labAbi,
+    abi: planetAbi,
     eventName: 'Transfer',
   })
 
 /**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link systemAbi}__
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link systemControllerAbi}__
  */
-export const useWriteSystem = /*#__PURE__*/ createUseWriteContract({
-  abi: systemAbi,
+export const useReadSystemController = /*#__PURE__*/ createUseReadContract({
+  abi: systemControllerAbi,
 })
 
 /**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link systemAbi}__ and `functionName` set to `"init"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link systemControllerAbi}__ and `functionName` set to `"getSystem"`
  */
-export const useWriteSystemInit = /*#__PURE__*/ createUseWriteContract({
-  abi: systemAbi,
-  functionName: 'init',
+export const useReadSystemControllerGetSystem =
+  /*#__PURE__*/ createUseReadContract({
+    abi: systemControllerAbi,
+    functionName: 'getSystem',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link systemControllerAbi}__ and `functionName` set to `"owner"`
+ */
+export const useReadSystemControllerOwner = /*#__PURE__*/ createUseReadContract(
+  { abi: systemControllerAbi, functionName: 'owner' },
+)
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link systemControllerAbi}__ and `functionName` set to `"systemMap"`
+ */
+export const useReadSystemControllerSystemMap =
+  /*#__PURE__*/ createUseReadContract({
+    abi: systemControllerAbi,
+    functionName: 'systemMap',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link systemControllerAbi}__ and `functionName` set to `"systems"`
+ */
+export const useReadSystemControllerSystems =
+  /*#__PURE__*/ createUseReadContract({
+    abi: systemControllerAbi,
+    functionName: 'systems',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link systemControllerAbi}__ and `functionName` set to `"tokenAddress"`
+ */
+export const useReadSystemControllerTokenAddress =
+  /*#__PURE__*/ createUseReadContract({
+    abi: systemControllerAbi,
+    functionName: 'tokenAddress',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link systemControllerAbi}__
+ */
+export const useWriteSystemController = /*#__PURE__*/ createUseWriteContract({
+  abi: systemControllerAbi,
 })
 
 /**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link systemAbi}__
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link systemControllerAbi}__ and `functionName` set to `"initAll"`
  */
-export const useSimulateSystem = /*#__PURE__*/ createUseSimulateContract({
-  abi: systemAbi,
-})
+export const useWriteSystemControllerInitAll =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: systemControllerAbi,
+    functionName: 'initAll',
+  })
 
 /**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link systemAbi}__ and `functionName` set to `"init"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link systemControllerAbi}__ and `functionName` set to `"registerSystem"`
  */
-export const useSimulateSystemInit = /*#__PURE__*/ createUseSimulateContract({
-  abi: systemAbi,
-  functionName: 'init',
-})
+export const useWriteSystemControllerRegisterSystem =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: systemControllerAbi,
+    functionName: 'registerSystem',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link systemControllerAbi}__ and `functionName` set to `"renounceOwnership"`
+ */
+export const useWriteSystemControllerRenounceOwnership =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: systemControllerAbi,
+    functionName: 'renounceOwnership',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link systemControllerAbi}__ and `functionName` set to `"setTokenAddress"`
+ */
+export const useWriteSystemControllerSetTokenAddress =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: systemControllerAbi,
+    functionName: 'setTokenAddress',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link systemControllerAbi}__ and `functionName` set to `"transferOwnership"`
+ */
+export const useWriteSystemControllerTransferOwnership =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: systemControllerAbi,
+    functionName: 'transferOwnership',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link systemControllerAbi}__
+ */
+export const useSimulateSystemController =
+  /*#__PURE__*/ createUseSimulateContract({ abi: systemControllerAbi })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link systemControllerAbi}__ and `functionName` set to `"initAll"`
+ */
+export const useSimulateSystemControllerInitAll =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: systemControllerAbi,
+    functionName: 'initAll',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link systemControllerAbi}__ and `functionName` set to `"registerSystem"`
+ */
+export const useSimulateSystemControllerRegisterSystem =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: systemControllerAbi,
+    functionName: 'registerSystem',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link systemControllerAbi}__ and `functionName` set to `"renounceOwnership"`
+ */
+export const useSimulateSystemControllerRenounceOwnership =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: systemControllerAbi,
+    functionName: 'renounceOwnership',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link systemControllerAbi}__ and `functionName` set to `"setTokenAddress"`
+ */
+export const useSimulateSystemControllerSetTokenAddress =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: systemControllerAbi,
+    functionName: 'setTokenAddress',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link systemControllerAbi}__ and `functionName` set to `"transferOwnership"`
+ */
+export const useSimulateSystemControllerTransferOwnership =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: systemControllerAbi,
+    functionName: 'transferOwnership',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link systemControllerAbi}__
+ */
+export const useWatchSystemControllerEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({ abi: systemControllerAbi })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link systemControllerAbi}__ and `eventName` set to `"OwnershipTransferred"`
+ */
+export const useWatchSystemControllerOwnershipTransferredEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: systemControllerAbi,
+    eventName: 'OwnershipTransferred',
+  })
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Action
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /**
- * Wraps __{@link readContract}__ with `abi` set to __{@link craftSystemAbi}__
+ * Wraps __{@link readContract}__ with `abi` set to __{@link globalProgressAbi}__
  */
-export const readCraftSystem = /*#__PURE__*/ createReadContract({
-  abi: craftSystemAbi,
+export const readGlobalProgress = /*#__PURE__*/ createReadContract({
+  abi: globalProgressAbi,
 })
 
 /**
- * Wraps __{@link readContract}__ with `abi` set to __{@link craftSystemAbi}__ and `functionName` set to `"gameStates"`
+ * Wraps __{@link readContract}__ with `abi` set to __{@link globalProgressAbi}__ and `functionName` set to `"owner"`
  */
-export const readCraftSystemGameStates = /*#__PURE__*/ createReadContract({
-  abi: craftSystemAbi,
-  functionName: 'gameStates',
-})
-
-/**
- * Wraps __{@link readContract}__ with `abi` set to __{@link craftSystemAbi}__ and `functionName` set to `"getGameState"`
- */
-export const readCraftSystemGetGameState = /*#__PURE__*/ createReadContract({
-  abi: craftSystemAbi,
-  functionName: 'getGameState',
-})
-
-/**
- * Wraps __{@link readContract}__ with `abi` set to __{@link craftSystemAbi}__ and `functionName` set to `"items"`
- */
-export const readCraftSystemItems = /*#__PURE__*/ createReadContract({
-  abi: craftSystemAbi,
-  functionName: 'items',
-})
-
-/**
- * Wraps __{@link readContract}__ with `abi` set to __{@link craftSystemAbi}__ and `functionName` set to `"owner"`
- */
-export const readCraftSystemOwner = /*#__PURE__*/ createReadContract({
-  abi: craftSystemAbi,
+export const readGlobalProgressOwner = /*#__PURE__*/ createReadContract({
+  abi: globalProgressAbi,
   functionName: 'owner',
 })
 
 /**
- * Wraps __{@link readContract}__ with `abi` set to __{@link craftSystemAbi}__ and `functionName` set to `"simulateTick"`
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link globalProgressAbi}__
  */
-export const readCraftSystemSimulateTick = /*#__PURE__*/ createReadContract({
-  abi: craftSystemAbi,
-  functionName: 'simulateTick',
+export const writeGlobalProgress = /*#__PURE__*/ createWriteContract({
+  abi: globalProgressAbi,
 })
 
 /**
- * Wraps __{@link readContract}__ with `abi` set to __{@link craftSystemAbi}__ and `functionName` set to `"stations"`
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link globalProgressAbi}__ and `functionName` set to `"countEvent"`
  */
-export const readCraftSystemStations = /*#__PURE__*/ createReadContract({
-  abi: craftSystemAbi,
-  functionName: 'stations',
+export const writeGlobalProgressCountEvent = /*#__PURE__*/ createWriteContract({
+  abi: globalProgressAbi,
+  functionName: 'countEvent',
 })
 
 /**
- * Wraps __{@link writeContract}__ with `abi` set to __{@link craftSystemAbi}__
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link globalProgressAbi}__ and `functionName` set to `"init"`
  */
-export const writeCraftSystem = /*#__PURE__*/ createWriteContract({
-  abi: craftSystemAbi,
-})
-
-/**
- * Wraps __{@link writeContract}__ with `abi` set to __{@link craftSystemAbi}__ and `functionName` set to `"addItem"`
- */
-export const writeCraftSystemAddItem = /*#__PURE__*/ createWriteContract({
-  abi: craftSystemAbi,
-  functionName: 'addItem',
-})
-
-/**
- * Wraps __{@link writeContract}__ with `abi` set to __{@link craftSystemAbi}__ and `functionName` set to `"addStation"`
- */
-export const writeCraftSystemAddStation = /*#__PURE__*/ createWriteContract({
-  abi: craftSystemAbi,
-  functionName: 'addStation',
-})
-
-/**
- * Wraps __{@link writeContract}__ with `abi` set to __{@link craftSystemAbi}__ and `functionName` set to `"init"`
- */
-export const writeCraftSystemInit = /*#__PURE__*/ createWriteContract({
-  abi: craftSystemAbi,
+export const writeGlobalProgressInit = /*#__PURE__*/ createWriteContract({
+  abi: globalProgressAbi,
   functionName: 'init',
 })
 
 /**
- * Wraps __{@link writeContract}__ with `abi` set to __{@link craftSystemAbi}__ and `functionName` set to `"renounceOwnership"`
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link globalProgressAbi}__ and `functionName` set to `"renounceOwnership"`
  */
-export const writeCraftSystemRenounceOwnership =
+export const writeGlobalProgressRenounceOwnership =
   /*#__PURE__*/ createWriteContract({
-    abi: craftSystemAbi,
+    abi: globalProgressAbi,
     functionName: 'renounceOwnership',
   })
 
 /**
- * Wraps __{@link writeContract}__ with `abi` set to __{@link craftSystemAbi}__ and `functionName` set to `"setLoader"`
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link globalProgressAbi}__ and `functionName` set to `"transferOwnership"`
  */
-export const writeCraftSystemSetLoader = /*#__PURE__*/ createWriteContract({
-  abi: craftSystemAbi,
-  functionName: 'setLoader',
-})
-
-/**
- * Wraps __{@link writeContract}__ with `abi` set to __{@link craftSystemAbi}__ and `functionName` set to `"tick"`
- */
-export const writeCraftSystemTick = /*#__PURE__*/ createWriteContract({
-  abi: craftSystemAbi,
-  functionName: 'tick',
-})
-
-/**
- * Wraps __{@link writeContract}__ with `abi` set to __{@link craftSystemAbi}__ and `functionName` set to `"transferOwnership"`
- */
-export const writeCraftSystemTransferOwnership =
+export const writeGlobalProgressTransferOwnership =
   /*#__PURE__*/ createWriteContract({
-    abi: craftSystemAbi,
+    abi: globalProgressAbi,
     functionName: 'transferOwnership',
   })
 
 /**
- * Wraps __{@link simulateContract}__ with `abi` set to __{@link craftSystemAbi}__
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link globalProgressAbi}__
  */
-export const simulateCraftSystem = /*#__PURE__*/ createSimulateContract({
-  abi: craftSystemAbi,
+export const simulateGlobalProgress = /*#__PURE__*/ createSimulateContract({
+  abi: globalProgressAbi,
 })
 
 /**
- * Wraps __{@link simulateContract}__ with `abi` set to __{@link craftSystemAbi}__ and `functionName` set to `"addItem"`
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link globalProgressAbi}__ and `functionName` set to `"countEvent"`
  */
-export const simulateCraftSystemAddItem = /*#__PURE__*/ createSimulateContract({
-  abi: craftSystemAbi,
-  functionName: 'addItem',
-})
-
-/**
- * Wraps __{@link simulateContract}__ with `abi` set to __{@link craftSystemAbi}__ and `functionName` set to `"addStation"`
- */
-export const simulateCraftSystemAddStation =
+export const simulateGlobalProgressCountEvent =
   /*#__PURE__*/ createSimulateContract({
-    abi: craftSystemAbi,
-    functionName: 'addStation',
+    abi: globalProgressAbi,
+    functionName: 'countEvent',
   })
 
 /**
- * Wraps __{@link simulateContract}__ with `abi` set to __{@link craftSystemAbi}__ and `functionName` set to `"init"`
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link globalProgressAbi}__ and `functionName` set to `"init"`
  */
-export const simulateCraftSystemInit = /*#__PURE__*/ createSimulateContract({
-  abi: craftSystemAbi,
+export const simulateGlobalProgressInit = /*#__PURE__*/ createSimulateContract({
+  abi: globalProgressAbi,
   functionName: 'init',
 })
 
 /**
- * Wraps __{@link simulateContract}__ with `abi` set to __{@link craftSystemAbi}__ and `functionName` set to `"renounceOwnership"`
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link globalProgressAbi}__ and `functionName` set to `"renounceOwnership"`
  */
-export const simulateCraftSystemRenounceOwnership =
+export const simulateGlobalProgressRenounceOwnership =
   /*#__PURE__*/ createSimulateContract({
-    abi: craftSystemAbi,
+    abi: globalProgressAbi,
     functionName: 'renounceOwnership',
   })
 
 /**
- * Wraps __{@link simulateContract}__ with `abi` set to __{@link craftSystemAbi}__ and `functionName` set to `"setLoader"`
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link globalProgressAbi}__ and `functionName` set to `"transferOwnership"`
  */
-export const simulateCraftSystemSetLoader =
+export const simulateGlobalProgressTransferOwnership =
   /*#__PURE__*/ createSimulateContract({
-    abi: craftSystemAbi,
-    functionName: 'setLoader',
-  })
-
-/**
- * Wraps __{@link simulateContract}__ with `abi` set to __{@link craftSystemAbi}__ and `functionName` set to `"tick"`
- */
-export const simulateCraftSystemTick = /*#__PURE__*/ createSimulateContract({
-  abi: craftSystemAbi,
-  functionName: 'tick',
-})
-
-/**
- * Wraps __{@link simulateContract}__ with `abi` set to __{@link craftSystemAbi}__ and `functionName` set to `"transferOwnership"`
- */
-export const simulateCraftSystemTransferOwnership =
-  /*#__PURE__*/ createSimulateContract({
-    abi: craftSystemAbi,
+    abi: globalProgressAbi,
     functionName: 'transferOwnership',
   })
 
 /**
- * Wraps __{@link watchContractEvent}__ with `abi` set to __{@link craftSystemAbi}__
+ * Wraps __{@link watchContractEvent}__ with `abi` set to __{@link globalProgressAbi}__
  */
-export const watchCraftSystemEvent = /*#__PURE__*/ createWatchContractEvent({
-  abi: craftSystemAbi,
+export const watchGlobalProgressEvent = /*#__PURE__*/ createWatchContractEvent({
+  abi: globalProgressAbi,
 })
 
 /**
- * Wraps __{@link watchContractEvent}__ with `abi` set to __{@link craftSystemAbi}__ and `eventName` set to `"OwnershipTransferred"`
+ * Wraps __{@link watchContractEvent}__ with `abi` set to __{@link globalProgressAbi}__ and `eventName` set to `"OwnershipTransferred"`
  */
-export const watchCraftSystemOwnershipTransferredEvent =
+export const watchGlobalProgressOwnershipTransferredEvent =
   /*#__PURE__*/ createWatchContractEvent({
-    abi: craftSystemAbi,
+    abi: globalProgressAbi,
     eventName: 'OwnershipTransferred',
   })
 
 /**
- * Wraps __{@link readContract}__ with `abi` set to __{@link labAbi}__
+ * Wraps __{@link readContract}__ with `abi` set to __{@link investmentSystemAbi}__
  */
-export const readLab = /*#__PURE__*/ createReadContract({ abi: labAbi })
+export const readInvestmentSystem = /*#__PURE__*/ createReadContract({
+  abi: investmentSystemAbi,
+})
 
 /**
- * Wraps __{@link readContract}__ with `abi` set to __{@link labAbi}__ and `functionName` set to `"balanceOf"`
+ * Wraps __{@link readContract}__ with `abi` set to __{@link investmentSystemAbi}__ and `functionName` set to `"controller"`
  */
-export const readLabBalanceOf = /*#__PURE__*/ createReadContract({
-  abi: labAbi,
+export const readInvestmentSystemController = /*#__PURE__*/ createReadContract({
+  abi: investmentSystemAbi,
+  functionName: 'controller',
+})
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link investmentSystemAbi}__ and `functionName` set to `"owner"`
+ */
+export const readInvestmentSystemOwner = /*#__PURE__*/ createReadContract({
+  abi: investmentSystemAbi,
+  functionName: 'owner',
+})
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link investmentSystemAbi}__ and `functionName` set to `"planet"`
+ */
+export const readInvestmentSystemPlanet = /*#__PURE__*/ createReadContract({
+  abi: investmentSystemAbi,
+  functionName: 'planet',
+})
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link investmentSystemAbi}__ and `functionName` set to `"stats"`
+ */
+export const readInvestmentSystemStats = /*#__PURE__*/ createReadContract({
+  abi: investmentSystemAbi,
+  functionName: 'stats',
+})
+
+/**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link investmentSystemAbi}__
+ */
+export const writeInvestmentSystem = /*#__PURE__*/ createWriteContract({
+  abi: investmentSystemAbi,
+})
+
+/**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link investmentSystemAbi}__ and `functionName` set to `"init"`
+ */
+export const writeInvestmentSystemInit = /*#__PURE__*/ createWriteContract({
+  abi: investmentSystemAbi,
+  functionName: 'init',
+})
+
+/**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link investmentSystemAbi}__ and `functionName` set to `"invest"`
+ */
+export const writeInvestmentSystemInvest = /*#__PURE__*/ createWriteContract({
+  abi: investmentSystemAbi,
+  functionName: 'invest',
+})
+
+/**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link investmentSystemAbi}__ and `functionName` set to `"renounceOwnership"`
+ */
+export const writeInvestmentSystemRenounceOwnership =
+  /*#__PURE__*/ createWriteContract({
+    abi: investmentSystemAbi,
+    functionName: 'renounceOwnership',
+  })
+
+/**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link investmentSystemAbi}__ and `functionName` set to `"transferOwnership"`
+ */
+export const writeInvestmentSystemTransferOwnership =
+  /*#__PURE__*/ createWriteContract({
+    abi: investmentSystemAbi,
+    functionName: 'transferOwnership',
+  })
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link investmentSystemAbi}__
+ */
+export const simulateInvestmentSystem = /*#__PURE__*/ createSimulateContract({
+  abi: investmentSystemAbi,
+})
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link investmentSystemAbi}__ and `functionName` set to `"init"`
+ */
+export const simulateInvestmentSystemInit =
+  /*#__PURE__*/ createSimulateContract({
+    abi: investmentSystemAbi,
+    functionName: 'init',
+  })
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link investmentSystemAbi}__ and `functionName` set to `"invest"`
+ */
+export const simulateInvestmentSystemInvest =
+  /*#__PURE__*/ createSimulateContract({
+    abi: investmentSystemAbi,
+    functionName: 'invest',
+  })
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link investmentSystemAbi}__ and `functionName` set to `"renounceOwnership"`
+ */
+export const simulateInvestmentSystemRenounceOwnership =
+  /*#__PURE__*/ createSimulateContract({
+    abi: investmentSystemAbi,
+    functionName: 'renounceOwnership',
+  })
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link investmentSystemAbi}__ and `functionName` set to `"transferOwnership"`
+ */
+export const simulateInvestmentSystemTransferOwnership =
+  /*#__PURE__*/ createSimulateContract({
+    abi: investmentSystemAbi,
+    functionName: 'transferOwnership',
+  })
+
+/**
+ * Wraps __{@link watchContractEvent}__ with `abi` set to __{@link investmentSystemAbi}__
+ */
+export const watchInvestmentSystemEvent =
+  /*#__PURE__*/ createWatchContractEvent({ abi: investmentSystemAbi })
+
+/**
+ * Wraps __{@link watchContractEvent}__ with `abi` set to __{@link investmentSystemAbi}__ and `eventName` set to `"OwnershipTransferred"`
+ */
+export const watchInvestmentSystemOwnershipTransferredEvent =
+  /*#__PURE__*/ createWatchContractEvent({
+    abi: investmentSystemAbi,
+    eventName: 'OwnershipTransferred',
+  })
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link planetAbi}__
+ */
+export const readPlanet = /*#__PURE__*/ createReadContract({ abi: planetAbi })
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link planetAbi}__ and `functionName` set to `"balanceOf"`
+ */
+export const readPlanetBalanceOf = /*#__PURE__*/ createReadContract({
+  abi: planetAbi,
   functionName: 'balanceOf',
 })
 
 /**
- * Wraps __{@link readContract}__ with `abi` set to __{@link labAbi}__ and `functionName` set to `"contractURI"`
+ * Wraps __{@link readContract}__ with `abi` set to __{@link planetAbi}__ and `functionName` set to `"contractURI"`
  */
-export const readLabContractUri = /*#__PURE__*/ createReadContract({
-  abi: labAbi,
+export const readPlanetContractUri = /*#__PURE__*/ createReadContract({
+  abi: planetAbi,
   functionName: 'contractURI',
 })
 
 /**
- * Wraps __{@link readContract}__ with `abi` set to __{@link labAbi}__ and `functionName` set to `"customizeCost"`
+ * Wraps __{@link readContract}__ with `abi` set to __{@link planetAbi}__ and `functionName` set to `"customizeCost"`
  */
-export const readLabCustomizeCost = /*#__PURE__*/ createReadContract({
-  abi: labAbi,
+export const readPlanetCustomizeCost = /*#__PURE__*/ createReadContract({
+  abi: planetAbi,
   functionName: 'customizeCost',
 })
 
 /**
- * Wraps __{@link readContract}__ with `abi` set to __{@link labAbi}__ and `functionName` set to `"explicitOwnershipOf"`
+ * Wraps __{@link readContract}__ with `abi` set to __{@link planetAbi}__ and `functionName` set to `"explicitOwnershipOf"`
  */
-export const readLabExplicitOwnershipOf = /*#__PURE__*/ createReadContract({
-  abi: labAbi,
+export const readPlanetExplicitOwnershipOf = /*#__PURE__*/ createReadContract({
+  abi: planetAbi,
   functionName: 'explicitOwnershipOf',
 })
 
 /**
- * Wraps __{@link readContract}__ with `abi` set to __{@link labAbi}__ and `functionName` set to `"explicitOwnershipsOf"`
+ * Wraps __{@link readContract}__ with `abi` set to __{@link planetAbi}__ and `functionName` set to `"explicitOwnershipsOf"`
  */
-export const readLabExplicitOwnershipsOf = /*#__PURE__*/ createReadContract({
-  abi: labAbi,
+export const readPlanetExplicitOwnershipsOf = /*#__PURE__*/ createReadContract({
+  abi: planetAbi,
   functionName: 'explicitOwnershipsOf',
 })
 
 /**
- * Wraps __{@link readContract}__ with `abi` set to __{@link labAbi}__ and `functionName` set to `"generateCharacter"`
+ * Wraps __{@link readContract}__ with `abi` set to __{@link planetAbi}__ and `functionName` set to `"generateCharacter"`
  */
-export const readLabGenerateCharacter = /*#__PURE__*/ createReadContract({
-  abi: labAbi,
+export const readPlanetGenerateCharacter = /*#__PURE__*/ createReadContract({
+  abi: planetAbi,
   functionName: 'generateCharacter',
 })
 
 /**
- * Wraps __{@link readContract}__ with `abi` set to __{@link labAbi}__ and `functionName` set to `"generateSVG"`
+ * Wraps __{@link readContract}__ with `abi` set to __{@link planetAbi}__ and `functionName` set to `"generateSVG"`
  */
-export const readLabGenerateSvg = /*#__PURE__*/ createReadContract({
-  abi: labAbi,
+export const readPlanetGenerateSvg = /*#__PURE__*/ createReadContract({
+  abi: planetAbi,
   functionName: 'generateSVG',
 })
 
 /**
- * Wraps __{@link readContract}__ with `abi` set to __{@link labAbi}__ and `functionName` set to `"getApproved"`
+ * Wraps __{@link readContract}__ with `abi` set to __{@link planetAbi}__ and `functionName` set to `"getApproved"`
  */
-export const readLabGetApproved = /*#__PURE__*/ createReadContract({
-  abi: labAbi,
+export const readPlanetGetApproved = /*#__PURE__*/ createReadContract({
+  abi: planetAbi,
   functionName: 'getApproved',
 })
 
 /**
- * Wraps __{@link readContract}__ with `abi` set to __{@link labAbi}__ and `functionName` set to `"isApprovedForAll"`
+ * Wraps __{@link readContract}__ with `abi` set to __{@link planetAbi}__ and `functionName` set to `"isApprovedForAll"`
  */
-export const readLabIsApprovedForAll = /*#__PURE__*/ createReadContract({
-  abi: labAbi,
+export const readPlanetIsApprovedForAll = /*#__PURE__*/ createReadContract({
+  abi: planetAbi,
   functionName: 'isApprovedForAll',
 })
 
 /**
- * Wraps __{@link readContract}__ with `abi` set to __{@link labAbi}__ and `functionName` set to `"mintCost"`
+ * Wraps __{@link readContract}__ with `abi` set to __{@link planetAbi}__ and `functionName` set to `"mintCost"`
  */
-export const readLabMintCost = /*#__PURE__*/ createReadContract({
-  abi: labAbi,
+export const readPlanetMintCost = /*#__PURE__*/ createReadContract({
+  abi: planetAbi,
   functionName: 'mintCost',
 })
 
 /**
- * Wraps __{@link readContract}__ with `abi` set to __{@link labAbi}__ and `functionName` set to `"name"`
+ * Wraps __{@link readContract}__ with `abi` set to __{@link planetAbi}__ and `functionName` set to `"name"`
  */
-export const readLabName = /*#__PURE__*/ createReadContract({
-  abi: labAbi,
+export const readPlanetName = /*#__PURE__*/ createReadContract({
+  abi: planetAbi,
   functionName: 'name',
 })
 
 /**
- * Wraps __{@link readContract}__ with `abi` set to __{@link labAbi}__ and `functionName` set to `"nextTokenId"`
+ * Wraps __{@link readContract}__ with `abi` set to __{@link planetAbi}__ and `functionName` set to `"nextTokenId"`
  */
-export const readLabNextTokenId = /*#__PURE__*/ createReadContract({
-  abi: labAbi,
+export const readPlanetNextTokenId = /*#__PURE__*/ createReadContract({
+  abi: planetAbi,
   functionName: 'nextTokenId',
 })
 
 /**
- * Wraps __{@link readContract}__ with `abi` set to __{@link labAbi}__ and `functionName` set to `"owner"`
+ * Wraps __{@link readContract}__ with `abi` set to __{@link planetAbi}__ and `functionName` set to `"owner"`
  */
-export const readLabOwner = /*#__PURE__*/ createReadContract({
-  abi: labAbi,
+export const readPlanetOwner = /*#__PURE__*/ createReadContract({
+  abi: planetAbi,
   functionName: 'owner',
 })
 
 /**
- * Wraps __{@link readContract}__ with `abi` set to __{@link labAbi}__ and `functionName` set to `"ownerOf"`
+ * Wraps __{@link readContract}__ with `abi` set to __{@link planetAbi}__ and `functionName` set to `"ownerOf"`
  */
-export const readLabOwnerOf = /*#__PURE__*/ createReadContract({
-  abi: labAbi,
+export const readPlanetOwnerOf = /*#__PURE__*/ createReadContract({
+  abi: planetAbi,
   functionName: 'ownerOf',
 })
 
 /**
- * Wraps __{@link readContract}__ with `abi` set to __{@link labAbi}__ and `functionName` set to `"renderers"`
+ * Wraps __{@link readContract}__ with `abi` set to __{@link planetAbi}__ and `functionName` set to `"renderers"`
  */
-export const readLabRenderers = /*#__PURE__*/ createReadContract({
-  abi: labAbi,
+export const readPlanetRenderers = /*#__PURE__*/ createReadContract({
+  abi: planetAbi,
   functionName: 'renderers',
 })
 
 /**
- * Wraps __{@link readContract}__ with `abi` set to __{@link labAbi}__ and `functionName` set to `"supportsInterface"`
+ * Wraps __{@link readContract}__ with `abi` set to __{@link planetAbi}__ and `functionName` set to `"supportsInterface"`
  */
-export const readLabSupportsInterface = /*#__PURE__*/ createReadContract({
-  abi: labAbi,
+export const readPlanetSupportsInterface = /*#__PURE__*/ createReadContract({
+  abi: planetAbi,
   functionName: 'supportsInterface',
 })
 
 /**
- * Wraps __{@link readContract}__ with `abi` set to __{@link labAbi}__ and `functionName` set to `"symbol"`
+ * Wraps __{@link readContract}__ with `abi` set to __{@link planetAbi}__ and `functionName` set to `"symbol"`
  */
-export const readLabSymbol = /*#__PURE__*/ createReadContract({
-  abi: labAbi,
+export const readPlanetSymbol = /*#__PURE__*/ createReadContract({
+  abi: planetAbi,
   functionName: 'symbol',
 })
 
 /**
- * Wraps __{@link readContract}__ with `abi` set to __{@link labAbi}__ and `functionName` set to `"systems"`
+ * Wraps __{@link readContract}__ with `abi` set to __{@link planetAbi}__ and `functionName` set to `"systemController"`
  */
-export const readLabSystems = /*#__PURE__*/ createReadContract({
-  abi: labAbi,
-  functionName: 'systems',
+export const readPlanetSystemController = /*#__PURE__*/ createReadContract({
+  abi: planetAbi,
+  functionName: 'systemController',
 })
 
 /**
- * Wraps __{@link readContract}__ with `abi` set to __{@link labAbi}__ and `functionName` set to `"tokenURI"`
+ * Wraps __{@link readContract}__ with `abi` set to __{@link planetAbi}__ and `functionName` set to `"tokenURI"`
  */
-export const readLabTokenUri = /*#__PURE__*/ createReadContract({
-  abi: labAbi,
+export const readPlanetTokenUri = /*#__PURE__*/ createReadContract({
+  abi: planetAbi,
   functionName: 'tokenURI',
 })
 
 /**
- * Wraps __{@link readContract}__ with `abi` set to __{@link labAbi}__ and `functionName` set to `"tokensOfOwner"`
+ * Wraps __{@link readContract}__ with `abi` set to __{@link planetAbi}__ and `functionName` set to `"tokensOfOwner"`
  */
-export const readLabTokensOfOwner = /*#__PURE__*/ createReadContract({
-  abi: labAbi,
+export const readPlanetTokensOfOwner = /*#__PURE__*/ createReadContract({
+  abi: planetAbi,
   functionName: 'tokensOfOwner',
 })
 
 /**
- * Wraps __{@link readContract}__ with `abi` set to __{@link labAbi}__ and `functionName` set to `"tokensOfOwnerIn"`
+ * Wraps __{@link readContract}__ with `abi` set to __{@link planetAbi}__ and `functionName` set to `"tokensOfOwnerIn"`
  */
-export const readLabTokensOfOwnerIn = /*#__PURE__*/ createReadContract({
-  abi: labAbi,
+export const readPlanetTokensOfOwnerIn = /*#__PURE__*/ createReadContract({
+  abi: planetAbi,
   functionName: 'tokensOfOwnerIn',
 })
 
 /**
- * Wraps __{@link readContract}__ with `abi` set to __{@link labAbi}__ and `functionName` set to `"totalSupply"`
+ * Wraps __{@link readContract}__ with `abi` set to __{@link planetAbi}__ and `functionName` set to `"totalSupply"`
  */
-export const readLabTotalSupply = /*#__PURE__*/ createReadContract({
-  abi: labAbi,
+export const readPlanetTotalSupply = /*#__PURE__*/ createReadContract({
+  abi: planetAbi,
   functionName: 'totalSupply',
 })
 
 /**
- * Wraps __{@link writeContract}__ with `abi` set to __{@link labAbi}__
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link planetAbi}__
  */
-export const writeLab = /*#__PURE__*/ createWriteContract({ abi: labAbi })
+export const writePlanet = /*#__PURE__*/ createWriteContract({ abi: planetAbi })
 
 /**
- * Wraps __{@link writeContract}__ with `abi` set to __{@link labAbi}__ and `functionName` set to `"addRenderer"`
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link planetAbi}__ and `functionName` set to `"addRenderer"`
  */
-export const writeLabAddRenderer = /*#__PURE__*/ createWriteContract({
-  abi: labAbi,
+export const writePlanetAddRenderer = /*#__PURE__*/ createWriteContract({
+  abi: planetAbi,
   functionName: 'addRenderer',
 })
 
 /**
- * Wraps __{@link writeContract}__ with `abi` set to __{@link labAbi}__ and `functionName` set to `"addSystem"`
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link planetAbi}__ and `functionName` set to `"approve"`
  */
-export const writeLabAddSystem = /*#__PURE__*/ createWriteContract({
-  abi: labAbi,
-  functionName: 'addSystem',
-})
-
-/**
- * Wraps __{@link writeContract}__ with `abi` set to __{@link labAbi}__ and `functionName` set to `"approve"`
- */
-export const writeLabApprove = /*#__PURE__*/ createWriteContract({
-  abi: labAbi,
+export const writePlanetApprove = /*#__PURE__*/ createWriteContract({
+  abi: planetAbi,
   functionName: 'approve',
 })
 
 /**
- * Wraps __{@link writeContract}__ with `abi` set to __{@link labAbi}__ and `functionName` set to `"clearSystems"`
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link planetAbi}__ and `functionName` set to `"mint"`
  */
-export const writeLabClearSystems = /*#__PURE__*/ createWriteContract({
-  abi: labAbi,
-  functionName: 'clearSystems',
-})
-
-/**
- * Wraps __{@link writeContract}__ with `abi` set to __{@link labAbi}__ and `functionName` set to `"mint"`
- */
-export const writeLabMint = /*#__PURE__*/ createWriteContract({
-  abi: labAbi,
+export const writePlanetMint = /*#__PURE__*/ createWriteContract({
+  abi: planetAbi,
   functionName: 'mint',
 })
 
 /**
- * Wraps __{@link writeContract}__ with `abi` set to __{@link labAbi}__ and `functionName` set to `"renounceOwnership"`
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link planetAbi}__ and `functionName` set to `"renounceOwnership"`
  */
-export const writeLabRenounceOwnership = /*#__PURE__*/ createWriteContract({
-  abi: labAbi,
+export const writePlanetRenounceOwnership = /*#__PURE__*/ createWriteContract({
+  abi: planetAbi,
   functionName: 'renounceOwnership',
 })
 
 /**
- * Wraps __{@link writeContract}__ with `abi` set to __{@link labAbi}__ and `functionName` set to `"safeTransferFrom"`
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link planetAbi}__ and `functionName` set to `"safeTransferFrom"`
  */
-export const writeLabSafeTransferFrom = /*#__PURE__*/ createWriteContract({
-  abi: labAbi,
+export const writePlanetSafeTransferFrom = /*#__PURE__*/ createWriteContract({
+  abi: planetAbi,
   functionName: 'safeTransferFrom',
 })
 
 /**
- * Wraps __{@link writeContract}__ with `abi` set to __{@link labAbi}__ and `functionName` set to `"selectRenderer"`
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link planetAbi}__ and `functionName` set to `"selectRenderer"`
  */
-export const writeLabSelectRenderer = /*#__PURE__*/ createWriteContract({
-  abi: labAbi,
+export const writePlanetSelectRenderer = /*#__PURE__*/ createWriteContract({
+  abi: planetAbi,
   functionName: 'selectRenderer',
 })
 
 /**
- * Wraps __{@link writeContract}__ with `abi` set to __{@link labAbi}__ and `functionName` set to `"setApprovalForAll"`
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link planetAbi}__ and `functionName` set to `"setApprovalForAll"`
  */
-export const writeLabSetApprovalForAll = /*#__PURE__*/ createWriteContract({
-  abi: labAbi,
+export const writePlanetSetApprovalForAll = /*#__PURE__*/ createWriteContract({
+  abi: planetAbi,
   functionName: 'setApprovalForAll',
 })
 
 /**
- * Wraps __{@link writeContract}__ with `abi` set to __{@link labAbi}__ and `functionName` set to `"transferFrom"`
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link planetAbi}__ and `functionName` set to `"transferFrom"`
  */
-export const writeLabTransferFrom = /*#__PURE__*/ createWriteContract({
-  abi: labAbi,
+export const writePlanetTransferFrom = /*#__PURE__*/ createWriteContract({
+  abi: planetAbi,
   functionName: 'transferFrom',
 })
 
 /**
- * Wraps __{@link writeContract}__ with `abi` set to __{@link labAbi}__ and `functionName` set to `"transferOwnership"`
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link planetAbi}__ and `functionName` set to `"transferOwnership"`
  */
-export const writeLabTransferOwnership = /*#__PURE__*/ createWriteContract({
-  abi: labAbi,
+export const writePlanetTransferOwnership = /*#__PURE__*/ createWriteContract({
+  abi: planetAbi,
   functionName: 'transferOwnership',
 })
 
 /**
- * Wraps __{@link simulateContract}__ with `abi` set to __{@link labAbi}__
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link planetAbi}__
  */
-export const simulateLab = /*#__PURE__*/ createSimulateContract({ abi: labAbi })
+export const simulatePlanet = /*#__PURE__*/ createSimulateContract({
+  abi: planetAbi,
+})
 
 /**
- * Wraps __{@link simulateContract}__ with `abi` set to __{@link labAbi}__ and `functionName` set to `"addRenderer"`
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link planetAbi}__ and `functionName` set to `"addRenderer"`
  */
-export const simulateLabAddRenderer = /*#__PURE__*/ createSimulateContract({
-  abi: labAbi,
+export const simulatePlanetAddRenderer = /*#__PURE__*/ createSimulateContract({
+  abi: planetAbi,
   functionName: 'addRenderer',
 })
 
 /**
- * Wraps __{@link simulateContract}__ with `abi` set to __{@link labAbi}__ and `functionName` set to `"addSystem"`
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link planetAbi}__ and `functionName` set to `"approve"`
  */
-export const simulateLabAddSystem = /*#__PURE__*/ createSimulateContract({
-  abi: labAbi,
-  functionName: 'addSystem',
-})
-
-/**
- * Wraps __{@link simulateContract}__ with `abi` set to __{@link labAbi}__ and `functionName` set to `"approve"`
- */
-export const simulateLabApprove = /*#__PURE__*/ createSimulateContract({
-  abi: labAbi,
+export const simulatePlanetApprove = /*#__PURE__*/ createSimulateContract({
+  abi: planetAbi,
   functionName: 'approve',
 })
 
 /**
- * Wraps __{@link simulateContract}__ with `abi` set to __{@link labAbi}__ and `functionName` set to `"clearSystems"`
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link planetAbi}__ and `functionName` set to `"mint"`
  */
-export const simulateLabClearSystems = /*#__PURE__*/ createSimulateContract({
-  abi: labAbi,
-  functionName: 'clearSystems',
-})
-
-/**
- * Wraps __{@link simulateContract}__ with `abi` set to __{@link labAbi}__ and `functionName` set to `"mint"`
- */
-export const simulateLabMint = /*#__PURE__*/ createSimulateContract({
-  abi: labAbi,
+export const simulatePlanetMint = /*#__PURE__*/ createSimulateContract({
+  abi: planetAbi,
   functionName: 'mint',
 })
 
 /**
- * Wraps __{@link simulateContract}__ with `abi` set to __{@link labAbi}__ and `functionName` set to `"renounceOwnership"`
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link planetAbi}__ and `functionName` set to `"renounceOwnership"`
  */
-export const simulateLabRenounceOwnership =
+export const simulatePlanetRenounceOwnership =
   /*#__PURE__*/ createSimulateContract({
-    abi: labAbi,
+    abi: planetAbi,
     functionName: 'renounceOwnership',
   })
 
 /**
- * Wraps __{@link simulateContract}__ with `abi` set to __{@link labAbi}__ and `functionName` set to `"safeTransferFrom"`
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link planetAbi}__ and `functionName` set to `"safeTransferFrom"`
  */
-export const simulateLabSafeTransferFrom = /*#__PURE__*/ createSimulateContract(
-  { abi: labAbi, functionName: 'safeTransferFrom' },
-)
-
-/**
- * Wraps __{@link simulateContract}__ with `abi` set to __{@link labAbi}__ and `functionName` set to `"selectRenderer"`
- */
-export const simulateLabSelectRenderer = /*#__PURE__*/ createSimulateContract({
-  abi: labAbi,
-  functionName: 'selectRenderer',
-})
-
-/**
- * Wraps __{@link simulateContract}__ with `abi` set to __{@link labAbi}__ and `functionName` set to `"setApprovalForAll"`
- */
-export const simulateLabSetApprovalForAll =
+export const simulatePlanetSafeTransferFrom =
   /*#__PURE__*/ createSimulateContract({
-    abi: labAbi,
+    abi: planetAbi,
+    functionName: 'safeTransferFrom',
+  })
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link planetAbi}__ and `functionName` set to `"selectRenderer"`
+ */
+export const simulatePlanetSelectRenderer =
+  /*#__PURE__*/ createSimulateContract({
+    abi: planetAbi,
+    functionName: 'selectRenderer',
+  })
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link planetAbi}__ and `functionName` set to `"setApprovalForAll"`
+ */
+export const simulatePlanetSetApprovalForAll =
+  /*#__PURE__*/ createSimulateContract({
+    abi: planetAbi,
     functionName: 'setApprovalForAll',
   })
 
 /**
- * Wraps __{@link simulateContract}__ with `abi` set to __{@link labAbi}__ and `functionName` set to `"transferFrom"`
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link planetAbi}__ and `functionName` set to `"transferFrom"`
  */
-export const simulateLabTransferFrom = /*#__PURE__*/ createSimulateContract({
-  abi: labAbi,
+export const simulatePlanetTransferFrom = /*#__PURE__*/ createSimulateContract({
+  abi: planetAbi,
   functionName: 'transferFrom',
 })
 
 /**
- * Wraps __{@link simulateContract}__ with `abi` set to __{@link labAbi}__ and `functionName` set to `"transferOwnership"`
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link planetAbi}__ and `functionName` set to `"transferOwnership"`
  */
-export const simulateLabTransferOwnership =
+export const simulatePlanetTransferOwnership =
   /*#__PURE__*/ createSimulateContract({
-    abi: labAbi,
+    abi: planetAbi,
     functionName: 'transferOwnership',
   })
 
 /**
- * Wraps __{@link watchContractEvent}__ with `abi` set to __{@link labAbi}__
+ * Wraps __{@link watchContractEvent}__ with `abi` set to __{@link planetAbi}__
  */
-export const watchLabEvent = /*#__PURE__*/ createWatchContractEvent({
-  abi: labAbi,
+export const watchPlanetEvent = /*#__PURE__*/ createWatchContractEvent({
+  abi: planetAbi,
 })
 
 /**
- * Wraps __{@link watchContractEvent}__ with `abi` set to __{@link labAbi}__ and `eventName` set to `"Approval"`
+ * Wraps __{@link watchContractEvent}__ with `abi` set to __{@link planetAbi}__ and `eventName` set to `"Approval"`
  */
-export const watchLabApprovalEvent = /*#__PURE__*/ createWatchContractEvent({
-  abi: labAbi,
+export const watchPlanetApprovalEvent = /*#__PURE__*/ createWatchContractEvent({
+  abi: planetAbi,
   eventName: 'Approval',
 })
 
 /**
- * Wraps __{@link watchContractEvent}__ with `abi` set to __{@link labAbi}__ and `eventName` set to `"ApprovalForAll"`
+ * Wraps __{@link watchContractEvent}__ with `abi` set to __{@link planetAbi}__ and `eventName` set to `"ApprovalForAll"`
  */
-export const watchLabApprovalForAllEvent =
+export const watchPlanetApprovalForAllEvent =
   /*#__PURE__*/ createWatchContractEvent({
-    abi: labAbi,
+    abi: planetAbi,
     eventName: 'ApprovalForAll',
   })
 
 /**
- * Wraps __{@link watchContractEvent}__ with `abi` set to __{@link labAbi}__ and `eventName` set to `"ConsecutiveTransfer"`
+ * Wraps __{@link watchContractEvent}__ with `abi` set to __{@link planetAbi}__ and `eventName` set to `"ConsecutiveTransfer"`
  */
-export const watchLabConsecutiveTransferEvent =
+export const watchPlanetConsecutiveTransferEvent =
   /*#__PURE__*/ createWatchContractEvent({
-    abi: labAbi,
+    abi: planetAbi,
     eventName: 'ConsecutiveTransfer',
   })
 
 /**
- * Wraps __{@link watchContractEvent}__ with `abi` set to __{@link labAbi}__ and `eventName` set to `"OwnershipTransferred"`
+ * Wraps __{@link watchContractEvent}__ with `abi` set to __{@link planetAbi}__ and `eventName` set to `"OwnershipTransferred"`
  */
-export const watchLabOwnershipTransferredEvent =
+export const watchPlanetOwnershipTransferredEvent =
   /*#__PURE__*/ createWatchContractEvent({
-    abi: labAbi,
+    abi: planetAbi,
     eventName: 'OwnershipTransferred',
   })
 
 /**
- * Wraps __{@link watchContractEvent}__ with `abi` set to __{@link labAbi}__ and `eventName` set to `"Transfer"`
+ * Wraps __{@link watchContractEvent}__ with `abi` set to __{@link planetAbi}__ and `eventName` set to `"Transfer"`
  */
-export const watchLabTransferEvent = /*#__PURE__*/ createWatchContractEvent({
-  abi: labAbi,
+export const watchPlanetTransferEvent = /*#__PURE__*/ createWatchContractEvent({
+  abi: planetAbi,
   eventName: 'Transfer',
 })
 
 /**
- * Wraps __{@link writeContract}__ with `abi` set to __{@link systemAbi}__
+ * Wraps __{@link readContract}__ with `abi` set to __{@link systemControllerAbi}__
  */
-export const writeSystem = /*#__PURE__*/ createWriteContract({ abi: systemAbi })
-
-/**
- * Wraps __{@link writeContract}__ with `abi` set to __{@link systemAbi}__ and `functionName` set to `"init"`
- */
-export const writeSystemInit = /*#__PURE__*/ createWriteContract({
-  abi: systemAbi,
-  functionName: 'init',
+export const readSystemController = /*#__PURE__*/ createReadContract({
+  abi: systemControllerAbi,
 })
 
 /**
- * Wraps __{@link simulateContract}__ with `abi` set to __{@link systemAbi}__
+ * Wraps __{@link readContract}__ with `abi` set to __{@link systemControllerAbi}__ and `functionName` set to `"getSystem"`
  */
-export const simulateSystem = /*#__PURE__*/ createSimulateContract({
-  abi: systemAbi,
+export const readSystemControllerGetSystem = /*#__PURE__*/ createReadContract({
+  abi: systemControllerAbi,
+  functionName: 'getSystem',
 })
 
 /**
- * Wraps __{@link simulateContract}__ with `abi` set to __{@link systemAbi}__ and `functionName` set to `"init"`
+ * Wraps __{@link readContract}__ with `abi` set to __{@link systemControllerAbi}__ and `functionName` set to `"owner"`
  */
-export const simulateSystemInit = /*#__PURE__*/ createSimulateContract({
-  abi: systemAbi,
-  functionName: 'init',
+export const readSystemControllerOwner = /*#__PURE__*/ createReadContract({
+  abi: systemControllerAbi,
+  functionName: 'owner',
 })
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link systemControllerAbi}__ and `functionName` set to `"systemMap"`
+ */
+export const readSystemControllerSystemMap = /*#__PURE__*/ createReadContract({
+  abi: systemControllerAbi,
+  functionName: 'systemMap',
+})
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link systemControllerAbi}__ and `functionName` set to `"systems"`
+ */
+export const readSystemControllerSystems = /*#__PURE__*/ createReadContract({
+  abi: systemControllerAbi,
+  functionName: 'systems',
+})
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link systemControllerAbi}__ and `functionName` set to `"tokenAddress"`
+ */
+export const readSystemControllerTokenAddress =
+  /*#__PURE__*/ createReadContract({
+    abi: systemControllerAbi,
+    functionName: 'tokenAddress',
+  })
+
+/**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link systemControllerAbi}__
+ */
+export const writeSystemController = /*#__PURE__*/ createWriteContract({
+  abi: systemControllerAbi,
+})
+
+/**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link systemControllerAbi}__ and `functionName` set to `"initAll"`
+ */
+export const writeSystemControllerInitAll = /*#__PURE__*/ createWriteContract({
+  abi: systemControllerAbi,
+  functionName: 'initAll',
+})
+
+/**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link systemControllerAbi}__ and `functionName` set to `"registerSystem"`
+ */
+export const writeSystemControllerRegisterSystem =
+  /*#__PURE__*/ createWriteContract({
+    abi: systemControllerAbi,
+    functionName: 'registerSystem',
+  })
+
+/**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link systemControllerAbi}__ and `functionName` set to `"renounceOwnership"`
+ */
+export const writeSystemControllerRenounceOwnership =
+  /*#__PURE__*/ createWriteContract({
+    abi: systemControllerAbi,
+    functionName: 'renounceOwnership',
+  })
+
+/**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link systemControllerAbi}__ and `functionName` set to `"setTokenAddress"`
+ */
+export const writeSystemControllerSetTokenAddress =
+  /*#__PURE__*/ createWriteContract({
+    abi: systemControllerAbi,
+    functionName: 'setTokenAddress',
+  })
+
+/**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link systemControllerAbi}__ and `functionName` set to `"transferOwnership"`
+ */
+export const writeSystemControllerTransferOwnership =
+  /*#__PURE__*/ createWriteContract({
+    abi: systemControllerAbi,
+    functionName: 'transferOwnership',
+  })
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link systemControllerAbi}__
+ */
+export const simulateSystemController = /*#__PURE__*/ createSimulateContract({
+  abi: systemControllerAbi,
+})
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link systemControllerAbi}__ and `functionName` set to `"initAll"`
+ */
+export const simulateSystemControllerInitAll =
+  /*#__PURE__*/ createSimulateContract({
+    abi: systemControllerAbi,
+    functionName: 'initAll',
+  })
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link systemControllerAbi}__ and `functionName` set to `"registerSystem"`
+ */
+export const simulateSystemControllerRegisterSystem =
+  /*#__PURE__*/ createSimulateContract({
+    abi: systemControllerAbi,
+    functionName: 'registerSystem',
+  })
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link systemControllerAbi}__ and `functionName` set to `"renounceOwnership"`
+ */
+export const simulateSystemControllerRenounceOwnership =
+  /*#__PURE__*/ createSimulateContract({
+    abi: systemControllerAbi,
+    functionName: 'renounceOwnership',
+  })
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link systemControllerAbi}__ and `functionName` set to `"setTokenAddress"`
+ */
+export const simulateSystemControllerSetTokenAddress =
+  /*#__PURE__*/ createSimulateContract({
+    abi: systemControllerAbi,
+    functionName: 'setTokenAddress',
+  })
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link systemControllerAbi}__ and `functionName` set to `"transferOwnership"`
+ */
+export const simulateSystemControllerTransferOwnership =
+  /*#__PURE__*/ createSimulateContract({
+    abi: systemControllerAbi,
+    functionName: 'transferOwnership',
+  })
+
+/**
+ * Wraps __{@link watchContractEvent}__ with `abi` set to __{@link systemControllerAbi}__
+ */
+export const watchSystemControllerEvent =
+  /*#__PURE__*/ createWatchContractEvent({ abi: systemControllerAbi })
+
+/**
+ * Wraps __{@link watchContractEvent}__ with `abi` set to __{@link systemControllerAbi}__ and `eventName` set to `"OwnershipTransferred"`
+ */
+export const watchSystemControllerOwnershipTransferredEvent =
+  /*#__PURE__*/ createWatchContractEvent({
+    abi: systemControllerAbi,
+    eventName: 'OwnershipTransferred',
+  })

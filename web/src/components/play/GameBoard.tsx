@@ -5,7 +5,7 @@ import { ControlTabs } from "@/components/play/ControlTabs";
 import { Belt, Item, ItemType, Station, StationModifier } from "@/domain/types";
 import { useData } from "@/hooks/UseData";
 import useDeployment from "@/hooks/useDeployment";
-import { useReadCraftSystemGameStates, useReadLabGenerateSvg } from "@/generated";
+import { useReadPlanetGenerateSvg } from "@/generated";
 import PlayPreview from "./PlayPreview";
 
 
@@ -51,8 +51,8 @@ const GameBoard = (props: GameBoardProps) => {
 
 
   const { deploy } = useDeployment();
-  const { data: image, isLoading: loadingImage } = useReadLabGenerateSvg({ address: deploy.lab, args: [props.tokenId] });
-  const { data: gameState, status, error } = useReadCraftSystemGameStates({ address: deploy.craftSystem, args: [props.tokenId] })
+  const { data: image, isLoading: loadingImage } = useReadPlanetGenerateSvg({ address: deploy.Planet, args: [props.tokenId] });
+  // const { data: gameState, status, error } = useReadCraftSystemGameStates({ address: deploy.craftSystem, args: [props.tokenId] })
 
 
   // const image = svg;
@@ -102,7 +102,7 @@ const GameBoard = (props: GameBoardProps) => {
         </div>
         <div className='max-w-lg min-w-lg'>
           {/* <div> information is simulated, sync to apply  </div> */}
-          <ControlTabs state={gameState}
+          <ControlTabs state={Object.freeze([BigInt(10), BigInt(10), BigInt(10), BigInt(10)]) as readonly [bigint, bigint, bigint, bigint]}
             setStation={setStation}
             simulatedState={simulatedState}
             planetName={planetName} />
