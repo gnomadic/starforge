@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { useReadLabBalanceOf, useReadLabTokensOfOwner } from "@/generated";
+import { useReadPlanetBalanceOf, useReadPlanetTokensOfOwner } from "@/generated";
 import { useAccount } from "wagmi";
 import useDeployment from "@/hooks/useDeployment";
 import { zeroAddress } from "viem";
@@ -13,8 +13,8 @@ const Council: React.FC = () => {
   const { address } = useAccount()
   const { deploy } = useDeployment()
 
-  const { data: balance } = useReadLabBalanceOf({ args: [address ? address : zeroAddress], address: deploy.lab })
-  const { data: held } = useReadLabTokensOfOwner({ args: [address ? address : zeroAddress], address: deploy.lab })
+  const { data: balance } = useReadPlanetBalanceOf({ args: [address ? address : zeroAddress], address: deploy.Planet })
+  const { data: held } = useReadPlanetTokensOfOwner({ args: [address ? address : zeroAddress], address: deploy.Planet })
 
   return (
     <div>

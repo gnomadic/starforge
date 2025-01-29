@@ -66,8 +66,10 @@ export  interface CraftingSystemGameState {
 }
 
 export type Deployment = {
-  lab: Address;
-  craftSystem: Address;
+  Planet: Address;
+  SystemController: Address;
+  InvestmentSystem: Address;
+  GlobalProgress: Address;
   displayName: string;
   currency: string;
   chain: string;
