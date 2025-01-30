@@ -134,10 +134,35 @@ export const investmentSystemAbi = [
   },
   {
     type: 'function',
+    inputs: [{ name: 'name', internalType: 'string', type: 'string' }],
+    name: 'addInvestment',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
     inputs: [],
     name: 'controller',
     outputs: [
       { name: '', internalType: 'contract ISystemController', type: 'address' },
+    ],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'getInvestments',
+    outputs: [
+      {
+        name: '',
+        internalType: 'struct InvestmentSystem.Investment[]',
+        type: 'tuple[]',
+        components: [
+          { name: 'id', internalType: 'uint256', type: 'uint256' },
+          { name: 'name', internalType: 'string', type: 'string' },
+          { name: 'enabled', internalType: 'bool', type: 'bool' },
+        ],
+      },
     ],
     stateMutability: 'view',
   },
@@ -157,10 +182,24 @@ export const investmentSystemAbi = [
   },
   {
     type: 'function',
-    inputs: [{ name: 'tokenId', internalType: 'uint256', type: 'uint256' }],
+    inputs: [
+      { name: 'tokenId', internalType: 'uint256', type: 'uint256' },
+      { name: 'investment', internalType: 'uint256', type: 'uint256' },
+    ],
     name: 'invest',
     outputs: [],
     stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+    name: 'investments',
+    outputs: [
+      { name: 'id', internalType: 'uint256', type: 'uint256' },
+      { name: 'name', internalType: 'string', type: 'string' },
+      { name: 'enabled', internalType: 'bool', type: 'bool' },
+    ],
+    stateMutability: 'view',
   },
   {
     type: 'function',
@@ -879,6 +918,24 @@ export const useReadInvestmentSystemController =
   })
 
 /**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link investmentSystemAbi}__ and `functionName` set to `"getInvestments"`
+ */
+export const useReadInvestmentSystemGetInvestments =
+  /*#__PURE__*/ createUseReadContract({
+    abi: investmentSystemAbi,
+    functionName: 'getInvestments',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link investmentSystemAbi}__ and `functionName` set to `"investments"`
+ */
+export const useReadInvestmentSystemInvestments =
+  /*#__PURE__*/ createUseReadContract({
+    abi: investmentSystemAbi,
+    functionName: 'investments',
+  })
+
+/**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link investmentSystemAbi}__ and `functionName` set to `"owner"`
  */
 export const useReadInvestmentSystemOwner = /*#__PURE__*/ createUseReadContract(
@@ -907,6 +964,15 @@ export const useReadInvestmentSystemStats = /*#__PURE__*/ createUseReadContract(
 export const useWriteInvestmentSystem = /*#__PURE__*/ createUseWriteContract({
   abi: investmentSystemAbi,
 })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link investmentSystemAbi}__ and `functionName` set to `"addInvestment"`
+ */
+export const useWriteInvestmentSystemAddInvestment =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: investmentSystemAbi,
+    functionName: 'addInvestment',
+  })
 
 /**
  * Wraps __{@link useWriteContract}__ with `abi` set to __{@link investmentSystemAbi}__ and `functionName` set to `"init"`
@@ -949,6 +1015,15 @@ export const useWriteInvestmentSystemTransferOwnership =
  */
 export const useSimulateInvestmentSystem =
   /*#__PURE__*/ createUseSimulateContract({ abi: investmentSystemAbi })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link investmentSystemAbi}__ and `functionName` set to `"addInvestment"`
+ */
+export const useSimulateInvestmentSystemAddInvestment =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: investmentSystemAbi,
+    functionName: 'addInvestment',
+  })
 
 /**
  * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link investmentSystemAbi}__ and `functionName` set to `"init"`
@@ -1712,6 +1787,22 @@ export const readInvestmentSystemController = /*#__PURE__*/ createReadContract({
 })
 
 /**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link investmentSystemAbi}__ and `functionName` set to `"getInvestments"`
+ */
+export const readInvestmentSystemGetInvestments =
+  /*#__PURE__*/ createReadContract({
+    abi: investmentSystemAbi,
+    functionName: 'getInvestments',
+  })
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link investmentSystemAbi}__ and `functionName` set to `"investments"`
+ */
+export const readInvestmentSystemInvestments = /*#__PURE__*/ createReadContract(
+  { abi: investmentSystemAbi, functionName: 'investments' },
+)
+
+/**
  * Wraps __{@link readContract}__ with `abi` set to __{@link investmentSystemAbi}__ and `functionName` set to `"owner"`
  */
 export const readInvestmentSystemOwner = /*#__PURE__*/ createReadContract({
@@ -1741,6 +1832,15 @@ export const readInvestmentSystemStats = /*#__PURE__*/ createReadContract({
 export const writeInvestmentSystem = /*#__PURE__*/ createWriteContract({
   abi: investmentSystemAbi,
 })
+
+/**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link investmentSystemAbi}__ and `functionName` set to `"addInvestment"`
+ */
+export const writeInvestmentSystemAddInvestment =
+  /*#__PURE__*/ createWriteContract({
+    abi: investmentSystemAbi,
+    functionName: 'addInvestment',
+  })
 
 /**
  * Wraps __{@link writeContract}__ with `abi` set to __{@link investmentSystemAbi}__ and `functionName` set to `"init"`
@@ -1782,6 +1882,15 @@ export const writeInvestmentSystemTransferOwnership =
 export const simulateInvestmentSystem = /*#__PURE__*/ createSimulateContract({
   abi: investmentSystemAbi,
 })
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link investmentSystemAbi}__ and `functionName` set to `"addInvestment"`
+ */
+export const simulateInvestmentSystemAddInvestment =
+  /*#__PURE__*/ createSimulateContract({
+    abi: investmentSystemAbi,
+    functionName: 'addInvestment',
+  })
 
 /**
  * Wraps __{@link simulateContract}__ with `abi` set to __{@link investmentSystemAbi}__ and `functionName` set to `"init"`
