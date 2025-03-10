@@ -83,8 +83,7 @@ module.exports = async (hre) => {
   const PlanetDeployment = await deployments.get("Planet");
   const deployedPlanet = await ethers.getContractAt("Planet", PlanetDeployment.address);
 
-  const InvestmentSystemDeployment = await deployments.get("InvestmentSystem");
-  const deployedInvestmentSystem = await ethers.getContractAt("InvestmentSystem", InvestmentSystemDeployment.address);
+
 
   // const CraftDeployment = await deployments.get("CraftSystem");
   // const deployedCraft = await ethers.getContractAt("CraftSystem", CraftDeployment.address);
@@ -169,15 +168,8 @@ module.exports = async (hre) => {
   tx = await deployedPlanet.mint("0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266")
   await tx.wait();
 
-  tx = await deployedInvestmentSystem.addInvestment("first");
-  await tx.wait();
 
-  tx = await deployedInvestmentSystem.addInvestment("second");
-  await tx.wait();
-
-  tx = await deployedInvestmentSystem.addInvestment("third");
-  await tx.wait();
-
+  
 
 
 };

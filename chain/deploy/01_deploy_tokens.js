@@ -26,7 +26,7 @@ module.exports = async (hre) => {
 
 
 
-  
+
 
 
 
@@ -36,9 +36,25 @@ module.exports = async (hre) => {
 
   console.log("----- done")
 
+  console.log("----- adding to investment system")
 
 
-  
+
+  const InvestmentSystemDeployment = await deployments.get("InvestmentSystem");
+  const deployedInvestmentSystem = await ethers.getContractAt("InvestmentSystem", InvestmentSystemDeployment.address);
+
+
+  tx = await deployedInvestmentSystem.addInvestment("first", [], [], [PopulationToken.address], [1]);
+  await tx.wait();
+
+  tx = await deployedInvestmentSystem.addInvestment("second", [], [], [], []);
+  await tx.wait();
+
+  tx = await deployedInvestmentSystem.addInvestment("third", [], [], [], []);
+  await tx.wait();
+
+  console.log("----- done")
+
 
   // ------------------------------------- write address megafile
 

@@ -13,7 +13,12 @@ contract GlobalProgress is Ownable, IGlobalProgress, ISystem {
         //nothing yet
     }
 
-    function init(ISystemController controller, uint256 tokenId) external override {
+    function init(
+        ISystemController controller,
+        uint256 tokenId
+    ) external override {
         //nothing yet
     }
+
+    function sync(uint256 tokenId) external override {}
 }

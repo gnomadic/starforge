@@ -18,16 +18,25 @@ contract InvestmentSystem is Ownable, IInvestmentSystem, ISystem{
     uint256 investmentCount;
     mapping(uint256 => Investment) public investments;
 
+
+uint256 public cycleTime = 10;
+
     struct Stats {
-        uint256 lastGaze;
-        uint16 gazes;
+        uint256 lastPurchase;
+        uint16 purchaseCount;
         mapping(uint256 => uint256) investments;
+        uint256 lastSyncAt;
     }
 
     struct Investment {
         uint256 id;
         string name;
         bool enabled;
+
+        address[] burnAdds;
+        uint256[] burnRates;
+        address[] mintAdds;
+        uint256[] mintRates;    
     }
 
     constructor(address _planet) Ownable(_msgSender()) {
@@ -36,15 +45,31 @@ contract InvestmentSystem is Ownable, IInvestmentSystem, ISystem{
 
     function init(ISystemController _controller, uint256 tokenId) external override {
         controller = _controller;
-        stats[tokenId].lastGaze = block.timestamp;
-        stats[tokenId].gazes = 0;
+        stats[tokenId].lastPurchase = block.timestamp;
+        stats[tokenId].purchaseCount = 0;
     }
+
+    function sync(uint256 tokenId) external override {
+
+        uint256 delta = block.timestamp - stats[tokenId].lastSyncAt;
+        uint256 cycles = delta / cycleTime;
+
+        if (cycles == 0) return;
+
+
+
+
+
+        stats[tokenId].lastSyncAt = block.timestamp;
+    }
+
+    
 
     function invest(uint256 tokenId, uint256 investment) public {
         if (planet.ownerOf(tokenId) != msg.sender) revert NotTheOwner();
-        if (block.timestamp - stats[tokenId].lastGaze < 14 hours) revert NotEnoughTimePassed();
-        stats[tokenId].gazes = stats[tokenId].gazes + 1;
-        stats[tokenId].lastGaze = block.timestamp;
+        if (block.timestamp - stats[tokenId].lastPurchase < 14 hours) revert NotEnoughTimePassed();
+        stats[tokenId].purchaseCount = stats[tokenId].purchaseCount + 1;
+        stats[tokenId].lastPurchase = block.timestamp;
 
         stats[tokenId].investments[investment] = stats[tokenId].investments[investment] + 1;
 
@@ -54,8 +79,13 @@ contract InvestmentSystem is Ownable, IInvestmentSystem, ISystem{
         }
     }
 
-    function addInvestment(string memory name) public onlyOwner {
-        investments[investmentCount] = Investment(investmentCount, name, true);
+    function addInvestment(string memory name, address[] memory burnAdds, uint256[] memory burnRates, address[] memory mintAdds, uint256[] memory mintRates) public onlyOwner {
+
+        if (burnAdds.length != burnRates.length) revert InvalidConfig();
+        if (mintAdds.length != mintRates.length) revert InvalidConfig();
+
+   
+        investments[investmentCount] = Investment(investmentCount, name, true, burnAdds, burnRates, mintAdds, mintRates);
         investmentCount = investmentCount + 1;
     }
 
@@ -69,4 +99,5 @@ contract InvestmentSystem is Ownable, IInvestmentSystem, ISystem{
 
     error NotTheOwner();
     error NotEnoughTimePassed();
+    error InvalidConfig();
 }

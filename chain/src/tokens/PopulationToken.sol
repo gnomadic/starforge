@@ -4,17 +4,37 @@ pragma solidity ^0.8.0;
 import "solady/tokens/ERC20.sol";
 
 contract PopulationToken is ERC20 {
-    // constructor() ERC20("PopulationToken", "POP", 18) {
+    address public controller;
 
-    //     _mint(msg.sender, 1000000 * 10 ** 18); // Mint 1,000,000 tokens to the deployer
-    // }
+    constructor() {
+        controller = msg.sender;
+    }
 
     function name() public pure override returns (string memory) {
         return "PopulationToken";
     }
 
-    /// @dev Returns the symbol of the token.
     function symbol() public pure override returns (string memory) {
         return "POP";
+    }
+
+    function mint(address to, uint256 amount) public onlyController {
+        _mint(to, amount);
+    }
+
+    function burn(address from, uint256 amount) public onlyController {
+        _burn(from, amount);
+    }
+
+    function revokeAndSetController(address _controller) public onlyController {
+        controller = _controller;
+    }
+
+    modifier onlyController() {
+        require(
+            msg.sender == controller,
+            "Only the Controller can call this function"
+        );
+        _;
     }
 }

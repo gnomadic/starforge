@@ -18,9 +18,15 @@ contract SystemController is Ownable, ISystemController {
         systemMap[id] = system;
     }
 
-    function initAll(uint256 _planet) external onlyToken {
+    function initAll(uint256 tokenId) external onlyToken {
         for (uint256 i = 0; i < systems.length; i++) {
-            systems[i].init(this, _planet);
+            systems[i].init(this, tokenId);
+        }
+    }
+
+    function syncAll(uint256 tokenId) external onlyToken {
+        for (uint256 i = 0; i < systems.length; i++) {
+            systems[i].sync(tokenId);
         }
     }
 
