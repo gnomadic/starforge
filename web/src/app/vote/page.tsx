@@ -1,6 +1,6 @@
 
 import React from 'react';
-import Council from '@/components/council/Council';
+import Council from '@/components/vote/Council';
 
 export default function Vote() {
 

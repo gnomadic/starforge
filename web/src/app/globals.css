@@ -115,8 +115,9 @@ body {
   :root {
     --background: 0 0% 100%;
     --foreground: 20 14.3% 4.1%;
+    --card:  222 47% 14%;
     /* --card: 0 0% 100%; */
-    --card: 49 24% 78%;
+    /* --card: 49 24% 78%; */
     --card-foreground: 20 14.3% 4.1%;
     --popover: 0 0% 100%;
     --popover-foreground: 20 14.3% 4.1%;
@@ -174,5 +175,32 @@ body {
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+@layer components {
+  .cosmic-panel {
+    @apply bg-card/20 backdrop-blur-lg border border-border/40 rounded-lg shadow-lg;
+  }
+  
+  .cosmic-page {
+    @apply min-h-screen px-12 py-6
+  }
+
+  .cosmic-button {
+    @apply bg-secondary/80 hover:bg-secondary/100 text-white px-4 py-2 rounded-lg 
+      transition-all duration-300 backdrop-blur-sm border border-border/20 
+      shadow-md hover:shadow-lg active:scale-95;
+  }
+  
+  .cosmic-glow {
+    @apply relative;
+  }
+  
+  .cosmic-glow::before {
+    content: '';
+    @apply absolute -inset-0.5 bg-primary/20 rounded-lg blur opacity-30 
+      transition-opacity duration-300 group-hover:opacity-60;
+    z-index: -1;
   }
 }
