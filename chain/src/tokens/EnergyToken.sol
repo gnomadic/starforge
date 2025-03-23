@@ -3,7 +3,7 @@ pragma solidity ^0.8.0;
 
 import "solady/tokens/ERC20.sol";
 
-contract PopulationToken is ERC20 {
+contract EnergyToken is ERC20 {
     address public controller;
 
     constructor() {
@@ -11,11 +11,11 @@ contract PopulationToken is ERC20 {
     }
 
     function name() public pure override returns (string memory) {
-        return "PopulationToken";
+        return "EnergyToken";
     }
 
     function symbol() public pure override returns (string memory) {
-        return "POP";
+        return "EN";
     }
 
     function mint(address to, uint256 amount) public onlyController {

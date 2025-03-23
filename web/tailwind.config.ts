@@ -59,18 +59,18 @@ const config: Config = {
   			}
   		}
   	},
-  	colors: {
-  		tavernGreen: '#14E943',
-  		lightgrey: '#858080',
-  		darkgrey: '#1B1B1D',
-  		white: '#FFFFFF',
-  		black: '#000000',
-  		red: '#E94714',
-  		unselected: '#858080',
-  		selected: '#E3A9FF',
-  		subtext: '#CECECE',
-  		tavernOrange: '#FF7347'
-  	},
+  	// colors: {
+  	// 	tavernGreen: '#14E943',
+  	// 	lightgrey: '#858080',
+  	// 	darkgrey: '#1B1B1D',
+  	// 	white: '#FFFFFF',
+  	// 	black: '#000000',
+  	// 	red: '#E94714',
+  	// 	unselected: '#858080',
+  	// 	selected: '#E3A9FF',
+  	// 	subtext: '#CECECE',
+  	// 	tavernOrange: '#FF7347'
+  	// },
   	fontFamily: {
   		roboto: ['Roboto Condensed', 'sans-serif'],
   		anon: ['Anonymous Pro', 'monospace'],

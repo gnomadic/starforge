@@ -1,13 +1,11 @@
 
 import React from 'react';
 import MintLab from '@/components/mint/MintLab';
-import SpaceBackground from '@/components/SpaceAnimation';
 
 export default function Home() {
 
     return (
         <section >
-            {/* <SpaceBackground/> */}
             <MintLab />
         </section>
     );

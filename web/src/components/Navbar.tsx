@@ -2,10 +2,11 @@
 
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import MobileNav from './MobileNav';
 import { NavItems } from '@/domain/Nav';
 import { usePathname } from 'next/navigation'
+import { cn } from '@/lib/utils';
 
 
 export default function Navbar() {
@@ -16,14 +17,33 @@ export default function Navbar() {
     setIsMobileNavOpen(!isMobileNavOpen);
   };
 
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 50);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return (
-    <header className='z-50 w-full mt-8 font-signika'>
+    // <header className='z-50 w-full mt-8 font-signika'>
+    <header
+      className={cn(
+        "fixed top-0 left-0 right-0 z-50 transition-all duration-300 px-6 md:px-12",
+        scrolled
+          ? "py-4 bg-black/80 backdrop-blur-md border-b border-white/20"
+          : "py-6"
+      )}
+    >
       <div className='flex px-6 lg:px-16 min-h-[18] items-center flex-shrink-0 flex-col justify-center'>
         <div className='flex items-center self-stretch justify-between'>
           <div className='flex items-start'>
             <Link href='/'>
               <div className='text-xl text-white font-mono text-center tracking-wider'>
-              E N T R O P I C A L
+                E N T R O P I C A L
               </div>
               {/* <div className='text-3xl text-white font-ultra text-center tracking-wider text-tavernOrange'>
               E N T R O P I C A L
@@ -36,7 +56,8 @@ export default function Navbar() {
                 return (
                   <div className='text-sm text-lightgrey' key={i}>
                     <Link href={element.href}>
-                      <div className={"relative cursor-pointer " + (pathname.includes(element.label) ? "text-white" : "")}>
+                      {/* <div className={"relative cursor-pointer " + (pathname.includes(element.label) ? "text-white" : "")}> */}
+                      <div className="text-sm text-white/70 hover:text-white transition-colors duration-300 relative after:absolute after:left-0 after:bottom-0 after:h-0.5 after:w-0 after:bg-primary hover:after:w-full after:transition-all after:duration-300">
                         {element.label}
                       </div>
                     </Link>
@@ -60,7 +81,9 @@ export default function Navbar() {
               </div> */}
             </div>
 
-            <div className='flex items-start justify-center gap-8 hidden md:block'  >
+         
+          </div>
+          <div className='flex items-start justify-center gap-8 hidden md:block'  >
               <ConnectButton
                 chainStatus='icon'
                 accountStatus='avatar'
@@ -93,7 +116,6 @@ export default function Navbar() {
                 <></>
               )}
             </div>
-          </div>
         </div>
       </div>
 

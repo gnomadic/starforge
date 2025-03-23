@@ -7,7 +7,7 @@ export async function GET(request: NextRequest) {
   const width = Number.parseInt(searchParams.get("width") || "300", 10)
   const height = Number.parseInt(searchParams.get("height") || "300", 10)
   const text = searchParams.get("text") || `${width}×${height}`
-  const bgColor = searchParams.get("bgColor") || "#e2e8f0" // slate-200
+  const bgColor = searchParams.get("bgColor") || "#636f80" // slate-200
   const textColor = searchParams.get("textColor") || "#64748b" // slate-500
 
   // Create SVG

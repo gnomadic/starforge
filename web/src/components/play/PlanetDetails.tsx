@@ -62,7 +62,7 @@ const PlanetDetails = () => {
 
       {/* Resource Multipliers */}
       <div className="space-y-4">
-        <h3 className="font-semibold">Resource Generation</h3>
+        <h3 className="font-semibold">Resource Multipliers</h3>
         <div className="grid grid-cols-2 gap-4">
           <div className={cn(
             "flex items-center gap-2",
@@ -95,29 +95,7 @@ const PlanetDetails = () => {
         </div>
       </div>
 
-      {/* Regeneration Level */}
-      <div className="space-y-4">
-        <div className="flex items-center justify-between">
-          <h3 className="font-semibold">Regeneration Level</h3>
-          <span className="text-sm text-muted-foreground">
-            {planet.regenerationLevel} / {planet.maxRegenerationLevel}
-          </span>
-        </div>
-        <Progress 
-          value={(planet.regenerationLevel / planet.maxRegenerationLevel) * 100} 
-          className="h-2" 
-        />
-        {planet.regenerationLevel < planet.maxRegenerationLevel && (
-          <Button
-            onClick={() => regeneratePlanet(planet.id)}
-            className="w-full"
-            variant="default"
-          >
-            <ArrowUpCircle className="h-4 w-4 mr-2" />
-            Regenerate Planet
-          </Button>
-        )}
-      </div>
+
     </div>
   );
 };

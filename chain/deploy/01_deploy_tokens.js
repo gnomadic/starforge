@@ -18,7 +18,22 @@ module.exports = async (hre) => {
   //   log: true,
   // });
 
-  const PopulationToken = await deploy("PopulationToken", {
+  const EnergyToken = await deploy("EnergyToken", {
+    from: deployer,
+    log: true,
+  });
+
+  const LifeToken = await deploy("LifeToken", {
+    from: deployer,
+    log: true,
+  });
+
+  const MatterToken = await deploy("MatterToken", {
+    from: deployer,
+    log: true,
+  });
+
+  const TechnologyToken = await deploy("TechnologyToken", {
     from: deployer,
     log: true,
   });
@@ -36,24 +51,24 @@ module.exports = async (hre) => {
 
   console.log("----- done")
 
-  console.log("----- adding to investment system")
+  // console.log("----- adding to investment system")
 
 
 
-  const InvestmentSystemDeployment = await deployments.get("InvestmentSystem");
-  const deployedInvestmentSystem = await ethers.getContractAt("InvestmentSystem", InvestmentSystemDeployment.address);
+  // const InvestmentSystemDeployment = await deployments.get("InvestmentSystem");
+  // const deployedInvestmentSystem = await ethers.getContractAt("InvestmentSystem", InvestmentSystemDeployment.address);
 
 
-  tx = await deployedInvestmentSystem.addInvestment("first", [], [], [PopulationToken.address], [1]);
-  await tx.wait();
+  // tx = await deployedInvestmentSystem.addInvestment("first", [], [], [PopulationToken.address], [1]);
+  // await tx.wait();
 
-  tx = await deployedInvestmentSystem.addInvestment("second", [], [], [], []);
-  await tx.wait();
+  // tx = await deployedInvestmentSystem.addInvestment("second", [], [], [], []);
+  // await tx.wait();
 
-  tx = await deployedInvestmentSystem.addInvestment("third", [], [], [], []);
-  await tx.wait();
+  // tx = await deployedInvestmentSystem.addInvestment("third", [], [], [], []);
+  // await tx.wait();
 
-  console.log("----- done")
+  // console.log("----- done")
 
 
   // ------------------------------------- write address megafile
@@ -62,9 +77,12 @@ module.exports = async (hre) => {
   networkName === "hardhat" ? (networkName = "localhost") : (networkName = hre.network.name);
 
   const object = {};
-  object.PopulationToken = PopulationToken.address;
+  object.EnergyToken = EnergyToken.address;
+  object.LifeToken = LifeToken.address;
+  object.MatterToken = MatterToken.address;
+  object.TechnologyToken = TechnologyToken.address;
 
-  const filename = "../deployments/" + networkName + "/AA-tokens.json";
+  const filename = "../deployments/" + networkName + "/ENT-tokens.json";
 
 
   await fs.writeFileSync(filename, JSON.stringify(object, null, 2));
@@ -77,11 +95,12 @@ module.exports = async (hre) => {
     console.log("verifing");
     // await verify(hre, color.address, "Color");
     // await verify(hre, starshipRenderer.address, "StarshipRenderer", "renderers/");
-    await verify(hre, PopulationToken.address, "PopulationToken", "", [PopulationToken.address]);
+    await verify(hre, EnergyToken.address, "EnergyToken", "", [EnergyToken.address]);
+    await verify(hre, LifeToken.address, "LifeToken", "", [LifeToken.address]);
+    await verify(hre, MatterToken.address, "MatterToken", "", [MatterToken.address]);
+    await verify(hre, TechnologyToken.address, "TechnologyToken", "", [TechnologyToken.address]);
 
   }
-
-
 
 };
 

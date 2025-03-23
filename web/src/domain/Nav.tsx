@@ -1,7 +1,7 @@
 export const NavItems = [
-  { href: '/mint', label: 'mint' },
-  { href: '/play', label: 'play' },
-  { href: '/vote', label: 'vote' },
+  { href: '/#mint', label: 'MINT' },
+  { href: '/play', label: 'PLAY' },
+  { href: '/vote', label: 'VOTE' },
 
 ];
 

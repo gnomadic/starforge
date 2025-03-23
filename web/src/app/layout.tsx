@@ -23,6 +23,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import SpaceAnimation from '@/components/SpaceAnimation';
 
 
 const signika = Signika({
@@ -85,6 +86,7 @@ export default function RootLayout({
 
       <body className={`${signika.variable} ${outfit.variable} ${nunito.variable} ${ptsans.variable} ${ultra.variable} ${ptser.variable} font-sans bg-black text-white`}>
         <Providers>
+          <SpaceAnimation/>
           {/* <Header /> */}
           <Navbar />
 
