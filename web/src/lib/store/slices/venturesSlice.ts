@@ -3,7 +3,7 @@ import { Venture } from '../../types/ventureTypes';
 import { Artifact } from '../../types/ventureTypes';
 import { initialVentures } from '../../data/ventures';
 import { initialArtifacts } from '../../data/artifacts';
-import { toast } from "@/components/ui/use-toast";
+import { toast } from "react-toastify";
 
 export interface VenturesState {
   ventures: Venture[];
@@ -25,11 +25,11 @@ export const createVenturesSlice = (set: any, get: any): VenturesState => ({
     
     const venture = ventures[ventureIndex];
     if (venture.status === 'active') {
-      toast({
+      toast.warning(JSON.stringify({
         title: "Venture already active",
         description: "This venture is already in progress.",
         variant: "destructive"
-      });
+      }));
       return;
     }
     
@@ -44,11 +44,11 @@ export const createVenturesSlice = (set: any, get: any): VenturesState => ({
     }
     
     if (!canAfford) {
-      toast({
+      toast.warning(JSON.stringify({
         title: "Cannot start venture",
         description: "You don't have enough resources for this venture.",
         variant: "destructive"
-      });
+      }));
       return;
     }
     
@@ -73,10 +73,10 @@ export const createVenturesSlice = (set: any, get: any): VenturesState => ({
       resources 
     });
     
-    toast({
+    toast.warning(JSON.stringify({
       title: "Venture started",
       description: `${venture.name} venture has been started on the selected planet.`,
-    });
+    }));
   },
   
   checkVentureCompletion: () => {
@@ -108,10 +108,10 @@ export const createVenturesSlice = (set: any, get: any): VenturesState => ({
                 discovered: true
               };
               
-              toast({
+              toast.warning(JSON.stringify({
                 title: "Venture completed successfully!",
                 description: `Your ${venture.name} venture discovered the ${artifacts[artifactIndex].name}!`,
-              });
+              }));
             }
             
             ventures[index] = {
@@ -124,11 +124,11 @@ export const createVenturesSlice = (set: any, get: any): VenturesState => ({
               status: 'failed',
             };
             
-            toast({
+            toast.warning(JSON.stringify({
               title: "Venture failed",
               description: `Your ${venture.name} venture failed to discover anything.`,
               variant: "destructive"
-            });
+            }));
           }
         }
       }

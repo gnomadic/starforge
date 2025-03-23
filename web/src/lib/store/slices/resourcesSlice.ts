@@ -11,7 +11,7 @@ export const createResourcesSlice = (set: any, get: any): ResourcesState => ({
   resources: [...initialResources],
   
   collectResource: (resourceId, amount) => {
-    const resources = get().resources.map(resource => {
+    const resources: Resource[] = get().resources.map((resource: Resource) => {
       if (resource.id === resourceId) {
         return {
           ...resource,

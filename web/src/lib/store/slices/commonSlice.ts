@@ -1,3 +1,4 @@
+import { Resource } from "@/lib/planetData";
 
 export interface CommonState {
   lastUpdateTime: number;
@@ -15,7 +16,7 @@ export const createCommonSlice = (set: any, get: any): CommonState => ({
     // Only update if some time has passed
     if (elapsedTimeInSeconds > 0) {
       // Update resources based on per-second rates
-      const resources = get().resources.map(resource => {
+      const resources: Resource[] = get().resources.map((resource: Resource) => {
         return {
           ...resource,
           amount: resource.amount + (resource.perSecond * elapsedTimeInSeconds)

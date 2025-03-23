@@ -1,7 +1,7 @@
 
 import { Upgrade } from '../../types/gameTypes';
 import { initialUpgrades } from '../../data/upgrades';
-import { toast } from "@/components/ui/use-toast";
+import { toast } from "react-toastify";
 
 export interface UpgradesState {
   upgrades: Upgrade[];
@@ -12,7 +12,7 @@ export const createUpgradesSlice = (set: any, get: any): UpgradesState => ({
   upgrades: [...initialUpgrades],
   
   purchaseUpgrade: (upgradeId) => {
-    const upgrade = get().upgrades.find(u => u.id === upgradeId);
+    const upgrade: Upgrade | undefined = get().upgrades.find((u: Upgrade) => u.id === upgradeId);
     if (!upgrade || upgrade.purchased) return;
     
     const resources = [...get().resources];
@@ -28,11 +28,11 @@ export const createUpgradesSlice = (set: any, get: any): UpgradesState => ({
     }
     
     if (!canAfford) {
-      toast({
+      toast.warning(JSON.stringify({
         title: "Cannot afford upgrade",
         description: "You don't have enough resources for this upgrade.",
         variant: "destructive"
-      });
+      }));
       return;
     }
     
@@ -63,7 +63,26 @@ export const createUpgradesSlice = (set: any, get: any): UpgradesState => ({
     }
     
     // Mark as purchased and unlock any dependent upgrades
-    const upgrades = get().upgrades.map(u => {
+    interface Resource {
+      id: string;
+      amount: number;
+      perSecond: number;
+    }
+
+    interface UpgradeCost {
+      [key: string]: number;
+    }
+
+    interface Upgrade {
+      id: string;
+      name: string;
+      cost: UpgradeCost;
+      purchased: boolean;
+      visible: boolean;
+      unlockRequirement?: string;
+    }
+
+    const upgrades: Upgrade[] = get().upgrades.map((u: Upgrade) => {
       if (u.id === upgradeId) {
         return { ...u, purchased: true };
       }
@@ -81,9 +100,9 @@ export const createUpgradesSlice = (set: any, get: any): UpgradesState => ({
       upgrades 
     });
     
-    toast({
+    toast.warning(JSON.stringify({
       title: "Upgrade purchased",
       description: `You've purchased ${upgrade.name}!`,
-    });
+    }));
   }
 });

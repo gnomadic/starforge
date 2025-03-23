@@ -115,7 +115,7 @@ const CouncilProjectCard: React.FC<CouncilProjectCardProps> = ({ project }) => {
                           "h-2", 
                           isComplete ? "bg-green-950/30" : "bg-secondary/30"
                         )}
-                        indicatorClassName={isComplete ? "bg-green-500" : ""}
+                        // indicatorClassName={isComplete ? "bg-green-500" : ""}
                       />
                       {!project.completed && !isComplete && (
                         <Button

@@ -8,7 +8,7 @@ import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { ShoppingCart, RefreshCw, Search, Plus, Minus } from 'lucide-react';
 import { MarketListing } from '@/lib/types/marketTypes';
-import { toast } from "@/components/ui/use-toast";
+import { toast } from "react-toastify";
 
 const MarketList = () => {
   const { 
@@ -83,11 +83,11 @@ const MarketList = () => {
 
   const handleCreateListing = () => {
     if (!sellItemId || sellQuantity <= 0 || sellPrice <= 0) {
-      toast({
+      toast.warning(JSON.stringify({
         title: "Invalid listing",
         description: "Please select an item, quantity, and price.",
         variant: "destructive"
-      });
+      }));
       return;
     }
 
@@ -109,10 +109,10 @@ const MarketList = () => {
 
   const handleRefreshMarket = () => {
     refreshMarket();
-    toast({
+    toast.warning(JSON.stringify({
       title: "Market refreshed",
       description: "New items are available in the marketplace.",
-    });
+    }));
   };
 
   return (
@@ -371,7 +371,7 @@ const MarketList = () => {
                     ))
                 ) : (
                   <div className="text-center py-4 text-muted-foreground">
-                    You don't have any active listings
+                    You don&apos;t have any active listings
                   </div>
                 )}
               </div>

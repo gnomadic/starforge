@@ -1,7 +1,7 @@
 
 import { MarketListing, MarketStatistics } from '../../types/marketTypes';
 import { initialMarketListings, initialMarketStats } from '../../data/marketplace';
-import { toast } from "@/components/ui/use-toast";
+import { toast } from "react-toastify";
 import { v4 as uuidv4 } from 'uuid';
 
 interface NewListing {
@@ -40,11 +40,11 @@ export const createMarketSlice = (set: any, get: any): MarketState => ({
     // Check if we can afford it
     const priceResourceIndex = resources.findIndex(r => r.id === listing.price.resourceId);
     if (priceResourceIndex === -1 || resources[priceResourceIndex].amount < listing.price.amount) {
-      toast({
+      toast.warning(JSON.stringify({
         title: "Cannot afford",
         description: "You don't have enough resources to buy this item.",
         variant: "destructive"
-      });
+      }));
       return;
     }
     
@@ -73,10 +73,10 @@ export const createMarketSlice = (set: any, get: any): MarketState => ({
       artifacts
     });
     
-    toast({
+    toast.warning(JSON.stringify({
       title: "Purchase successful",
       description: "You have successfully purchased the item from the marketplace.",
-    });
+    }));
   },
   
   sellToMarket: (listingId) => {
@@ -104,10 +104,10 @@ export const createMarketSlice = (set: any, get: any): MarketState => ({
         resources
       });
       
-      toast({
+      toast.warning(JSON.stringify({
         title: "Sale successful",
         description: "You have successfully sold the item to the marketplace.",
-      });
+      }));
     }
   },
   
@@ -120,11 +120,11 @@ export const createMarketSlice = (set: any, get: any): MarketState => ({
     if (listing.type === 'resource') {
       const resourceIndex = resources.findIndex(r => r.id === listing.itemId);
       if (resourceIndex === -1 || resources[resourceIndex].amount < listing.quantity) {
-        toast({
+        toast.warning(JSON.stringify({
           title: "Insufficient resources",
           description: "You don't have enough of this resource to create a listing.",
           variant: "destructive"
-        });
+        }));
         return;
       }
       
@@ -133,11 +133,11 @@ export const createMarketSlice = (set: any, get: any): MarketState => ({
     } else if (listing.type === 'artifact') {
       const artifactIndex = artifacts.findIndex(a => a.id === listing.itemId);
       if (artifactIndex === -1 || !artifacts[artifactIndex].discovered) {
-        toast({
+        toast.warning(JSON.stringify({
           title: "Artifact not found",
           description: "You don't have this artifact to sell.",
           variant: "destructive"
-        });
+        }));
         return;
       }
       
@@ -167,10 +167,10 @@ export const createMarketSlice = (set: any, get: any): MarketState => ({
       artifacts
     });
     
-    toast({
+    toast.warning(JSON.stringify({
       title: "Listing created",
       description: "Your item has been listed on the marketplace.",
-    });
+    }));
   },
   
   refreshMarket: () => {
@@ -178,9 +178,9 @@ export const createMarketSlice = (set: any, get: any): MarketState => ({
     // For now, just refresh with the initial listings
     set({ marketListings: [...initialMarketListings] });
     
-    toast({
+    toast.warning(JSON.stringify({
       title: "Market refreshed",
       description: "The marketplace has been refreshed with new listings.",
-    });
+    }));
   }
 });

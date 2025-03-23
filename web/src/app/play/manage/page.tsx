@@ -112,7 +112,7 @@ const Index = () => {
                   variant="secondary"
                   size="sm"
                   className="mx-auto block"
-                  onClick={() => navigate('/discover')}
+                  // onClick={() => navigate('/discover')}
                 >
                   Discover More Planets
                 </Button>

@@ -4,7 +4,7 @@ import { useGameStore } from '@/lib/gameState';
 import { ProbeUpgrade } from '@/lib/types/combatTypes';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { toast } from '@/components/ui/use-toast';
+import { toast } from 'react-toastify';
 import { Heart, Shield, Swords, Weight, Plus, CheckCircle, Lock } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -44,11 +44,11 @@ const ProbeCustomizer = () => {
     if (!upgrade) return;
     
     if (probe.currentWeight + upgrade.weight > probe.weightCapacity) {
-      toast({
+      toast.warning(JSON.stringify({
         title: "Weight limit exceeded",
         description: "You can't install this upgrade as it would exceed your probe's weight capacity.",
         variant: "destructive"
-      });
+      }));
       return;
     }
     

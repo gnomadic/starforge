@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { PlanetType, getPlanetColorByType } from '@/lib/planetData';
 import { Sparkles, AlertTriangle } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { toast } from "@/components/ui/use-toast";
+import { toast } from "react-toastify";
 import { Progress } from '@/components/ui/progress';
 
 const GachaBanner: React.FC = () => {
@@ -28,27 +28,27 @@ const GachaBanner: React.FC = () => {
   
   const canAffordGacha = () => {
     return resources.every(resource => {
-      const cost = gachaCost[resource.id] || 0;
+      const cost = 0;// gachaCost[resource.id] || 0;
       return resource.amount >= cost;
     });
   };
   
   const handleGachaPull = () => {
     if (!canAffordGacha()) {
-      toast({
+      toast.warning(JSON.stringify({
         title: "Not enough resources",
         description: "You don't have enough resources for a gacha pull",
         variant: "destructive"
-      });
+      }));
       return;
     }
     
     if (undiscoveredPlanets.length === 0) {
-      toast({
+      toast.warning(JSON.stringify({
         title: "No more planets",
         description: "You've discovered all available planets!",
         variant: "default"
-      });
+      }));
       return;
     }
     
@@ -178,7 +178,7 @@ const GachaBanner: React.FC = () => {
         
         {undiscoveredPlanets.length === 0 && (
           <p className="text-xs text-muted-foreground mt-2">
-            You've discovered all available planets!
+            You&apos;ve discovered all available planets!
           </p>
         )}
       </div>

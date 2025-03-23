@@ -1,7 +1,7 @@
 
 import { Planet } from '../../types/gameTypes';
 import { initialPlanets } from '../../data/planets';
-import { toast } from "@/components/ui/use-toast";
+import { toast } from "react-toastify";
 
 export interface PlanetsState {
   planets: Planet[];
@@ -22,7 +22,7 @@ export const createPlanetsSlice = (set: any, get: any): PlanetsState => ({
   },
   
   regeneratePlanet: (planetId) => {
-    const planet = get().planets.find(p => p.id === planetId);
+    const planet: Planet | undefined = get().planets.find((p: Planet) => p.id === planetId);
     if (!planet || planet.regenerationLevel >= planet.maxRegenerationLevel) return;
     
     const requiredEnergy = 50 * (planet.regenerationLevel + 1);
@@ -37,11 +37,11 @@ export const createPlanetsSlice = (set: any, get: any): PlanetsState => ({
     if (resources[energyIndex].amount < requiredEnergy ||
         resources[matterIndex].amount < requiredMatter ||
         resources[lifeIndex].amount < requiredLife) {
-      toast({
+          toast.warning(JSON.stringify({
         title: "Cannot regenerate",
         description: "You don't have enough resources to regenerate this planet.",
         variant: "destructive"
-      });
+      }));
       return;
     }
     
@@ -49,7 +49,7 @@ export const createPlanetsSlice = (set: any, get: any): PlanetsState => ({
     resources[matterIndex].amount -= requiredMatter;
     resources[lifeIndex].amount -= requiredLife;
     
-    const planets = get().planets.map(p => {
+    const planets: Planet[] = get().planets.map((p: Planet) => {
       if (p.id === planetId) {
         return {
           ...p,
@@ -64,14 +64,14 @@ export const createPlanetsSlice = (set: any, get: any): PlanetsState => ({
       resources 
     });
     
-    toast({
+    toast.warning(JSON.stringify({
       title: "Planet regenerated",
       description: `${planet.name} has been regenerated to level ${planet.regenerationLevel + 1}!`,
-    });
+    }));
   },
   
   unlockPlanet: (planetId) => {
-    const planet = get().planets.find(p => p.id === planetId);
+    const planet: Planet | undefined = get().planets.find((p: Planet) => p.id === planetId);
     if (!planet || planet.discovered || !planet.unlockCost) return;
     
     const resources = [...get().resources];
@@ -87,11 +87,11 @@ export const createPlanetsSlice = (set: any, get: any): PlanetsState => ({
     }
     
     if (!canAfford) {
-      toast({
+      toast.warning(JSON.stringify({
         title: "Cannot unlock planet",
         description: "You don't have enough resources to unlock this planet.",
         variant: "destructive"
-      });
+      }));
       return;
     }
     
@@ -103,7 +103,7 @@ export const createPlanetsSlice = (set: any, get: any): PlanetsState => ({
       }
     }
     
-    const planets = get().planets.map(p => {
+    const planets: Planet[] = get().planets.map((p: Planet) => {
       if (p.id === planetId) {
         return {
           ...p,
@@ -119,10 +119,10 @@ export const createPlanetsSlice = (set: any, get: any): PlanetsState => ({
       selectedPlanetId: planetId 
     });
     
-    toast({
+    toast.warning(JSON.stringify({
       title: "Planet discovered",
       description: `You've discovered ${planet.name}!`,
-    });
+    }));
   },
   
   pullGacha: () => {
@@ -147,11 +147,11 @@ export const createPlanetsSlice = (set: any, get: any): PlanetsState => ({
     });
     
     if (!canAfford) {
-      toast({
+      toast.warning(JSON.stringify({
         title: "Cannot pull gacha",
         description: "You don't have enough resources.",
         variant: "destructive"
-      });
+      }));
       return null;
     }
     
@@ -164,13 +164,13 @@ export const createPlanetsSlice = (set: any, get: any): PlanetsState => ({
     });
     
     // Get undiscovered planets
-    const undiscoveredPlanets = planets.filter(p => !p.discovered);
+    const undiscoveredPlanets: Planet[] = planets.filter((p: Planet) => !p.discovered);
     
     if (undiscoveredPlanets.length === 0) {
-      toast({
+      toast.warning(JSON.stringify({
         title: "No planets to discover",
         description: "You've already discovered all available planets.",
-      });
+      }));
       return null;
     }
     
@@ -179,7 +179,7 @@ export const createPlanetsSlice = (set: any, get: any): PlanetsState => ({
     const planetToDiscover = undiscoveredPlanets[randomIndex];
     
     // Update the planet to be discovered
-    const updatedPlanets = planets.map(p => {
+    const updatedPlanets: Planet[] = planets.map((p: Planet) => {
       if (p.id === planetToDiscover.id) {
         return {
           ...p,
@@ -196,10 +196,10 @@ export const createPlanetsSlice = (set: any, get: any): PlanetsState => ({
       selectedPlanetId: planetToDiscover.id 
     });
     
-    toast({
+    toast.warning(JSON.stringify({
       title: "Planet discovered!",
       description: `You've discovered ${planetToDiscover.name}!`,
-    });
+    }));
     
     return planetToDiscover.id;
   },
@@ -210,15 +210,15 @@ export const createPlanetsSlice = (set: any, get: any): PlanetsState => ({
     
     // Don't allow destroying Terra (home planet)
     if (planetId === 'terra') {
-      toast({
+      toast.warning(JSON.stringify({
         title: "Cannot destroy home planet",
         description: "Terra is your home planet and cannot be destroyed.",
         variant: "destructive"
-      });
+      }));
       return;
     }
     
-    const planet = planets.find(p => p.id === planetId);
+    const planet: Planet | undefined = planets.find((p: Planet) => p.id === planetId);
     if (!planet || !planet.discovered) return;
     
     // Calculate resources gained from destroying the planet
@@ -240,7 +240,7 @@ export const createPlanetsSlice = (set: any, get: any): PlanetsState => ({
     if (techIndex !== -1) resources[techIndex].amount += techGain;
     
     // Reset the planet to undiscovered state and reset regeneration
-    const updatedPlanets = planets.map(p => {
+    const updatedPlanets: Planet[] = planets.map((p: Planet) => {
       if (p.id === planetId) {
         return {
           ...p,
@@ -260,10 +260,10 @@ export const createPlanetsSlice = (set: any, get: any): PlanetsState => ({
       selectedPlanetId
     });
     
-    toast({
+    toast.warning(JSON.stringify({
       title: "Planet destroyed",
       description: `${planet.name} has been destroyed and yielded resources!`,
-    });
+    }));
   }
 });
 

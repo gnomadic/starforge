@@ -2,7 +2,8 @@
 import { Probe, ProbeUpgrade, Enemy, CombatLog } from '../../types/combatTypes';
 import { initialProbeUpgrades } from '../../data/probeUpgrades';
 import { initialEnemies } from '../../data/enemies';
-import { toast } from "@/components/ui/use-toast";
+import { toast } from 'react-toastify';
+
 import { v4 as uuidv4 } from 'uuid';
 
 export interface CombatState {
@@ -38,7 +39,7 @@ export const createCombatSlice = (set: any, get: any): CombatState => ({
   combatLogs: [],
   
   purchaseProbeUpgrade: (upgradeId) => {
-    const upgrade = get().probeUpgrades.find(u => u.id === upgradeId);
+    const upgrade: ProbeUpgrade | undefined = get().probeUpgrades.find((u: ProbeUpgrade) => u.id === upgradeId);
     if (!upgrade || upgrade.purchased) return;
     
     const resources = [...get().resources];
@@ -54,11 +55,11 @@ export const createCombatSlice = (set: any, get: any): CombatState => ({
     }
     
     if (!canAfford) {
-      toast({
+      toast.warning(JSON.stringify({
         title: "Cannot afford upgrade",
         description: "You don't have enough resources for this probe upgrade.",
         variant: "destructive"
-      });
+      }));
       return;
     }
     
@@ -71,7 +72,7 @@ export const createCombatSlice = (set: any, get: any): CombatState => ({
     }
     
     // Mark as purchased
-    const probeUpgrades = get().probeUpgrades.map(u => {
+    const probeUpgrades: ProbeUpgrade[] = get().probeUpgrades.map((u: ProbeUpgrade) => {
       if (u.id === upgradeId) {
         return { ...u, purchased: true };
       }
@@ -83,10 +84,10 @@ export const createCombatSlice = (set: any, get: any): CombatState => ({
       probeUpgrades 
     });
     
-    toast({
+    toast.warning(JSON.stringify({
       title: "Upgrade purchased",
       description: `You've purchased the ${upgrade.name} for your probe!`,
-    });
+    }));
     
     get().addCombatLog(`Purchased probe upgrade: ${upgrade.name}`, 'system');
   },
@@ -101,36 +102,36 @@ export const createCombatSlice = (set: any, get: any): CombatState => ({
     const upgrade = probeUpgrades[upgradeIndex];
     
     // Check if already installed
-    if (probe.upgrades.some(u => u.id === upgradeId)) {
-      toast({
+    if (probe.upgrades.some((u: ProbeUpgrade) => u.id === upgradeId)) {
+      toast.warning(JSON.stringify({
         title: "Already installed",
         description: "This upgrade is already installed on your probe.",
         variant: "destructive"
-      });
+      }));
       return;
     }
     
     // Check weight capacity
     if (probe.currentWeight + upgrade.weight > probe.weightCapacity) {
-      toast({
+      toast.warning(JSON.stringify({
         title: "Weight limit exceeded",
         description: "This upgrade would exceed your probe's weight capacity.",
         variant: "destructive"
-      });
+      }));
       return;
     }
     
     // Apply the upgrade
     probe.upgrades.push(upgrade);
     probe.currentWeight += upgrade.weight;
-    probe.health = probe.baseHealth + probe.upgrades.reduce((sum, u) => sum + u.healthBonus, 0);
-    probe.attack = probe.baseAttack + probe.upgrades.reduce((sum, u) => sum + u.attackBonus, 0);
-    probe.defense = probe.baseDefense + probe.upgrades.reduce((sum, u) => sum + u.defenseBonus, 0);
+    probe.health = probe.baseHealth + probe.upgrades.reduce((sum: number, u: ProbeUpgrade) => sum + u.healthBonus, 0);
+    probe.attack = probe.baseAttack + probe.upgrades.reduce((sum: number, u: ProbeUpgrade) => sum + u.attackBonus, 0);
+    probe.defense = probe.baseDefense + probe.upgrades.reduce((sum: number, u: ProbeUpgrade) => sum + u.defenseBonus, 0);
     
     // Special case for lightweight alloys: reduce weight of all other upgrades by 20%
     if (upgradeId === 'lightweight-alloys') {
       let weightReduction = 0;
-      probe.upgrades.forEach(u => {
+      probe.upgrades.forEach((u: ProbeUpgrade) => {
         if (u.id !== 'lightweight-alloys') {
           weightReduction += u.weight * 0.2;
         }
@@ -140,10 +141,10 @@ export const createCombatSlice = (set: any, get: any): CombatState => ({
     
     set({ probe });
     
-    toast({
+    toast.warning(JSON.stringify({
       title: "Upgrade installed",
       description: `${upgrade.name} has been installed on your probe.`,
-    });
+    }));
     
     get().addCombatLog(`Installed ${upgrade.name} on probe`, 'system');
   },
@@ -151,7 +152,7 @@ export const createCombatSlice = (set: any, get: any): CombatState => ({
   uninstallProbeUpgrade: (upgradeId) => {
     const probe = {...get().probe};
     
-    const upgradeIndex = probe.upgrades.findIndex(u => u.id === upgradeId);
+    const upgradeIndex: number = probe.upgrades.findIndex((u: ProbeUpgrade) => u.id === upgradeId);
     if (upgradeIndex === -1) return;
     
     const upgrade = probe.upgrades[upgradeIndex];
@@ -163,7 +164,7 @@ export const createCombatSlice = (set: any, get: any): CombatState => ({
     let weightAdjustment = upgrade.weight;
     if (upgradeId === 'lightweight-alloys') {
       // Add back the 20% weight that was reduced
-      probe.upgrades.forEach(u => {
+      probe.upgrades.forEach((u: ProbeUpgrade) => {
         weightAdjustment += u.weight * 0.2;
       });
     }
@@ -171,16 +172,16 @@ export const createCombatSlice = (set: any, get: any): CombatState => ({
     probe.currentWeight = Math.max(0, probe.currentWeight - upgrade.weight);
     
     // Recalculate stats
-    probe.health = probe.baseHealth + probe.upgrades.reduce((sum, u) => sum + u.healthBonus, 0);
-    probe.attack = probe.baseAttack + probe.upgrades.reduce((sum, u) => sum + u.attackBonus, 0);
-    probe.defense = probe.baseDefense + probe.upgrades.reduce((sum, u) => sum + u.defenseBonus, 0);
+    probe.health = probe.baseHealth + probe.upgrades.reduce((sum: number, u: ProbeUpgrade) => sum + u.healthBonus, 0);
+    probe.attack = probe.baseAttack + probe.upgrades.reduce((sum: number, u: ProbeUpgrade) => sum + u.attackBonus, 0);
+    probe.defense = probe.baseDefense + probe.upgrades.reduce((sum: number, u: ProbeUpgrade) => sum + u.defenseBonus, 0);
     
     set({ probe });
     
-    toast({
+    toast.warning(JSON.stringify({
       title: "Upgrade removed",
       description: `${upgrade.name} has been removed from your probe.`,
-    });
+    }));
     
     get().addCombatLog(`Removed ${upgrade.name} from probe`, 'system');
   },
@@ -194,11 +195,11 @@ export const createCombatSlice = (set: any, get: any): CombatState => ({
       const elapsedTime = (currentTime - probe.lastLaunch) / 1000;
       if (elapsedTime < probe.cooldown) {
         const remainingTime = Math.ceil(probe.cooldown - elapsedTime);
-        toast({
+        toast.warning(JSON.stringify({
           title: "Probe on cooldown",
           description: `Your probe will be ready in ${remainingTime} seconds.`,
           variant: "destructive"
-        });
+        }));
         return;
       }
     }
@@ -211,10 +212,10 @@ export const createCombatSlice = (set: any, get: any): CombatState => ({
     
     // Skip if enemy is already defeated
     if (enemy.defeated) {
-      toast({
+      toast.warning(JSON.stringify({
         title: "No enemy to attack",
         description: "The current enemy has already been defeated. Select a new target.",
-      });
+      }));
       return;
     }
     
@@ -257,10 +258,10 @@ export const createCombatSlice = (set: any, get: any): CombatState => ({
           
           set({ artifacts });
           
-          toast({
+          toast.warning(JSON.stringify({
             title: "Artifact discovered!",
             description: `Your probe discovered the ${artifacts[artifactIndex].name}!`,
-          });
+          }));
           
           get().addCombatLog(`Discovered artifact: ${artifacts[artifactIndex].name}`, 'system');
         }
@@ -271,10 +272,10 @@ export const createCombatSlice = (set: any, get: any): CombatState => ({
         resources
       });
       
-      toast({
+      toast.warning(JSON.stringify({
         title: "Enemy defeated!",
         description: `Your probe has defeated the ${enemy.name} and collected resources!`,
-      });
+      }));
       
       get().addCombatLog(`Defeated ${enemy.name} and collected rewards`, 'defeat');
     } else {
@@ -298,11 +299,11 @@ export const createCombatSlice = (set: any, get: any): CombatState => ({
     const { currentEnemy } = get();
     
     if (!currentEnemy.defeated) {
-      toast({
+      toast.warning(JSON.stringify({
         title: "Enemy not defeated",
         description: "You must defeat the current enemy before selecting a new one.",
         variant: "destructive"
-      });
+      }));
       return;
     }
     
@@ -317,10 +318,10 @@ export const createCombatSlice = (set: any, get: any): CombatState => ({
     
     set({ currentEnemy: newEnemy });
     
-    toast({
+    toast.warning(JSON.stringify({
       title: "New threat detected",
       description: `Your scanners have detected a ${newEnemy.name}!`,
-    });
+    }));
     
     get().addCombatLog(`New threat detected: ${newEnemy.name}`, 'system');
   },
