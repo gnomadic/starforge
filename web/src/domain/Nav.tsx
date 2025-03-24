@@ -2,7 +2,7 @@ export const NavItems = [
   { href: '/#mint', label: 'MINT' },
   { href: '/gallery', label: 'GALLERY'},
   { href: '/quests', label: 'QUESTS'},
-  { href: '/play', label: 'PLAY' },
+  // { href: '/play', label: 'PLAY' },
   { href: '/vote', label: 'VOTE' },
 
 ];
