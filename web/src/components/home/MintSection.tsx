@@ -13,18 +13,6 @@ const MintSection: React.FC<MintSectionProps> = ({ className }) => {
   const [mintAmount, setMintAmount] = useState(1);
   const price = 0.08;
 
-  const decrementAmount = () => {
-    if (mintAmount > 1) {
-      setMintAmount(mintAmount - 1);
-    }
-  };
-
-  const incrementAmount = () => {
-    if (mintAmount < 5) {
-      setMintAmount(mintAmount + 1);
-    }
-  };
-
   const [planetColorOne, setPlanetColorOne] = useState(0);
   const [originalColorOne, setOriginalColorOne] = useState(0);
   const [originalColorTwo, setOriginalColorTwo] = useState(0);
