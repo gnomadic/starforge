@@ -32,7 +32,7 @@ const Index = () => {
   const discoveredPlanets = planets.filter(planet => planet.discovered);
 
   return (
-    <div className="cosmic-page">
+    <div className="cosmic-page ">
 
       <div className="h-full grid grid-cols-1 lg:grid-cols-2 gap-4 ">
 

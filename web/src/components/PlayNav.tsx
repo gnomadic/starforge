@@ -14,7 +14,7 @@ export default function PlayNav() {
   const pathname = usePathname();
 
   return (
-    <header className='z-50 w-full mt-8 font-signika '>
+    <header className='z-50 w-full mt-8 font-signika pt-24'>
       <div className='grid grid-cols-1 md:grid-cols-6 gap-4 px-4 py-6 cosmic-panel'>
         {PlayNavItems.map((item) => (
           <Link href={item.href} key={item.href} >

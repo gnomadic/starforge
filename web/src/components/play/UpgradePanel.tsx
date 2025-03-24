@@ -3,6 +3,7 @@ import React from 'react';
 import { useGameStore } from '@/lib/gameState';
 import { cn } from '@/lib/utils';
 import { ArrowUpCircle, LockIcon, CheckCircle2 } from 'lucide-react';
+import { Card, CardHeader } from '../ui/card';
 
 interface UpgradePanelProps {
   className?: string;
@@ -35,21 +36,21 @@ const UpgradePanel: React.FC<UpgradePanelProps> = ({ className }) => {
   }
 
   return (
-    <div className={cn("cosmic-panel p-4", className)}>
-      <h2 className="text-lg font-semibold mb-3">Upgrades</h2>
+    <Card className={cn("backdrop-blur-sm p-4", className)}>
+      <CardHeader className="text-lg font-semibold mb-3">Upgrades</CardHeader>
       <div className="space-y-3">
         {visibleUpgrades.map(upgrade => {
           const isAffordable = canAffordUpgrade(upgrade.id);
           const isPurchased = upgrade.purchased;
-          
+
           return (
-            <div 
+            <div
               key={upgrade.id}
               className={cn(
                 "rounded-lg p-3 border transition-all duration-300",
-                isPurchased 
-                  ? "bg-secondary/20 border-secondary/30 cursor-default opacity-70" 
-                  : isAffordable 
+                isPurchased
+                  ? "bg-secondary/20 border-secondary/30 cursor-default opacity-70"
+                  : isAffordable
                     ? "bg-secondary/60 border-accent/50 hover:bg-secondary/80 cursor-pointer"
                     : "bg-secondary/40 border-secondary/30 opacity-70 cursor-not-allowed"
               )}
@@ -70,15 +71,15 @@ const UpgradePanel: React.FC<UpgradePanelProps> = ({ className }) => {
                   <p className="text-sm text-muted-foreground mt-1">{upgrade.description}</p>
                   <p className="text-xs text-primary mt-2">{upgrade.effect}</p>
                 </div>
-                
+
                 {!isPurchased && (
                   <div className="text-right text-xs space-y-1">
                     {Object.entries(upgrade.cost).map(([resourceId, cost]) => {
                       const resource = resources.find(r => r.id === resourceId);
                       const hasEnough = resource && resource.amount >= cost;
-                      
+
                       return (
-                        <div 
+                        <div
                           key={resourceId}
                           className={cn(
                             "rounded px-2 py-1 inline-block",
@@ -96,7 +97,7 @@ const UpgradePanel: React.FC<UpgradePanelProps> = ({ className }) => {
           );
         })}
       </div>
-    </div>
+    </Card>
   );
 };
 

@@ -11,7 +11,7 @@ export default function Footer() {
           <div className='flex items-start'>
             <Link href='/'>
     
-              <div className='text-4xl text-white font-mono text-center tracking-wider'>
+              <div className='text-2xl md:text-4xl text-white font-mono text-center tracking-wider'>
               E N T R O P I C A L
               </div>
               {/* <div className='mx-5 text-xl uppercase text-subtext'>Build.  </div> */}

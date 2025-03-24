@@ -262,6 +262,7 @@ body {
     content: '';
     @apply w-1.5 h-1.5 bg-white/80 rounded-full mt-2 animate-pulse-slow;
   }
+
 }
 
 

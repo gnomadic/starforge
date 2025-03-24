@@ -49,7 +49,7 @@ const HowToPlaySection: React.FC = () => {
         <div className="text-center mb-20 reveal-on-scroll">
           <span className="px-3 py-1 text-xs font-medium tracking-wider uppercase bg-primary/30 text-primary rounded-full font-signika">The Plan</span>
           <h2 className="mt-6 text-4xl font-mono font-bold">
-            We will <span className="text-gradient">build</span> the machine to reverse entropy.
+            We will <span className="text-gradient">build</span> the machine to stop this.
           </h2>
           <p className="mt-6 text-lg text-white/70 max-w-3xl mx-auto font-mono">
             We can&apos;t do it without you.

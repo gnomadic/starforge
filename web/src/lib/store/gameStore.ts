@@ -61,7 +61,7 @@ export const useGameStore = create<GameState>()(
       ...createCommonSlice(set, get),
     }),
     {
-      name: 'cosmic-collector-storage'
+      name: 'cosmic-collector-storage2'
     }
   )
 );

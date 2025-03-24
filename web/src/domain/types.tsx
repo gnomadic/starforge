@@ -85,3 +85,81 @@ export type HSL = {
   l: number;
   a: number;
 }
+
+export interface NFT {
+    id: number;
+    name: string;
+    image: string;
+    rarity: string;
+    energy: number;
+    power: number;
+    speed: number;
+    category: string;
+    description: string;
+}
+
+
+
+export interface Resource {
+  type: 'gold' | 'energy' | 'cosmic-dust' | 'stardust';
+  amount: number;
+  icon: string;
+}
+
+export interface Reward {
+  type: 'xp' | 'gold' | 'artifact' | 'cosmic-dust';
+  amount: number;
+  artifactId?: string;
+  name: string;
+  icon: string;
+}
+
+export interface Quest {
+  id: string;
+  title: string;
+  description: string;
+  timeRequired: number; // in seconds
+  riskLevel: 'low' | 'medium' | 'high' | 'extreme';
+  resources: Resource[];
+  rewards: Reward[];
+  availableUntil?: Date;
+  image: string;
+}
+
+export interface Artifact {
+  id: string;
+  name: string;
+  description: string;
+  rarity: 'common' | 'uncommon' | 'rare' | 'epic' | 'legendary';
+  image: string;
+  boost: {
+    type: 'energy' | 'power' | 'speed' | 'health' | 'attack' | 'defense';
+    amount: number;
+  };
+  equipped: boolean;
+}
+
+export interface Enemy {
+  id: string;
+  name: string;
+  health: number;
+  attack: number;
+  defense: number;
+  image: string;
+  description: string;
+  rewards: Reward[];
+}
+
+export interface CombatStats {
+  health: number;
+  maxHealth: number;
+  attack: number;
+  defense: number;
+}
+
+export interface CombatLogData {
+  id: string;
+  message: string;
+  type: 'player' | 'enemy' | 'system' | 'reward';
+  timestamp: number;
+}
