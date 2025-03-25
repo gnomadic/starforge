@@ -94,6 +94,11 @@ export interface NFT {
     energy: number;
     power: number;
     speed: number;
+    temperature:  number;
+    water : number;
+    biomass : number;
+    atmosphere :  number;
+    density:  number;
     category: string;
     description: string;
 }
@@ -162,4 +167,22 @@ export interface CombatLogData {
   message: string;
   type: 'player' | 'enemy' | 'system' | 'reward';
   timestamp: number;
+}
+
+// New types for voting system
+export interface VoteOption {
+  id: string;
+  title: string;
+  description: string;
+  image?: string;
+  voteCount: number;
+  category: 'quest' | 'artifact' | 'enemy';
+}
+
+export interface VoteCategory {
+  id: string;
+  title: string;
+  description: string;
+  options: VoteOption[];
+  endsAt: Date;
 }
