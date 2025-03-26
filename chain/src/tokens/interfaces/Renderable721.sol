@@ -2,7 +2,7 @@
 pragma solidity ^0.8.24;
 import {Base64} from "@openzeppelin/contracts/utils/Base64.sol";
 import {Strings} from "@openzeppelin/contracts/utils/Strings.sol";
-import {IRenderer} from "./IRenderer.sol";
+import {IRenderer} from "../../renderers/interfaces/IRenderer.sol";
 
 abstract contract Renderable721 {
     mapping(uint256 => uint256) selectedRenderer;

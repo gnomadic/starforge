@@ -6,7 +6,7 @@
 
     <pattern id="pattern" width="1" height="30" patternUnits="userSpaceOnUse">
         <!-- <circle r="32"/> -->
-        <!-- <path d="m0 14h1v2H0" fill="#fff"/> -->
+        <!-- <path dx="m0 14h1v2H0" fill="#fff"/> -->
         <circle r="1" fill="none" stroke="#ffff" stroke-width="2"/>
     </pattern>
     <filter id="filter">

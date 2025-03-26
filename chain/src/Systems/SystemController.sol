@@ -2,7 +2,7 @@
 pragma solidity ^0.8.24;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
-import "../interfaces/ISystem.sol";
+import { ISystem, ISystemController} from "./interfaces/ISystem.sol";
 
 
 contract SystemController is Ownable, ISystemController {

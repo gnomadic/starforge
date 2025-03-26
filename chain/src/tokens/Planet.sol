@@ -1,13 +1,12 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.24;
 
-import "../lib/ERC721A/contracts/extensions/ERC721AQueryable.sol";
+import "../../lib/ERC721A/contracts/extensions/ERC721AQueryable.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
-import {IRenderer} from "./interfaces/IRenderer.sol";
 import {Renderable721} from "./interfaces/Renderable721.sol";
 import {Base64} from "@openzeppelin/contracts/utils/Base64.sol";
 import {Strings} from "@openzeppelin/contracts/utils/Strings.sol";
-import {ISystemController} from "./interfaces/ISystem.sol";
+import {ISystemController} from "../systems/interfaces/ISystem.sol";
 
 contract Planet is ERC721AQueryable, Renderable721, Ownable {
     using Strings for uint256;
@@ -25,7 +24,7 @@ contract Planet is ERC721AQueryable, Renderable721, Ownable {
         address systems
     )
         Renderable721(renderer)
-        ERC721A("STAR FORGE | PLANET", "Planet")
+        ERC721A("ENTROPICAL | PLANET", "Planet")
         Ownable(_msgSender())
     {
         systemController = ISystemController(systems);
@@ -57,7 +56,7 @@ contract Planet is ERC721AQueryable, Renderable721, Ownable {
 
         bytes memory dataURI = abi.encodePacked(
             "{",
-            '"name": "STAR FORGE | PLANET #',
+            '"name": "ENTROPICAL | PLANET #',
             tokenId.toString(),
             '",',
             '"description": "Forge the future",',
@@ -78,8 +77,8 @@ contract Planet is ERC721AQueryable, Renderable721, Ownable {
     function contractURI() public view returns (string memory) {
         bytes memory dataURI = abi.encodePacked(
             "{",
-            '"name": "STAR FORGE | PLANETS",',
-            '"description": "play STAR FORGE.  Forge your planet in this incremental onchain game.",',
+            '"name": "ENTROPICAL | PLANETS",',
+            '"description": "play ENTROPICAL.  Forge your planet in this incremental onchain game.",',
             '"external_url": "nope",',
             '"image": "',
             generateCharacter(0),

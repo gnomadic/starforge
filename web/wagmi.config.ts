@@ -14,9 +14,8 @@ export default defineConfig({
       project: '../chain',
       include: [
         'Planet.sol/**',
-        'InvestmentSystem.sol/**',
-        'GlobalProgress.sol/**',
-        'SystemController.sol/**'
+        'SystemController.sol/**',
+        'PlanetStatsSystem.sol/**',
       ],
     }),
     react(),

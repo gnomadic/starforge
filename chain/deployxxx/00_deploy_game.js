@@ -13,25 +13,24 @@ module.exports = async (hre) => {
   console.log("----- deploying")
 
 
+  // const colorUtils = await deploy("ColorUtils", {
+  //   from: deployer,
+  //   log: true,
+  // });
+
   const PlanetRenderer = await deploy("PlanetRenderer", {
     from: deployer,
     log: true,
   });
 
-  const SpaceOrbStepRenderer = await deploy("SpaceOrbStepRenderer", {
+  const SurfaceRenderer = await deploy("SurfaceRenderer", {
     from: deployer,
     log: true,
   });
-  
-
-  // const SurfaceRenderer = await deploy("SurfaceRenderer", {
-  //   from: deployer,
-  //   log: true,
-  // });
-  // const MapRenderer = await deploy("MapRenderer", {
-  //   from: deployer,
-  //   log: true,
-  // });
+  const MapRenderer = await deploy("MapRenderer", {
+    from: deployer,
+    log: true,
+  });
 
   const SystemController = await deploy("SystemController", {
     from: deployer,
@@ -44,22 +43,16 @@ module.exports = async (hre) => {
     args: [PlanetRenderer.address, SystemController.address],
   });
 
-  const PlanetStats = await deploy("PlanetStatsSystem", {
+  const InvestmentSystem = await deploy("InvestmentSystem", {
     from: deployer,
     log: true,
     args: [Planet.address]
   });
 
-  // const InvestmentSystem = await deploy("InvestmentSystem", {
-  //   from: deployer,
-  //   log: true,
-  //   args: [Planet.address]
-  // });
-
-  // const GlobalProgress = await deploy("GlobalProgress", {
-  //   from: deployer,
-  //   log: true,
-  // });
+  const GlobalProgress = await deploy("GlobalProgress", {
+    from: deployer,
+    log: true,
+  });
 
 
   
@@ -102,11 +95,11 @@ module.exports = async (hre) => {
   let tx = await deployedSysController.setTokenAddress(Planet.address);
   await tx.wait();
 
-  tx = await deployedSysController.registerSystem(1, PlanetStats.address);
+  tx = await deployedSysController.registerSystem(1, GlobalProgress.address);
   await tx.wait();
 
-  // tx = await deployedSysController.registerSystem(2, InvestmentSystem.address);
-  // await tx.wait();
+  tx = await deployedSysController.registerSystem(2, InvestmentSystem.address);
+  await tx.wait();
 
   // tx = await deployedCraft.setLoader(craftLoader.address);
   // await tx.wait();
@@ -129,7 +122,10 @@ module.exports = async (hre) => {
 
   console.log("----- configuring renderer")
 
-  tx = await deployedRenderer.addStepRenderer(SpaceOrbStepRenderer.address);
+  tx = await deployedRenderer.addStepRenderer(MapRenderer.address);
+  await tx.wait();
+
+  tx = await deployedRenderer.addStepRenderer(SurfaceRenderer.address);
   await tx.wait();
 
   console.log("----- done")
@@ -143,11 +139,11 @@ module.exports = async (hre) => {
   const object = {};
   object.Planet = Planet.address;
   object.SystemController = SystemController.address;
-  object.PlanetStats = PlanetStats.address;
+  object.InvestmentSystem = InvestmentSystem.address;
+  object.GlobalProgress = GlobalProgress.address;
+  // object.craftSystem = craft.address;
 
-
-
-  const filename = "../deployments/" + networkName + "/entropical-deployment.json";
+  const filename = "../deployments/" + networkName + "/AA-deployment.json";
 
 
   await fs.writeFileSync(filename, JSON.stringify(object, null, 2));
@@ -158,7 +154,8 @@ module.exports = async (hre) => {
   console.log("done deploying");
   if (chainId !== "31337" && hre.network.name !== "localhost" && hre.network.name !== "1337") {
     console.log("verifing");
-    
+    // await verify(hre, color.address, "Color");
+    // await verify(hre, starshipRenderer.address, "StarshipRenderer", "renderers/");
     await verify(hre, Planet.address, "Planet", "", [Planet.address]);
 
   }

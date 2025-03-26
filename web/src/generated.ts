@@ -13,235 +13,6 @@ import {
 } from 'wagmi/codegen'
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// GlobalProgress
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-export const globalProgressAbi = [
-  { type: 'constructor', inputs: [], stateMutability: 'nonpayable' },
-  {
-    type: 'error',
-    inputs: [{ name: 'owner', internalType: 'address', type: 'address' }],
-    name: 'OwnableInvalidOwner',
-  },
-  {
-    type: 'error',
-    inputs: [{ name: 'account', internalType: 'address', type: 'address' }],
-    name: 'OwnableUnauthorizedAccount',
-  },
-  {
-    type: 'event',
-    anonymous: false,
-    inputs: [
-      {
-        name: 'previousOwner',
-        internalType: 'address',
-        type: 'address',
-        indexed: true,
-      },
-      {
-        name: 'newOwner',
-        internalType: 'address',
-        type: 'address',
-        indexed: true,
-      },
-    ],
-    name: 'OwnershipTransferred',
-  },
-  {
-    type: 'function',
-    inputs: [{ name: '_event', internalType: 'string', type: 'string' }],
-    name: 'countEvent',
-    outputs: [],
-    stateMutability: 'nonpayable',
-  },
-  {
-    type: 'function',
-    inputs: [
-      {
-        name: 'controller',
-        internalType: 'contract ISystemController',
-        type: 'address',
-      },
-      { name: 'tokenId', internalType: 'uint256', type: 'uint256' },
-    ],
-    name: 'init',
-    outputs: [],
-    stateMutability: 'nonpayable',
-  },
-  {
-    type: 'function',
-    inputs: [],
-    name: 'owner',
-    outputs: [{ name: '', internalType: 'address', type: 'address' }],
-    stateMutability: 'view',
-  },
-  {
-    type: 'function',
-    inputs: [],
-    name: 'renounceOwnership',
-    outputs: [],
-    stateMutability: 'nonpayable',
-  },
-  {
-    type: 'function',
-    inputs: [{ name: 'newOwner', internalType: 'address', type: 'address' }],
-    name: 'transferOwnership',
-    outputs: [],
-    stateMutability: 'nonpayable',
-  },
-] as const
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// InvestmentSystem
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-export const investmentSystemAbi = [
-  {
-    type: 'constructor',
-    inputs: [{ name: '_planet', internalType: 'address', type: 'address' }],
-    stateMutability: 'nonpayable',
-  },
-  { type: 'error', inputs: [], name: 'NotEnoughTimePassed' },
-  { type: 'error', inputs: [], name: 'NotTheOwner' },
-  {
-    type: 'error',
-    inputs: [{ name: 'owner', internalType: 'address', type: 'address' }],
-    name: 'OwnableInvalidOwner',
-  },
-  {
-    type: 'error',
-    inputs: [{ name: 'account', internalType: 'address', type: 'address' }],
-    name: 'OwnableUnauthorizedAccount',
-  },
-  {
-    type: 'event',
-    anonymous: false,
-    inputs: [
-      {
-        name: 'previousOwner',
-        internalType: 'address',
-        type: 'address',
-        indexed: true,
-      },
-      {
-        name: 'newOwner',
-        internalType: 'address',
-        type: 'address',
-        indexed: true,
-      },
-    ],
-    name: 'OwnershipTransferred',
-  },
-  {
-    type: 'function',
-    inputs: [{ name: 'name', internalType: 'string', type: 'string' }],
-    name: 'addInvestment',
-    outputs: [],
-    stateMutability: 'nonpayable',
-  },
-  {
-    type: 'function',
-    inputs: [],
-    name: 'controller',
-    outputs: [
-      { name: '', internalType: 'contract ISystemController', type: 'address' },
-    ],
-    stateMutability: 'view',
-  },
-  {
-    type: 'function',
-    inputs: [],
-    name: 'getInvestments',
-    outputs: [
-      {
-        name: '',
-        internalType: 'struct InvestmentSystem.Investment[]',
-        type: 'tuple[]',
-        components: [
-          { name: 'id', internalType: 'uint256', type: 'uint256' },
-          { name: 'name', internalType: 'string', type: 'string' },
-          { name: 'enabled', internalType: 'bool', type: 'bool' },
-        ],
-      },
-    ],
-    stateMutability: 'view',
-  },
-  {
-    type: 'function',
-    inputs: [
-      {
-        name: '_controller',
-        internalType: 'contract ISystemController',
-        type: 'address',
-      },
-      { name: 'tokenId', internalType: 'uint256', type: 'uint256' },
-    ],
-    name: 'init',
-    outputs: [],
-    stateMutability: 'nonpayable',
-  },
-  {
-    type: 'function',
-    inputs: [
-      { name: 'tokenId', internalType: 'uint256', type: 'uint256' },
-      { name: 'investment', internalType: 'uint256', type: 'uint256' },
-    ],
-    name: 'invest',
-    outputs: [],
-    stateMutability: 'nonpayable',
-  },
-  {
-    type: 'function',
-    inputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
-    name: 'investments',
-    outputs: [
-      { name: 'id', internalType: 'uint256', type: 'uint256' },
-      { name: 'name', internalType: 'string', type: 'string' },
-      { name: 'enabled', internalType: 'bool', type: 'bool' },
-    ],
-    stateMutability: 'view',
-  },
-  {
-    type: 'function',
-    inputs: [],
-    name: 'owner',
-    outputs: [{ name: '', internalType: 'address', type: 'address' }],
-    stateMutability: 'view',
-  },
-  {
-    type: 'function',
-    inputs: [],
-    name: 'planet',
-    outputs: [{ name: '', internalType: 'contract IERC721', type: 'address' }],
-    stateMutability: 'view',
-  },
-  {
-    type: 'function',
-    inputs: [],
-    name: 'renounceOwnership',
-    outputs: [],
-    stateMutability: 'nonpayable',
-  },
-  {
-    type: 'function',
-    inputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
-    name: 'stats',
-    outputs: [
-      { name: 'lastGaze', internalType: 'uint256', type: 'uint256' },
-      { name: 'gazes', internalType: 'uint16', type: 'uint16' },
-    ],
-    stateMutability: 'view',
-  },
-  {
-    type: 'function',
-    inputs: [{ name: 'newOwner', internalType: 'address', type: 'address' }],
-    name: 'transferOwnership',
-    outputs: [],
-    stateMutability: 'nonpayable',
-  },
-] as const
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Planet
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -672,6 +443,133 @@ export const planetAbi = [
 ] as const
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// PlanetStatsSystem
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+export const planetStatsSystemAbi = [
+  {
+    type: 'constructor',
+    inputs: [
+      { name: '_planetAddress', internalType: 'address', type: 'address' },
+    ],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'error',
+    inputs: [{ name: 'owner', internalType: 'address', type: 'address' }],
+    name: 'OwnableInvalidOwner',
+  },
+  {
+    type: 'error',
+    inputs: [{ name: 'account', internalType: 'address', type: 'address' }],
+    name: 'OwnableUnauthorizedAccount',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
+        name: 'previousOwner',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'newOwner',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+    ],
+    name: 'OwnershipTransferred',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'getMintPrice',
+    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'getRarityOdds',
+    outputs: [{ name: '', internalType: 'uint8[6]', type: 'uint8[6]' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: 'tokenId', internalType: 'uint256', type: 'uint256' }],
+    name: 'getStats',
+    outputs: [
+      {
+        name: '',
+        internalType: 'struct PlanetStatsSystem.Stats',
+        type: 'tuple',
+        components: [
+          { name: 'entropy', internalType: 'uint8', type: 'uint8' },
+          { name: 'rarity', internalType: 'uint8', type: 'uint8' },
+          { name: 'stats', internalType: 'uint8[6]', type: 'uint8[6]' },
+        ],
+      },
+    ],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      {
+        name: 'controller',
+        internalType: 'contract ISystemController',
+        type: 'address',
+      },
+      { name: 'tokenId', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'init',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'owner',
+    outputs: [{ name: '', internalType: 'address', type: 'address' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'renounceOwnership',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: 'tokenId', internalType: 'uint256', type: 'uint256' }],
+    name: 'sync',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: 'newOwner', internalType: 'address', type: 'address' }],
+    name: 'transferOwnership',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'newPrice', internalType: 'uint256', type: 'uint256' },
+      { name: 'rollOdds', internalType: 'uint8[6]', type: 'uint8[6]' },
+    ],
+    name: 'updateMintRules',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+] as const
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // SystemController
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -715,7 +613,7 @@ export const systemControllerAbi = [
   },
   {
     type: 'function',
-    inputs: [{ name: '_planet', internalType: 'uint256', type: 'uint256' }],
+    inputs: [{ name: 'tokenId', internalType: 'uint256', type: 'uint256' }],
     name: 'initAll',
     outputs: [],
     stateMutability: 'nonpayable',
@@ -755,6 +653,13 @@ export const systemControllerAbi = [
   },
   {
     type: 'function',
+    inputs: [{ name: 'tokenId', internalType: 'uint256', type: 'uint256' }],
+    name: 'syncAll',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
     inputs: [{ name: '', internalType: 'uint8', type: 'uint8' }],
     name: 'systemMap',
     outputs: [{ name: '', internalType: 'contract ISystem', type: 'address' }],
@@ -786,295 +691,6 @@ export const systemControllerAbi = [
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // React
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link globalProgressAbi}__
- */
-export const useReadGlobalProgress = /*#__PURE__*/ createUseReadContract({
-  abi: globalProgressAbi,
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link globalProgressAbi}__ and `functionName` set to `"owner"`
- */
-export const useReadGlobalProgressOwner = /*#__PURE__*/ createUseReadContract({
-  abi: globalProgressAbi,
-  functionName: 'owner',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link globalProgressAbi}__
- */
-export const useWriteGlobalProgress = /*#__PURE__*/ createUseWriteContract({
-  abi: globalProgressAbi,
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link globalProgressAbi}__ and `functionName` set to `"countEvent"`
- */
-export const useWriteGlobalProgressCountEvent =
-  /*#__PURE__*/ createUseWriteContract({
-    abi: globalProgressAbi,
-    functionName: 'countEvent',
-  })
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link globalProgressAbi}__ and `functionName` set to `"init"`
- */
-export const useWriteGlobalProgressInit = /*#__PURE__*/ createUseWriteContract({
-  abi: globalProgressAbi,
-  functionName: 'init',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link globalProgressAbi}__ and `functionName` set to `"renounceOwnership"`
- */
-export const useWriteGlobalProgressRenounceOwnership =
-  /*#__PURE__*/ createUseWriteContract({
-    abi: globalProgressAbi,
-    functionName: 'renounceOwnership',
-  })
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link globalProgressAbi}__ and `functionName` set to `"transferOwnership"`
- */
-export const useWriteGlobalProgressTransferOwnership =
-  /*#__PURE__*/ createUseWriteContract({
-    abi: globalProgressAbi,
-    functionName: 'transferOwnership',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link globalProgressAbi}__
- */
-export const useSimulateGlobalProgress =
-  /*#__PURE__*/ createUseSimulateContract({ abi: globalProgressAbi })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link globalProgressAbi}__ and `functionName` set to `"countEvent"`
- */
-export const useSimulateGlobalProgressCountEvent =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: globalProgressAbi,
-    functionName: 'countEvent',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link globalProgressAbi}__ and `functionName` set to `"init"`
- */
-export const useSimulateGlobalProgressInit =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: globalProgressAbi,
-    functionName: 'init',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link globalProgressAbi}__ and `functionName` set to `"renounceOwnership"`
- */
-export const useSimulateGlobalProgressRenounceOwnership =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: globalProgressAbi,
-    functionName: 'renounceOwnership',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link globalProgressAbi}__ and `functionName` set to `"transferOwnership"`
- */
-export const useSimulateGlobalProgressTransferOwnership =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: globalProgressAbi,
-    functionName: 'transferOwnership',
-  })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link globalProgressAbi}__
- */
-export const useWatchGlobalProgressEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({ abi: globalProgressAbi })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link globalProgressAbi}__ and `eventName` set to `"OwnershipTransferred"`
- */
-export const useWatchGlobalProgressOwnershipTransferredEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: globalProgressAbi,
-    eventName: 'OwnershipTransferred',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link investmentSystemAbi}__
- */
-export const useReadInvestmentSystem = /*#__PURE__*/ createUseReadContract({
-  abi: investmentSystemAbi,
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link investmentSystemAbi}__ and `functionName` set to `"controller"`
- */
-export const useReadInvestmentSystemController =
-  /*#__PURE__*/ createUseReadContract({
-    abi: investmentSystemAbi,
-    functionName: 'controller',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link investmentSystemAbi}__ and `functionName` set to `"getInvestments"`
- */
-export const useReadInvestmentSystemGetInvestments =
-  /*#__PURE__*/ createUseReadContract({
-    abi: investmentSystemAbi,
-    functionName: 'getInvestments',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link investmentSystemAbi}__ and `functionName` set to `"investments"`
- */
-export const useReadInvestmentSystemInvestments =
-  /*#__PURE__*/ createUseReadContract({
-    abi: investmentSystemAbi,
-    functionName: 'investments',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link investmentSystemAbi}__ and `functionName` set to `"owner"`
- */
-export const useReadInvestmentSystemOwner = /*#__PURE__*/ createUseReadContract(
-  { abi: investmentSystemAbi, functionName: 'owner' },
-)
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link investmentSystemAbi}__ and `functionName` set to `"planet"`
- */
-export const useReadInvestmentSystemPlanet =
-  /*#__PURE__*/ createUseReadContract({
-    abi: investmentSystemAbi,
-    functionName: 'planet',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link investmentSystemAbi}__ and `functionName` set to `"stats"`
- */
-export const useReadInvestmentSystemStats = /*#__PURE__*/ createUseReadContract(
-  { abi: investmentSystemAbi, functionName: 'stats' },
-)
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link investmentSystemAbi}__
- */
-export const useWriteInvestmentSystem = /*#__PURE__*/ createUseWriteContract({
-  abi: investmentSystemAbi,
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link investmentSystemAbi}__ and `functionName` set to `"addInvestment"`
- */
-export const useWriteInvestmentSystemAddInvestment =
-  /*#__PURE__*/ createUseWriteContract({
-    abi: investmentSystemAbi,
-    functionName: 'addInvestment',
-  })
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link investmentSystemAbi}__ and `functionName` set to `"init"`
- */
-export const useWriteInvestmentSystemInit =
-  /*#__PURE__*/ createUseWriteContract({
-    abi: investmentSystemAbi,
-    functionName: 'init',
-  })
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link investmentSystemAbi}__ and `functionName` set to `"invest"`
- */
-export const useWriteInvestmentSystemInvest =
-  /*#__PURE__*/ createUseWriteContract({
-    abi: investmentSystemAbi,
-    functionName: 'invest',
-  })
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link investmentSystemAbi}__ and `functionName` set to `"renounceOwnership"`
- */
-export const useWriteInvestmentSystemRenounceOwnership =
-  /*#__PURE__*/ createUseWriteContract({
-    abi: investmentSystemAbi,
-    functionName: 'renounceOwnership',
-  })
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link investmentSystemAbi}__ and `functionName` set to `"transferOwnership"`
- */
-export const useWriteInvestmentSystemTransferOwnership =
-  /*#__PURE__*/ createUseWriteContract({
-    abi: investmentSystemAbi,
-    functionName: 'transferOwnership',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link investmentSystemAbi}__
- */
-export const useSimulateInvestmentSystem =
-  /*#__PURE__*/ createUseSimulateContract({ abi: investmentSystemAbi })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link investmentSystemAbi}__ and `functionName` set to `"addInvestment"`
- */
-export const useSimulateInvestmentSystemAddInvestment =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: investmentSystemAbi,
-    functionName: 'addInvestment',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link investmentSystemAbi}__ and `functionName` set to `"init"`
- */
-export const useSimulateInvestmentSystemInit =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: investmentSystemAbi,
-    functionName: 'init',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link investmentSystemAbi}__ and `functionName` set to `"invest"`
- */
-export const useSimulateInvestmentSystemInvest =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: investmentSystemAbi,
-    functionName: 'invest',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link investmentSystemAbi}__ and `functionName` set to `"renounceOwnership"`
- */
-export const useSimulateInvestmentSystemRenounceOwnership =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: investmentSystemAbi,
-    functionName: 'renounceOwnership',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link investmentSystemAbi}__ and `functionName` set to `"transferOwnership"`
- */
-export const useSimulateInvestmentSystemTransferOwnership =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: investmentSystemAbi,
-    functionName: 'transferOwnership',
-  })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link investmentSystemAbi}__
- */
-export const useWatchInvestmentSystemEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({ abi: investmentSystemAbi })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link investmentSystemAbi}__ and `eventName` set to `"OwnershipTransferred"`
- */
-export const useWatchInvestmentSystemOwnershipTransferredEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: investmentSystemAbi,
-    eventName: 'OwnershipTransferred',
-  })
 
 /**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link planetAbi}__
@@ -1486,6 +1102,167 @@ export const useWatchPlanetTransferEvent =
   })
 
 /**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link planetStatsSystemAbi}__
+ */
+export const useReadPlanetStatsSystem = /*#__PURE__*/ createUseReadContract({
+  abi: planetStatsSystemAbi,
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link planetStatsSystemAbi}__ and `functionName` set to `"getMintPrice"`
+ */
+export const useReadPlanetStatsSystemGetMintPrice =
+  /*#__PURE__*/ createUseReadContract({
+    abi: planetStatsSystemAbi,
+    functionName: 'getMintPrice',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link planetStatsSystemAbi}__ and `functionName` set to `"getRarityOdds"`
+ */
+export const useReadPlanetStatsSystemGetRarityOdds =
+  /*#__PURE__*/ createUseReadContract({
+    abi: planetStatsSystemAbi,
+    functionName: 'getRarityOdds',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link planetStatsSystemAbi}__ and `functionName` set to `"getStats"`
+ */
+export const useReadPlanetStatsSystemGetStats =
+  /*#__PURE__*/ createUseReadContract({
+    abi: planetStatsSystemAbi,
+    functionName: 'getStats',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link planetStatsSystemAbi}__ and `functionName` set to `"owner"`
+ */
+export const useReadPlanetStatsSystemOwner =
+  /*#__PURE__*/ createUseReadContract({
+    abi: planetStatsSystemAbi,
+    functionName: 'owner',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link planetStatsSystemAbi}__
+ */
+export const useWritePlanetStatsSystem = /*#__PURE__*/ createUseWriteContract({
+  abi: planetStatsSystemAbi,
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link planetStatsSystemAbi}__ and `functionName` set to `"init"`
+ */
+export const useWritePlanetStatsSystemInit =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: planetStatsSystemAbi,
+    functionName: 'init',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link planetStatsSystemAbi}__ and `functionName` set to `"renounceOwnership"`
+ */
+export const useWritePlanetStatsSystemRenounceOwnership =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: planetStatsSystemAbi,
+    functionName: 'renounceOwnership',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link planetStatsSystemAbi}__ and `functionName` set to `"sync"`
+ */
+export const useWritePlanetStatsSystemSync =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: planetStatsSystemAbi,
+    functionName: 'sync',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link planetStatsSystemAbi}__ and `functionName` set to `"transferOwnership"`
+ */
+export const useWritePlanetStatsSystemTransferOwnership =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: planetStatsSystemAbi,
+    functionName: 'transferOwnership',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link planetStatsSystemAbi}__ and `functionName` set to `"updateMintRules"`
+ */
+export const useWritePlanetStatsSystemUpdateMintRules =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: planetStatsSystemAbi,
+    functionName: 'updateMintRules',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link planetStatsSystemAbi}__
+ */
+export const useSimulatePlanetStatsSystem =
+  /*#__PURE__*/ createUseSimulateContract({ abi: planetStatsSystemAbi })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link planetStatsSystemAbi}__ and `functionName` set to `"init"`
+ */
+export const useSimulatePlanetStatsSystemInit =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: planetStatsSystemAbi,
+    functionName: 'init',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link planetStatsSystemAbi}__ and `functionName` set to `"renounceOwnership"`
+ */
+export const useSimulatePlanetStatsSystemRenounceOwnership =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: planetStatsSystemAbi,
+    functionName: 'renounceOwnership',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link planetStatsSystemAbi}__ and `functionName` set to `"sync"`
+ */
+export const useSimulatePlanetStatsSystemSync =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: planetStatsSystemAbi,
+    functionName: 'sync',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link planetStatsSystemAbi}__ and `functionName` set to `"transferOwnership"`
+ */
+export const useSimulatePlanetStatsSystemTransferOwnership =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: planetStatsSystemAbi,
+    functionName: 'transferOwnership',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link planetStatsSystemAbi}__ and `functionName` set to `"updateMintRules"`
+ */
+export const useSimulatePlanetStatsSystemUpdateMintRules =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: planetStatsSystemAbi,
+    functionName: 'updateMintRules',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link planetStatsSystemAbi}__
+ */
+export const useWatchPlanetStatsSystemEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({ abi: planetStatsSystemAbi })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link planetStatsSystemAbi}__ and `eventName` set to `"OwnershipTransferred"`
+ */
+export const useWatchPlanetStatsSystemOwnershipTransferredEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: planetStatsSystemAbi,
+    eventName: 'OwnershipTransferred',
+  })
+
+/**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link systemControllerAbi}__
  */
 export const useReadSystemController = /*#__PURE__*/ createUseReadContract({
@@ -1579,6 +1356,15 @@ export const useWriteSystemControllerSetTokenAddress =
   })
 
 /**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link systemControllerAbi}__ and `functionName` set to `"syncAll"`
+ */
+export const useWriteSystemControllerSyncAll =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: systemControllerAbi,
+    functionName: 'syncAll',
+  })
+
+/**
  * Wraps __{@link useWriteContract}__ with `abi` set to __{@link systemControllerAbi}__ and `functionName` set to `"transferOwnership"`
  */
 export const useWriteSystemControllerTransferOwnership =
@@ -1630,6 +1416,15 @@ export const useSimulateSystemControllerSetTokenAddress =
   })
 
 /**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link systemControllerAbi}__ and `functionName` set to `"syncAll"`
+ */
+export const useSimulateSystemControllerSyncAll =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: systemControllerAbi,
+    functionName: 'syncAll',
+  })
+
+/**
  * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link systemControllerAbi}__ and `functionName` set to `"transferOwnership"`
  */
 export const useSimulateSystemControllerTransferOwnership =
@@ -1656,292 +1451,6 @@ export const useWatchSystemControllerOwnershipTransferredEvent =
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Action
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-/**
- * Wraps __{@link readContract}__ with `abi` set to __{@link globalProgressAbi}__
- */
-export const readGlobalProgress = /*#__PURE__*/ createReadContract({
-  abi: globalProgressAbi,
-})
-
-/**
- * Wraps __{@link readContract}__ with `abi` set to __{@link globalProgressAbi}__ and `functionName` set to `"owner"`
- */
-export const readGlobalProgressOwner = /*#__PURE__*/ createReadContract({
-  abi: globalProgressAbi,
-  functionName: 'owner',
-})
-
-/**
- * Wraps __{@link writeContract}__ with `abi` set to __{@link globalProgressAbi}__
- */
-export const writeGlobalProgress = /*#__PURE__*/ createWriteContract({
-  abi: globalProgressAbi,
-})
-
-/**
- * Wraps __{@link writeContract}__ with `abi` set to __{@link globalProgressAbi}__ and `functionName` set to `"countEvent"`
- */
-export const writeGlobalProgressCountEvent = /*#__PURE__*/ createWriteContract({
-  abi: globalProgressAbi,
-  functionName: 'countEvent',
-})
-
-/**
- * Wraps __{@link writeContract}__ with `abi` set to __{@link globalProgressAbi}__ and `functionName` set to `"init"`
- */
-export const writeGlobalProgressInit = /*#__PURE__*/ createWriteContract({
-  abi: globalProgressAbi,
-  functionName: 'init',
-})
-
-/**
- * Wraps __{@link writeContract}__ with `abi` set to __{@link globalProgressAbi}__ and `functionName` set to `"renounceOwnership"`
- */
-export const writeGlobalProgressRenounceOwnership =
-  /*#__PURE__*/ createWriteContract({
-    abi: globalProgressAbi,
-    functionName: 'renounceOwnership',
-  })
-
-/**
- * Wraps __{@link writeContract}__ with `abi` set to __{@link globalProgressAbi}__ and `functionName` set to `"transferOwnership"`
- */
-export const writeGlobalProgressTransferOwnership =
-  /*#__PURE__*/ createWriteContract({
-    abi: globalProgressAbi,
-    functionName: 'transferOwnership',
-  })
-
-/**
- * Wraps __{@link simulateContract}__ with `abi` set to __{@link globalProgressAbi}__
- */
-export const simulateGlobalProgress = /*#__PURE__*/ createSimulateContract({
-  abi: globalProgressAbi,
-})
-
-/**
- * Wraps __{@link simulateContract}__ with `abi` set to __{@link globalProgressAbi}__ and `functionName` set to `"countEvent"`
- */
-export const simulateGlobalProgressCountEvent =
-  /*#__PURE__*/ createSimulateContract({
-    abi: globalProgressAbi,
-    functionName: 'countEvent',
-  })
-
-/**
- * Wraps __{@link simulateContract}__ with `abi` set to __{@link globalProgressAbi}__ and `functionName` set to `"init"`
- */
-export const simulateGlobalProgressInit = /*#__PURE__*/ createSimulateContract({
-  abi: globalProgressAbi,
-  functionName: 'init',
-})
-
-/**
- * Wraps __{@link simulateContract}__ with `abi` set to __{@link globalProgressAbi}__ and `functionName` set to `"renounceOwnership"`
- */
-export const simulateGlobalProgressRenounceOwnership =
-  /*#__PURE__*/ createSimulateContract({
-    abi: globalProgressAbi,
-    functionName: 'renounceOwnership',
-  })
-
-/**
- * Wraps __{@link simulateContract}__ with `abi` set to __{@link globalProgressAbi}__ and `functionName` set to `"transferOwnership"`
- */
-export const simulateGlobalProgressTransferOwnership =
-  /*#__PURE__*/ createSimulateContract({
-    abi: globalProgressAbi,
-    functionName: 'transferOwnership',
-  })
-
-/**
- * Wraps __{@link watchContractEvent}__ with `abi` set to __{@link globalProgressAbi}__
- */
-export const watchGlobalProgressEvent = /*#__PURE__*/ createWatchContractEvent({
-  abi: globalProgressAbi,
-})
-
-/**
- * Wraps __{@link watchContractEvent}__ with `abi` set to __{@link globalProgressAbi}__ and `eventName` set to `"OwnershipTransferred"`
- */
-export const watchGlobalProgressOwnershipTransferredEvent =
-  /*#__PURE__*/ createWatchContractEvent({
-    abi: globalProgressAbi,
-    eventName: 'OwnershipTransferred',
-  })
-
-/**
- * Wraps __{@link readContract}__ with `abi` set to __{@link investmentSystemAbi}__
- */
-export const readInvestmentSystem = /*#__PURE__*/ createReadContract({
-  abi: investmentSystemAbi,
-})
-
-/**
- * Wraps __{@link readContract}__ with `abi` set to __{@link investmentSystemAbi}__ and `functionName` set to `"controller"`
- */
-export const readInvestmentSystemController = /*#__PURE__*/ createReadContract({
-  abi: investmentSystemAbi,
-  functionName: 'controller',
-})
-
-/**
- * Wraps __{@link readContract}__ with `abi` set to __{@link investmentSystemAbi}__ and `functionName` set to `"getInvestments"`
- */
-export const readInvestmentSystemGetInvestments =
-  /*#__PURE__*/ createReadContract({
-    abi: investmentSystemAbi,
-    functionName: 'getInvestments',
-  })
-
-/**
- * Wraps __{@link readContract}__ with `abi` set to __{@link investmentSystemAbi}__ and `functionName` set to `"investments"`
- */
-export const readInvestmentSystemInvestments = /*#__PURE__*/ createReadContract(
-  { abi: investmentSystemAbi, functionName: 'investments' },
-)
-
-/**
- * Wraps __{@link readContract}__ with `abi` set to __{@link investmentSystemAbi}__ and `functionName` set to `"owner"`
- */
-export const readInvestmentSystemOwner = /*#__PURE__*/ createReadContract({
-  abi: investmentSystemAbi,
-  functionName: 'owner',
-})
-
-/**
- * Wraps __{@link readContract}__ with `abi` set to __{@link investmentSystemAbi}__ and `functionName` set to `"planet"`
- */
-export const readInvestmentSystemPlanet = /*#__PURE__*/ createReadContract({
-  abi: investmentSystemAbi,
-  functionName: 'planet',
-})
-
-/**
- * Wraps __{@link readContract}__ with `abi` set to __{@link investmentSystemAbi}__ and `functionName` set to `"stats"`
- */
-export const readInvestmentSystemStats = /*#__PURE__*/ createReadContract({
-  abi: investmentSystemAbi,
-  functionName: 'stats',
-})
-
-/**
- * Wraps __{@link writeContract}__ with `abi` set to __{@link investmentSystemAbi}__
- */
-export const writeInvestmentSystem = /*#__PURE__*/ createWriteContract({
-  abi: investmentSystemAbi,
-})
-
-/**
- * Wraps __{@link writeContract}__ with `abi` set to __{@link investmentSystemAbi}__ and `functionName` set to `"addInvestment"`
- */
-export const writeInvestmentSystemAddInvestment =
-  /*#__PURE__*/ createWriteContract({
-    abi: investmentSystemAbi,
-    functionName: 'addInvestment',
-  })
-
-/**
- * Wraps __{@link writeContract}__ with `abi` set to __{@link investmentSystemAbi}__ and `functionName` set to `"init"`
- */
-export const writeInvestmentSystemInit = /*#__PURE__*/ createWriteContract({
-  abi: investmentSystemAbi,
-  functionName: 'init',
-})
-
-/**
- * Wraps __{@link writeContract}__ with `abi` set to __{@link investmentSystemAbi}__ and `functionName` set to `"invest"`
- */
-export const writeInvestmentSystemInvest = /*#__PURE__*/ createWriteContract({
-  abi: investmentSystemAbi,
-  functionName: 'invest',
-})
-
-/**
- * Wraps __{@link writeContract}__ with `abi` set to __{@link investmentSystemAbi}__ and `functionName` set to `"renounceOwnership"`
- */
-export const writeInvestmentSystemRenounceOwnership =
-  /*#__PURE__*/ createWriteContract({
-    abi: investmentSystemAbi,
-    functionName: 'renounceOwnership',
-  })
-
-/**
- * Wraps __{@link writeContract}__ with `abi` set to __{@link investmentSystemAbi}__ and `functionName` set to `"transferOwnership"`
- */
-export const writeInvestmentSystemTransferOwnership =
-  /*#__PURE__*/ createWriteContract({
-    abi: investmentSystemAbi,
-    functionName: 'transferOwnership',
-  })
-
-/**
- * Wraps __{@link simulateContract}__ with `abi` set to __{@link investmentSystemAbi}__
- */
-export const simulateInvestmentSystem = /*#__PURE__*/ createSimulateContract({
-  abi: investmentSystemAbi,
-})
-
-/**
- * Wraps __{@link simulateContract}__ with `abi` set to __{@link investmentSystemAbi}__ and `functionName` set to `"addInvestment"`
- */
-export const simulateInvestmentSystemAddInvestment =
-  /*#__PURE__*/ createSimulateContract({
-    abi: investmentSystemAbi,
-    functionName: 'addInvestment',
-  })
-
-/**
- * Wraps __{@link simulateContract}__ with `abi` set to __{@link investmentSystemAbi}__ and `functionName` set to `"init"`
- */
-export const simulateInvestmentSystemInit =
-  /*#__PURE__*/ createSimulateContract({
-    abi: investmentSystemAbi,
-    functionName: 'init',
-  })
-
-/**
- * Wraps __{@link simulateContract}__ with `abi` set to __{@link investmentSystemAbi}__ and `functionName` set to `"invest"`
- */
-export const simulateInvestmentSystemInvest =
-  /*#__PURE__*/ createSimulateContract({
-    abi: investmentSystemAbi,
-    functionName: 'invest',
-  })
-
-/**
- * Wraps __{@link simulateContract}__ with `abi` set to __{@link investmentSystemAbi}__ and `functionName` set to `"renounceOwnership"`
- */
-export const simulateInvestmentSystemRenounceOwnership =
-  /*#__PURE__*/ createSimulateContract({
-    abi: investmentSystemAbi,
-    functionName: 'renounceOwnership',
-  })
-
-/**
- * Wraps __{@link simulateContract}__ with `abi` set to __{@link investmentSystemAbi}__ and `functionName` set to `"transferOwnership"`
- */
-export const simulateInvestmentSystemTransferOwnership =
-  /*#__PURE__*/ createSimulateContract({
-    abi: investmentSystemAbi,
-    functionName: 'transferOwnership',
-  })
-
-/**
- * Wraps __{@link watchContractEvent}__ with `abi` set to __{@link investmentSystemAbi}__
- */
-export const watchInvestmentSystemEvent =
-  /*#__PURE__*/ createWatchContractEvent({ abi: investmentSystemAbi })
-
-/**
- * Wraps __{@link watchContractEvent}__ with `abi` set to __{@link investmentSystemAbi}__ and `eventName` set to `"OwnershipTransferred"`
- */
-export const watchInvestmentSystemOwnershipTransferredEvent =
-  /*#__PURE__*/ createWatchContractEvent({
-    abi: investmentSystemAbi,
-    eventName: 'OwnershipTransferred',
-  })
 
 /**
  * Wraps __{@link readContract}__ with `abi` set to __{@link planetAbi}__
@@ -2336,6 +1845,164 @@ export const watchPlanetTransferEvent = /*#__PURE__*/ createWatchContractEvent({
 })
 
 /**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link planetStatsSystemAbi}__
+ */
+export const readPlanetStatsSystem = /*#__PURE__*/ createReadContract({
+  abi: planetStatsSystemAbi,
+})
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link planetStatsSystemAbi}__ and `functionName` set to `"getMintPrice"`
+ */
+export const readPlanetStatsSystemGetMintPrice =
+  /*#__PURE__*/ createReadContract({
+    abi: planetStatsSystemAbi,
+    functionName: 'getMintPrice',
+  })
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link planetStatsSystemAbi}__ and `functionName` set to `"getRarityOdds"`
+ */
+export const readPlanetStatsSystemGetRarityOdds =
+  /*#__PURE__*/ createReadContract({
+    abi: planetStatsSystemAbi,
+    functionName: 'getRarityOdds',
+  })
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link planetStatsSystemAbi}__ and `functionName` set to `"getStats"`
+ */
+export const readPlanetStatsSystemGetStats = /*#__PURE__*/ createReadContract({
+  abi: planetStatsSystemAbi,
+  functionName: 'getStats',
+})
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link planetStatsSystemAbi}__ and `functionName` set to `"owner"`
+ */
+export const readPlanetStatsSystemOwner = /*#__PURE__*/ createReadContract({
+  abi: planetStatsSystemAbi,
+  functionName: 'owner',
+})
+
+/**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link planetStatsSystemAbi}__
+ */
+export const writePlanetStatsSystem = /*#__PURE__*/ createWriteContract({
+  abi: planetStatsSystemAbi,
+})
+
+/**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link planetStatsSystemAbi}__ and `functionName` set to `"init"`
+ */
+export const writePlanetStatsSystemInit = /*#__PURE__*/ createWriteContract({
+  abi: planetStatsSystemAbi,
+  functionName: 'init',
+})
+
+/**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link planetStatsSystemAbi}__ and `functionName` set to `"renounceOwnership"`
+ */
+export const writePlanetStatsSystemRenounceOwnership =
+  /*#__PURE__*/ createWriteContract({
+    abi: planetStatsSystemAbi,
+    functionName: 'renounceOwnership',
+  })
+
+/**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link planetStatsSystemAbi}__ and `functionName` set to `"sync"`
+ */
+export const writePlanetStatsSystemSync = /*#__PURE__*/ createWriteContract({
+  abi: planetStatsSystemAbi,
+  functionName: 'sync',
+})
+
+/**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link planetStatsSystemAbi}__ and `functionName` set to `"transferOwnership"`
+ */
+export const writePlanetStatsSystemTransferOwnership =
+  /*#__PURE__*/ createWriteContract({
+    abi: planetStatsSystemAbi,
+    functionName: 'transferOwnership',
+  })
+
+/**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link planetStatsSystemAbi}__ and `functionName` set to `"updateMintRules"`
+ */
+export const writePlanetStatsSystemUpdateMintRules =
+  /*#__PURE__*/ createWriteContract({
+    abi: planetStatsSystemAbi,
+    functionName: 'updateMintRules',
+  })
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link planetStatsSystemAbi}__
+ */
+export const simulatePlanetStatsSystem = /*#__PURE__*/ createSimulateContract({
+  abi: planetStatsSystemAbi,
+})
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link planetStatsSystemAbi}__ and `functionName` set to `"init"`
+ */
+export const simulatePlanetStatsSystemInit =
+  /*#__PURE__*/ createSimulateContract({
+    abi: planetStatsSystemAbi,
+    functionName: 'init',
+  })
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link planetStatsSystemAbi}__ and `functionName` set to `"renounceOwnership"`
+ */
+export const simulatePlanetStatsSystemRenounceOwnership =
+  /*#__PURE__*/ createSimulateContract({
+    abi: planetStatsSystemAbi,
+    functionName: 'renounceOwnership',
+  })
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link planetStatsSystemAbi}__ and `functionName` set to `"sync"`
+ */
+export const simulatePlanetStatsSystemSync =
+  /*#__PURE__*/ createSimulateContract({
+    abi: planetStatsSystemAbi,
+    functionName: 'sync',
+  })
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link planetStatsSystemAbi}__ and `functionName` set to `"transferOwnership"`
+ */
+export const simulatePlanetStatsSystemTransferOwnership =
+  /*#__PURE__*/ createSimulateContract({
+    abi: planetStatsSystemAbi,
+    functionName: 'transferOwnership',
+  })
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link planetStatsSystemAbi}__ and `functionName` set to `"updateMintRules"`
+ */
+export const simulatePlanetStatsSystemUpdateMintRules =
+  /*#__PURE__*/ createSimulateContract({
+    abi: planetStatsSystemAbi,
+    functionName: 'updateMintRules',
+  })
+
+/**
+ * Wraps __{@link watchContractEvent}__ with `abi` set to __{@link planetStatsSystemAbi}__
+ */
+export const watchPlanetStatsSystemEvent =
+  /*#__PURE__*/ createWatchContractEvent({ abi: planetStatsSystemAbi })
+
+/**
+ * Wraps __{@link watchContractEvent}__ with `abi` set to __{@link planetStatsSystemAbi}__ and `eventName` set to `"OwnershipTransferred"`
+ */
+export const watchPlanetStatsSystemOwnershipTransferredEvent =
+  /*#__PURE__*/ createWatchContractEvent({
+    abi: planetStatsSystemAbi,
+    eventName: 'OwnershipTransferred',
+  })
+
+/**
  * Wraps __{@link readContract}__ with `abi` set to __{@link systemControllerAbi}__
  */
 export const readSystemController = /*#__PURE__*/ createReadContract({
@@ -2426,6 +2093,14 @@ export const writeSystemControllerSetTokenAddress =
   })
 
 /**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link systemControllerAbi}__ and `functionName` set to `"syncAll"`
+ */
+export const writeSystemControllerSyncAll = /*#__PURE__*/ createWriteContract({
+  abi: systemControllerAbi,
+  functionName: 'syncAll',
+})
+
+/**
  * Wraps __{@link writeContract}__ with `abi` set to __{@link systemControllerAbi}__ and `functionName` set to `"transferOwnership"`
  */
 export const writeSystemControllerTransferOwnership =
@@ -2475,6 +2150,15 @@ export const simulateSystemControllerSetTokenAddress =
   /*#__PURE__*/ createSimulateContract({
     abi: systemControllerAbi,
     functionName: 'setTokenAddress',
+  })
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link systemControllerAbi}__ and `functionName` set to `"syncAll"`
+ */
+export const simulateSystemControllerSyncAll =
+  /*#__PURE__*/ createSimulateContract({
+    abi: systemControllerAbi,
+    functionName: 'syncAll',
   })
 
 /**

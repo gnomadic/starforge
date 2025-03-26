@@ -18,8 +18,9 @@ export const Deployments: { [key: string]: Deployment } = {
   basesep: {
     Planet: '0x0',
     SystemController: '0x0',
-    InvestmentSystem: '0x0',
-    GlobalProgress: '0x0',
+    PlanetStatsSystem: '0x0',
+    // InvestmentSystem: '0x0',
+    // GlobalProgress: '0x0',
     displayName: 'Adventure Alchemist',
     currency: 'base sep eth',
     chain: 'base sepolia',
@@ -30,10 +31,11 @@ export const Deployments: { [key: string]: Deployment } = {
   },
 
   localhost: {
-    Planet: '0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9',
+    Planet: '0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9',
     SystemController: '0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9',
-    InvestmentSystem: '0x5FC8d32690cc91D4c39d9d3abcBD16989F875707',
-    GlobalProgress: '0x0165878A594ca255338adfa4d48449f69242Eb8',
+    PlanetStatsSystem: '0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9',
+    // InvestmentSystem: '0x5FC8d32690cc91D4c39d9d3abcBD16989F875707',
+    // GlobalProgress: '0x0165878A594ca255338adfa4d48449f69242Eb8',
     displayName: 'Adventure Alchemist',
     currency: 'eth',
     chain: 'localhost',
@@ -46,8 +48,9 @@ export const Deployments: { [key: string]: Deployment } = {
   default: {
     Planet: '0x0',
     SystemController: '0x0',
-    InvestmentSystem: '0x0',
-    GlobalProgress: '0x0',
+    PlanetStatsSystem: '0x0',    
+    // InvestmentSystem: '0x0',
+    // GlobalProgress: '0x0',
     displayName: 'Adventure Alchemist',
     currency: 'eth',
     chain: 'unknown',

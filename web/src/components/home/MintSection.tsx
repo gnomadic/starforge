@@ -1,9 +1,13 @@
 "use client"
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import HueControl from '../mint/HueControl';
+import { useReadPlanetGenerateSvg } from '@/generated';
+import { useAccount } from 'wagmi';
+import useDeployment from '@/hooks/useDeployment';
+import MintPreview from '../mint/MintPreview';
 
 interface MintSectionProps {
   className?: string;
@@ -19,6 +23,37 @@ const MintSection: React.FC<MintSectionProps> = ({ className }) => {
   const [satLight, setSatLight] = useState({ sat: 25, light: 80, meter: 80, index: 0 });
   const [planetColorTwo, setPlanetColorTwo] = useState(0);
 
+
+      const { address } = useAccount();
+      const { deploy } = useDeployment();
+      const { data: image, isLoading: loadingImage } = useReadPlanetGenerateSvg({ address: deploy.Planet, args: [BigInt(0)] });
+      const [preview, setPreview] = useState<string>("");
+
+
+       useEffect(() => {
+              if (image == undefined || image == "") {
+                  return;
+              }
+              console.log("image: " + image);
+              console.log("wat: ", window.btoa(String(image)));
+      
+       
+      
+              // const planetColors = extractPlanetColors(image);
+              // setPlanetColorOne(planetColors[0]);
+              // setPlanetColorTwo(planetColors[1]);
+      
+              // setOriginalColorOne(planetColors[0]);
+              // setOriginalColorTwo(planetColors[1]);
+      
+              // const noise = extractNoiseSeed(image);
+              // setOriginalSeed(Number(noise));
+              // setNoiseSeed(Number(noise));
+    
+              setPreview(window.btoa(String(image)));
+      
+      
+          }, [image]);
 
 
   function planetColorChange(colorOne: number, colorTwo: number, sat: number, light: number) {
@@ -110,7 +145,13 @@ const MintSection: React.FC<MintSectionProps> = ({ className }) => {
 
           <div className="reveal-on-scroll delay-200">
             <div className="glass rounded-2xl p-6 border border-white/10">
-              <div className="aspect-square rounded-xl overflow-hidden bg-black/30 backdrop-blur-sm border border-white/5 mb-6">
+                                <MintPreview 
+                                preview={preview}
+                                size={512}
+                                tokenId={BigInt(0)}
+                                 />
+            
+              {/* <div className="aspect-square rounded-xl overflow-hidden bg-black/30 backdrop-blur-sm border border-white/5 mb-6">
                 <div className="w-full h-full flex items-center justify-center bg-black/20 relative">
                   <div className="w-3/4 h-3/4 rounded-full bg-gradient-to-br from-blue-500/20 via-purple-500/20 to-pink-500/20 animate-pulse-slow absolute"></div>
                   <div className="w-1/2 h-1/2 rounded-full bg-gradient-to-br from-blue-400/30 via-purple-400/30 to-pink-400/30 animate-float absolute"></div>
@@ -120,7 +161,7 @@ const MintSection: React.FC<MintSectionProps> = ({ className }) => {
                     <span className="font-mono text-sm uppercase tracking-widest text-white/70">Preview</span>
                   </div>
                 </div>
-              </div>
+              </div> */}
 
               <h3 className="text-2xl font-mono font-bold mb-2">Mint your Cosmic NFT</h3>
               <p className="text-white/60 mb-6">Join our community and secure your unique NFT today.</p>

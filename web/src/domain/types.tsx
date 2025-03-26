@@ -68,8 +68,9 @@ export  interface CraftingSystemGameState {
 export type Deployment = {
   Planet: Address;
   SystemController: Address;
-  InvestmentSystem: Address;
-  GlobalProgress: Address;
+  PlanetStatsSystem: Address;
+  // InvestmentSystem: Address;
+  // GlobalProgress: Address;
   displayName: string;
   currency: string;
   chain: string;
@@ -135,7 +136,7 @@ export interface Artifact {
   id: string;
   name: string;
   description: string;
-  rarity: 'common' | 'uncommon' | 'rare' | 'epic' | 'legendary';
+  rarity: number;// 'common' | 'uncommon' | 'rare' | 'epic' | 'legendary';
   image: string;
   boost: {
     type: 'energy' | 'power' | 'speed' | 'health' | 'attack' | 'defense';

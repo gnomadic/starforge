@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.24;
 
-import '../ColorUtils.sol';
+// import '../ColorUtils.sol';
 
 interface IStepRenderer {
   function generateDefs(

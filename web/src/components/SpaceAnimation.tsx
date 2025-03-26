@@ -196,9 +196,9 @@ const SpaceAnimation: React.FC = () => {
             <stop offset="100%" stopColor="hsl(140,100%,10%)" />
           </linearGradient>
           <linearGradient id="cloudGradient" gradientTransform="rotate(42)">
-            <stop stopOpacity=".1" offset="15%" />
-            <stop stopOpacity=".3" offset="30%" />
-            <stop stopOpacity=".1" offset="50%" />
+            <stop stopOpacity=".08" offset="15%" />
+            <stop stopOpacity=".1" offset="30%" />
+            <stop stopOpacity=".08" offset="50%" />
           </linearGradient>
           {/* <linearGradient id="dayGradient" gradientTransform="rotate(13)">
             <stop offset="0%" stopColor="hsl(0,100%,90%)" />
@@ -222,7 +222,7 @@ const SpaceAnimation: React.FC = () => {
           </filter> */}
         </defs>
         <svg >
-          <rect width="100%" height="100%" filter="url(#stars)" opacity="1" />
+          <rect width="100%" height="100%" filter="url(#stars)" opacity=".7" />
           {/* <path fill="url(#dayGradient)" d="M 0 0 H 1512 V 1512 H 0 z" opacity="0" filter="url(#light)" /> */}
           <path fill="url(#skyGradient)" d="M 0 0 H 1512 V 1512 H 0 z" opacity=".7" />
           <path fill="url(#cloudGradient)" filter="url(#clouds)" d="M 0 0 H 1512 V 1512 H 0 z" />

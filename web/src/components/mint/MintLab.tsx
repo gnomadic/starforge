@@ -142,7 +142,7 @@ export default function MintLab(props: MintLabProps) {
         <section className="p-12">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
                 <div className='mx-auto'>
-                    <MintPreview preview={preview} />
+                    <MintPreview preview={preview} size={512} tokenId={BigInt(1)} />
                 </div>
                 <div className='max-w-lg min-w-lg'>
                     <Tabs defaultValue="random" className="">
