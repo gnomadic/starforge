@@ -24,6 +24,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import SpaceAnimation from '@/components/SpaceAnimation';
+import ResourceBar from '@/components/ResourceBar';
+import { useResources } from '@/components/ResourceContext';
 
 
 const signika = Signika({
@@ -68,6 +70,9 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // const { resources } = useResources();
+
+
   return (
     <html lang='en'>
       {/* <Head>
@@ -86,12 +91,15 @@ export default function RootLayout({
 
       <body className={`${signika.variable} ${outfit.variable} ${nunito.variable} ${ptsans.variable} ${ultra.variable} ${ptser.variable} font-sans bg-black text-white`}>
         <Providers>
-          <SpaceAnimation/>
+          <SpaceAnimation />
           {/* <Header /> */}
           <Navbar />
 
           {children}
           <ToastContainer position='bottom-right' />
+          {/* <div className={`fixed ${false ? 'bottom-4 right-4' : 'bottom-6 right-6'} z-50 glass rounded-lg shadow-md`}>
+            <ResourceBar  />
+          </div> */}
           <Footer />
           <Analytics />
         </Providers>

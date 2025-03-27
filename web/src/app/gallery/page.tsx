@@ -10,7 +10,7 @@ import Navbar from '@/components/Navbar';
 import { Button } from '@/components/ui/button';
 import { NFTGrid } from '@/components/gallery/NFTGrid';
 import UpgradePanel from '@/components/play/UpgradePanel';
-import { Artifact } from '@/domain/types';
+import { Artifact, NFT } from '@/domain/types';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { ArtifactCard } from '@/components/ArtifactCard';
 import { useReadPlanetBalanceOf, useReadPlanetStatsSystemGetStats, useReadPlanetTokensOfOwner } from "@/generated";
@@ -18,14 +18,19 @@ import { useAccount } from "wagmi";
 import useDeployment from "@/hooks/useDeployment";
 import { zeroAddress } from 'viem';
 import { RarityBadge } from '@/components/gallery/RarityBadge';
+import { Progress } from '@/components/ui/progress';
+import MintPreview from '@/components/mint/MintPreview';
 
 // Mock NFT data - in a real app, this would come from blockchain/API
-const mockNFTs = [
+const mockNFTs: NFT[] = [
   {
     id: 1,
     name: "Cosmic Explorer #042",
     image: "bg-gradient-to-br from-blue-500/20 via-purple-500/20 to-pink-500/20",
     rarity: 0,
+    entropy: 78,
+    stats: [15, 15, 7, 11, 10, 14],
+
     energy: 89,
     power: 95,
     speed: 76,
@@ -45,6 +50,10 @@ const mockNFTs = [
     name: "Nebula Wanderer #108",
     image: "bg-gradient-to-br from-purple-500/20 via-pink-500/20 to-orange-500/20",
     rarity: 1,
+    entropy: 78,
+    stats: [15, 15, 7, 11, 10, 14],
+
+
     energy: 72,
     power: 68,
     speed: 91,
@@ -63,6 +72,11 @@ const mockNFTs = [
     name: "Star Collector #217",
     image: "bg-gradient-to-br from-cyan-500/20 via-blue-500/20 to-indigo-500/20",
     rarity: 2,
+    entropy: 78,
+    stats: [15, 15, 7, 11, 10, 14],
+
+
+
     energy: 84,
     power: 63,
     speed: 79,
@@ -80,7 +94,55 @@ const mockNFTs = [
     id: 4,
     name: "Void Traveler #355",
     image: "bg-gradient-to-br from-indigo-500/20 via-purple-500/20 to-pink-500/20",
-    rarity: ``,
+    rarity: 3,
+    entropy: 78,
+    stats: [15, 15, 7, 11, 10, 14],
+
+
+    energy: 78,
+    power: 82,
+    speed: 75,
+
+    temperature: 30,
+    water: 40,
+    biomass: 50,
+    atmosphere: 33,
+    density: 10,
+
+    category: "Traveler",
+    description: "A master of void traversal, capable of opening pathways through the darkest regions of space."
+  },
+  {
+    id: 5,
+    name: "Void Traveler #355",
+    image: "bg-gradient-to-br from-indigo-500/20 via-purple-500/20 to-pink-500/20",
+    rarity: 4,
+    entropy: 78,
+    stats: [15, 15, 7, 11, 10, 14],
+
+
+    energy: 78,
+    power: 82,
+    speed: 75,
+
+    temperature: 30,
+    water: 40,
+    biomass: 50,
+    atmosphere: 33,
+    density: 10,
+
+    category: "Traveler",
+    description: "A master of void traversal, capable of opening pathways through the darkest regions of space."
+  },
+  {
+    id: 6,
+    name: "Void Traveler #355",
+    image: "bg-gradient-to-br from-indigo-500/20 via-purple-500/20 to-pink-500/20",
+    rarity: 5,
+    entropy: 78,
+    stats: [15, 15, 7, 11, 10, 14],
+
+
     energy: 78,
     power: 82,
     speed: 75,
@@ -149,7 +211,7 @@ const Gallery: React.FC = () => {
 
   const { data: balance } = useReadPlanetBalanceOf({ args: [address ? address : zeroAddress], address: deploy.Planet })
   const { data: held } = useReadPlanetTokensOfOwner({ args: [address ? address : zeroAddress], address: deploy.Planet })
-  const {data: stats } = useReadPlanetStatsSystemGetStats({args: [BigInt(0)], address: deploy.PlanetStatsSystem})
+  const { data: stats } = useReadPlanetStatsSystemGetStats({ args: [BigInt(0)], address: deploy.PlanetStatsSystem })
 
 
   const handleEquipArtifact = (id: string) => {
@@ -190,7 +252,7 @@ const Gallery: React.FC = () => {
               nfts={mockNFTs}
               selectedNFT={selectedNFT}
               setSelectedNFT={setSelectedNFT}
-              heldTokenIds = {held}
+              heldTokenIds={held || []}
               setSelectedTokenId={setSelectedTokenId}
               selectedTokenId={selectedTokenId}
             />
@@ -209,61 +271,81 @@ const Gallery: React.FC = () => {
                       {JSON.stringify(stats)}
                     </CardTitle>
                     <CardDescription>
-                      {selectedNFT.category} • ID #{selectedNFT.id.toString().padStart(4, '0')}
+                      {/* {selectedNFT.category} • ID #{selectedNFT.id.toString().padStart(4, '0')} */}
+                      {/* Entropy
+                      <div className="mt-2 w-1/2 bg-white/10 h-2 rounded-full mx-auto md:mx-2">
+                        <div
+                          className="bg-red-500 h-2 rounded-full"
+                          style={{ width: `${selectedNFT.stats[0] * 5}%` }}
+                        />
+                        <span className="float-right text-xs text-white/70 pt-2">{selectedNFT.stats[0]}/20</span>
+                      </div> */}
+
                     </CardDescription>
                   </CardHeader>
                   <CardContent className="space-y-6">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      <div className="aspect-square rounded-xl overflow-hidden bg-black/40 border border-white/5 relative flex items-center justify-center">
+                      <div>
+                        <MintPreview preview='' />
+                        Entropy
+                        <div className="mt-2 w-full bg-white/10 h-2 rounded-full mx-auto md:mx-2">
+                          <div
+                            className="bg-red-500 h-2 rounded-full"
+                            style={{ width: `${stats?.entropy}%` }}
+                          />
+                          <span className="float-right text-xs text-white/70 pt-2">{stats?.entropy} / 100</span>
+                        </div>
+
+                      </div>
+
+                      {/* <div className="aspect-square rounded-xl overflow-hidden bg-black/40 border border-white/5 relative flex items-center justify-center">
                         <div className={cn("w-3/4 h-3/4 rounded-full animate-pulse-slow absolute", selectedNFT.image)}></div>
                         <div className="w-1/2 h-1/2 rounded-full bg-gradient-to-br from-primary/80 via-primary/30 to-transparent animate-float absolute"></div>
                         <div className="w-28 h-28 rounded-full bg-gradient-to-br from-primary via-primary/70 to-accent animate-glow absolute"></div>
-                      </div>
-                      <div>
-                        <h3 className="text-lg font-medium">Entropy</h3>
-                        <Table>
-                          <TableBody>
-                            <TableRow>
-                              {/* <TableCell className="text-white/70">Energy</TableCell> */}
-                              <TableCell>
-                                <div className="w-full bg-white/10 h-2 rounded-full">
-                                  <div
-                                    className="bg-primary h-2 rounded-full"
-                                    style={{ width: `${selectedNFT.energy}%` }}
-                                  />
-                                </div>
-                                <span className="text-xs text-white/70">{selectedNFT.energy}/100</span>
-                              </TableCell>
-                            </TableRow>
+                        
+                      </div> */}
 
-                          </TableBody>
-                        </Table>
+                      <div>
+
 
                         <h3 className="text-lg font-medium my-2">Stats</h3>
                         <Table>
                           <TableBody>
                             <TableRow>
-                              <TableCell className="text-white/70">Energy</TableCell>
+                              <TableCell className="text-white/70">Temperature</TableCell>
                               <TableCell>
                                 <div className="w-full bg-white/10 h-2 rounded-full">
                                   <div
-                                    className="bg-primary h-2 rounded-full"
-                                    style={{ width: `${selectedNFT.energy}%` }}
+                                    className="bg-orange-300 h-2 rounded-full"
+                                    style={{ width: `${stats?.stats[0] * 5}%` }}
                                   />
                                 </div>
-                                <span className="text-xs text-white/70">{selectedNFT.energy}/100</span>
+
+                                <span className="text-xs text-white/70">{stats?.stats[0]}/20</span>
                               </TableCell>
                             </TableRow>
                             <TableRow>
-                              <TableCell className="text-white/70">Power</TableCell>
+                              <TableCell className="text-white/70">Water</TableCell>
                               <TableCell>
                                 <div className="w-full bg-white/10 h-2 rounded-full">
                                   <div
-                                    className="bg-accent h-2 rounded-full"
-                                    style={{ width: `${selectedNFT.power}%` }}
+                                    className="bg-blue-500 h-2 rounded-full"
+                                    style={{ width: `${stats?.stats[1] * 5}%` }}
                                   />
                                 </div>
-                                <span className="text-xs text-white/70">{selectedNFT.power}/100</span>
+                                <span className="text-xs text-white/70">{stats?.stats[1]}/20</span>
+                              </TableCell>
+                            </TableRow>
+                            <TableRow>
+                              <TableCell className="text-white/70">Biomass</TableCell>
+                              <TableCell>
+                                <div className="w-full bg-white/10 h-2 rounded-full">
+                                  <div
+                                    className="bg-blue-400 h-2 rounded-full"
+                                    style={{ width: `${selectedNFT.stats[2] * 5}%` }}
+                                  />
+                                </div>
+                                <span className="text-xs text-white/70">{selectedNFT.stats[2]}/20</span>
                               </TableCell>
                             </TableRow>
                             <TableRow>
@@ -272,10 +354,10 @@ const Gallery: React.FC = () => {
                                 <div className="w-full bg-white/10 h-2 rounded-full">
                                   <div
                                     className="bg-blue-400 h-2 rounded-full"
-                                    style={{ width: `${selectedNFT.speed}%` }}
+                                    style={{ width: `${selectedNFT.stats[3] * 5}%` }}
                                   />
                                 </div>
-                                <span className="text-xs text-white/70">{selectedNFT.speed}/100</span>
+                                <span className="text-xs text-white/70">{selectedNFT.stats[3]}/20</span>
                               </TableCell>
                             </TableRow>
                             <TableRow>
@@ -284,10 +366,10 @@ const Gallery: React.FC = () => {
                                 <div className="w-full bg-white/10 h-2 rounded-full">
                                   <div
                                     className="bg-blue-400 h-2 rounded-full"
-                                    style={{ width: `${selectedNFT.speed}%` }}
+                                    style={{ width: `${selectedNFT.stats[4] * 5}%` }}
                                   />
                                 </div>
-                                <span className="text-xs text-white/70">{selectedNFT.speed}/100</span>
+                                <span className="text-xs text-white/70">{selectedNFT.stats[4]}/20</span>
                               </TableCell>
                             </TableRow>
                             <TableRow>
@@ -296,22 +378,10 @@ const Gallery: React.FC = () => {
                                 <div className="w-full bg-white/10 h-2 rounded-full">
                                   <div
                                     className="bg-blue-400 h-2 rounded-full"
-                                    style={{ width: `${selectedNFT.speed}%` }}
+                                    style={{ width: `${selectedNFT.stats[5] * 5}%` }}
                                   />
                                 </div>
-                                <span className="text-xs text-white/70">{selectedNFT.speed}/100</span>
-                              </TableCell>
-                            </TableRow>
-                            <TableRow>
-                              <TableCell className="text-white/70">Speed</TableCell>
-                              <TableCell>
-                                <div className="w-full bg-white/10 h-2 rounded-full">
-                                  <div
-                                    className="bg-blue-400 h-2 rounded-full"
-                                    style={{ width: `${selectedNFT.speed}%` }}
-                                  />
-                                </div>
-                                <span className="text-xs text-white/70">{selectedNFT.speed}/100</span>
+                                <span className="text-xs text-white/70">{selectedNFT.stats[5]}/20</span>
                               </TableCell>
                             </TableRow>
                           </TableBody>

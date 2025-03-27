@@ -6,10 +6,6 @@ import { cn } from "@/lib/utils";
 import MintPreview from "../mint/MintPreview";
 
 
-interface ItemCardProps {
-  item: Item | undefined;
-  onStationClick: (station: Station) => void;
-}
 
 interface NFTGridProps {
   nfts: NFT[]
@@ -21,34 +17,51 @@ interface NFTGridProps {
 }
 
 
+export function NFTGrid(props: NFTGridProps) {
+
+  return match(props.heldTokenIds)
+    .with([], () => <EmptyNFTs />)
+    .with([P.select()], (singleNFT) => <EmptyNFTs />)
+    .otherwise(() => (
+      <ManyNFTs
+        nfts={props.nfts}
+        selectedNFT={props.selectedNFT}
+        setSelectedNFT={props.setSelectedNFT}
+        selectedTokenId={props.selectedTokenId}
+        setSelectedTokenId={props.setSelectedTokenId}
+        heldTokenIds={props.heldTokenIds}
+      />
+    ));
+}
+
+
+
+interface ItemCardProps {
+  item: Item | undefined;
+  onStationClick: (station: Station) => void;
+}
+
+
+
 
 
 export function ItemCard(props: ItemCardProps) {
   return match(props)
-    .with({ item: P.nullish }, (item) => <EmptyStations></EmptyStations>)
+    .with({ item: P.nullish }, (item) => <EmptyNFTs></EmptyNFTs>)
     //   .with({ item: P.nonNullable}, (item) => <PresentItemCard item={item}/>)
-    .otherwise(() => <EmptyStations></EmptyStations>);
+    .otherwise(() => <EmptyNFTs></EmptyNFTs>);
 
 }
 
 
-export function EmptyStations() {
+export function EmptyNFTs() {
   return (
-    <Card className="block max-w-sm overflow-hidden">
-      <CardHeader>
-        <h2 className="text-2xl font-bold">Empty Station</h2>
-        <h2 className="mb-2 font-sans text-2xl font-bold">nothing</h2>
-      </CardHeader>
-      <CardContent className="pt-12">
-
-        <p className="text-grey-400 line-clamp-4 font-sans">really nothing</p>
-      </CardContent>
-    </Card>
+    <></>
   );
 }
 
 
-export function NFTGrid({ nfts, selectedNFT, setSelectedNFT, selectedTokenId, setSelectedTokenId, heldTokenIds }: NFTGridProps) {
+export function ManyNFTs({ nfts, selectedNFT, setSelectedNFT, selectedTokenId, setSelectedTokenId, heldTokenIds }: NFTGridProps) {
 
   return (
     <div className="backdrop-blur-sm">

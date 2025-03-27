@@ -163,7 +163,7 @@ const MintSection: React.FC<MintSectionProps> = ({ className }) => {
                 </div>
               </div> */}
 
-              <h3 className="text-2xl font-mono font-bold mb-2">Mint your Cosmic NFT</h3>
+              <h3 className="text-2xl font-mono font-bold mb-2 mt-4">Mint your Cosmic NFT</h3>
               <p className="text-white/60 mb-6">Join our community and secure your unique NFT today.</p>
 
               <div className="flex items-center justify-between mb-6 bg-black/20 rounded-lg p-3 border border-white/5">

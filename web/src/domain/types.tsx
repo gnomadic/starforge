@@ -91,7 +91,9 @@ export interface NFT {
     id: number;
     name: string;
     image: string;
-    rarity: string;
+    rarity: number;
+    entropy: number;
+    stats: number[];
     energy: number;
     power: number;
     speed: number;
