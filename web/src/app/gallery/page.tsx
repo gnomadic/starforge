@@ -349,7 +349,7 @@ const Gallery: React.FC = () => {
                               </TableCell>
                             </TableRow>
                             <TableRow>
-                              <TableCell className="text-white/70">Speed</TableCell>
+                              <TableCell className="text-white/70">Atmosphere</TableCell>
                               <TableCell>
                                 <div className="w-full bg-white/10 h-2 rounded-full">
                                   <div
@@ -361,7 +361,7 @@ const Gallery: React.FC = () => {
                               </TableCell>
                             </TableRow>
                             <TableRow>
-                              <TableCell className="text-white/70">Speed</TableCell>
+                              <TableCell className="text-white/70">Density</TableCell>
                               <TableCell>
                                 <div className="w-full bg-white/10 h-2 rounded-full">
                                   <div
@@ -373,7 +373,7 @@ const Gallery: React.FC = () => {
                               </TableCell>
                             </TableRow>
                             <TableRow>
-                              <TableCell className="text-white/70">Speed</TableCell>
+                              <TableCell className="text-white/70">Anomaly</TableCell>
                               <TableCell>
                                 <div className="w-full bg-white/10 h-2 rounded-full">
                                   <div

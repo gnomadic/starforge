@@ -137,7 +137,7 @@ const Voting = () => {
           <h1 className="text-4xl font-display font-bold mb-2">Cosmic Democracy</h1>
           <p className="text-white/70">
             Shape the future of the cosmos by voting on upcoming quests, artifacts, and enemies.
-            The community's collective will determines what challenges appear next.
+            The community&apos;s collective will determines what challenges appear next.
           </p>
         </div>
         
