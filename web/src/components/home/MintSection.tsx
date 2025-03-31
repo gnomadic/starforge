@@ -8,6 +8,7 @@ import { useReadPlanetGenerateSvg } from '@/generated';
 import { useAccount } from 'wagmi';
 import useDeployment from '@/hooks/useDeployment';
 import MintPreview from '../mint/MintPreview';
+import { extractDope, replaceDope } from '@/services/SVGCombiner';
 
 interface MintSectionProps {
   className?: string;
@@ -17,11 +18,18 @@ const MintSection: React.FC<MintSectionProps> = ({ className }) => {
   const [mintAmount, setMintAmount] = useState(1);
   const price = 0.08;
 
-  const [planetColorOne, setPlanetColorOne] = useState(0);
   const [originalColorOne, setOriginalColorOne] = useState(0);
-  const [originalColorTwo, setOriginalColorTwo] = useState(0);
-  const [satLight, setSatLight] = useState({ sat: 25, light: 80, meter: 80, index: 0 });
-  const [planetColorTwo, setPlanetColorTwo] = useState(0);
+  const [planetColorOne, setPlanetColorOne] = useState(0);
+
+  const [originalTwo, setoriginalTwo] = useState(0);
+  const [planetTwo, setplanetTwo] = useState(0);
+
+  const [originalThree, setoriginalThree] = useState(0);
+  const [planetThree, setplanetThree] = useState(0);
+  
+  // const [originalColorTwo, setOriginalColorTwo] = useState(0);
+  // const [satLight, setSatLight] = useState({ sat: 25, light: 80, meter: 80, index: 0 });
+  // const [planetColorTwo, setPlanetColorTwo] = useState(0);
 
 
       const { address } = useAccount();
@@ -36,7 +44,11 @@ const MintSection: React.FC<MintSectionProps> = ({ className }) => {
               }
               console.log("image: " + image);
               console.log("wat: ", window.btoa(String(image)));
-      
+
+              const startColor = extractDope(image);
+              console.log("startColor: ", startColor);
+              setPlanetColorOne(startColor);
+              setOriginalColorOne(startColor);
        
       
               // const planetColors = extractPlanetColors(image);
@@ -56,10 +68,17 @@ const MintSection: React.FC<MintSectionProps> = ({ className }) => {
           }, [image]);
 
 
-  function planetColorChange(colorOne: number, colorTwo: number, sat: number, light: number) {
+  function planetColorChange(colorOne: number, two: number, three: number) {
 
-    // let newSVG = replacePlanet(preview, colorOne, colorTwo, sat, light);
-    // setPreview(window.btoa(String(newSVG)));
+    
+    let newSVG = replaceDope(preview, colorOne);
+
+
+    console.log("wat: ", newSVG);
+
+    setPreview(window.btoa(String(newSVG)));
+
+
   }
 
   return (
@@ -91,54 +110,51 @@ const MintSection: React.FC<MintSectionProps> = ({ className }) => {
               ))} */}
 
               <div className="bg-white/5 border border-white/10 rounded-lg px-4 py-2 font-signika">
-                {/* <p className="text-sm text-white/50">{item.label}</p> */}
-                {/* <p className="mt-1 text-xl font-medium">{item.value}</p> */}
+                
                 <HueControl
                   reset={() => {
                     setPlanetColorOne(originalColorOne);
-                    planetColorChange(originalColorOne, planetColorTwo, satLight.sat, satLight.light);
+                    planetColorChange(originalColorOne, planetTwo, planetThree);
                   }}
                   title="Primary Color"
                   value={planetColorOne}
                   newHue={(h) => {
                     setPlanetColorOne(h);
-                    planetColorChange(h, planetColorTwo, satLight.sat, satLight.light);
+                    planetColorChange(h, planetTwo, planetThree);
                   }}
                 />
               </div>
-              <div className="bg-white/5 border border-white/10 rounded-lg px-4 py-2 font-signika">
-                {/* <p className="text-sm text-white/50">{item.label}</p> */}
-                {/* <p className="mt-1 text-xl font-medium">{item.value}</p> */}
+              {/* <div className="bg-white/5 border border-white/10 rounded-lg px-4 py-2 font-signika">
+              
                 <HueControl
                   reset={() => {
-                    setPlanetColorOne(originalColorOne);
-                    planetColorChange(originalColorOne, planetColorTwo, satLight.sat, satLight.light);
+                    setplanetTwo(originalTwo);
+                    planetColorChange(planetColorOne, originalTwo, planetThree);
                   }}
                   title="Secondary Color"
-                  value={planetColorOne}
+                  value={planetTwo}
                   newHue={(h) => {
-                    setPlanetColorOne(h);
-                    planetColorChange(h, planetColorTwo, satLight.sat, satLight.light);
+                    setplanetTwo(h);
+                    planetColorChange(planetColorOne, h, planetThree);
                   }}
                 />
-              </div>
+              </div> */}
  
-              <div className="bg-white/5 border border-white/10 rounded-lg px-4 py-2 font-signika">
-                {/* <p className="text-sm text-white/50">{item.label}</p> */}
-                {/* <p className="mt-1 text-xl font-medium">{item.value}</p> */}
+              {/* <div className="bg-white/5 border border-white/10 rounded-lg px-4 py-2 font-signika">
+                
                 <HueControl
                   reset={() => {
-                    setPlanetColorOne(originalColorOne);
-                    planetColorChange(originalColorOne, planetColorTwo, satLight.sat, satLight.light);
+                    setplanetThree(originalThree);
+                    planetColorChange(planetColorOne, planetTwo, originalThree);
                   }}
                   title="Terrain"
-                  value={planetColorOne}
+                  value={planetThree}
                   newHue={(h) => {
-                    setPlanetColorOne(h);
-                    planetColorChange(h, planetColorTwo, satLight.sat, satLight.light);
+                    setplanetThree(h);
+                    planetColorChange(planetColorOne, planetTwo, h);
                   }}
                 />
-              </div>
+              </div> */}
 
             </div>
           </div>

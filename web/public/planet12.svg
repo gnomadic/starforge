@@ -31,7 +31,7 @@
       <stop stop-opacity=".6" offset="75%"/>
       <stop stop-opacity="0" offset="85%"/>
     </linearGradient>
-        <radialGRadient id="dope" fy='0.5' fx='0.5'>
+        <radialGradient id="dope" fy='0.5' fx='0.5'>
       <stop stop-color="hsl(0deg, 0%, 0%)"  offset="00%"/>
       <stop stop-color="hsl(1deg, 56%, 31%)"  offset="70%"/>
       <stop stop-color="hsl(347deg, 56%, 53%)"  offset="90%"/>
@@ -42,7 +42,7 @@
   <animate attributeName="fx" dur="5" values="0.5; 0.4; 0.5; 0.6; 0.5" 
     repeatCount="indefinite"  offset="1" /> -->
 
-    </radialGRadient>
+    </radialGradient>
     <filter id="clouds" x="-50%" y="-50%" height="200%" width="200%">
       <feGaussianBlur in="sky" stdDeviation="20" result="skyblur"/>
       <feTurbulence type="fractalNoise" baseFrequency=".01" numOctaves="5" result="skynoise" seed="4426"/>

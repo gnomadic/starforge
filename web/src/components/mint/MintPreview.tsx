@@ -29,7 +29,7 @@ export default function MintPreview({ preview, size, tokenId }: MintPreviewProps
         }
         console.log("image: " + image);
         setRendered(window.btoa(String(image)))
-    }, [image]);
+    }, [image, preview]);
 
     return (
 

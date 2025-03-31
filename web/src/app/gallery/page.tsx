@@ -342,10 +342,10 @@ const Gallery: React.FC = () => {
                                 <div className="w-full bg-white/10 h-2 rounded-full">
                                   <div
                                     className="bg-blue-400 h-2 rounded-full"
-                                    style={{ width: `${selectedNFT.stats[2] * 5}%` }}
+                                    style={{ width: `${stats?.stats[2] * 5}%` }}
                                   />
                                 </div>
-                                <span className="text-xs text-white/70">{selectedNFT.stats[2]}/20</span>
+                                <span className="text-xs text-white/70">{stats?.stats[2]}/20</span>
                               </TableCell>
                             </TableRow>
                             <TableRow>
@@ -354,10 +354,10 @@ const Gallery: React.FC = () => {
                                 <div className="w-full bg-white/10 h-2 rounded-full">
                                   <div
                                     className="bg-blue-400 h-2 rounded-full"
-                                    style={{ width: `${selectedNFT.stats[3] * 5}%` }}
+                                    style={{ width: `${stats?.stats[3] * 5}%` }}
                                   />
                                 </div>
-                                <span className="text-xs text-white/70">{selectedNFT.stats[3]}/20</span>
+                                <span className="text-xs text-white/70">{stats?.stats[3]}/20</span>
                               </TableCell>
                             </TableRow>
                             <TableRow>
@@ -366,10 +366,10 @@ const Gallery: React.FC = () => {
                                 <div className="w-full bg-white/10 h-2 rounded-full">
                                   <div
                                     className="bg-blue-400 h-2 rounded-full"
-                                    style={{ width: `${selectedNFT.stats[4] * 5}%` }}
+                                    style={{ width: `${stats?.stats[4] * 5}%` }}
                                   />
                                 </div>
-                                <span className="text-xs text-white/70">{selectedNFT.stats[4]}/20</span>
+                                <span className="text-xs text-white/70">{stats?.stats[4]}/20</span>
                               </TableCell>
                             </TableRow>
                             <TableRow>
@@ -378,10 +378,10 @@ const Gallery: React.FC = () => {
                                 <div className="w-full bg-white/10 h-2 rounded-full">
                                   <div
                                     className="bg-blue-400 h-2 rounded-full"
-                                    style={{ width: `${selectedNFT.stats[5] * 5}%` }}
+                                    style={{ width: `${stats?.stats[5] * 5}%` }}
                                   />
                                 </div>
-                                <span className="text-xs text-white/70">{selectedNFT.stats[5]}/20</span>
+                                <span className="text-xs text-white/70">{stats?.stats[5]}/20</span>
                               </TableCell>
                             </TableRow>
                           </TableBody>
