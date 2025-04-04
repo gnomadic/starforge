@@ -1,7 +1,7 @@
 
-import { Resource } from '../types/gameTypes';
+import { Supply } from '../types/gameTypes';
 
-export const initialResources: Resource[] = [
+export const initialResources: Supply[] = [
   {
     id: 'energy',
     name: 'Energy',

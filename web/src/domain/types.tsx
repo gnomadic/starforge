@@ -119,6 +119,7 @@ export interface Supply {
   // icon: string;
     icon: React.ReactNode;
     color: string;
+    id: string;
   
 }
 

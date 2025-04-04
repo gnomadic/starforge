@@ -33,15 +33,15 @@ export function extractDope(svg: string | undefined) {
   const doc = new DOMParser().parseFromString(svg, "text/xml");
   const gradient = doc.getElementById("dope");
 
-  console.log(gradient);
+  // console.log(gradient);
   // // gradient?.childNodes[0].
   const first = new XMLSerializer().serializeToString(gradient!.childNodes[0]);
 
-  console.log("first: ", first);
+  // console.log("first: ", first);
 
   const value = first.substring(first.indexOf("hsl(") + 4, first.indexOf(","));
 
-  console.log("value: ", value);
+  // console.log("value: ", value);
   // console.log("pulled: ", value);
   return value;
 }

@@ -8,24 +8,28 @@ import SupplyBar from './SupplyBar';
 // Define the initial Supply values
 const initialSupplies: Supply[] = [
   {
+    id: '1',
     type: 'life',
     amount: 100,
     icon: <Heart className="h-4 w-4 text-red-400" />,
     color: 'bg-red-950/60'
   },
   {
+    id: '1',
     type: 'matter',
     amount: 250,
     icon: <Circle className="h-4 w-4 text-blue-400" />,
     color: 'bg-blue-950/60'
   },
   {
+    id: '1',
     type: 'energy',
     amount: 75,
     icon: <Zap className="h-4 w-4 text-yellow-400" />,
     color: 'bg-yellow-950/60'
   },
   {
+    id: '1',
     type: 'technology',
     amount: 50,
     icon: <Cpu className="h-4 w-4 text-emerald-400" />,

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Resource, ResourceType } from '@/lib/types/gameTypes';
+import { Supply, ResourceType } from '@/lib/types/gameTypes';
 import { useGameStore } from '@/lib/gameState';
 import { cn } from '@/lib/utils';
 import { 
@@ -18,7 +18,7 @@ const ResourcePanelThin: React.FC<ResourcePanelThinProps> = ({ className }) => {
   const resources = useGameStore(state => state.resources);
   const collectResource = useGameStore(state => state.collectResource);
 
-  const getResourceIcon = (resource: Resource) => {
+  const getResourceIcon = (resource: Supply) => {
     switch (resource.id) {
       case 'energy': return <Sun className={cn("h-3 w-3", resource.color)} />;
       case 'matter': return <MountainSnow className={cn("h-3 w-3", resource.color)} />;
@@ -28,7 +28,7 @@ const ResourcePanelThin: React.FC<ResourcePanelThinProps> = ({ className }) => {
     }
   };
 
-  const handleResourceClick = (resource: Resource) => {
+  const handleResourceClick = (resource: Supply) => {
     collectResource(resource.id as ResourceType, 1);
   };
 

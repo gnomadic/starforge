@@ -42,13 +42,15 @@ const MintSection: React.FC<MintSectionProps> = ({ className }) => {
               if (image == undefined || image == "") {
                   return;
               }
-              console.log("image: " + image);
-              console.log("wat: ", window.btoa(String(image)));
+              // console.log("image: " + image);
+              // console.log("wat: ", window.btoa(String(image)));
 
               const startColor = extractDope(image);
-              console.log("startColor: ", startColor);
-              setPlanetColorOne(startColor);
-              setOriginalColorOne(startColor);
+
+
+
+              setPlanetColorOne(Number(startColor));
+              setOriginalColorOne(Number(startColor));
        
       
               // const planetColors = extractPlanetColors(image);

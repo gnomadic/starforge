@@ -20,7 +20,7 @@ const mockArtifacts: Artifact[] = [
     id: 'a1',
     name: 'Power Shield',
     description: 'A shield that enhances defense capabilities.',
-    rarity: 'rare',
+    rarity: 4,
     image: 'bg-gradient-to-br from-blue-500/20 via-cyan-500/20 to-green-500/20',
     boost: { type: 'defense', amount: 15 },
     equipped: false
@@ -29,7 +29,7 @@ const mockArtifacts: Artifact[] = [
     id: 'a2',
     name: 'Plasma Blaster',
     description: 'A weapon that fires concentrated energy blasts.',
-    rarity: 'epic',
+    rarity: 2,
     image: 'bg-gradient-to-br from-red-500/20 via-orange-500/20 to-yellow-500/20',
     boost: { type: 'attack', amount: 25 },
     equipped: false
@@ -38,7 +38,7 @@ const mockArtifacts: Artifact[] = [
     id: 'a3',
     name: 'Bionic Core',
     description: 'Enhances the overall vitality of the probe.',
-    rarity: 'uncommon',
+    rarity: 3,
     image: 'bg-gradient-to-br from-green-500/20 via-emerald-500/20 to-teal-500/20',
     boost: { type: 'health', amount: 50 },
     equipped: false

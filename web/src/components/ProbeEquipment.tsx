@@ -29,13 +29,13 @@ const ProbeEquipment: React.FC<ProbeEquipmentProps> = ({
     }
   };
   
-  const getRarityColor = (rarity: string) => {
+  const getRarityColor = (rarity: number) => {
     switch (rarity) {
-      case 'common': return 'border-white/10 bg-white/5';
-      case 'uncommon': return 'border-green-500/30 bg-green-500/10';
-      case 'rare': return 'border-blue-500/30 bg-blue-500/10';
-      case 'epic': return 'border-purple-500/30 bg-purple-500/10';
-      case 'legendary': return 'border-yellow-500/30 bg-yellow-500/10';
+      case 4: return 'border-white/10 bg-white/5';
+      case 3: return 'border-green-500/30 bg-green-500/10';
+      case 2: return 'border-blue-500/30 bg-blue-500/10';
+      case 1: return 'border-purple-500/30 bg-purple-500/10';
+      case 0: return 'border-yellow-500/30 bg-yellow-500/10';
       default: return 'border-white/10 bg-white/5';
     }
   };

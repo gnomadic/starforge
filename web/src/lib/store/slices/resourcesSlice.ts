@@ -1,9 +1,9 @@
 
-import { Resource, ResourceType } from '../../types/gameTypes';
+import { Supply, ResourceType } from '../../types/gameTypes';
 import { initialResources } from '../../data/resources';
 
 export interface ResourcesState {
-  resources: Resource[];
+  resources: Supply[];
   collectResource: (resourceId: ResourceType, amount: number) => void;
 }
 
@@ -11,7 +11,7 @@ export const createResourcesSlice = (set: any, get: any): ResourcesState => ({
   resources: [...initialResources],
   
   collectResource: (resourceId, amount) => {
-    const resources: Resource[] = get().resources.map((resource: Resource) => {
+    const resources: Supply[] = get().resources.map((resource: Supply) => {
       if (resource.id === resourceId) {
         return {
           ...resource,

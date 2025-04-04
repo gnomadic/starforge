@@ -283,7 +283,14 @@ const Gallery: React.FC = () => {
                   <CardContent className="space-y-6">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div>
-                        <MintPreview preview='' />
+                        <MintPreview
+                         preview='' 
+                         size={512}
+                         tokenId={selectedTokenId}
+                         
+                         
+                         
+                         />
                         Entropy
                         <div className="mt-2 w-full bg-white/10 h-2 rounded-full mx-auto md:mx-2">
                           <div
@@ -314,7 +321,7 @@ const Gallery: React.FC = () => {
                                 <div className="w-full bg-white/10 h-2 rounded-full">
                                   <div
                                     className="bg-orange-300 h-2 rounded-full"
-                                    style={{ width: `${stats?.stats[0] * 5}%` }}
+                                    style={{ width: `${stats?.stats ? stats.stats[0] * 5 : 0}%` }}
                                   />
                                 </div>
 
@@ -327,7 +334,7 @@ const Gallery: React.FC = () => {
                                 <div className="w-full bg-white/10 h-2 rounded-full">
                                   <div
                                     className="bg-blue-500 h-2 rounded-full"
-                                    style={{ width: `${stats?.stats[1] * 5}%` }}
+                                    style={{ width: `${stats?.stats ? stats.stats[1] * 5 : 0}%` }}
                                   />
                                 </div>
                                 <span className="text-xs text-white/70">{stats?.stats[1]}/20</span>
@@ -339,7 +346,7 @@ const Gallery: React.FC = () => {
                                 <div className="w-full bg-white/10 h-2 rounded-full">
                                   <div
                                     className="bg-blue-400 h-2 rounded-full"
-                                    style={{ width: `${stats?.stats[2] * 5}%` }}
+                                    style={{ width: `${stats?.stats ? stats.stats[2] * 5 : 0}%` }}
                                   />
                                 </div>
                                 <span className="text-xs text-white/70">{stats?.stats[2]}/20</span>
@@ -351,7 +358,7 @@ const Gallery: React.FC = () => {
                                 <div className="w-full bg-white/10 h-2 rounded-full">
                                   <div
                                     className="bg-blue-400 h-2 rounded-full"
-                                    style={{ width: `${stats?.stats[3] * 5}%` }}
+                                    style={{ width: `${stats?.stats ? stats.stats[3] * 5 : 0}%` }}
                                   />
                                 </div>
                                 <span className="text-xs text-white/70">{stats?.stats[3]}/20</span>
@@ -363,7 +370,7 @@ const Gallery: React.FC = () => {
                                 <div className="w-full bg-white/10 h-2 rounded-full">
                                   <div
                                     className="bg-blue-400 h-2 rounded-full"
-                                    style={{ width: `${stats?.stats[4] * 5}%` }}
+                                    style={{ width: `${stats?.stats ? stats.stats[4] * 5 : 0}%` }}
                                   />
                                 </div>
                                 <span className="text-xs text-white/70">{stats?.stats[4]}/20</span>
@@ -375,7 +382,7 @@ const Gallery: React.FC = () => {
                                 <div className="w-full bg-white/10 h-2 rounded-full">
                                   <div
                                     className="bg-blue-400 h-2 rounded-full"
-                                    style={{ width: `${stats?.stats[5] * 5}%` }}
+                                    style={{ width: `${stats?.stats ? stats.stats[5] * 5 : 0}%` }}
                                   />
                                 </div>
                                 <span className="text-xs text-white/70">{stats?.stats[5]}/20</span>
