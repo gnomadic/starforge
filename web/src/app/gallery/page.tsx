@@ -4,10 +4,7 @@ import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-// import Button from '@/components/Button';
-import { cn } from '@/lib/utils';
-import Navbar from '@/components/Navbar';
-import { Button } from '@/components/ui/button';
+
 import { NFTGrid } from '@/components/gallery/NFTGrid';
 import UpgradePanel from '@/components/play/UpgradePanel';
 import { Artifact, NFT } from '@/domain/types';

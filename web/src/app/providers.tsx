@@ -7,7 +7,8 @@ import {
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { WagmiProvider } from 'wagmi';
 import { config } from '@/domain/WagmiConfig';
-import { ResourceProvider } from '@/components/ResourceContext';
+import { SupplyProvider } from '@/components/SupplyContext';
+// import { SupplyProvider } from '@/components/SupplyProvider';
 
 
 const queryClient = new QueryClient();
@@ -17,10 +18,10 @@ export function Providers({ children }: { children: React.ReactNode }) {
     <WagmiProvider config={config}>
       <QueryClientProvider client={queryClient} >
         <RainbowKitProvider>
-        {/* <ResourceProvider> */}
+        <SupplyProvider>
 
           {children}
-          {/* </ResourceProvider> */}
+          </SupplyProvider>
           </RainbowKitProvider>
       </QueryClientProvider>
     </WagmiProvider>

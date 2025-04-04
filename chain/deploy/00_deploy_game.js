@@ -22,6 +22,8 @@ module.exports = async (hre) => {
     from: deployer,
     log: true,
   });
+
+  
   
 
   // const SurfaceRenderer = await deploy("SurfaceRenderer", {
@@ -48,6 +50,17 @@ module.exports = async (hre) => {
     from: deployer,
     log: true,
     args: [Planet.address]
+  });
+
+  const UpgradesSystem = await deploy("UpgradesSystem", {
+    from: deployer,
+    log: true,
+    
+  });
+
+  const DungeonMaster = await deploy("DungeonMaster", {
+    from: deployer,
+    log: true,
   });
 
   // const InvestmentSystem = await deploy("InvestmentSystem", {
@@ -105,6 +118,9 @@ module.exports = async (hre) => {
   tx = await deployedSysController.registerSystem(1, PlanetStats.address);
   await tx.wait();
 
+  tx = await deployedSysController.registerSystem(2, UpgradesSystem.address);
+  await tx.wait();
+
   // tx = await deployedSysController.registerSystem(2, InvestmentSystem.address);
   // await tx.wait();
 
@@ -144,6 +160,8 @@ module.exports = async (hre) => {
   object.Planet = Planet.address;
   object.SystemController = SystemController.address;
   object.PlanetStats = PlanetStats.address;
+  object.UpgradesSystem = UpgradesSystem.address;
+  object.DungeonMaster = DungeonMaster.address;
 
 
 

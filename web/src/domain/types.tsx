@@ -69,6 +69,8 @@ export type Deployment = {
   Planet: Address;
   SystemController: Address;
   PlanetStatsSystem: Address;
+  UpgradesSystem: Address;
+  DungeonMaster: Address;
   // InvestmentSystem: Address;
   // GlobalProgress: Address;
   displayName: string;
@@ -108,10 +110,16 @@ export interface NFT {
 
 
 
-export interface Resource {
-  type: 'gold' | 'energy' | 'cosmic-dust' | 'stardust';
+export type ResourceType = 'energy' | 'matter' | 'life' | 'technology';
+
+export interface Supply {
+  // type: 'gold' | 'energy' | 'cosmic-dust' | 'stardust';
+  type: 'energy' | 'matter' | 'life' | 'technology';
   amount: number;
-  icon: string;
+  // icon: string;
+    icon: React.ReactNode;
+    color: string;
+  
 }
 
 export interface Reward {
@@ -128,7 +136,7 @@ export interface Quest {
   description: string;
   timeRequired: number; // in seconds
   riskLevel: 'low' | 'medium' | 'high' | 'extreme';
-  resources: Resource[];
+  supplies: Supply[];
   rewards: Reward[];
   availableUntil?: Date;
   image: string;

@@ -1,7 +1,6 @@
-"use client";
 
 import React, { createContext, useContext, useState, ReactNode } from 'react';
-import { Resource } from '@/components/ResourceBar';
+import { Resource } from '@/components/SupplyBar';
 import { Heart, Circle, Zap, Cpu } from 'lucide-react';
 
 // Define the initial resource values

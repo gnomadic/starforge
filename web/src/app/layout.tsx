@@ -24,8 +24,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import SpaceAnimation from '@/components/SpaceAnimation';
-import ResourceBar from '@/components/ResourceBar';
-import { useResources } from '@/components/ResourceContext';
+import SupplyBar from '@/components/SupplyBar';
+// import { useResources } from '@/components/ResourceContext';
 
 
 const signika = Signika({
@@ -98,7 +98,7 @@ export default function RootLayout({
           {children}
           <ToastContainer position='bottom-right' />
           {/* <div className={`fixed ${false ? 'bottom-4 right-4' : 'bottom-6 right-6'} z-50 glass rounded-lg shadow-md`}>
-            <ResourceBar  />
+            <SupplyBar  />
           </div> */}
           <Footer />
           <Analytics />

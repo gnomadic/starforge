@@ -20,7 +20,7 @@ const mockQuests: Quest[] = [
     description: 'Venture into the outer reaches of the Orion Nebula to collect rare cosmic gases and encounter unknown entities.',
     timeRequired: 180, // 3 minutes
     riskLevel: 'medium',
-    resources: [
+    supplies: [
       { type: 'energy', amount: 40, icon: '⚡' },
       { type: 'cosmic-dust', amount: 25, icon: '✨' }
     ],
@@ -37,7 +37,7 @@ const mockQuests: Quest[] = [
     description: 'Harvest fragments from a dying star. Be quick and careful, as the star is unstable and could emit dangerous radiation.',
     timeRequired: 120, // 2 minutes
     riskLevel: 'high',
-    resources: [
+    supplies: [
       { type: 'energy', amount: 60, icon: '⚡' },
       { type: 'stardust', amount: 35, icon: '💫' }
     ],
@@ -54,7 +54,7 @@ const mockQuests: Quest[] = [
     description: 'Mine precious metals and minerals from the asteroid belt. A relatively safe mission with moderate rewards.',
     timeRequired: 90, // 1.5 minutes
     riskLevel: 'low',
-    resources: [
+    supplies: [
       { type: 'energy', amount: 25, icon: '⚡' },
       { type: 'gold', amount: 30, icon: '💰' }
     ],
@@ -71,7 +71,7 @@ const mockQuests: Quest[] = [
     description: 'Conduct research near the event horizon of a black hole. Extremely dangerous but potentially groundbreaking discoveries await.',
     timeRequired: 300, // 5 minutes
     riskLevel: 'extreme',
-    resources: [
+    supplies: [
       { type: 'energy', amount: 85, icon: '⚡' },
       { type: 'cosmic-dust', amount: 60, icon: '✨' },
       { type: 'stardust', amount: 50, icon: '💫' }
@@ -130,7 +130,7 @@ const QuestCard: React.FC<{
         <div className="space-y-2">
           <h4 className="text-sm font-medium text-white/80">Required Resources:</h4>
           <div className="flex flex-wrap gap-2">
-            {quest.resources.map((resource, idx) => (
+            {quest.supplies.map((resource, idx) => (
               <Badge key={idx} variant="secondary" className="bg-primary/10">
                 {resource.icon} {resource.amount} {resource.type}
               </Badge>

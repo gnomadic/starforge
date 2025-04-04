@@ -5,7 +5,7 @@ export type ResourceType = 'energy' | 'matter' | 'life' | 'technology';
 export type PlanetType = 'temperate' | 'rocky' | 'gaseous' | 'oceanic' | 'barren' | 'ice';
 
 // Resource interface
-export interface Resource {
+export interface Supply {
   id: string;
   name: string;
   amount: number;

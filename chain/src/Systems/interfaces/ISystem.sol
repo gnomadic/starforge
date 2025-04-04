@@ -12,3 +12,8 @@ interface ISystemController {
     function getSystem(uint8 id) external view returns (ISystem);
     
 }
+
+struct TokenRate {
+    uint256 rate;
+    address token;
+}

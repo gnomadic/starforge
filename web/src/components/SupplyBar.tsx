@@ -3,31 +3,31 @@ import React from 'react';
 import { cn } from '@/lib/utils';
 import { Heart, Circle, Zap, Cpu } from 'lucide-react';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
-import { useResources } from './ResourceContext';
+import { useSupplies } from './SupplyContext';
 // import { useIsMobile } from '@/hooks/use-mobile';
 
-export interface Resource {
+export interface Supply {
   type: 'life' | 'matter' | 'energy' | 'technology';
   amount: number;
   icon: React.ReactNode;
   color: string;
 }
 
-interface ResourceBarProps {
+interface SupplyBarProps {
   className?: string;
 }
 
-const ResourceBar: React.FC<ResourceBarProps> = ({  className }) => {
+const SupplyBar: React.FC<SupplyBarProps> = ({  className }) => {
 //   const isMobile = useIsMobile();
-const resourcesContext = useResources();
+const resourcesContext = useSupplies();
 if (!resourcesContext) {
     throw new Error('useResources must be used within a ResourcesProvider');
 }
-const { resources } = resourcesContext;
+const { supplies } = resourcesContext;
 
   return (
     <div className={cn('flex items-center gap-3 p-2', false ? 'flex-col' : '', className)}>
-      {resources.map((resource) => (
+      {supplies.map((resource) => (
         <TooltipProvider key={resource.type}>
           <Tooltip>
             <TooltipTrigger asChild>
@@ -50,4 +50,4 @@ const { resources } = resourcesContext;
   );
 };
 
-export default ResourceBar;
+export default SupplyBar;
