@@ -71,6 +71,13 @@ export type Deployment = {
   PlanetStatsSystem: Address;
   UpgradesSystem: Address;
   DungeonMaster: Address;
+  EnergyToken: Address;
+  LifeToken: Address;
+  MatterToken: Address;
+  TechToken: Address;
+
+
+
   // InvestmentSystem: Address;
   // GlobalProgress: Address;
   displayName: string;

@@ -67,8 +67,8 @@ export default function MintLab(props: MintLabProps) {
         if (image == undefined || image == "") {
             return;
         }
-        console.log("image: " + image);
-        console.log("wat: ", window.btoa(String(image)));
+        // console.log("image: " + image);
+        // console.log("wat: ", window.btoa(String(image)));
 
         // const skyColors = extractSkyColors(image);
         // setSkyColorOne(skyColors[0]);

@@ -27,7 +27,7 @@ export default function MintPreview({ preview, size, tokenId }: MintPreviewProps
         if (image == undefined || image == "") {
             return;
         }
-        console.log("image: " + image);
+        // console.log("image: " + image);
         setRendered(window.btoa(String(image)))
     }, [image, preview]);
 

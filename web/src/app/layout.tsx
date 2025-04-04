@@ -92,7 +92,6 @@ export default function RootLayout({
       <body className={`${signika.variable} ${outfit.variable} ${nunito.variable} ${ptsans.variable} ${ultra.variable} ${ptser.variable} font-sans bg-black text-white`}>
         <Providers>
           <SpaceAnimation />
-          {/* <Header /> */}
           <Navbar />
 
           {children}
