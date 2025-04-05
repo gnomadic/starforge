@@ -8,9 +8,9 @@ import MintPreview from "../mint/MintPreview";
 
 
 interface NFTGridProps {
-  nfts: NFT[]
-  selectedNFT: NFT;
-  setSelectedNFT: (nft: NFT) => void;
+  // nfts: NFT[]
+  // selectedNFT: NFT;
+  // setSelectedNFT: (nft: NFT) => void;
   selectedTokenId: bigint;
   setSelectedTokenId: (tokenId: bigint) => void;
   heldTokenIds: readonly bigint[] | undefined;
@@ -24,9 +24,9 @@ export function NFTGrid(props: NFTGridProps) {
     .with([P.select()], (singleNFT) => <EmptyNFTs />)
     .otherwise(() => (
       <ManyNFTs
-        nfts={props.nfts}
-        selectedNFT={props.selectedNFT}
-        setSelectedNFT={props.setSelectedNFT}
+        // nfts={props.nfts}
+        // selectedNFT={props.selectedNFT}
+        // setSelectedNFT={props.setSelectedNFT}
         selectedTokenId={props.selectedTokenId}
         setSelectedTokenId={props.setSelectedTokenId}
         heldTokenIds={props.heldTokenIds}
@@ -61,7 +61,7 @@ export function EmptyNFTs() {
 }
 
 
-export function ManyNFTs({ nfts, selectedNFT, setSelectedNFT, selectedTokenId, setSelectedTokenId, heldTokenIds }: NFTGridProps) {
+export function ManyNFTs({ selectedTokenId, setSelectedTokenId, heldTokenIds }: NFTGridProps) {
 
   return (
     <div className="backdrop-blur-sm">
@@ -92,10 +92,10 @@ export function ManyNFTs({ nfts, selectedNFT, setSelectedNFT, selectedTokenId, s
         </div>
         <CardContent>
           <div className="grid grid-cols-12 gap-3">
-            {nfts.map((nft) => (
+            {/* {nfts.map((nft) => (
               <div
                 key={nft.id}
-                onClick={() => setSelectedNFT(nft)}
+                // onClick={() => setSelectedNFT(nft)}
                 className={cn(
                   "aspect-square rounded-lg overflow-hidden bg-black/30 border border-white/5 cursor-pointer hover:border-primary/50 transition-all relative flex items-center justify-center",
                   selectedNFT.id === nft.id ? "border-primary" : "",
@@ -111,14 +111,14 @@ export function ManyNFTs({ nfts, selectedNFT, setSelectedNFT, selectedTokenId, s
                   #{nft.id.toString().padStart(4, '0')}
                 </div>
               </div>
-            ))}
+            ))} */}
             {heldTokenIds?.map((tokenId) => (
               <div
                 key={tokenId}
                 onClick={() => setSelectedTokenId(tokenId)}
                 className={cn(
                   "aspect-square rounded-lg overflow-hidden bg-black/30 border border-white/5 cursor-pointer hover:border-primary/50 transition-all relative flex items-center justify-center",
-                  BigInt(selectedNFT.id) === tokenId ? "border-primary" : "",
+                  BigInt(selectedTokenId) === tokenId ? "border-primary" : "",
                   "max-w-24"
                 )}
               >
@@ -126,7 +126,7 @@ export function ManyNFTs({ nfts, selectedNFT, setSelectedNFT, selectedTokenId, s
                   preview={""}
                   size={128}
                   tokenId={tokenId} />
-                {BigInt(selectedNFT.id) === tokenId && (
+                {BigInt(selectedTokenId) === tokenId && (
                   <div className="absolute top-2 right-2 w-3 h-3 rounded-full bg-primary z-10"></div>
                 )}
                 <div className="absolute bottom-2 left-2 text-xs font-medium z-10 text-white/80">

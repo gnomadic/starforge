@@ -2,7 +2,7 @@ import { cn } from "@/lib/utils";
 import { match } from "ts-pattern";
 
 interface RarityBadgeProps {
-    rarity: number;
+    rarity: number | undefined; 
 }
 
 export function RarityBadge({ rarity }: RarityBadgeProps) {

@@ -1,22 +1,19 @@
 
 import React from 'react';
 import { useGameStore } from '@/lib/gameState';
-import { cn } from '@/lib/utils';
-import { ArrowUpCircle, LockIcon, CheckCircle2 } from 'lucide-react';
-import { Card, CardHeader } from '../ui/card';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
 import useDeployment from '@/hooks/useDeployment';
-import { useReadPlanetBalanceOf, useReadPlanetStatsSystemGetStats, useReadPlanetTokensOfOwner } from "@/generated";
+import { useReadPlanetStatsSystemGetStats } from "@/generated";
 
 interface PlanetStatsProps {
-  selectedIndex: bigint;  
+  selectedTokenId: bigint;
 }
 
-const PlanetStats: React.FC<PlanetStatsProps> = ({ selectedIndex }) => {
+const PlanetStats: React.FC<PlanetStatsProps> = ({ selectedTokenId }) => {
 
-    const { deploy } = useDeployment()
-  
-  const { data: stats } = useReadPlanetStatsSystemGetStats({ args: [selectedIndex], address: deploy.PlanetStatsSystem })
+  const { deploy } = useDeployment()
+
+  const { data: stats } = useReadPlanetStatsSystemGetStats({ args: [selectedTokenId], address: deploy.PlanetStatsSystem })
 
 
   const upgrades = useGameStore(state => state.upgrades);
@@ -48,7 +45,7 @@ const PlanetStats: React.FC<PlanetStatsProps> = ({ selectedIndex }) => {
     <div>
 
 
-      <h3 className="text-lg font-medium my-2">Stats</h3>
+      {/* <h3 className="text-lg font-medium my-2">Stats</h3> */}
       <Table>
         <TableBody>
           <TableRow>

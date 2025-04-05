@@ -15,25 +15,26 @@ import { NFT } from '@/domain/types';
 
 interface PlanetCardProps {
   // className?: string;
-  selectedIndex: bigint;
+  // selectedIndex: bigint;
 
-  selectedNFT: NFT;
+  // selectedNFT: NFT;
   selectedTokenId: bigint;
 
 }
 
-const PlanetCard: React.FC<PlanetCardProps> = ({selectedIndex,  selectedNFT , selectedTokenId}) => {
+const PlanetCard: React.FC<PlanetCardProps> = ({ selectedTokenId }) => {
 
   const { deploy } = useDeployment()
 
-  const { data: stats } = useReadPlanetStatsSystemGetStats({ args: [selectedIndex], address: deploy.PlanetStatsSystem })
+  const { data: stats } = useReadPlanetStatsSystemGetStats({ args: [selectedTokenId], address: deploy.PlanetStatsSystem })
 
   return (
     <Card className="bg-black/30 border-white/10 backdrop-blur-sm">
       <CardHeader>
         <CardTitle className="flex items-center gap-3">
-          <span>{selectedNFT.name}</span>
-          <RarityBadge rarity={selectedNFT.rarity} />
+          {/* <span>{stats.name}</span> */}
+          <span>Lost Planet #{selectedTokenId.toString()}</span>
+          <RarityBadge rarity={stats?.rarity} />
         </CardTitle>
         <CardDescription>
 
@@ -60,7 +61,7 @@ const PlanetCard: React.FC<PlanetCardProps> = ({selectedIndex,  selectedNFT , se
           </div>
 
           <PlanetStats
-            selectedIndex={BigInt(selectedNFT.id)}
+            selectedTokenId={selectedTokenId}
           />
         </div>
       </CardContent>
