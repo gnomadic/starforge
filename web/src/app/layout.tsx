@@ -70,25 +70,9 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // const { resources } = useResources();
-
 
   return (
     <html lang='en'>
-      {/* <Head>
-        <title>Adventure Alchemist</title>
-      </Head> */}
-
-      {/* <Header/> */}
-      {/* <NavigationHeader /> */}
-      {/* <MobileNavigationHeader /> */}
-      {/* <main className="flex-grow px-4 py-8">{Component(pageProps)}</main> */}
-
-      {/* <Head>
-        <title>My page title</title>
-      </Head> */}
-      {/* <div className="flex flex-col min-h-screen"> */}
-
       <body className={`${signika.variable} ${outfit.variable} ${nunito.variable} ${ptsans.variable} ${ultra.variable} ${ptser.variable} font-sans bg-black text-white`}>
         <Providers>
           <SpaceAnimation />
@@ -96,17 +80,11 @@ export default function RootLayout({
 
           {children}
           <ToastContainer position='bottom-right' />
-          {/* <div className={`fixed ${false ? 'bottom-4 right-4' : 'bottom-6 right-6'} z-50 glass rounded-lg shadow-md`}>
-            <SupplyBar  />
-          </div> */}
+
           <Footer />
           <Analytics />
         </Providers>
       </body>
-      {/* </div> */}
-
-      {/* <Footer /> */}
-      {/* <Analytics /> */}
     </html>
   );
 }

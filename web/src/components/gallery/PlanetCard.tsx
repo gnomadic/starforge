@@ -1,0 +1,71 @@
+"use client";
+
+import React from 'react';
+import { useGameStore } from '@/lib/gameState';
+import { cn } from '@/lib/utils';
+import { ArrowUpCircle, LockIcon, CheckCircle2 } from 'lucide-react';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/card';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import useDeployment from '@/hooks/useDeployment';
+import { useReadPlanetStatsSystemGetStats } from '@/generated';
+import MintPreview from '../mint/MintPreview';
+import PlanetStats from './PlanetStats';
+import { RarityBadge } from './RarityBadge';
+import { NFT } from '@/domain/types';
+
+interface PlanetCardProps {
+  // className?: string;
+  selectedIndex: bigint;
+
+  selectedNFT: NFT;
+  selectedTokenId: bigint;
+
+}
+
+const PlanetCard: React.FC<PlanetCardProps> = ({selectedIndex,  selectedNFT , selectedTokenId}) => {
+
+  const { deploy } = useDeployment()
+
+  const { data: stats } = useReadPlanetStatsSystemGetStats({ args: [selectedIndex], address: deploy.PlanetStatsSystem })
+
+  return (
+    <Card className="bg-black/30 border-white/10 backdrop-blur-sm">
+      <CardHeader>
+        <CardTitle className="flex items-center gap-3">
+          <span>{selectedNFT.name}</span>
+          <RarityBadge rarity={selectedNFT.rarity} />
+        </CardTitle>
+        <CardDescription>
+
+
+        </CardDescription>
+      </CardHeader>
+      <CardContent className="space-y-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <MintPreview
+              preview=''
+              size={512}
+              tokenId={selectedTokenId}
+            />
+            Entropy
+            <div className="mt-2 w-full bg-white/10 h-2 rounded-full mx-auto md:mx-2">
+              <div
+                className="bg-red-500 h-2 rounded-full"
+                style={{ width: `${stats?.entropy}%` }}
+              />
+              <span className="float-right text-xs text-white/70 pt-2">{stats?.entropy} / 100</span>
+            </div>
+
+          </div>
+
+          <PlanetStats
+            selectedIndex={BigInt(selectedNFT.id)}
+          />
+        </div>
+      </CardContent>
+    </Card>
+  );
+};
+
+export default PlanetCard;
