@@ -13,6 +13,119 @@ import {
 } from 'wagmi/codegen'
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// DungeonMaster
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+export const dungeonMasterAbi = [
+  { type: 'constructor', inputs: [], stateMutability: 'nonpayable' },
+  {
+    type: 'error',
+    inputs: [{ name: 'owner', internalType: 'address', type: 'address' }],
+    name: 'OwnableInvalidOwner',
+  },
+  {
+    type: 'error',
+    inputs: [{ name: 'account', internalType: 'address', type: 'address' }],
+    name: 'OwnableUnauthorizedAccount',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
+        name: 'previousOwner',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'newOwner',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+    ],
+    name: 'OwnershipTransferred',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'VOTING_DURATION',
+    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: 'proposalId', internalType: 'uint256', type: 'uint256' }],
+    name: 'finalizeProposal',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'getProposalsCount',
+    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'owner',
+    outputs: [{ name: '', internalType: 'address', type: 'address' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+    name: 'proposals',
+    outputs: [
+      { name: 'target', internalType: 'address', type: 'address' },
+      { name: 'data', internalType: 'string', type: 'string' },
+      { name: 'yesVotes', internalType: 'uint256', type: 'uint256' },
+      { name: 'noVotes', internalType: 'uint256', type: 'uint256' },
+      { name: 'startTime', internalType: 'uint256', type: 'uint256' },
+      { name: 'executed', internalType: 'bool', type: 'bool' },
+    ],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'renounceOwnership',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: '_target', internalType: 'address', type: 'address' },
+      { name: '_data', internalType: 'string', type: 'string' },
+    ],
+    name: 'submitProposal',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: 'newOwner', internalType: 'address', type: 'address' }],
+    name: 'transferOwnership',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'proposalId', internalType: 'uint256', type: 'uint256' },
+      { name: 'support', internalType: 'bool', type: 'bool' },
+    ],
+    name: 'voteOnProposal',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+] as const
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Planet
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -689,6 +802,224 @@ export const systemControllerAbi = [
 ] as const
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// UpgradesSystem
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+export const upgradesSystemAbi = [
+  { type: 'constructor', inputs: [], stateMutability: 'nonpayable' },
+  {
+    type: 'error',
+    inputs: [{ name: 'owner', internalType: 'address', type: 'address' }],
+    name: 'OwnableInvalidOwner',
+  },
+  {
+    type: 'error',
+    inputs: [{ name: 'account', internalType: 'address', type: 'address' }],
+    name: 'OwnableUnauthorizedAccount',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
+        name: 'previousOwner',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'newOwner',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+    ],
+    name: 'OwnershipTransferred',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: '_name', internalType: 'string', type: 'string' },
+      { name: '_description', internalType: 'string', type: 'string' },
+      {
+        name: '_cost',
+        internalType: 'struct TokenRate',
+        type: 'tuple',
+        components: [
+          { name: 'rate', internalType: 'uint256', type: 'uint256' },
+          { name: 'token', internalType: 'address', type: 'address' },
+        ],
+      },
+      {
+        name: '_benefit',
+        internalType: 'struct TokenRate',
+        type: 'tuple',
+        components: [
+          { name: 'rate', internalType: 'uint256', type: 'uint256' },
+          { name: 'token', internalType: 'address', type: 'address' },
+        ],
+      },
+    ],
+    name: 'addUpgrade',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: 'proposalId', internalType: 'uint256', type: 'uint256' }],
+    name: 'finalizeProposal',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'getAllUpgrades',
+    outputs: [
+      {
+        name: '',
+        internalType: 'struct UpgradesSystem.Upgrade[]',
+        type: 'tuple[]',
+        components: [
+          { name: 'name', internalType: 'string', type: 'string' },
+          { name: 'description', internalType: 'string', type: 'string' },
+          {
+            name: 'cost',
+            internalType: 'struct TokenRate',
+            type: 'tuple',
+            components: [
+              { name: 'rate', internalType: 'uint256', type: 'uint256' },
+              { name: 'token', internalType: 'address', type: 'address' },
+            ],
+          },
+          {
+            name: 'benefit',
+            internalType: 'struct TokenRate',
+            type: 'tuple',
+            components: [
+              { name: 'rate', internalType: 'uint256', type: 'uint256' },
+              { name: 'token', internalType: 'address', type: 'address' },
+            ],
+          },
+        ],
+      },
+    ],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: 'tokenId', internalType: 'uint256', type: 'uint256' }],
+    name: 'getAppliedUpgrades',
+    outputs: [{ name: '', internalType: 'uint256[]', type: 'uint256[]' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: '', internalType: 'contract ISystemController', type: 'address' },
+      { name: '', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'init',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'owner',
+    outputs: [{ name: '', internalType: 'address', type: 'address' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: '', internalType: 'uint256', type: 'uint256' },
+      { name: '', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'planetUpgrades',
+    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+    name: 'proposals',
+    outputs: [
+      { name: 'payload', internalType: 'string', type: 'string' },
+      { name: 'executed', internalType: 'bool', type: 'bool' },
+    ],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: 'payload', internalType: 'string', type: 'string' }],
+    name: 'propose',
+    outputs: [{ name: 'proposalId', internalType: 'uint256', type: 'uint256' }],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: '', internalType: 'contract ISystemController', type: 'address' },
+      { name: 'tokenId', internalType: 'uint256', type: 'uint256' },
+      { name: 'upgradeId', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'purchaseUpgrade',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'renounceOwnership',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+    name: 'sync',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: 'newOwner', internalType: 'address', type: 'address' }],
+    name: 'transferOwnership',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+    name: 'upgrades',
+    outputs: [
+      { name: 'name', internalType: 'string', type: 'string' },
+      { name: 'description', internalType: 'string', type: 'string' },
+      {
+        name: 'cost',
+        internalType: 'struct TokenRate',
+        type: 'tuple',
+        components: [
+          { name: 'rate', internalType: 'uint256', type: 'uint256' },
+          { name: 'token', internalType: 'address', type: 'address' },
+        ],
+      },
+      {
+        name: 'benefit',
+        internalType: 'struct TokenRate',
+        type: 'tuple',
+        components: [
+          { name: 'rate', internalType: 'uint256', type: 'uint256' },
+          { name: 'token', internalType: 'address', type: 'address' },
+        ],
+      },
+    ],
+    stateMutability: 'view',
+  },
+] as const
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // erc20
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -792,6 +1123,167 @@ export const erc20Abi = [
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // React
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link dungeonMasterAbi}__
+ */
+export const useReadDungeonMaster = /*#__PURE__*/ createUseReadContract({
+  abi: dungeonMasterAbi,
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link dungeonMasterAbi}__ and `functionName` set to `"VOTING_DURATION"`
+ */
+export const useReadDungeonMasterVotingDuration =
+  /*#__PURE__*/ createUseReadContract({
+    abi: dungeonMasterAbi,
+    functionName: 'VOTING_DURATION',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link dungeonMasterAbi}__ and `functionName` set to `"getProposalsCount"`
+ */
+export const useReadDungeonMasterGetProposalsCount =
+  /*#__PURE__*/ createUseReadContract({
+    abi: dungeonMasterAbi,
+    functionName: 'getProposalsCount',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link dungeonMasterAbi}__ and `functionName` set to `"owner"`
+ */
+export const useReadDungeonMasterOwner = /*#__PURE__*/ createUseReadContract({
+  abi: dungeonMasterAbi,
+  functionName: 'owner',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link dungeonMasterAbi}__ and `functionName` set to `"proposals"`
+ */
+export const useReadDungeonMasterProposals =
+  /*#__PURE__*/ createUseReadContract({
+    abi: dungeonMasterAbi,
+    functionName: 'proposals',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link dungeonMasterAbi}__
+ */
+export const useWriteDungeonMaster = /*#__PURE__*/ createUseWriteContract({
+  abi: dungeonMasterAbi,
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link dungeonMasterAbi}__ and `functionName` set to `"finalizeProposal"`
+ */
+export const useWriteDungeonMasterFinalizeProposal =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: dungeonMasterAbi,
+    functionName: 'finalizeProposal',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link dungeonMasterAbi}__ and `functionName` set to `"renounceOwnership"`
+ */
+export const useWriteDungeonMasterRenounceOwnership =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: dungeonMasterAbi,
+    functionName: 'renounceOwnership',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link dungeonMasterAbi}__ and `functionName` set to `"submitProposal"`
+ */
+export const useWriteDungeonMasterSubmitProposal =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: dungeonMasterAbi,
+    functionName: 'submitProposal',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link dungeonMasterAbi}__ and `functionName` set to `"transferOwnership"`
+ */
+export const useWriteDungeonMasterTransferOwnership =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: dungeonMasterAbi,
+    functionName: 'transferOwnership',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link dungeonMasterAbi}__ and `functionName` set to `"voteOnProposal"`
+ */
+export const useWriteDungeonMasterVoteOnProposal =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: dungeonMasterAbi,
+    functionName: 'voteOnProposal',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link dungeonMasterAbi}__
+ */
+export const useSimulateDungeonMaster = /*#__PURE__*/ createUseSimulateContract(
+  { abi: dungeonMasterAbi },
+)
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link dungeonMasterAbi}__ and `functionName` set to `"finalizeProposal"`
+ */
+export const useSimulateDungeonMasterFinalizeProposal =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: dungeonMasterAbi,
+    functionName: 'finalizeProposal',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link dungeonMasterAbi}__ and `functionName` set to `"renounceOwnership"`
+ */
+export const useSimulateDungeonMasterRenounceOwnership =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: dungeonMasterAbi,
+    functionName: 'renounceOwnership',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link dungeonMasterAbi}__ and `functionName` set to `"submitProposal"`
+ */
+export const useSimulateDungeonMasterSubmitProposal =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: dungeonMasterAbi,
+    functionName: 'submitProposal',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link dungeonMasterAbi}__ and `functionName` set to `"transferOwnership"`
+ */
+export const useSimulateDungeonMasterTransferOwnership =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: dungeonMasterAbi,
+    functionName: 'transferOwnership',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link dungeonMasterAbi}__ and `functionName` set to `"voteOnProposal"`
+ */
+export const useSimulateDungeonMasterVoteOnProposal =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: dungeonMasterAbi,
+    functionName: 'voteOnProposal',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link dungeonMasterAbi}__
+ */
+export const useWatchDungeonMasterEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({ abi: dungeonMasterAbi })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link dungeonMasterAbi}__ and `eventName` set to `"OwnershipTransferred"`
+ */
+export const useWatchDungeonMasterOwnershipTransferredEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: dungeonMasterAbi,
+    eventName: 'OwnershipTransferred',
+  })
 
 /**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link planetAbi}__
@@ -1550,6 +2042,236 @@ export const useWatchSystemControllerOwnershipTransferredEvent =
   })
 
 /**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link upgradesSystemAbi}__
+ */
+export const useReadUpgradesSystem = /*#__PURE__*/ createUseReadContract({
+  abi: upgradesSystemAbi,
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link upgradesSystemAbi}__ and `functionName` set to `"getAllUpgrades"`
+ */
+export const useReadUpgradesSystemGetAllUpgrades =
+  /*#__PURE__*/ createUseReadContract({
+    abi: upgradesSystemAbi,
+    functionName: 'getAllUpgrades',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link upgradesSystemAbi}__ and `functionName` set to `"getAppliedUpgrades"`
+ */
+export const useReadUpgradesSystemGetAppliedUpgrades =
+  /*#__PURE__*/ createUseReadContract({
+    abi: upgradesSystemAbi,
+    functionName: 'getAppliedUpgrades',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link upgradesSystemAbi}__ and `functionName` set to `"owner"`
+ */
+export const useReadUpgradesSystemOwner = /*#__PURE__*/ createUseReadContract({
+  abi: upgradesSystemAbi,
+  functionName: 'owner',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link upgradesSystemAbi}__ and `functionName` set to `"planetUpgrades"`
+ */
+export const useReadUpgradesSystemPlanetUpgrades =
+  /*#__PURE__*/ createUseReadContract({
+    abi: upgradesSystemAbi,
+    functionName: 'planetUpgrades',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link upgradesSystemAbi}__ and `functionName` set to `"proposals"`
+ */
+export const useReadUpgradesSystemProposals =
+  /*#__PURE__*/ createUseReadContract({
+    abi: upgradesSystemAbi,
+    functionName: 'proposals',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link upgradesSystemAbi}__ and `functionName` set to `"upgrades"`
+ */
+export const useReadUpgradesSystemUpgrades =
+  /*#__PURE__*/ createUseReadContract({
+    abi: upgradesSystemAbi,
+    functionName: 'upgrades',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link upgradesSystemAbi}__
+ */
+export const useWriteUpgradesSystem = /*#__PURE__*/ createUseWriteContract({
+  abi: upgradesSystemAbi,
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link upgradesSystemAbi}__ and `functionName` set to `"addUpgrade"`
+ */
+export const useWriteUpgradesSystemAddUpgrade =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: upgradesSystemAbi,
+    functionName: 'addUpgrade',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link upgradesSystemAbi}__ and `functionName` set to `"finalizeProposal"`
+ */
+export const useWriteUpgradesSystemFinalizeProposal =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: upgradesSystemAbi,
+    functionName: 'finalizeProposal',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link upgradesSystemAbi}__ and `functionName` set to `"init"`
+ */
+export const useWriteUpgradesSystemInit = /*#__PURE__*/ createUseWriteContract({
+  abi: upgradesSystemAbi,
+  functionName: 'init',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link upgradesSystemAbi}__ and `functionName` set to `"propose"`
+ */
+export const useWriteUpgradesSystemPropose =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: upgradesSystemAbi,
+    functionName: 'propose',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link upgradesSystemAbi}__ and `functionName` set to `"purchaseUpgrade"`
+ */
+export const useWriteUpgradesSystemPurchaseUpgrade =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: upgradesSystemAbi,
+    functionName: 'purchaseUpgrade',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link upgradesSystemAbi}__ and `functionName` set to `"renounceOwnership"`
+ */
+export const useWriteUpgradesSystemRenounceOwnership =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: upgradesSystemAbi,
+    functionName: 'renounceOwnership',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link upgradesSystemAbi}__ and `functionName` set to `"sync"`
+ */
+export const useWriteUpgradesSystemSync = /*#__PURE__*/ createUseWriteContract({
+  abi: upgradesSystemAbi,
+  functionName: 'sync',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link upgradesSystemAbi}__ and `functionName` set to `"transferOwnership"`
+ */
+export const useWriteUpgradesSystemTransferOwnership =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: upgradesSystemAbi,
+    functionName: 'transferOwnership',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link upgradesSystemAbi}__
+ */
+export const useSimulateUpgradesSystem =
+  /*#__PURE__*/ createUseSimulateContract({ abi: upgradesSystemAbi })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link upgradesSystemAbi}__ and `functionName` set to `"addUpgrade"`
+ */
+export const useSimulateUpgradesSystemAddUpgrade =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: upgradesSystemAbi,
+    functionName: 'addUpgrade',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link upgradesSystemAbi}__ and `functionName` set to `"finalizeProposal"`
+ */
+export const useSimulateUpgradesSystemFinalizeProposal =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: upgradesSystemAbi,
+    functionName: 'finalizeProposal',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link upgradesSystemAbi}__ and `functionName` set to `"init"`
+ */
+export const useSimulateUpgradesSystemInit =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: upgradesSystemAbi,
+    functionName: 'init',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link upgradesSystemAbi}__ and `functionName` set to `"propose"`
+ */
+export const useSimulateUpgradesSystemPropose =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: upgradesSystemAbi,
+    functionName: 'propose',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link upgradesSystemAbi}__ and `functionName` set to `"purchaseUpgrade"`
+ */
+export const useSimulateUpgradesSystemPurchaseUpgrade =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: upgradesSystemAbi,
+    functionName: 'purchaseUpgrade',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link upgradesSystemAbi}__ and `functionName` set to `"renounceOwnership"`
+ */
+export const useSimulateUpgradesSystemRenounceOwnership =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: upgradesSystemAbi,
+    functionName: 'renounceOwnership',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link upgradesSystemAbi}__ and `functionName` set to `"sync"`
+ */
+export const useSimulateUpgradesSystemSync =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: upgradesSystemAbi,
+    functionName: 'sync',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link upgradesSystemAbi}__ and `functionName` set to `"transferOwnership"`
+ */
+export const useSimulateUpgradesSystemTransferOwnership =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: upgradesSystemAbi,
+    functionName: 'transferOwnership',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link upgradesSystemAbi}__
+ */
+export const useWatchUpgradesSystemEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({ abi: upgradesSystemAbi })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link upgradesSystemAbi}__ and `eventName` set to `"OwnershipTransferred"`
+ */
+export const useWatchUpgradesSystemOwnershipTransferredEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: upgradesSystemAbi,
+    eventName: 'OwnershipTransferred',
+  })
+
+/**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link erc20Abi}__
  */
 export const useReadErc20 = /*#__PURE__*/ createUseReadContract({
@@ -1694,6 +2416,165 @@ export const useWatchErc20TransferEvent =
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Action
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link dungeonMasterAbi}__
+ */
+export const readDungeonMaster = /*#__PURE__*/ createReadContract({
+  abi: dungeonMasterAbi,
+})
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link dungeonMasterAbi}__ and `functionName` set to `"VOTING_DURATION"`
+ */
+export const readDungeonMasterVotingDuration = /*#__PURE__*/ createReadContract(
+  { abi: dungeonMasterAbi, functionName: 'VOTING_DURATION' },
+)
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link dungeonMasterAbi}__ and `functionName` set to `"getProposalsCount"`
+ */
+export const readDungeonMasterGetProposalsCount =
+  /*#__PURE__*/ createReadContract({
+    abi: dungeonMasterAbi,
+    functionName: 'getProposalsCount',
+  })
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link dungeonMasterAbi}__ and `functionName` set to `"owner"`
+ */
+export const readDungeonMasterOwner = /*#__PURE__*/ createReadContract({
+  abi: dungeonMasterAbi,
+  functionName: 'owner',
+})
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link dungeonMasterAbi}__ and `functionName` set to `"proposals"`
+ */
+export const readDungeonMasterProposals = /*#__PURE__*/ createReadContract({
+  abi: dungeonMasterAbi,
+  functionName: 'proposals',
+})
+
+/**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link dungeonMasterAbi}__
+ */
+export const writeDungeonMaster = /*#__PURE__*/ createWriteContract({
+  abi: dungeonMasterAbi,
+})
+
+/**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link dungeonMasterAbi}__ and `functionName` set to `"finalizeProposal"`
+ */
+export const writeDungeonMasterFinalizeProposal =
+  /*#__PURE__*/ createWriteContract({
+    abi: dungeonMasterAbi,
+    functionName: 'finalizeProposal',
+  })
+
+/**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link dungeonMasterAbi}__ and `functionName` set to `"renounceOwnership"`
+ */
+export const writeDungeonMasterRenounceOwnership =
+  /*#__PURE__*/ createWriteContract({
+    abi: dungeonMasterAbi,
+    functionName: 'renounceOwnership',
+  })
+
+/**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link dungeonMasterAbi}__ and `functionName` set to `"submitProposal"`
+ */
+export const writeDungeonMasterSubmitProposal =
+  /*#__PURE__*/ createWriteContract({
+    abi: dungeonMasterAbi,
+    functionName: 'submitProposal',
+  })
+
+/**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link dungeonMasterAbi}__ and `functionName` set to `"transferOwnership"`
+ */
+export const writeDungeonMasterTransferOwnership =
+  /*#__PURE__*/ createWriteContract({
+    abi: dungeonMasterAbi,
+    functionName: 'transferOwnership',
+  })
+
+/**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link dungeonMasterAbi}__ and `functionName` set to `"voteOnProposal"`
+ */
+export const writeDungeonMasterVoteOnProposal =
+  /*#__PURE__*/ createWriteContract({
+    abi: dungeonMasterAbi,
+    functionName: 'voteOnProposal',
+  })
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link dungeonMasterAbi}__
+ */
+export const simulateDungeonMaster = /*#__PURE__*/ createSimulateContract({
+  abi: dungeonMasterAbi,
+})
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link dungeonMasterAbi}__ and `functionName` set to `"finalizeProposal"`
+ */
+export const simulateDungeonMasterFinalizeProposal =
+  /*#__PURE__*/ createSimulateContract({
+    abi: dungeonMasterAbi,
+    functionName: 'finalizeProposal',
+  })
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link dungeonMasterAbi}__ and `functionName` set to `"renounceOwnership"`
+ */
+export const simulateDungeonMasterRenounceOwnership =
+  /*#__PURE__*/ createSimulateContract({
+    abi: dungeonMasterAbi,
+    functionName: 'renounceOwnership',
+  })
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link dungeonMasterAbi}__ and `functionName` set to `"submitProposal"`
+ */
+export const simulateDungeonMasterSubmitProposal =
+  /*#__PURE__*/ createSimulateContract({
+    abi: dungeonMasterAbi,
+    functionName: 'submitProposal',
+  })
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link dungeonMasterAbi}__ and `functionName` set to `"transferOwnership"`
+ */
+export const simulateDungeonMasterTransferOwnership =
+  /*#__PURE__*/ createSimulateContract({
+    abi: dungeonMasterAbi,
+    functionName: 'transferOwnership',
+  })
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link dungeonMasterAbi}__ and `functionName` set to `"voteOnProposal"`
+ */
+export const simulateDungeonMasterVoteOnProposal =
+  /*#__PURE__*/ createSimulateContract({
+    abi: dungeonMasterAbi,
+    functionName: 'voteOnProposal',
+  })
+
+/**
+ * Wraps __{@link watchContractEvent}__ with `abi` set to __{@link dungeonMasterAbi}__
+ */
+export const watchDungeonMasterEvent = /*#__PURE__*/ createWatchContractEvent({
+  abi: dungeonMasterAbi,
+})
+
+/**
+ * Wraps __{@link watchContractEvent}__ with `abi` set to __{@link dungeonMasterAbi}__ and `eventName` set to `"OwnershipTransferred"`
+ */
+export const watchDungeonMasterOwnershipTransferredEvent =
+  /*#__PURE__*/ createWatchContractEvent({
+    abi: dungeonMasterAbi,
+    eventName: 'OwnershipTransferred',
+  })
 
 /**
  * Wraps __{@link readContract}__ with `abi` set to __{@link planetAbi}__
@@ -2425,6 +3306,232 @@ export const watchSystemControllerEvent =
 export const watchSystemControllerOwnershipTransferredEvent =
   /*#__PURE__*/ createWatchContractEvent({
     abi: systemControllerAbi,
+    eventName: 'OwnershipTransferred',
+  })
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link upgradesSystemAbi}__
+ */
+export const readUpgradesSystem = /*#__PURE__*/ createReadContract({
+  abi: upgradesSystemAbi,
+})
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link upgradesSystemAbi}__ and `functionName` set to `"getAllUpgrades"`
+ */
+export const readUpgradesSystemGetAllUpgrades =
+  /*#__PURE__*/ createReadContract({
+    abi: upgradesSystemAbi,
+    functionName: 'getAllUpgrades',
+  })
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link upgradesSystemAbi}__ and `functionName` set to `"getAppliedUpgrades"`
+ */
+export const readUpgradesSystemGetAppliedUpgrades =
+  /*#__PURE__*/ createReadContract({
+    abi: upgradesSystemAbi,
+    functionName: 'getAppliedUpgrades',
+  })
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link upgradesSystemAbi}__ and `functionName` set to `"owner"`
+ */
+export const readUpgradesSystemOwner = /*#__PURE__*/ createReadContract({
+  abi: upgradesSystemAbi,
+  functionName: 'owner',
+})
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link upgradesSystemAbi}__ and `functionName` set to `"planetUpgrades"`
+ */
+export const readUpgradesSystemPlanetUpgrades =
+  /*#__PURE__*/ createReadContract({
+    abi: upgradesSystemAbi,
+    functionName: 'planetUpgrades',
+  })
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link upgradesSystemAbi}__ and `functionName` set to `"proposals"`
+ */
+export const readUpgradesSystemProposals = /*#__PURE__*/ createReadContract({
+  abi: upgradesSystemAbi,
+  functionName: 'proposals',
+})
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link upgradesSystemAbi}__ and `functionName` set to `"upgrades"`
+ */
+export const readUpgradesSystemUpgrades = /*#__PURE__*/ createReadContract({
+  abi: upgradesSystemAbi,
+  functionName: 'upgrades',
+})
+
+/**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link upgradesSystemAbi}__
+ */
+export const writeUpgradesSystem = /*#__PURE__*/ createWriteContract({
+  abi: upgradesSystemAbi,
+})
+
+/**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link upgradesSystemAbi}__ and `functionName` set to `"addUpgrade"`
+ */
+export const writeUpgradesSystemAddUpgrade = /*#__PURE__*/ createWriteContract({
+  abi: upgradesSystemAbi,
+  functionName: 'addUpgrade',
+})
+
+/**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link upgradesSystemAbi}__ and `functionName` set to `"finalizeProposal"`
+ */
+export const writeUpgradesSystemFinalizeProposal =
+  /*#__PURE__*/ createWriteContract({
+    abi: upgradesSystemAbi,
+    functionName: 'finalizeProposal',
+  })
+
+/**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link upgradesSystemAbi}__ and `functionName` set to `"init"`
+ */
+export const writeUpgradesSystemInit = /*#__PURE__*/ createWriteContract({
+  abi: upgradesSystemAbi,
+  functionName: 'init',
+})
+
+/**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link upgradesSystemAbi}__ and `functionName` set to `"propose"`
+ */
+export const writeUpgradesSystemPropose = /*#__PURE__*/ createWriteContract({
+  abi: upgradesSystemAbi,
+  functionName: 'propose',
+})
+
+/**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link upgradesSystemAbi}__ and `functionName` set to `"purchaseUpgrade"`
+ */
+export const writeUpgradesSystemPurchaseUpgrade =
+  /*#__PURE__*/ createWriteContract({
+    abi: upgradesSystemAbi,
+    functionName: 'purchaseUpgrade',
+  })
+
+/**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link upgradesSystemAbi}__ and `functionName` set to `"renounceOwnership"`
+ */
+export const writeUpgradesSystemRenounceOwnership =
+  /*#__PURE__*/ createWriteContract({
+    abi: upgradesSystemAbi,
+    functionName: 'renounceOwnership',
+  })
+
+/**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link upgradesSystemAbi}__ and `functionName` set to `"sync"`
+ */
+export const writeUpgradesSystemSync = /*#__PURE__*/ createWriteContract({
+  abi: upgradesSystemAbi,
+  functionName: 'sync',
+})
+
+/**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link upgradesSystemAbi}__ and `functionName` set to `"transferOwnership"`
+ */
+export const writeUpgradesSystemTransferOwnership =
+  /*#__PURE__*/ createWriteContract({
+    abi: upgradesSystemAbi,
+    functionName: 'transferOwnership',
+  })
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link upgradesSystemAbi}__
+ */
+export const simulateUpgradesSystem = /*#__PURE__*/ createSimulateContract({
+  abi: upgradesSystemAbi,
+})
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link upgradesSystemAbi}__ and `functionName` set to `"addUpgrade"`
+ */
+export const simulateUpgradesSystemAddUpgrade =
+  /*#__PURE__*/ createSimulateContract({
+    abi: upgradesSystemAbi,
+    functionName: 'addUpgrade',
+  })
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link upgradesSystemAbi}__ and `functionName` set to `"finalizeProposal"`
+ */
+export const simulateUpgradesSystemFinalizeProposal =
+  /*#__PURE__*/ createSimulateContract({
+    abi: upgradesSystemAbi,
+    functionName: 'finalizeProposal',
+  })
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link upgradesSystemAbi}__ and `functionName` set to `"init"`
+ */
+export const simulateUpgradesSystemInit = /*#__PURE__*/ createSimulateContract({
+  abi: upgradesSystemAbi,
+  functionName: 'init',
+})
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link upgradesSystemAbi}__ and `functionName` set to `"propose"`
+ */
+export const simulateUpgradesSystemPropose =
+  /*#__PURE__*/ createSimulateContract({
+    abi: upgradesSystemAbi,
+    functionName: 'propose',
+  })
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link upgradesSystemAbi}__ and `functionName` set to `"purchaseUpgrade"`
+ */
+export const simulateUpgradesSystemPurchaseUpgrade =
+  /*#__PURE__*/ createSimulateContract({
+    abi: upgradesSystemAbi,
+    functionName: 'purchaseUpgrade',
+  })
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link upgradesSystemAbi}__ and `functionName` set to `"renounceOwnership"`
+ */
+export const simulateUpgradesSystemRenounceOwnership =
+  /*#__PURE__*/ createSimulateContract({
+    abi: upgradesSystemAbi,
+    functionName: 'renounceOwnership',
+  })
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link upgradesSystemAbi}__ and `functionName` set to `"sync"`
+ */
+export const simulateUpgradesSystemSync = /*#__PURE__*/ createSimulateContract({
+  abi: upgradesSystemAbi,
+  functionName: 'sync',
+})
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link upgradesSystemAbi}__ and `functionName` set to `"transferOwnership"`
+ */
+export const simulateUpgradesSystemTransferOwnership =
+  /*#__PURE__*/ createSimulateContract({
+    abi: upgradesSystemAbi,
+    functionName: 'transferOwnership',
+  })
+
+/**
+ * Wraps __{@link watchContractEvent}__ with `abi` set to __{@link upgradesSystemAbi}__
+ */
+export const watchUpgradesSystemEvent = /*#__PURE__*/ createWatchContractEvent({
+  abi: upgradesSystemAbi,
+})
+
+/**
+ * Wraps __{@link watchContractEvent}__ with `abi` set to __{@link upgradesSystemAbi}__ and `eventName` set to `"OwnershipTransferred"`
+ */
+export const watchUpgradesSystemOwnershipTransferredEvent =
+  /*#__PURE__*/ createWatchContractEvent({
+    abi: upgradesSystemAbi,
     eventName: 'OwnershipTransferred',
   })
 

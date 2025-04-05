@@ -42,7 +42,7 @@ const SpaceAnimation: React.FC = () => {
       size: Math.random() * 2 + 0.5,
       opacity: Math.random() * 0.7 + 0.3,
       pulse: Math.random() * 3 + 1,
-      speed: Math.random() * 0.5 + 3, // Random speed for parallax effect
+      speed: Math.random() * 0.5 + 1, // Random speed for parallax effect
       // speed: Math.random() * 0.5 + 0.1, // Random speed for parallax effect
     }));
 
@@ -53,7 +53,7 @@ const SpaceAnimation: React.FC = () => {
       size: Math.random() * 2 + 0.5,
       opacity: Math.random() * 0.7 + 0.3,
       pulse: Math.random() * 3 + 1,
-      speed: Math.random() * 0.5 + 0.1
+      speed: Math.random() * 0.5 + 0.4
     })));
 
     // Add stars to the SVG
@@ -200,10 +200,7 @@ const SpaceAnimation: React.FC = () => {
             <stop stopOpacity=".1" offset="30%" />
             <stop stopOpacity=".08" offset="50%" />
           </linearGradient>
-          {/* <linearGradient id="dayGradient" gradientTransform="rotate(13)">
-            <stop offset="0%" stopColor="hsl(0,100%,90%)" />
-            <stop offset="100%" stopColor="hsl(320,100%,30%)" />
-          </linearGradient> */}
+
           <filter id="stars">
             <feTurbulence baseFrequency=".35" seed="2251" />
             <feColorMatrix values="0 0 0 9 -4 0 0 0 9 -4 0 0 0 9 -4 0 0 0 0 1" />
@@ -214,23 +211,13 @@ const SpaceAnimation: React.FC = () => {
             <feColorMatrix values="1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 3 -1 -1 0 0" />
             <feComposite operator="in" in2="SourceGraphic" />
           </filter>
-          {/* <filter id="light">
-            <feSpecularLighting result="specOut" specularExponent="100" lighting-color="white">
-              <fePointLight x="10" y="70" z="300" />
-            </feSpecularLighting>
-            <feComposite in="SourceGraphic" in2="specOut" operator="arithmetic" k1="0" k2="1" k3="1" k4="0" />
-          </filter> */}
+
         </defs>
         <svg >
-          <rect width="100%" height="100%" filter="url(#stars)" opacity=".7" />
-          {/* <path fill="url(#dayGradient)" d="M 0 0 H 1512 V 1512 H 0 z" opacity="0" filter="url(#light)" /> */}
-          <path fill="url(#skyGradient)" d="M 0 0 H 1512 V 1512 H 0 z" opacity=".7" />
-          <path fill="url(#cloudGradient)" filter="url(#clouds)" d="M 0 0 H 1512 V 1512 H 0 z" />
-          <svg
-            ref={svgRef}
-
-          ></svg>
-
+          {/* <rect width="100%" height="100%" filter="url(#stars)" opacity=".7" /> */}
+          {/* <path fill="url(#skyGradient)" d="M 0 0 H 1512 V 1512 H 0 z" opacity=".7" /> */}
+          {/* <path fill="url(#cloudGradient)" filter="url(#clouds)" d="M 0 0 H 1512 V 1512 H 0 z" /> */}
+          <svg ref={svgRef}></svg>
 
         </svg>
 

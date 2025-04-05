@@ -1,15 +1,26 @@
 
+"use client";
+
+
 import React from 'react';
 import { useGameStore } from '@/lib/gameState';
 import { cn } from '@/lib/utils';
 import { ArrowUpCircle, LockIcon, CheckCircle2 } from 'lucide-react';
 import { Card, CardHeader } from '../ui/card';
+import { useReadUpgradesSystemGetAllUpgrades, useReadUpgradesSystemPlanetUpgrades, useReadUpgradesSystemUpgrades } from '@/generated';
+import useDeployment from '@/hooks/useDeployment';
 
 interface UpgradePanelProps {
-  className?: string;
+  selectedTokenId: bigint;
+
 }
 
-const UpgradePanel: React.FC<UpgradePanelProps> = ({ className }) => {
+const UpgradePanel: React.FC<UpgradePanelProps> = ({ selectedTokenId }) => {
+
+  const { deploy } = useDeployment();
+
+  const { data: ups, error: upgradesError, isLoading } = useReadUpgradesSystemGetAllUpgrades({ args: [], address: deploy.UpgradesSystem });
+
   const upgrades = useGameStore(state => state.upgrades);
   const resources = useGameStore(state => state.resources);
   const purchaseUpgrade = useGameStore(state => state.purchaseUpgrade);
@@ -36,9 +47,15 @@ const UpgradePanel: React.FC<UpgradePanelProps> = ({ className }) => {
   }
 
   return (
-    <Card className={cn("backdrop-blur-sm p-4", className)}>
+    <Card className={cn("backdrop-blur-sm p-4", "")}>
       <CardHeader className="text-lg font-semibold mb-3">Upgrades</CardHeader>
       <div className="space-y-3">
+
+        {ups?.map(upgrade => {
+return (<div>{upgrade.name} = {upgrade.description}</div>)
+        })}
+
+
         {visibleUpgrades.map(upgrade => {
           const isAffordable = canAffordUpgrade(upgrade.id);
           const isPurchased = upgrade.purchased;
@@ -97,6 +114,7 @@ const UpgradePanel: React.FC<UpgradePanelProps> = ({ className }) => {
           );
         })}
       </div>
+
     </Card>
   );
 };

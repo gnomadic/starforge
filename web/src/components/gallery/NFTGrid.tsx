@@ -1,6 +1,6 @@
-import { Item, NFT, Station } from "@/domain/types";
+import { Item, Station } from "@/domain/types";
 import { match, P } from "ts-pattern";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from "../ui/card";
+import { Card, CardContent, CardTitle, CardDescription } from "../ui/card";
 import { Pagination, PaginationContent, PaginationItem, PaginationPrevious, PaginationLink, PaginationNext } from "../ui/pagination";
 import { cn } from "@/lib/utils";
 import MintPreview from "../mint/MintPreview";
@@ -8,9 +8,6 @@ import MintPreview from "../mint/MintPreview";
 
 
 interface NFTGridProps {
-  // nfts: NFT[]
-  // selectedNFT: NFT;
-  // setSelectedNFT: (nft: NFT) => void;
   selectedTokenId: bigint;
   setSelectedTokenId: (tokenId: bigint) => void;
   heldTokenIds: readonly bigint[] | undefined;
@@ -24,9 +21,6 @@ export function NFTGrid(props: NFTGridProps) {
     .with([P.select()], (singleNFT) => <EmptyNFTs />)
     .otherwise(() => (
       <ManyNFTs
-        // nfts={props.nfts}
-        // selectedNFT={props.selectedNFT}
-        // setSelectedNFT={props.setSelectedNFT}
         selectedTokenId={props.selectedTokenId}
         setSelectedTokenId={props.setSelectedTokenId}
         heldTokenIds={props.heldTokenIds}
@@ -34,25 +28,17 @@ export function NFTGrid(props: NFTGridProps) {
     ));
 }
 
-
-
 interface ItemCardProps {
   item: Item | undefined;
   onStationClick: (station: Station) => void;
 }
-
-
-
-
 
 export function ItemCard(props: ItemCardProps) {
   return match(props)
     .with({ item: P.nullish }, (item) => <EmptyNFTs></EmptyNFTs>)
     //   .with({ item: P.nonNullable}, (item) => <PresentItemCard item={item}/>)
     .otherwise(() => <EmptyNFTs></EmptyNFTs>);
-
 }
-
 
 export function EmptyNFTs() {
   return (
@@ -62,11 +48,11 @@ export function EmptyNFTs() {
 
 
 export function ManyNFTs({ selectedTokenId, setSelectedTokenId, heldTokenIds }: NFTGridProps) {
-
   return (
     <div className="backdrop-blur-sm">
       <Card className="bg-black/30 border-white/10">
         <div className="flex justify-between p-6">
+
           <div className="text-2xl font-semibold leading-none tracking-tight">
             <CardTitle>Your NFTs</CardTitle>
             <CardDescription>Select an NFT to view details</CardDescription>
@@ -92,26 +78,6 @@ export function ManyNFTs({ selectedTokenId, setSelectedTokenId, heldTokenIds }: 
         </div>
         <CardContent>
           <div className="grid grid-cols-12 gap-3">
-            {/* {nfts.map((nft) => (
-              <div
-                key={nft.id}
-                // onClick={() => setSelectedNFT(nft)}
-                className={cn(
-                  "aspect-square rounded-lg overflow-hidden bg-black/30 border border-white/5 cursor-pointer hover:border-primary/50 transition-all relative flex items-center justify-center",
-                  selectedNFT.id === nft.id ? "border-primary" : "",
-                  "max-w-24"
-                )}
-              >
-                <div className={cn("w-3/4 h-3/4 rounded-full animate-pulse-slow absolute", nft.image)}></div>
-                <div className="w-1/2 h-1/2 rounded-full bg-gradient-to-br from-primary/40 via-transparent to-transparent animate-float absolute"></div>
-                {selectedNFT.id === nft.id && (
-                  <div className="absolute top-2 right-2 w-3 h-3 rounded-full bg-primary z-10"></div>
-                )}
-                <div className="absolute bottom-2 left-2 text-xs font-medium z-10 text-white/80">
-                  #{nft.id.toString().padStart(4, '0')}
-                </div>
-              </div>
-            ))} */}
             {heldTokenIds?.map((tokenId) => (
               <div
                 key={tokenId}

@@ -14,12 +14,7 @@ import { RarityBadge } from './RarityBadge';
 import { NFT } from '@/domain/types';
 
 interface PlanetCardProps {
-  // className?: string;
-  // selectedIndex: bigint;
-
-  // selectedNFT: NFT;
   selectedTokenId: bigint;
-
 }
 
 const PlanetCard: React.FC<PlanetCardProps> = ({ selectedTokenId }) => {
@@ -49,7 +44,9 @@ const PlanetCard: React.FC<PlanetCardProps> = ({ selectedTokenId }) => {
               size={512}
               tokenId={selectedTokenId}
             />
-            Entropy
+                  <h3 className="text-lg font-medium my-2 pt-2">Entropy</h3>
+
+            
             <div className="mt-2 w-full bg-white/10 h-2 rounded-full mx-auto md:mx-2">
               <div
                 className="bg-red-500 h-2 rounded-full"

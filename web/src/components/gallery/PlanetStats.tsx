@@ -45,7 +45,7 @@ const PlanetStats: React.FC<PlanetStatsProps> = ({ selectedTokenId }) => {
     <div>
 
 
-      {/* <h3 className="text-lg font-medium my-2">Stats</h3> */}
+      <h3 className="text-lg font-medium my-2">Stats</h3>
       <Table>
         <TableBody>
           <TableRow>

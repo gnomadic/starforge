@@ -23,6 +23,8 @@ export default defineConfig({
         'Planet.sol/**',
         'SystemController.sol/**',
         'PlanetStatsSystem.sol/**',
+        'UpgradesSystem.sol/**',
+        'DungeonMaster.sol/**',
       ],
     }),
     react(),

@@ -236,7 +236,9 @@ module.exports = async (hre) => {
   tx = await deployedTechToken.mint("0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266", BigInt(40000000000000000000))
   await tx.wait();
 
-  // tx = await deployedUpgradesSystem.addUpgrade("Basic Energy Collector", "Harnesses solar energy to increase energy production.", [])
+  tx = await deployedUpgradesSystem.addUpgrade("Basic Energy Collector", "Harnesses solar energy to increase energy production.",
+      BigInt(30000000000000000000), life.address, BigInt(10000000000000000000), energy.address );//, deployedLifeToken.address ,BigInt(100000000000000), deployedEnergyToken.address)
+  await tx.wait();
 
 
 

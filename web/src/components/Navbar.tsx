@@ -43,11 +43,8 @@ export default function Navbar() {
           <div className='flex items-start'>
             <Link href='/'>
               <div className='text-xl text-white font-mono text-center tracking-wider'>
-                E N T R O P I C A L
+                S T A R F O R G E
               </div>
-              {/* <div className='text-3xl text-white font-ultra text-center tracking-wider text-tavernOrange'>
-              E N T R O P I C A L
-              </div> */}
             </Link>
           </div>
           <div className='flex items-center justify-center gap-8'>

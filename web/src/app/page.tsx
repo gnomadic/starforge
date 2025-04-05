@@ -3,7 +3,8 @@ import MintSection from "@/components/home/MintSection";
 import HowToPlaySection from "@/components/home/HowToPlaySection";
 
 export const metadata: Metadata = {
-  title: 'E N T R O P I C A L',
+  title: 'S T A R F O R G E',
+  description: 'Weave the stars.  Forge Empires.  Uncover the truth.',
 }
 
 export default function Home() {

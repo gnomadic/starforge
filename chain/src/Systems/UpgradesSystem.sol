@@ -3,6 +3,7 @@ pragma solidity ^0.8.24;
 import "@openzeppelin/contracts/access/Ownable.sol";
 import {ISystem, ISystemController, TokenRate} from "./interfaces/ISystem.sol";
 import {IVotable} from "../interfaces/IVotable.sol";
+import {console} from "hardhat/console.sol";
 
 contract UpgradesSystem is Ownable, ISystem, IVotable {
     struct Upgrade {
@@ -56,10 +57,13 @@ contract UpgradesSystem is Ownable, ISystem, IVotable {
     function addUpgrade(
         string memory _name,
         string memory _description,
-        TokenRate memory _cost,
-        TokenRate memory _benefit
+        uint256 costAmount,
+        address costToken,
+        uint256 benefitAmount,
+        address benefitToken
+        
     ) public onlyOwner {
-        upgrades.push(Upgrade(_name, _description, _cost, _benefit));
+        upgrades.push(Upgrade(_name, _description, TokenRate(costAmount, costToken), TokenRate(benefitAmount, benefitToken)));
     }
 
     function purchaseUpgrade(
@@ -81,5 +85,10 @@ contract UpgradesSystem is Ownable, ISystem, IVotable {
         uint256 tokenId
     ) external view returns (uint256[] memory) {
         return planetUpgrades[tokenId];
+    }
+
+    function getAllUpgrades() external view returns (Upgrade[] memory) {
+        console.log("All Upgrades: %s", upgrades.length);
+        return upgrades;
     }
 }
