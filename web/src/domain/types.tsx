@@ -123,6 +123,8 @@ export interface Supply {
   // type: 'gold' | 'energy' | 'cosmic-dust' | 'stardust';
   type: 'energy' | 'matter' | 'life' | 'technology';
   amount: number;
+  emissionRate: number;
+
   // icon: string;
     icon: React.ReactNode;
     color: string;

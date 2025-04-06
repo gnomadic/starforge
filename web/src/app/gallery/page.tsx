@@ -16,7 +16,7 @@ const Gallery: React.FC = () => {
 
         <Tabs defaultValue="nfts" className="mb-8">
           <TabsList className="w-full md:w-auto">
-            <TabsTrigger value="nfts">Cosmic NFTs</TabsTrigger>
+            <TabsTrigger value="nfts">Star Systems</TabsTrigger>
             <TabsTrigger value="artifacts">Artifacts</TabsTrigger>
           </TabsList>
 

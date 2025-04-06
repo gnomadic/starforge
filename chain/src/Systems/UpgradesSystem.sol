@@ -7,6 +7,7 @@ import {console} from "hardhat/console.sol";
 
 contract UpgradesSystem is Ownable, ISystem, IVotable {
     struct Upgrade {
+        uint256 id;
         string name;
         string description;
         TokenRate cost;
@@ -19,10 +20,10 @@ contract UpgradesSystem is Ownable, ISystem, IVotable {
         bool executed;
     }
 
-    ProposedUpgrade[] public proposals;
-    Upgrade[] public upgrades;
+    ProposedUpgrade[] private proposals;
+    Upgrade[] private upgrades;
 
-    mapping(uint256 => uint256[]) public planetUpgrades;
+    mapping(uint256 => uint256[]) private planetUpgrades;
 
     constructor() Ownable(_msgSender()) {}
 
@@ -50,7 +51,7 @@ contract UpgradesSystem is Ownable, ISystem, IVotable {
                 (string, string, TokenRate, TokenRate)
             );
 
-        upgrades.push(Upgrade(_name, _description, _cost, _benefit));
+        upgrades.push(Upgrade(upgrades.length, _name, _description, _cost, _benefit));
     }
 
     // Existing methods
@@ -63,7 +64,7 @@ contract UpgradesSystem is Ownable, ISystem, IVotable {
         address benefitToken
         
     ) public onlyOwner {
-        upgrades.push(Upgrade(_name, _description, TokenRate(costAmount, costToken), TokenRate(benefitAmount, benefitToken)));
+        upgrades.push(Upgrade(upgrades.length, _name, _description, TokenRate(costAmount, costToken), TokenRate(benefitAmount, benefitToken)));
     }
 
     function purchaseUpgrade(

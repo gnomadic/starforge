@@ -841,24 +841,10 @@ export const upgradesSystemAbi = [
     inputs: [
       { name: '_name', internalType: 'string', type: 'string' },
       { name: '_description', internalType: 'string', type: 'string' },
-      {
-        name: '_cost',
-        internalType: 'struct TokenRate',
-        type: 'tuple',
-        components: [
-          { name: 'rate', internalType: 'uint256', type: 'uint256' },
-          { name: 'token', internalType: 'address', type: 'address' },
-        ],
-      },
-      {
-        name: '_benefit',
-        internalType: 'struct TokenRate',
-        type: 'tuple',
-        components: [
-          { name: 'rate', internalType: 'uint256', type: 'uint256' },
-          { name: 'token', internalType: 'address', type: 'address' },
-        ],
-      },
+      { name: 'costAmount', internalType: 'uint256', type: 'uint256' },
+      { name: 'costToken', internalType: 'address', type: 'address' },
+      { name: 'benefitAmount', internalType: 'uint256', type: 'uint256' },
+      { name: 'benefitToken', internalType: 'address', type: 'address' },
     ],
     name: 'addUpgrade',
     outputs: [],
@@ -881,6 +867,7 @@ export const upgradesSystemAbi = [
         internalType: 'struct UpgradesSystem.Upgrade[]',
         type: 'tuple[]',
         components: [
+          { name: 'id', internalType: 'uint256', type: 'uint256' },
           { name: 'name', internalType: 'string', type: 'string' },
           { name: 'description', internalType: 'string', type: 'string' },
           {
@@ -932,26 +919,6 @@ export const upgradesSystemAbi = [
   },
   {
     type: 'function',
-    inputs: [
-      { name: '', internalType: 'uint256', type: 'uint256' },
-      { name: '', internalType: 'uint256', type: 'uint256' },
-    ],
-    name: 'planetUpgrades',
-    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
-    stateMutability: 'view',
-  },
-  {
-    type: 'function',
-    inputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
-    name: 'proposals',
-    outputs: [
-      { name: 'payload', internalType: 'string', type: 'string' },
-      { name: 'executed', internalType: 'bool', type: 'bool' },
-    ],
-    stateMutability: 'view',
-  },
-  {
-    type: 'function',
     inputs: [{ name: 'payload', internalType: 'string', type: 'string' }],
     name: 'propose',
     outputs: [{ name: 'proposalId', internalType: 'uint256', type: 'uint256' }],
@@ -988,34 +955,6 @@ export const upgradesSystemAbi = [
     name: 'transferOwnership',
     outputs: [],
     stateMutability: 'nonpayable',
-  },
-  {
-    type: 'function',
-    inputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
-    name: 'upgrades',
-    outputs: [
-      { name: 'name', internalType: 'string', type: 'string' },
-      { name: 'description', internalType: 'string', type: 'string' },
-      {
-        name: 'cost',
-        internalType: 'struct TokenRate',
-        type: 'tuple',
-        components: [
-          { name: 'rate', internalType: 'uint256', type: 'uint256' },
-          { name: 'token', internalType: 'address', type: 'address' },
-        ],
-      },
-      {
-        name: 'benefit',
-        internalType: 'struct TokenRate',
-        type: 'tuple',
-        components: [
-          { name: 'rate', internalType: 'uint256', type: 'uint256' },
-          { name: 'token', internalType: 'address', type: 'address' },
-        ],
-      },
-    ],
-    stateMutability: 'view',
   },
 ] as const
 
@@ -2073,33 +2012,6 @@ export const useReadUpgradesSystemOwner = /*#__PURE__*/ createUseReadContract({
   abi: upgradesSystemAbi,
   functionName: 'owner',
 })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link upgradesSystemAbi}__ and `functionName` set to `"planetUpgrades"`
- */
-export const useReadUpgradesSystemPlanetUpgrades =
-  /*#__PURE__*/ createUseReadContract({
-    abi: upgradesSystemAbi,
-    functionName: 'planetUpgrades',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link upgradesSystemAbi}__ and `functionName` set to `"proposals"`
- */
-export const useReadUpgradesSystemProposals =
-  /*#__PURE__*/ createUseReadContract({
-    abi: upgradesSystemAbi,
-    functionName: 'proposals',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link upgradesSystemAbi}__ and `functionName` set to `"upgrades"`
- */
-export const useReadUpgradesSystemUpgrades =
-  /*#__PURE__*/ createUseReadContract({
-    abi: upgradesSystemAbi,
-    functionName: 'upgrades',
-  })
 
 /**
  * Wraps __{@link useWriteContract}__ with `abi` set to __{@link upgradesSystemAbi}__
@@ -3340,31 +3252,6 @@ export const readUpgradesSystemGetAppliedUpgrades =
 export const readUpgradesSystemOwner = /*#__PURE__*/ createReadContract({
   abi: upgradesSystemAbi,
   functionName: 'owner',
-})
-
-/**
- * Wraps __{@link readContract}__ with `abi` set to __{@link upgradesSystemAbi}__ and `functionName` set to `"planetUpgrades"`
- */
-export const readUpgradesSystemPlanetUpgrades =
-  /*#__PURE__*/ createReadContract({
-    abi: upgradesSystemAbi,
-    functionName: 'planetUpgrades',
-  })
-
-/**
- * Wraps __{@link readContract}__ with `abi` set to __{@link upgradesSystemAbi}__ and `functionName` set to `"proposals"`
- */
-export const readUpgradesSystemProposals = /*#__PURE__*/ createReadContract({
-  abi: upgradesSystemAbi,
-  functionName: 'proposals',
-})
-
-/**
- * Wraps __{@link readContract}__ with `abi` set to __{@link upgradesSystemAbi}__ and `functionName` set to `"upgrades"`
- */
-export const readUpgradesSystemUpgrades = /*#__PURE__*/ createReadContract({
-  abi: upgradesSystemAbi,
-  functionName: 'upgrades',
 })
 
 /**

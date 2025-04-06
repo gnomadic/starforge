@@ -42,7 +42,7 @@ const SpaceAnimation: React.FC = () => {
       size: Math.random() * 2 + 0.5,
       opacity: Math.random() * 0.7 + 0.3,
       pulse: Math.random() * 3 + 1,
-      speed: Math.random() * 0.5 + 1, // Random speed for parallax effect
+      speed: Math.random() * 0.5 + .4, // Random speed for parallax effect
       // speed: Math.random() * 0.5 + 0.1, // Random speed for parallax effect
     }));
 
@@ -53,7 +53,7 @@ const SpaceAnimation: React.FC = () => {
       size: Math.random() * 2 + 0.5,
       opacity: Math.random() * 0.7 + 0.3,
       pulse: Math.random() * 3 + 1,
-      speed: Math.random() * 0.5 + 0.4
+      speed: Math.random() * 0.3
     })));
 
     // Add stars to the SVG
@@ -214,6 +214,7 @@ const SpaceAnimation: React.FC = () => {
 
         </defs>
         <svg >
+          <rect width="100%" height="100%" fill="#162435" opacity="1" />
           {/* <rect width="100%" height="100%" filter="url(#stars)" opacity=".7" /> */}
           {/* <path fill="url(#skyGradient)" d="M 0 0 H 1512 V 1512 H 0 z" opacity=".7" /> */}
           {/* <path fill="url(#cloudGradient)" filter="url(#clouds)" d="M 0 0 H 1512 V 1512 H 0 z" /> */}

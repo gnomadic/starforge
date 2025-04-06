@@ -14,6 +14,7 @@ const initialSupplies: Supply[] = [
     id: '1',
     type: 'life',
     amount: 0,
+    emissionRate: 0.1,
     icon: <Heart className="h-4 w-4 text-red-400" />,
     color: 'bg-red-950/60'
   },
@@ -21,6 +22,7 @@ const initialSupplies: Supply[] = [
     id: '1',
     type: 'matter',
     amount: 0,
+    emissionRate: 0.2,
     icon: <Circle className="h-4 w-4 text-blue-400" />,
     color: 'bg-blue-950/60'
   },
@@ -28,6 +30,7 @@ const initialSupplies: Supply[] = [
     id: '1',
     type: 'energy',
     amount: 0,
+    emissionRate: 0.15,
     icon: <Zap className="h-4 w-4 text-yellow-400" />,
     color: 'bg-yellow-950/60'
   },
@@ -35,6 +38,7 @@ const initialSupplies: Supply[] = [
     id: '1',
     type: 'technology',
     amount: 0,
+    emissionRate: 0.05,
     icon: <Cpu className="h-4 w-4 text-emerald-400" />,
     color: 'bg-emerald-950/60'
   }
@@ -44,16 +48,21 @@ const initialSupplies: Supply[] = [
 interface SupplyContextProps {
   supplies: Supply[];
   updateSupply: (type: Supply['type'], amount: number) => void;
+  sync: () => void;
+  syncReady: boolean;
 }
 
 const SupplyContext = createContext<SupplyContextProps>({
   supplies: initialSupplies,
   updateSupply: () => {},
+  sync: () => {},
+  syncReady: true
 });
 
 // Create provider component
 export const SupplyProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [supplies, setSupplies] = useState<Supply[]>(initialSupplies);
+  const [syncReady, setSyncReady] = useState(true);
 
 
   const { deploy } = useDeployment();
@@ -89,6 +98,7 @@ export const SupplyProvider: React.FC<{ children: ReactNode }> = ({ children }) 
     )
     if (lifeBalance) {
       updateSupply('life', Number(lifeBalance) / 1e18);
+      
     }
     if (energyBalance) {
       updateSupply('energy', Number(energyBalance) / 1e18);
@@ -113,8 +123,17 @@ export const SupplyProvider: React.FC<{ children: ReactNode }> = ({ children }) 
     );
   };
 
+    
+  const sync = () => {
+    if (syncReady) {
+      console.log("Sync triggered!");
+      // Here you would implement the actual sync logic
+      setSyncReady(false);
+    }
+  };
+
   return (
-    <SupplyContext.Provider value={{ supplies, updateSupply }}>
+    <SupplyContext.Provider value={{ supplies, updateSupply, sync, syncReady }}>
       {children}
       <div className={`fixed ${false ? 'bottom-4 right-4' : 'bottom-6 right-6'} z-50 glass rounded-lg shadow-md`}>
             <SupplyBar  />
