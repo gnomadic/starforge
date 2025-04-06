@@ -16,31 +16,35 @@ const initialSupplies: Supply[] = [
     amount: 0,
     emissionRate: 0.1,
     icon: <Heart className="h-4 w-4 text-red-400" />,
-    color: 'bg-red-950/60'
+    color: 'bg-red-950/60',
+    address: '0x0'
   },
   {
-    id: '1',
+    id: '2',
     type: 'matter',
     amount: 0,
     emissionRate: 0.2,
     icon: <Circle className="h-4 w-4 text-blue-400" />,
-    color: 'bg-blue-950/60'
+    color: 'bg-blue-950/60',
+    address: '0x0'
   },
   {
-    id: '1',
+    id: '3',
     type: 'energy',
     amount: 0,
     emissionRate: 0.15,
     icon: <Zap className="h-4 w-4 text-yellow-400" />,
-    color: 'bg-yellow-950/60'
+    color: 'bg-yellow-950/60',
+    address: '0x0'
   },
   {
-    id: '1',
+    id: '4',
     type: 'technology',
     amount: 0,
     emissionRate: 0.05,
     icon: <Cpu className="h-4 w-4 text-emerald-400" />,
-    color: 'bg-emerald-950/60'
+    color: 'bg-emerald-950/60',
+    address: '0x0'
   }
 ];
 
@@ -54,8 +58,8 @@ interface SupplyContextProps {
 
 const SupplyContext = createContext<SupplyContextProps>({
   supplies: initialSupplies,
-  updateSupply: () => {},
-  sync: () => {},
+  updateSupply: () => { },
+  sync: () => { },
   syncReady: true
 });
 
@@ -67,12 +71,12 @@ export const SupplyProvider: React.FC<{ children: ReactNode }> = ({ children }) 
 
   const { deploy } = useDeployment();
   const { address } = useAccount();
-  
+
 
   const { data: lifeBalance, error: lifeError } = useReadErc20BalanceOf({
     address: deploy.LifeToken,
     args: [address ? address : "0x"],
-  }); 
+  });
 
   const { data: energyBalance } = useReadErc20BalanceOf({
     address: deploy.EnergyToken,
@@ -98,7 +102,7 @@ export const SupplyProvider: React.FC<{ children: ReactNode }> = ({ children }) 
     )
     if (lifeBalance) {
       updateSupply('life', Number(lifeBalance) / 1e18);
-      
+
     }
     if (energyBalance) {
       updateSupply('energy', Number(energyBalance) / 1e18);
@@ -110,20 +114,42 @@ export const SupplyProvider: React.FC<{ children: ReactNode }> = ({ children }) 
       updateSupply('technology', Number(techBalance) / 1e18);
     }
   }
-  , [lifeBalance, energyBalance, matterBalance, techBalance]);
+    , [lifeBalance, energyBalance, matterBalance, techBalance]);
+
+  useEffect(() => {
+    // set the address in the Supply from the deploy
+    setSupplies((prev) =>
+      prev.map((supply) => {
+        switch (supply.type) {
+          case 'life':
+            return { ...supply, address: deploy.LifeToken };
+          case 'energy':
+            return { ...supply, address: deploy.EnergyToken };
+          case 'matter':
+            return { ...supply, address: deploy.MatterToken };
+          case 'technology':
+            return { ...supply, address: deploy.TechToken };
+          default:
+            return supply;
+        }
+      })
+    );
+
+  }, [deploy]);
+
 
 
   const updateSupply = (type: Supply['type'], amount: number) => {
-    setSupplies((prev) => 
-      prev.map((Supply) => 
-        Supply.type === type 
+    setSupplies((prev) =>
+      prev.map((Supply) =>
+        Supply.type === type
           ? { ...Supply, amount: Math.max(0, Supply.amount + amount) }
           : Supply
       )
     );
   };
 
-    
+
   const sync = () => {
     if (syncReady) {
       console.log("Sync triggered!");
@@ -136,8 +162,8 @@ export const SupplyProvider: React.FC<{ children: ReactNode }> = ({ children }) 
     <SupplyContext.Provider value={{ supplies, updateSupply, sync, syncReady }}>
       {children}
       <div className={`fixed ${false ? 'bottom-4 right-4' : 'bottom-6 right-6'} z-50 glass rounded-lg shadow-md`}>
-            <SupplyBar  />
-          </div>
+        <SupplyBar />
+      </div>
     </SupplyContext.Provider>
   );
 };
