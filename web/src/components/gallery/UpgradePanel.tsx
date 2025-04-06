@@ -1,4 +1,3 @@
-
 "use client";
 
 
@@ -68,6 +67,10 @@ const UpgradePanel: React.FC<UpgradePanelProps> = ({ selectedTokenId }) => {
     return false;
   };
 
+  const handleSync = async () => {
+    // Use deploy.SupplyEmissionsSystem and call sync(selectedTokenId)
+  };
+
   if (visibleUpgrades.length === 0) {
     return null;
   }
@@ -77,9 +80,9 @@ const UpgradePanel: React.FC<UpgradePanelProps> = ({ selectedTokenId }) => {
       <CardHeader className="text-lg font-semibold mb-3">Upgrades</CardHeader>
       <div className="space-y-3">
 
-        {ups?.map(upgrade => {
+        {/* {ups?.map(upgrade => {
           return (<div>{upgrade.name} = {upgrade.description}</div>)
-        })}
+        })} */}
 
 
         {ups?.map(upgrade => {
@@ -93,7 +96,7 @@ const UpgradePanel: React.FC<UpgradePanelProps> = ({ selectedTokenId }) => {
           return (
             <div
               key={upgrade.id}
-                           className={cn(
+              className={cn(
                 "rounded-lg p-3 border transition-all duration-300",
                 isPurchased
                   ? "bg-secondary/20 border-secondary/30 cursor-default opacity-70"
@@ -102,6 +105,23 @@ const UpgradePanel: React.FC<UpgradePanelProps> = ({ selectedTokenId }) => {
                     : "bg-secondary/40 border-secondary/30 opacity-70 cursor-not-allowed"
               )}
             >
+              <div className="flex items-start justify-between">
+                <div>
+                  <div className="flex items-center space-x-2">
+                    {isPurchased ? (
+                      <CheckCircle2 className="h-5 w-5 text-green-400" />
+                    ) : isAffordable ? (
+                      <ArrowUpCircle className="h-5 w-5 text-primary" />
+                    ) : (
+                      <LockIcon className="h-5 w-5 text-muted-foreground" />
+                    )}
+                    <h3 className="font-medium">{upgrade.name}</h3>
+                  </div>
+                  <p className="text-sm text-muted-foreground mt-1">{upgrade.description}</p>
+                  <p className="text-xs text-primary mt-2">{formatEther(upgrade.benefit.rate)}</p>
+
+                </div>
+              </div>
               <div>
                 {JSON.stringify(upgrade, bigIntReplacer)}
               </div>
@@ -191,7 +211,7 @@ const UpgradePanel: React.FC<UpgradePanelProps> = ({ selectedTokenId }) => {
           );
         })}
       </div>
-
+      <button onClick={handleSync}>Sync Tokens</button>
     </Card>
   );
 };
