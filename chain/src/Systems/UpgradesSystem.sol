@@ -10,8 +10,10 @@ contract UpgradesSystem is Ownable, ISystem, IVotable {
         uint256 id;
         string name;
         string description;
-        TokenRate cost;
-        TokenRate benefit;
+        uint256[] costRate;
+        address[] costToken;
+        uint256[] benefitRate;
+        address[] benefitToken;
     }
 
     // Store proposals as raw payloads
@@ -40,31 +42,69 @@ contract UpgradesSystem is Ownable, ISystem, IVotable {
         require(!prop.executed, "Already executed");
         prop.executed = true;
 
-        // Decode the payload and execute the proposal
         (
             string memory _name,
             string memory _description,
-            TokenRate memory _cost,
-            TokenRate memory _benefit
+            uint256[] memory _costRate,
+            address[] memory _costToken,
+            uint256[] memory _benefitRate,
+            address[] memory _benefitToken
         ) = abi.decode(
                 bytes(prop.payload),
-                (string, string, TokenRate, TokenRate)
+                (string, string, uint256[], address[], uint256[], address[])
             );
 
-        upgrades.push(Upgrade(upgrades.length, _name, _description, _cost, _benefit));
+        require(
+            _costRate.length == _costToken.length,
+            "Cost amount and token length mismatch"
+        );
+        require(
+            _benefitRate.length == _benefitToken.length,
+            "Benefit amount and token length mismatch"
+        );
+
+        Upgrade memory newUpgrade = Upgrade({
+            id: upgrades.length,
+            name: _name,
+            description: _description,
+            costRate: _costRate,
+            costToken: _costToken,
+            benefitRate: _benefitRate,
+            benefitToken: _benefitToken
+        });
+
+        upgrades.push(newUpgrade);
     }
 
     // Existing methods
     function addUpgrade(
         string memory _name,
         string memory _description,
-        uint256 costAmount,
-        address costToken,
-        uint256 benefitAmount,
-        address benefitToken
-        
+        uint256[] memory _costRate,
+        address[] memory _costToken,
+        uint256[] memory _benefitRate,
+        address[] memory _benefitToken
     ) public onlyOwner {
-        upgrades.push(Upgrade(upgrades.length, _name, _description, TokenRate(costAmount, costToken), TokenRate(benefitAmount, benefitToken)));
+        require(
+            _costRate.length == _costToken.length,
+            "Cost amount and token length mismatch"
+        );
+        require(
+            _benefitRate.length == _benefitToken.length,
+            "Benefit amount and token length mismatch"
+        );
+
+        Upgrade memory newUpgrade = Upgrade({
+            id: upgrades.length,
+            name: _name,
+            description: _description,
+            costRate: _costRate,
+            costToken: _costToken,
+            benefitRate: _benefitRate,
+            benefitToken: _benefitToken
+        });
+
+        upgrades.push(newUpgrade);
     }
 
     function purchaseUpgrade(

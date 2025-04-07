@@ -7,12 +7,12 @@ import { useSupplies } from './SupplyContext';
 // import { useIsMobile } from '@/hooks/use-mobile';
 import { Button } from '@/components/ui/button';
 
-export interface Supply {
-  type: 'life' | 'matter' | 'energy' | 'technology';
-  amount: number;
-  icon: React.ReactNode;
-  color: string;
-}
+// export interface Supply {
+//   type: 'life' | 'matter' | 'energy' | 'technology';
+//   amount: number;
+//   icon: React.ReactNode;
+//   color: string;
+// }
 
 interface SupplyBarProps {
   className?: string;

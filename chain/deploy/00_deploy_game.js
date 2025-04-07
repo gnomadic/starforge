@@ -237,7 +237,10 @@ module.exports = async (hre) => {
   await tx.wait();
 
   tx = await deployedUpgradesSystem.addUpgrade("Basic Energy Collector", "Harnesses solar energy to increase energy production.",
-      BigInt(30000000000000000000), life.address, BigInt(10000000000000000000), energy.address );//, deployedLifeToken.address ,BigInt(100000000000000), deployedEnergyToken.address)
+    [BigInt(10000000000000000000), BigInt(20000000000000000000), BigInt(30000000000000000000), BigInt(40000000000000000000)],
+    [life.address, matter.address, tech.address, energy.address],
+    [BigInt(40000000000000000000), BigInt(30000000000000000000), BigInt(20000000000000000000), BigInt(10000000000000000000)],
+    [energy.address, life.address, matter.address, tech.address],);
   await tx.wait();
 
 

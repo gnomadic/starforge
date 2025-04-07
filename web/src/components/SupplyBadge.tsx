@@ -1,94 +1,128 @@
-
-import React from 'react';
-import { cn } from '@/lib/utils';
-import { Heart, Circle, Zap, Cpu, RefreshCw } from 'lucide-react';
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
-import { useSupplies } from './SupplyContext';
-// import { useIsMobile } from '@/hooks/use-mobile';
-import { Button } from '@/components/ui/button';
-
-// export interface Supply {
-//   type: 'life' | 'matter' | 'energy' | 'technology';
-//   amount: number;
-//   icon: React.ReactNode;
-//   color: string;
-// }
+import { cn } from "@/lib/utils";
+import { match, P } from "ts-pattern";
+import { Address, formatEther } from "viem";
+import { useSupplies } from "./SupplyContext";
+import { Circle } from "lucide-react";
 
 interface SupplyBadgeProps {
-  className?: string;
+    address?: Address | undefined;
+    emission?: bigint | undefined;
+    value?: bigint | undefined;
 }
 
-const SupplyBadge: React.FC<SupplyBadgeProps> = ({  className }) => {
-  const isMobile = false;
-const resourcesContext = useSupplies();
-if (!resourcesContext) {
-    throw new Error('useResources must be used within a ResourcesProvider');
+export function SupplyBadge({ address, emission, value }: SupplyBadgeProps) {
+    return match({ emission, value })
+        .with({ emission: P.bigint, value: P.bigint }, () => (
+            <FullSupplyBadge address={address!} emission={emission!} value={value!} />
+        ))
+        .with({ emission: P.bigint }, () => (
+            <EmissionSupplyBadge address={address!} emission={emission!} />
+        ))
+        .with({ value: P.bigint }, () => (
+            <ValueSupplyBadge address={address!} value={value!} />
+        ))
+        .otherwise(() => <EmptySupplyBadge />);
 }
-const { supplies, updateSupply, sync, syncReady  } = resourcesContext;
 
-  return (
-    <div className={cn(
-      'flex gap-3 p-2 items-center', 
-      isMobile ? 'flex-col' : '',
-      className
-    )}>
-      {supplies.map((resource) => (
-        <TooltipProvider key={resource.type}>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <div className="flex items-center gap-1.5">
-                <div className={cn('p-1.5 rounded-full', resource.color)}>
-                  {resource.icon}
-                </div>
-                <div className="flex flex-col">
-                  <span className="font-mono text-xs font-medium text-white/90">
-                    {resource.amount.toFixed(1)}
-                  </span>
-                  <span className="font-mono text-xs text-white/70">
-                    +{resource.emissionRate}/s
-                  </span>
-                </div>
-              </div>
-            </TooltipTrigger>
-            <TooltipContent>
-              <p className="capitalize">
-                {resource.type}: {resource.amount.toFixed(1)} (+{resource.emissionRate}/s)
-              </p>
-            </TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
-      ))}
-      
-      <TooltipProvider>
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <Button 
-              variant="ghost" 
-              size="icon" 
-              onClick={sync}
-              className={cn(
-                'ml-2 p-1.5 rounded-full',
-                syncReady ? 'bg-emerald-950/60 hover:bg-emerald-900/70' : 'bg-slate-800/60 hover:bg-slate-700/70',
-                'transition-colors duration-300'
-              )}
-              disabled={!syncReady}
-            >
-              <RefreshCw 
-                className={cn(
-                  'h-4 w-4',
-                  syncReady ? 'text-emerald-400' : 'text-slate-400',
-                  syncReady && 'animate-pulse'
-                )} 
-              />
-            </Button>
-          </TooltipTrigger>
-          <TooltipContent>
-            <p>{syncReady ? 'Sync Available!' : 'Sync Unavailable'}</p>
-          </TooltipContent>
-        </Tooltip>
-      </TooltipProvider>
+const EmptySupplyBadge = ({ showEmissionRate = false }) => (
+    <div className="flex items-center gap-1.5">
+        <div className="p-1.5 rounded-full bg-gray-500">
+            <Circle size={16} color="white" />
+        </div>
+        <div className="flex flex-col font-mono text-xs font-medium text-white/90 ">
+            {/* <span className="font-mono text-xs font-medium text-white/90 justify-end"> */}
+            ---
+            {/* </span> */}
+
+        </div>
     </div>
-  );
-};
+);
 
-export default SupplyBadge;
+
+interface FullSupplyBadgeProps {
+    address: Address;
+    emission: bigint;
+    value: bigint;
+}
+
+const FullSupplyBadge = ({ address, emission, value }: FullSupplyBadgeProps) => {
+    const supplyContext = useSupplies();
+    if (!supplyContext) {
+        throw new Error('useResources must be used within a ResourcesProvider');
+    }
+    const { supplies } = supplyContext;
+    const supply = supplies.find((supply) => supply.address === address);
+
+    return (
+        <div className="flex items-center gap-1.5">
+            <div className={cn('p-1.5 rounded-full', supply?.color)}>
+                {supply?.icon}
+            </div>
+            <div className="flex flex-col">
+                <span className="font-mono text-xs font-medium text-white/90">
+                    {formatEther(value)}
+                </span>
+                <span className="font-mono text-xs text-white/70">
+                    +{formatEther(emission)}/s
+                </span>
+            </div>
+        </div>
+
+    )
+}
+
+interface EmissionSupplyBadgeProps {
+    address: Address;
+    emission: bigint;
+}
+
+const EmissionSupplyBadge = ({ address, emission }: EmissionSupplyBadgeProps) => {
+    const supplyContext = useSupplies();
+    if (!supplyContext) {
+        throw new Error('useResources must be used within a ResourcesProvider');
+    }
+    const { supplies } = supplyContext;
+    const supply = supplies.find((supply) => supply.address === address);
+
+    return (
+        <div className="flex items-center gap-1.5">
+            <div className={cn('p-1.5 rounded-full', supply?.color)}>
+                {supply?.icon}
+            </div>
+            <div className="flex flex-col">
+                <span className="font-mono text-xs font-medium text-white/70">
+                    +{formatEther(emission)}/s
+                </span>
+            </div>
+        </div>
+
+    )
+}
+
+interface ValueSupplyBadgeProps {
+    address: Address;
+    value: bigint;
+}
+
+const ValueSupplyBadge = ({ address, value }: ValueSupplyBadgeProps) => {
+    console.log('ValueSupplyBadge', address, value);
+    const supplyContext = useSupplies();
+    if (!supplyContext) {
+        throw new Error('useResources must be used within a ResourcesProvider');
+    }
+    const { supplies } = supplyContext;
+    const supply = supplies.find((supply) => supply.address === address);
+
+    return (
+        <div className="flex items-center gap-1.5">
+            <div className={cn('p-1.5 rounded-full', supply?.color)}>
+                {supply?.icon}
+            </div>
+            <div className="flex flex-col">
+                <span className="font-mono font-medium text-xs text-white/90">
+                {formatEther(value)}
+                </span>
+            </div>
+        </div>
+    )
+}

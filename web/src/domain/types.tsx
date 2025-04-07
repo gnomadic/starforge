@@ -56,12 +56,12 @@ export interface GameState {
   time: number;
 }
 
-export  interface CraftingSystemGameState {
-  
-    lastTick : bigint;
-    newItemRate : bigint;
-    beltDuration : bigint;
-    activeItem : bigint;
+export interface CraftingSystemGameState {
+
+  lastTick: bigint;
+  newItemRate: bigint;
+  beltDuration: bigint;
+  activeItem: bigint;
 
 }
 
@@ -97,22 +97,22 @@ export type HSL = {
 }
 
 export interface NFT {
-    id: number;
-    name: string;
-    image: string;
-    rarity: number;
-    entropy: number;
-    stats: number[];
-    energy: number;
-    power: number;
-    speed: number;
-    temperature:  number;
-    water : number;
-    biomass : number;
-    atmosphere :  number;
-    density:  number;
-    category: string;
-    description: string;
+  id: number;
+  name: string;
+  image: string;
+  rarity: number;
+  entropy: number;
+  stats: number[];
+  energy: number;
+  power: number;
+  speed: number;
+  temperature: number;
+  water: number;
+  biomass: number;
+  atmosphere: number;
+  density: number;
+  category: string;
+  description: string;
 }
 
 
@@ -124,14 +124,11 @@ export interface Supply {
   type: 'energy' | 'matter' | 'life' | 'technology';
   amount: number;
   emissionRate: number;
-
   // icon: string;
-    icon: React.ReactNode;
-    color: string;
-    id: string;
-
-    address: Address;
-  
+  icon: React.ReactNode;
+  color: string;
+  id: string;
+  address: Address;
 }
 
 export interface Reward {
