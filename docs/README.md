@@ -20,11 +20,9 @@ layout:
 
 # Welcome
 
-Welcome to Entropical.
+Welcome to the GitBook Starter Template! Here you'll get an overview of all the amazing features GitBook offers to help you build beautiful, interactive documentation.
 
-Entropical is a web3 RPG, where you, the player, take control of newly charted planets across the vast universe. &#x20;
-
-
+You'll see some of the best parts of GitBook in action — and find help on how you can turn this template into your own.
 
 ### Jump right in
 
