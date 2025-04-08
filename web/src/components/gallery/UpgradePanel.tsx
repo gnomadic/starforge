@@ -114,7 +114,7 @@ const UpgradePanel: React.FC<UpgradePanelProps> = ({ selectedTokenId }) => {
                       {upgrade.benefitToken.map
                         ((token, index) => {
                           return (
-                            <div>
+                            <div key={index}>
                               <SupplyBadge
                                 address={token}
                                 emission={upgrade.costRate[index]}
@@ -134,7 +134,7 @@ const UpgradePanel: React.FC<UpgradePanelProps> = ({ selectedTokenId }) => {
                     {upgrade.costToken.map
                       ((token, index) => {
                         return (
-                          <div>
+                          <div key={index}>
                             <SupplyBadge
                               address={token}
                               value={upgrade.costRate[index]}

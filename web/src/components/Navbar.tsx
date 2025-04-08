@@ -7,6 +7,7 @@ import MobileNav from './MobileNav';
 import { NavItems } from '@/domain/Nav';
 import { usePathname } from 'next/navigation'
 import { cn } from '@/lib/utils';
+import { ArrowUpRightIcon } from 'lucide-react';
 
 
 export default function Navbar() {
@@ -53,7 +54,6 @@ export default function Navbar() {
                 return (
                   <div className='text-sm text-lightgrey' key={i}>
                     <Link href={element.href}>
-                      {/* <div className={"relative cursor-pointer " + (pathname.includes(element.label) ? "text-white" : "")}> */}
                       <div className="text-sm text-white/70 hover:text-white transition-colors duration-300 relative after:absolute after:left-0 after:bottom-0 after:h-0.5 after:w-0 after:bg-primary hover:after:w-full after:transition-all after:duration-300">
                         {element.label}
                       </div>
@@ -61,21 +61,21 @@ export default function Navbar() {
                   </div>
                 );
               })}
-              {/* <div className='text-sm text-lightgrey' >
+              <div className='text-sm text-white/70 hover:text-white transition-colors duration-300 relative after:absolute after:left-0 after:bottom-0 after:h-0.5 after:w-0 after:bg-primary hover:after:w-full after:transition-all after:duration-300' >
                 <a
                   target="_blank"
                   rel="noopener noreferrer"
-                  href="https://docs.playtavern.com"
+                  href="https://play-starforge.gitbook.io/starforge"
                 >
                   <div className="relative cursor-pointer">
-                    docs
+                    DOCS
                     <ArrowUpRightIcon
                       className="h-3 mb-2 "
                       style={{ display: "inline" }}
                     />
                   </div>
                 </a>
-              </div> */}
+              </div>
             </div>
 
          

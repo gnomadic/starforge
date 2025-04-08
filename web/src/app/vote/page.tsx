@@ -11,7 +11,7 @@ import VotingCategory from '@/components/vote/VotingCategory';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Building2, GraduationCap, Users, FileText, Dice6 } from 'lucide-react';
 import ProposalForm from '@/components/vote/ProposalForm';
-import NFTMinter from '@/components/vote/NFTMinter';
+import DiceMinter from '@/components/vote/DiceMinter';
 
 // Mock data for voting categories
 const mockVoteCategories: VoteCategory[] = [
@@ -185,7 +185,7 @@ const Voting = () => {
           </TabsContent>
 
           <TabsContent value="mint">
-            <NFTMinter />
+            <DiceMinter />
           </TabsContent>
         </Tabs>
 

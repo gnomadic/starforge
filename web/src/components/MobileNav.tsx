@@ -58,21 +58,21 @@ export default function MobileNav(props: MobileNavProps) {
             </a>
           </li> */}
 
-          {/* <li className=''>
+          <li className=''>
             <a
               target="_blank"
               rel="noopener noreferrer"
-              href="https://docs.playtavern.com"
+              href="https://play-starforge.gitbook.io/starforge"
             >
-              <div className="relative text-lightgrey">
-                docs
+              <div className="relative pb-8 cursor-pointer">
+                DOCS
                 <ArrowUpRightIcon
-                  className="w-4 h-4 mb-1 -ml-1"
+                  className="w-4 h-4 mb-2"
                   style={{ display: "inline" }}
                 />
               </div>
             </a>
-          </li> */}
+          </li>
         </ul>
       </nav>
     </div>

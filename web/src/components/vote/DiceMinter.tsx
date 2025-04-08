@@ -16,7 +16,7 @@ const diceFaces = [
   "⚅", // 6
 ];
 
-const NFTMinter = () => {
+const DiceMinter = () => {
 //   const { toast } = useToast();
   const resources = useGameStore(state => state.resources);
   const collectResource = useGameStore(state => state.collectResource);
@@ -27,14 +27,7 @@ const NFTMinter = () => {
   const handleMint = () => {
     // Check if player has enough influence
     const influence = resources.find(r => r.id === 'influence');
-    if (!influence || influence.amount < 50) {
-      toast.error("Not enough influence");
-        
-      return;
-    }
-    
-    // Deduct influence
-    // collectResource('influence', -50);
+
     
     // Start rolling animation
     setIsRolling(true);
@@ -117,4 +110,4 @@ const NFTMinter = () => {
   );
 };
 
-export default NFTMinter;
+export default DiceMinter;
