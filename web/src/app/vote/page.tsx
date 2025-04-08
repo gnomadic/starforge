@@ -8,6 +8,10 @@ import { addDays } from 'date-fns';
 import { toast } from 'react-toastify';
 import { VoteCategory } from '@/domain/types';
 import VotingCategory from '@/components/vote/VotingCategory';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Building2, GraduationCap, Users, FileText, Dice6 } from 'lucide-react';
+import ProposalForm from '@/components/vote/ProposalForm';
+import NFTMinter from '@/components/vote/NFTMinter';
 
 // Mock data for voting categories
 const mockVoteCategories: VoteCategory[] = [
@@ -103,7 +107,7 @@ const mockVoteCategories: VoteCategory[] = [
 const Voting = () => {
   // State to track voted options per category
   const [userVotes, setUserVotes] = useState<Record<string, string>>({});
-  
+
   const handleVote = (categoryId: string, optionId: string) => {
     // Check if user already voted in this category
     if (userVotes[categoryId] === optionId) {
@@ -113,14 +117,14 @@ const Voting = () => {
       toast.info("Vote removed");
       return;
     }
-    
+
     // If user already voted for a different option in this category
     if (userVotes[categoryId]) {
       toast.info("Changed your vote");
     } else {
       toast.success("Vote recorded!");
     }
-    
+
     // Update user votes
     setUserVotes(prev => ({
       ...prev,
@@ -130,27 +134,64 @@ const Voting = () => {
 
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
-      <Navbar />
-      
+
       <main className="pt-28 pb-20 px-6 max-w-7xl mx-auto">
-        <div className="mb-8">
-          <h1 className="text-4xl font-display font-bold mb-2">Cosmic Democracy</h1>
-          <p className="text-white/70">
-            Shape the future of the cosmos by voting on upcoming quests, artifacts, and enemies.
-            The community&apos;s collective will determines what challenges appear next.
-          </p>
-        </div>
-        
-        <div className="space-y-10">
-          {mockVoteCategories.map((category) => (
-            <VotingCategory
-              key={category.id}
-              category={category}
-              onVote={handleVote}
-              votedOptionId={userVotes[category.id] || null}
-            />
-          ))}
-        </div>
+
+        <Tabs defaultValue="active" className="w-full">
+          <TabsList className="mb-4 grid grid-cols-3 w-full">
+            <TabsTrigger value="active" className="flex items-center gap-2">
+              <Users className="h-4 w-4" />
+              <span>Active Initiatives</span>
+              {/* {activeProjects.length > 0 && (
+              <span className="ml-1 bg-primary/20 text-primary rounded-full px-2 py-0.5 text-xs">
+                {activeProjects.length}
+              </span>
+            )} */}
+            </TabsTrigger>
+            <TabsTrigger value="propose" className="flex items-center gap-2">
+              <FileText className="h-4 w-4" />
+              <span>Submit Proposal</span>
+            </TabsTrigger>
+            <TabsTrigger value="mint" className="flex items-center gap-2">
+              <Dice6 className="h-4 w-4" />
+              <span>Mint D6 NFT</span>
+            </TabsTrigger>
+          </TabsList>
+          <TabsContent value="active" className="space-y-4">
+
+            <div className="mb-8">
+              <h1 className="text-4xl font-display font-bold mb-2">Cosmic Democracy</h1>
+              <p className="text-white/70">
+                Shape the future of the cosmos by voting on upcoming quests, artifacts, and enemies.
+                The community&apos;s collective will determines what challenges appear next.
+              </p>
+            </div>
+
+            <div className="space-y-10">
+              {mockVoteCategories.map((category) => (
+                <VotingCategory
+                  key={category.id}
+                  category={category}
+                  onVote={handleVote}
+                  votedOptionId={userVotes[category.id] || null}
+                />
+              ))}
+            </div>
+          </TabsContent>
+
+
+          <TabsContent value="propose">
+            <ProposalForm />
+          </TabsContent>
+
+          <TabsContent value="mint">
+            <NFTMinter />
+          </TabsContent>
+        </Tabs>
+
+
+
+
       </main>
     </div>
   );

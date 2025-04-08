@@ -12,13 +12,16 @@
   "dependencies": {
     "@headlessui/react": "^1.7.18",
     "@heroicons/react": "^2.1.3",
+    "@hookform/resolvers": "^5.0.1",
     "@pinata/sdk": "^2.1.0",
     "@radix-ui/react-aspect-ratio": "^1.1.2",
     "@radix-ui/react-avatar": "^1.1.3",
     "@radix-ui/react-checkbox": "^1.1.4",
     "@radix-ui/react-collapsible": "^1.1.3",
+    "@radix-ui/react-label": "^2.1.2",
     "@radix-ui/react-progress": "^1.1.2",
     "@radix-ui/react-scroll-area": "^1.2.3",
+    "@radix-ui/react-select": "^2.1.6",
     "@radix-ui/react-separator": "^1.1.2",
     "@radix-ui/react-slider": "^1.2.2",
     "@radix-ui/react-slot": "^1.1.0",
@@ -56,6 +59,7 @@
     "radix-ui": "^1.1.3",
     "react": "^18",
     "react-dom": "^18",
+    "react-hook-form": "^7.55.0",
     "react-tabs": "^6.0.2",
     "react-toastify": "^10.0.5",
     "recharts": "^2.15.0",
@@ -66,7 +70,8 @@
     "ts-pattern": "^5.5.0",
     "uuid": "^11.1.0",
     "viem": "^2.9.9",
-    "wagmi": "^2.5.18"
+    "wagmi": "^2.5.18",
+    "zod": "^3.24.2"
   },
   "devDependencies": {
     "@types/node": "^20",
