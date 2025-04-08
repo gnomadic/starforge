@@ -63,6 +63,50 @@ export const dungeonMasterAbi = [
   },
   {
     type: 'function',
+    inputs: [{ name: 'proposalId', internalType: 'uint256', type: 'uint256' }],
+    name: 'getProposal',
+    outputs: [
+      {
+        name: '',
+        internalType: 'struct DungeonMaster.Proposal',
+        type: 'tuple',
+        components: [
+          { name: 'target', internalType: 'address', type: 'address' },
+          { name: 'data', internalType: 'string', type: 'string' },
+          { name: 'category', internalType: 'uint16', type: 'uint16' },
+          { name: 'yesVotes', internalType: 'uint256', type: 'uint256' },
+          { name: 'noVotes', internalType: 'uint256', type: 'uint256' },
+          { name: 'startTime', internalType: 'uint256', type: 'uint256' },
+          { name: 'executed', internalType: 'bool', type: 'bool' },
+        ],
+      },
+    ],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'getProposals',
+    outputs: [
+      {
+        name: '',
+        internalType: 'struct DungeonMaster.Proposal[]',
+        type: 'tuple[]',
+        components: [
+          { name: 'target', internalType: 'address', type: 'address' },
+          { name: 'data', internalType: 'string', type: 'string' },
+          { name: 'category', internalType: 'uint16', type: 'uint16' },
+          { name: 'yesVotes', internalType: 'uint256', type: 'uint256' },
+          { name: 'noVotes', internalType: 'uint256', type: 'uint256' },
+          { name: 'startTime', internalType: 'uint256', type: 'uint256' },
+          { name: 'executed', internalType: 'bool', type: 'bool' },
+        ],
+      },
+    ],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
     inputs: [],
     name: 'getProposalsCount',
     outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
@@ -73,20 +117,6 @@ export const dungeonMasterAbi = [
     inputs: [],
     name: 'owner',
     outputs: [{ name: '', internalType: 'address', type: 'address' }],
-    stateMutability: 'view',
-  },
-  {
-    type: 'function',
-    inputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
-    name: 'proposals',
-    outputs: [
-      { name: 'target', internalType: 'address', type: 'address' },
-      { name: 'data', internalType: 'string', type: 'string' },
-      { name: 'yesVotes', internalType: 'uint256', type: 'uint256' },
-      { name: 'noVotes', internalType: 'uint256', type: 'uint256' },
-      { name: 'startTime', internalType: 'uint256', type: 'uint256' },
-      { name: 'executed', internalType: 'bool', type: 'bool' },
-    ],
     stateMutability: 'view',
   },
   {
@@ -1070,6 +1100,24 @@ export const useReadDungeonMasterVotingDuration =
   })
 
 /**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link dungeonMasterAbi}__ and `functionName` set to `"getProposal"`
+ */
+export const useReadDungeonMasterGetProposal =
+  /*#__PURE__*/ createUseReadContract({
+    abi: dungeonMasterAbi,
+    functionName: 'getProposal',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link dungeonMasterAbi}__ and `functionName` set to `"getProposals"`
+ */
+export const useReadDungeonMasterGetProposals =
+  /*#__PURE__*/ createUseReadContract({
+    abi: dungeonMasterAbi,
+    functionName: 'getProposals',
+  })
+
+/**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link dungeonMasterAbi}__ and `functionName` set to `"getProposalsCount"`
  */
 export const useReadDungeonMasterGetProposalsCount =
@@ -1085,15 +1133,6 @@ export const useReadDungeonMasterOwner = /*#__PURE__*/ createUseReadContract({
   abi: dungeonMasterAbi,
   functionName: 'owner',
 })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link dungeonMasterAbi}__ and `functionName` set to `"proposals"`
- */
-export const useReadDungeonMasterProposals =
-  /*#__PURE__*/ createUseReadContract({
-    abi: dungeonMasterAbi,
-    functionName: 'proposals',
-  })
 
 /**
  * Wraps __{@link useWriteContract}__ with `abi` set to __{@link dungeonMasterAbi}__
@@ -2334,6 +2373,22 @@ export const readDungeonMasterVotingDuration = /*#__PURE__*/ createReadContract(
 )
 
 /**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link dungeonMasterAbi}__ and `functionName` set to `"getProposal"`
+ */
+export const readDungeonMasterGetProposal = /*#__PURE__*/ createReadContract({
+  abi: dungeonMasterAbi,
+  functionName: 'getProposal',
+})
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link dungeonMasterAbi}__ and `functionName` set to `"getProposals"`
+ */
+export const readDungeonMasterGetProposals = /*#__PURE__*/ createReadContract({
+  abi: dungeonMasterAbi,
+  functionName: 'getProposals',
+})
+
+/**
  * Wraps __{@link readContract}__ with `abi` set to __{@link dungeonMasterAbi}__ and `functionName` set to `"getProposalsCount"`
  */
 export const readDungeonMasterGetProposalsCount =
@@ -2348,14 +2403,6 @@ export const readDungeonMasterGetProposalsCount =
 export const readDungeonMasterOwner = /*#__PURE__*/ createReadContract({
   abi: dungeonMasterAbi,
   functionName: 'owner',
-})
-
-/**
- * Wraps __{@link readContract}__ with `abi` set to __{@link dungeonMasterAbi}__ and `functionName` set to `"proposals"`
- */
-export const readDungeonMasterProposals = /*#__PURE__*/ createReadContract({
-  abi: dungeonMasterAbi,
-  functionName: 'proposals',
 })
 
 /**

@@ -11,10 +11,10 @@ contract DungeonMaster is Ownable {
         uint256 noVotes;
         uint256 startTime;
         bool executed;
-        mapping(address => bool) voted;
     }
 
-    Proposal[] public proposals;
+    Proposal[] private proposals;
+    mapping(uint256 => mapping(address => bool)) private hasVoted;
     uint256 public constant VOTING_DURATION = 7 days;
 
     constructor() Ownable(_msgSender()) {}
@@ -34,9 +34,9 @@ contract DungeonMaster is Ownable {
             block.timestamp < proposal.startTime + VOTING_DURATION,
             "Voting ended"
         );
-        require(!proposal.voted[msg.sender], "Already voted");
+        require(!hasVoted[proposalId][msg.sender], "Already voted");
 
-        proposal.voted[msg.sender] = true;
+        hasVoted[proposalId][msg.sender] = true;
         if (support) {
             proposal.yesVotes++;
         } else {
@@ -67,5 +67,13 @@ contract DungeonMaster is Ownable {
     /// @notice Returns the total number of proposals
     function getProposalsCount() external view returns (uint256) {
         return proposals.length;
+    }
+
+    function getProposals() external view returns (Proposal[] memory) {
+        return proposals;
+    }
+    function getProposal(uint256 proposalId) external view returns (Proposal memory) {
+        require(proposalId < proposals.length, "Invalid proposal");
+        return proposals[proposalId];
     }
 }
