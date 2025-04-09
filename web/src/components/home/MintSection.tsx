@@ -4,8 +4,8 @@ import React, { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import HueControl from '../mint/HueControl';
-import { useReadPlanetGenerateSvg } from '@/generated';
-import { useAccount } from 'wagmi';
+import { useReadPlanetGenerateSvg, useWritePlanetMint } from '@/generated';
+import { useAccount, useWaitForTransactionReceipt } from 'wagmi';
 import { useDeployment } from '@/hooks/useDeployment';
 import MintPreview from '../mint/MintPreview';
 import { extractDope, replaceDope } from '@/services/SVGCombiner';
@@ -26,53 +26,57 @@ const MintSection: React.FC<MintSectionProps> = ({ className }) => {
 
   const [originalThree, setoriginalThree] = useState(0);
   const [planetThree, setplanetThree] = useState(0);
-  
+
   // const [originalColorTwo, setOriginalColorTwo] = useState(0);
   // const [satLight, setSatLight] = useState({ sat: 25, light: 80, meter: 80, index: 0 });
   // const [planetColorTwo, setPlanetColorTwo] = useState(0);
 
 
-      const { address } = useAccount();
-      const { deploy } = useDeployment();
-      const { data: image, isLoading: loadingImage } = useReadPlanetGenerateSvg({ address: deploy.Planet, args: [BigInt(0)] });
-      const [preview, setPreview] = useState<string>("");
+  const { address } = useAccount();
+  const { deploy } = useDeployment();
+  const { data: image, isLoading: loadingImage } = useReadPlanetGenerateSvg({ address: deploy.Planet, args: [BigInt(0)] });
+  const [preview, setPreview] = useState<string>("");
 
-
-       useEffect(() => {
-              if (image == undefined || image == "") {
-                  return;
-              }
-              // console.log("image: " + image);
-              // console.log("wat: ", window.btoa(String(image)));
-
-              const startColor = extractDope(image);
-
-
-
-              setPlanetColorOne(Number(startColor));
-              setOriginalColorOne(Number(startColor));
-       
+      const { data: hash, error: writeError, writeContract } = useWritePlanetMint();
       
-              // const planetColors = extractPlanetColors(image);
-              // setPlanetColorOne(planetColors[0]);
-              // setPlanetColorTwo(planetColors[1]);
-      
-              // setOriginalColorOne(planetColors[0]);
-              // setOriginalColorTwo(planetColors[1]);
-      
-              // const noise = extractNoiseSeed(image);
-              // setOriginalSeed(Number(noise));
-              // setNoiseSeed(Number(noise));
-    
-              setPreview(window.btoa(String(image)));
-      
-      
-          }, [image]);
+      const { isLoading, isSuccess, data } = useWaitForTransactionReceipt({ hash })
+
+
+  useEffect(() => {
+    if (image == undefined || image == "") {
+      return;
+    }
+    // console.log("image: " + image);
+    // console.log("wat: ", window.btoa(String(image)));
+
+    const startColor = extractDope(image);
+
+
+
+    setPlanetColorOne(Number(startColor));
+    setOriginalColorOne(Number(startColor));
+
+
+    // const planetColors = extractPlanetColors(image);
+    // setPlanetColorOne(planetColors[0]);
+    // setPlanetColorTwo(planetColors[1]);
+
+    // setOriginalColorOne(planetColors[0]);
+    // setOriginalColorTwo(planetColors[1]);
+
+    // const noise = extractNoiseSeed(image);
+    // setOriginalSeed(Number(noise));
+    // setNoiseSeed(Number(noise));
+
+    setPreview(window.btoa(String(image)));
+
+
+  }, [image]);
 
 
   function planetColorChange(colorOne: number, two: number, three: number) {
 
-    
+
     let newSVG = replaceDope(preview, colorOne);
 
 
@@ -112,7 +116,7 @@ const MintSection: React.FC<MintSectionProps> = ({ className }) => {
               ))} */}
 
               <div className="bg-white/5 border border-white/10 rounded-lg px-4 py-2 font-signika">
-                
+
                 <HueControl
                   reset={() => {
                     setPlanetColorOne(originalColorOne);
@@ -141,7 +145,7 @@ const MintSection: React.FC<MintSectionProps> = ({ className }) => {
                   }}
                 />
               </div> */}
- 
+
               {/* <div className="bg-white/5 border border-white/10 rounded-lg px-4 py-2 font-signika">
                 
                 <HueControl
@@ -163,12 +167,12 @@ const MintSection: React.FC<MintSectionProps> = ({ className }) => {
 
           <div className="reveal-on-scroll delay-200">
             <div className="glass rounded-2xl p-6 border border-white/10">
-                                <MintPreview 
-                                preview={preview}
-                                size={512}
-                                tokenId={BigInt(0)}
-                                 />
-            
+              <MintPreview
+                preview={preview}
+                size={512}
+                tokenId={BigInt(0)}
+              />
+
               {/* <div className="aspect-square rounded-xl overflow-hidden bg-black/30 backdrop-blur-sm border border-white/5 mb-6">
                 <div className="w-full h-full flex items-center justify-center bg-black/20 relative">
                   <div className="w-3/4 h-3/4 rounded-full bg-gradient-to-br from-blue-500/20 via-purple-500/20 to-pink-500/20 animate-pulse-slow absolute"></div>
@@ -191,7 +195,12 @@ const MintSection: React.FC<MintSectionProps> = ({ className }) => {
 
 
 
-              <Button className="w-full">Mint Now</Button>
+              <Button className="w-full"
+                onClick={() => {
+                  console.log("Accept Assignment button clicked");
+                  writeContract({ address: deploy.Planet, args: [address!] });
+                }}
+              >Mint Now</Button>
 
               {/* <p className="mt-4 text-center text-xs text-white/50">
                 By minting, you agree to our terms and conditions

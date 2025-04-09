@@ -33,6 +33,7 @@ export default function MintLab(props: MintLabProps) {
     const { data: image, isLoading: loadingImage } = useReadPlanetGenerateSvg({ address: deploy.Planet, args: [BigInt(0)] });
     const [preview, setPreview] = useState<string>("");
     const { data: hash, error: writeError, writeContract } = useWritePlanetMint();
+    
     const { isLoading, isSuccess, data } = useWaitForTransactionReceipt({ hash })
 
     const [satLight, setSatLight] = useState({ sat: 25, light: 80, meter: 80, index: 0 });
@@ -169,7 +170,10 @@ export default function MintLab(props: MintLabProps) {
                                 <div className='flex py-8'>
                                     {address ?
                                         <Button className='mx-auto px-12 py-4'
-                                            onClick={() => writeContract({ address: deploy.Planet, args: [address] })}
+                                            onClick={() => {
+                                                console.log("Accept Assignment button clicked");
+                                                writeContract({ address: deploy.Planet, args: [address] });
+                                            }}
                                         >
                                             Accept Assignment 0.0025 ETH
                                         </Button>
