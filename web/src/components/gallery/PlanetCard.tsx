@@ -6,7 +6,7 @@ import { cn } from '@/lib/utils';
 import { ArrowUpCircle, LockIcon, CheckCircle2 } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import useDeployment from '@/hooks/useDeployment';
+import { useDeployment } from '@/hooks/useDeployment';
 import { useReadPlanetStatsSystemGetStats } from '@/generated';
 import MintPreview from '../mint/MintPreview';
 import PlanetStats from './PlanetStats';

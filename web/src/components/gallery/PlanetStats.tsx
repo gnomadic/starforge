@@ -2,7 +2,7 @@
 import React from 'react';
 import { useGameStore } from '@/lib/gameState';
 import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
-import useDeployment from '@/hooks/useDeployment';
+import { useDeployment } from '@/hooks/useDeployment';
 import { useReadPlanetStatsSystemGetStats } from "@/generated";
 
 interface PlanetStatsProps {

@@ -5,7 +5,7 @@ import { Heart, Circle, Zap, Cpu } from 'lucide-react';
 import { Supply } from '@/domain/types';
 import SupplyBar from './SupplyBar';
 import { useReadErc20BalanceOf } from '@/generated';
-import useDeployment from '@/hooks/useDeployment';
+import { useDeployment } from '@/hooks/useDeployment';
 import { useAccount } from 'wagmi';
 
 // Define the initial Supply values
@@ -16,8 +16,7 @@ const initialSupplies: Supply[] = [
     amount: 0,
     emissionRate: 0.1,
     icon: <Heart className="h-4 w-4 text-red-400" />,
-    color: 'bg-red-950/60',
-    address: '0x0'
+    color: 'bg-red-950/60'
   },
   {
     id: '2',
@@ -25,8 +24,7 @@ const initialSupplies: Supply[] = [
     amount: 0,
     emissionRate: 0.2,
     icon: <Circle className="h-4 w-4 text-blue-400" />,
-    color: 'bg-blue-950/60',
-    address: '0x0'
+    color: 'bg-blue-950/60'
   },
   {
     id: '3',
@@ -34,8 +32,7 @@ const initialSupplies: Supply[] = [
     amount: 0,
     emissionRate: 0.15,
     icon: <Zap className="h-4 w-4 text-yellow-400" />,
-    color: 'bg-yellow-950/60',
-    address: '0x0'
+    color: 'bg-yellow-950/60'
   },
   {
     id: '4',
@@ -43,8 +40,7 @@ const initialSupplies: Supply[] = [
     amount: 0,
     emissionRate: 0.05,
     icon: <Cpu className="h-4 w-4 text-emerald-400" />,
-    color: 'bg-emerald-950/60',
-    address: '0x0'
+    color: 'bg-emerald-950/60'
   }
 ];
 
@@ -116,26 +112,26 @@ export const SupplyProvider: React.FC<{ children: ReactNode }> = ({ children }) 
   }
     , [lifeBalance, energyBalance, matterBalance, techBalance]);
 
-  useEffect(() => {
-    // set the address in the Supply from the deploy
-    setSupplies((prev) =>
-      prev.map((supply) => {
-        switch (supply.type) {
-          case 'life':
-            return { ...supply, address: deploy.LifeToken };
-          case 'energy':
-            return { ...supply, address: deploy.EnergyToken };
-          case 'matter':
-            return { ...supply, address: deploy.MatterToken };
-          case 'technology':
-            return { ...supply, address: deploy.TechToken };
-          default:
-            return supply;
-        }
-      })
-    );
+  // useEffect(() => {
+  //   // set the address in the Supply from the deploy
+  //   setSupplies((prev) =>
+  //     prev.map((supply) => {
+  //       switch (supply.type) {
+  //         case 'life':
+  //           return { ...supply, address: deploy.LifeToken };
+  //         case 'energy':
+  //           return { ...supply, address: deploy.EnergyToken };
+  //         case 'matter':
+  //           return { ...supply, address: deploy.MatterToken };
+  //         case 'technology':
+  //           return { ...supply, address: deploy.TechToken };
+  //         default:
+  //           return supply;
+  //       }
+  //     })
+  //   );
 
-  }, [deploy]);
+  // }, [deploy]);
 
 
 

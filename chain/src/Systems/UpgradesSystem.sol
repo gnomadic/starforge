@@ -16,32 +16,21 @@ contract UpgradesSystem is Ownable, ISystem, IVotable {
         address[] benefitToken;
     }
 
-    // Store proposals as raw payloads
-    struct ProposedUpgrade {
-        string payload;
-        bool executed;
-    }
-
-    ProposedUpgrade[] private proposals;
     Upgrade[] private upgrades;
 
     mapping(uint256 => uint256[]) private planetUpgrades;
 
     constructor() Ownable(_msgSender()) {}
 
-    // IVotable interface
-    function propose(
-        string calldata payload
-    ) external override returns (uint256 proposalId) {
-        proposals.push(ProposedUpgrade({payload: payload, executed: false}));
-        return proposals.length - 1;
-    }
+    // // IVotable interface
+    // function propose(
+    //     string calldata payload
+    // ) external override returns (uint256 proposalId) {
+    //     proposals.push(ProposedUpgrade({payload: payload, executed: false}));
+    //     return proposals.length - 1;
+    // }
 
-    function finalizeProposal(uint256 proposalId) external override {
-        ProposedUpgrade storage prop = proposals[proposalId];
-        require(!prop.executed, "Already executed");
-        prop.executed = true;
-
+    function finalizeProposal(string calldata payload) external override {
         (
             string memory _name,
             string memory _description,
@@ -50,7 +39,7 @@ contract UpgradesSystem is Ownable, ISystem, IVotable {
             uint256[] memory _benefitRate,
             address[] memory _benefitToken
         ) = abi.decode(
-                bytes(prop.payload),
+                bytes(payload),
                 (string, string, uint256[], address[], uint256[], address[])
             );
 

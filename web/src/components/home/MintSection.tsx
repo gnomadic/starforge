@@ -6,7 +6,7 @@ import { cn } from '@/lib/utils';
 import HueControl from '../mint/HueControl';
 import { useReadPlanetGenerateSvg } from '@/generated';
 import { useAccount } from 'wagmi';
-import useDeployment from '@/hooks/useDeployment';
+import { useDeployment } from '@/hooks/useDeployment';
 import MintPreview from '../mint/MintPreview';
 import { extractDope, replaceDope } from '@/services/SVGCombiner';
 

@@ -3,6 +3,7 @@ import { match, P } from "ts-pattern";
 import { Address, formatEther } from "viem";
 import { useSupplies } from "./SupplyContext";
 import { Circle } from "lucide-react";
+import { getTokenDisplayName } from "@/hooks/useDeployment";
 
 interface SupplyBadgeProps {
     address?: Address | undefined;
@@ -51,7 +52,8 @@ const FullSupplyBadge = ({ address, emission, value }: FullSupplyBadgeProps) => 
         throw new Error('useResources must be used within a ResourcesProvider');
     }
     const { supplies } = supplyContext;
-    const supply = supplies.find((supply) => supply.address === address);
+    const supplyName = getTokenDisplayName(address);
+    const supply = supplies.find((supply) => supply.type === supplyName);
 
     return (
         <div className="flex items-center gap-1.5">
@@ -82,7 +84,8 @@ const EmissionSupplyBadge = ({ address, emission }: EmissionSupplyBadgeProps) =>
         throw new Error('useResources must be used within a ResourcesProvider');
     }
     const { supplies } = supplyContext;
-    const supply = supplies.find((supply) => supply.address === address);
+    const supplyName = getTokenDisplayName(address);
+    const supply = supplies.find((supply) => supply.type === supplyName);
 
     return (
         <div className="flex items-center gap-1.5">
@@ -111,8 +114,9 @@ const ValueSupplyBadge = ({ address, value }: ValueSupplyBadgeProps) => {
         throw new Error('useResources must be used within a ResourcesProvider');
     }
     const { supplies } = supplyContext;
-    const supply = supplies.find((supply) => supply.address === address);
-
+    const supplyName = getTokenDisplayName(address);
+    const supply = supplies.find((supply) => supply.type === supplyName);
+    
     return (
         <div className="flex items-center gap-1.5">
             <div className={cn('p-1.5 rounded-full', supply?.color)}>

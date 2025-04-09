@@ -5,7 +5,7 @@ import { NFTGrid } from '@/components/gallery/NFTGrid';
 import UpgradePanel from '@/components/gallery/UpgradePanel';
 import { useReadPlanetTokensOfOwner } from "@/generated";
 import { useAccount } from "wagmi";
-import useDeployment from "@/hooks/useDeployment";
+import { useDeployment } from "@/hooks/useDeployment";
 import { zeroAddress } from 'viem';
 import PlanetCard from '@/components/gallery/PlanetCard';
 

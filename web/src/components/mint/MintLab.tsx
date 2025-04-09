@@ -7,7 +7,7 @@ import { toast } from 'react-toastify';
 import { useAccount, useWaitForTransactionReceipt } from 'wagmi';
 import { Button } from '@/components/ui/button';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
-import useDeployment from '@/hooks/useDeployment';
+import { useDeployment } from '@/hooks/useDeployment';
 import MintPreview from './MintPreview';
 import { extractNoiseSeed, extractPlanetColors, replaceNoiseSeed, replacePlanet } from '@/services/SVGCombiner';
 import { Card, CardDescription, CardHeader, CardTitle } from '../ui/card';

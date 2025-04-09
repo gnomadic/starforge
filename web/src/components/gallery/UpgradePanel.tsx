@@ -6,7 +6,7 @@ import { cn } from '@/lib/utils';
 import { ArrowUpCircle, LockIcon, CheckCircle2 } from 'lucide-react';
 import { Card, CardHeader } from '../ui/card';
 import { useReadUpgradesSystemGetAllUpgrades, useReadUpgradesSystemGetAppliedUpgrades } from '@/generated';
-import useDeployment from '@/hooks/useDeployment';
+import { useDeployment } from '@/hooks/useDeployment';
 import { formatEther } from 'viem';
 import { useSupplies } from '../SupplyContext';
 import { SupplyBadge } from '../SupplyBadge';

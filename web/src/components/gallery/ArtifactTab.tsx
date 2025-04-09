@@ -5,7 +5,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Artifact, NFT } from '@/domain/types';
 import { ArtifactCard } from '@/components/ArtifactCard';
 import { useAccount } from "wagmi";
-import useDeployment from "@/hooks/useDeployment";
+import { useDeployment } from "@/hooks/useDeployment";
 
 interface ArtifactTabProps {
 

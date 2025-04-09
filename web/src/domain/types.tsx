@@ -128,7 +128,6 @@ export interface Supply {
   icon: React.ReactNode;
   color: string;
   id: string;
-  address: Address;
 }
 
 export interface Reward {

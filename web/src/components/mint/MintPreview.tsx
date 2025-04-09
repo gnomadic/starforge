@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import placeholder from "@/images/cardback.png";
-import useDeployment from '@/hooks/useDeployment';
+import { useDeployment } from '@/hooks/useDeployment';
 import { useReadPlanetGenerateSvg } from '@/generated';
 import { useEffect, useState } from 'react';
 

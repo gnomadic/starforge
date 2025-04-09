@@ -23,16 +23,23 @@ import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { Check } from 'lucide-react';
 import { toast } from 'react-toastify';
+import { useWriteDungeonMaster, useWriteDungeonMasterSubmitProposal } from '@/generated';
+// import { useWriteDungeonMaster } from '@/src/generated'
+
 // import { useToast } from '@/hooks/use-toast';
 
 const proposalFormSchema = z.object({
   topic: z.string().min(1, "Please select a topic"),
   name: z.string().min(3, "Name must be at least 3 characters"),
   description: z.string().min(10, "Description must be at least 10 characters"),
-  benefitResource: z.string().min(1, "Please select a benefit resource"),
-  benefitAmount: z.coerce.number().min(0, "Amount must be at least 0"),
-  costResource: z.string().min(1, "Please select a cost resource"),
-  costAmount: z.coerce.number().min(0, "Amount must be at least 0"),
+  benefit: z.object({
+    resource: z.string().min(1, "Please select a benefit resource"),
+    amount: z.coerce.number().min(0, "Amount must be at least 0"),
+  }),
+  cost: z.object({
+    resource: z.string().min(1, "Please select a cost resource"),
+    amount: z.coerce.number().min(0, "Amount must be at least 0"),
+  }),
 });
 
 type ProposalFormValues = z.infer<typeof proposalFormSchema>;
@@ -46,16 +53,46 @@ const ProposalForm = () => {
       topic: "",
       name: "",
       description: "",
-      benefitResource: "",
-      benefitAmount: 0,
-      costResource: "",
-      costAmount: 0,
+      benefit: {
+        resource: "",
+        amount: 0,
+      },
+      cost: {
+        resource: "",
+        amount: 0,
+      },
     },
   });
+
+  // const { write: submitProposalTx } = useWriteDungeonMasterSubmitProposal({
+  //   functionName: 'submitProposal',
+  // })
 
   const onSubmit = (data: ProposalFormValues) => {
     console.log("Proposal submitted:", data);
     toast.success("Proposal Submitted");
+
+    const payload = JSON.stringify({
+      topic: data.topic,
+      name: data.name,
+      description: data.description,
+      benefit: {
+        resource: data.benefit.resource,
+        amount: data.benefit.amount,
+      },
+      cost: {
+        resource: data.cost.resource,
+        amount: data.cost.amount,
+      },
+    })
+    // submitProposalTx({
+    //   args: [
+    //     '0x0000000000000000000000000000000000000000', // Placeholder target
+    //     payload,
+    //   ],
+    // })
+
+    console.log("Transaction payload:", payload);
       
     form.reset();
   };
@@ -144,7 +181,7 @@ const ProposalForm = () => {
               
               <FormField
                 control={form.control}
-                name="benefitResource"
+                name="benefit.resource"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Resource Type</FormLabel>
@@ -172,7 +209,7 @@ const ProposalForm = () => {
               
               <FormField
                 control={form.control}
-                name="benefitAmount"
+                name="benefit.amount"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Amount</FormLabel>
@@ -190,7 +227,7 @@ const ProposalForm = () => {
               
               <FormField
                 control={form.control}
-                name="costResource"
+                name="cost.resource"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Resource Type</FormLabel>
@@ -218,7 +255,7 @@ const ProposalForm = () => {
               
               <FormField
                 control={form.control}
-                name="costAmount"
+                name="cost.amount"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Amount</FormLabel>

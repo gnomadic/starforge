@@ -57,10 +57,10 @@ contract DungeonMaster is Ownable {
         // If yesVotes > noVotes, propose & finalize on the target
         if (proposal.yesVotes > proposal.noVotes) {
             // 1) call propose(...) on the target
-            uint256 targetProposalId = IVotable(proposal.target).propose(proposal.data);
+            // uint256 targetProposalId = IVotable(proposal.target).propose(proposal.data);
 
             // 2) finalize it
-            IVotable(proposal.target).finalizeProposal(targetProposalId);
+            IVotable(proposal.target).finalizeProposal(proposal.data);
         }
     }
 
