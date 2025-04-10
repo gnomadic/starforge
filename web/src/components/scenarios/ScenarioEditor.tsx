@@ -40,11 +40,17 @@ const formSchema = z.object({
   description: z.string().min(10, {
     message: "Description must be at least 10 characters.",
   }),
+  heroes: z.boolean().default(false),
   quests: z.boolean().default(false),
   artifacts: z.boolean().default(false),
   enemies: z.boolean().default(false),
   resources: z.boolean().default(false),
   jobs: z.boolean().default(false),
+
+  // Hero details
+    heroTitle: z.string().optional(),
+    heroDescription: z.string().optional(),
+    heroReward: z.string().optional(),
   
   // Quest details
   questTitle: z.string().optional(),
@@ -93,6 +99,7 @@ const ScenarioEditor: React.FC<ScenarioEditorProps> = ({ onSave, onCancel }) => 
   });
 
   // Watch for changes to content type toggles to manage accordion state
+  const HeroesEnabled = form.watch("heroes");
   const questsEnabled = form.watch("quests");
   const artifactsEnabled = form.watch("artifacts");
   const enemiesEnabled = form.watch("enemies");
@@ -169,6 +176,74 @@ const ScenarioEditor: React.FC<ScenarioEditorProps> = ({ onSave, onCancel }) => 
 
             <Accordion type="multiple" className="space-y-4">
               {/* Quests Section */}
+              <AccordionItem value="quests" className="border border-white/10 rounded-lg overflow-hidden">
+                <div className="flex flex-row items-center justify-between p-3">
+                  <div className="space-y-0.5">
+                    <div className="flex items-center">
+                      <Sparkles className="w-4 h-4 mr-2 text-blue-400" />
+                      <FormLabel>Heroes</FormLabel>
+                    </div>
+                    <FormDescription className="text-xs">
+                      ERC721 to act as Heroes
+                    </FormDescription>
+                  </div>
+                  <FormField
+                    control={form.control}
+                    name="heroes"
+                    render={({ field }) => (
+                      <FormItem className="flex items-center space-x-2">
+                        <FormControl>
+                          <Switch
+                            checked={field.value}
+                            onCheckedChange={field.onChange}
+                          />
+                        </FormControl>
+                      </FormItem>
+                    )}
+                  />
+                </div>
+                
+                <Collapsible open={HeroesEnabled}>
+                  <CollapsibleContent className="p-4 pt-0 bg-black/20 space-y-4">
+                    <FormField
+                      control={form.control}
+                      name="heroTitle"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Quest Title</FormLabel>
+                          <FormControl>
+                            <Input placeholder="Name your quest" {...field} />
+                          </FormControl>
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="heroDescription"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Description</FormLabel>
+                          <FormControl>
+                            <Textarea placeholder="Describe the quest objectives" {...field} />
+                          </FormControl>
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="heroReward"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Reward</FormLabel>
+                          <FormControl>
+                            <Input placeholder="What will players receive?" {...field} />
+                          </FormControl>
+                        </FormItem>
+                      )}
+                    />
+                  </CollapsibleContent>
+                </Collapsible>
+              </AccordionItem>
               <AccordionItem value="quests" className="border border-white/10 rounded-lg overflow-hidden">
                 <div className="flex flex-row items-center justify-between p-3">
                   <div className="space-y-0.5">

@@ -4,7 +4,7 @@ export const NavItems = [
   { href: '/jobs', label: 'JOBS'},
   { href: '/quests', label: 'QUESTS'},
   { href: '/combat', label: 'COMBAT' },
-  { href: '/vote', label: 'VOTE' },
+  { href: '/scenarios', label: 'SCENARIOS' },
 
 ];
 
