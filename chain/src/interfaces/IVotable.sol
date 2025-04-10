@@ -1,5 +1,7 @@
 pragma solidity ^0.8.24;
 
 interface IVotable {
+
+    
     function finalizeProposal(string calldata payload) external;
 }

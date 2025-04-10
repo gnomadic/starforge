@@ -57,30 +57,61 @@ const config: Config = {
   				'4': 'hsl(var(--chart-4))',
   				'5': 'hsl(var(--chart-5))'
   			}
+  		},
+  		keyframes: {
+  			'accordion-down': {
+  				from: {
+  					height: '0'
+  				},
+  				to: {
+  					height: 'var(--radix-accordion-content-height)'
+  				}
+  			},
+  			'accordion-up': {
+  				from: {
+  					height: 'var(--radix-accordion-content-height)'
+  				},
+  				to: {
+  					height: '0'
+  				}
+  			}
+  		},
+  		animation: {
+  			'accordion-down': 'accordion-down 0.2s ease-out',
+  			'accordion-up': 'accordion-up 0.2s ease-out'
   		}
   	},
-  	// colors: {
-  	// 	tavernGreen: '#14E943',
-  	// 	lightgrey: '#858080',
-  	// 	darkgrey: '#1B1B1D',
-  	// 	white: '#FFFFFF',
-  	// 	black: '#000000',
-  	// 	red: '#E94714',
-  	// 	unselected: '#858080',
-  	// 	selected: '#E3A9FF',
-  	// 	subtext: '#CECECE',
-  	// 	tavernOrange: '#FF7347'
-  	// },
   	fontFamily: {
-  		roboto: ['Roboto Condensed', 'sans-serif'],
-  		anon: ['Anonymous Pro', 'monospace'],
-		mono: ['Roboto Mono', 'monospace'],
-  		signika: ['var(--font-signika)'],
-  		outfit: ['var(--font-outfit)'],
-		nunito: ['var(--font-nunito)'],
-		ptsans: ['var(--font-ptsans)'],
-		ultra: ['var(--font-ultra)'],
-		ptser: ['var(--font-ptserif)'],
+  		roboto: [
+  			'Roboto Condensed',
+  			'sans-serif'
+  		],
+  		anon: [
+  			'Anonymous Pro',
+  			'monospace'
+  		],
+  		mono: [
+  			'Roboto Mono',
+  			'monospace'
+  		],
+  		signika: [
+  			'var(--font-signika)'
+  		],
+  		outfit: [
+  			'var(--font-outfit)'
+  		],
+  		nunito: [
+  			'var(--font-nunito)'
+  		],
+  		ptsans: [
+  			'var(--font-ptsans)'
+  		],
+  		ultra: [
+  			'var(--font-ultra)'
+  		],
+  		ptser: [
+  			'var(--font-ptserif)'
+  		]
   	}
   },
   plugins: [require("tailwindcss-animate")],

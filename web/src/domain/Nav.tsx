@@ -1,6 +1,7 @@
 export const NavItems = [
   { href: '/#mint', label: 'MINT' },
   { href: '/gallery', label: 'GALLERY'},
+  { href: '/jobs', label: 'JOBS'},
   { href: '/quests', label: 'QUESTS'},
   { href: '/combat', label: 'COMBAT' },
   { href: '/vote', label: 'VOTE' },

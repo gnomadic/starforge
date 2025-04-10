@@ -205,3 +205,45 @@ export interface VoteCategory {
   options: VoteOption[];
   endsAt: Date;
 }
+
+export interface Scenario {
+  id: string;
+  title: string;
+  description: string;
+  author: string;
+  createdAt: Date;
+  updatedAt: Date;
+  activations: number;
+  thumbnail?: string;
+  quests?: Quest[];
+  artifacts?: Artifact[];
+  enemies?: Enemy[];
+  resources?: Resource[];
+  jobs?: ScenarioJob[];
+  isActive?: boolean; // Track if scenario is active for current player
+}
+
+export interface ScenarioJob {
+  id: string;
+  title: string;
+  description: string;
+  resourceType: 'life' | 'matter' | 'energy' | 'technology';
+  baseEmissionBoost: number;
+}
+
+export interface ScenarioForm {
+  title: string;
+  description: string;
+  quests: boolean;
+  artifacts: boolean;
+  enemies: boolean;
+  resources: boolean;
+  jobs: boolean;
+  
+  // Content type details could be added here in the future
+  questDetails?: any[];
+  artifactDetails?: any[];
+  enemyDetails?: any[];
+  resourceDetails?: any[];
+  jobDetails?: any[];
+}
