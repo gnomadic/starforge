@@ -14,9 +14,13 @@ contract SystemController is Ownable, ISystemController {
     address public tokenAddress;
     ScenarioFactory public scenarioFactory;
 
-    constructor(ScenarioFactory scenarios) Ownable(_msgSender()) {
-        scenarioFactory = scenarios;
+    constructor() Ownable(_msgSender()) {
+        // scenarioFactory = scenarios;
         
+    }
+
+    function setScenarioFactory(ScenarioFactory scenarios) external onlyOwner {
+        scenarioFactory = scenarios;
     }
 
     function registerSystem(uint8 id, ISystem system) external onlyOwner {

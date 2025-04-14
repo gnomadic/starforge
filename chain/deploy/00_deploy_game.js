@@ -12,6 +12,12 @@ module.exports = async (hre) => {
 
   console.log("----- deploying")
 
+
+  const SystemController = await deploy("SystemController", {
+    from: deployer,
+    log: true,
+  });
+
   const Scenario = await deploy("Scenario", {
     from: deployer,
     log: true,
@@ -21,6 +27,7 @@ module.exports = async (hre) => {
   const ScenarioFactory = await deploy("ScenarioFactory", {
     from: deployer,
     log: true,
+    args: [SystemController.address],
   });
 
   const RegenScenario  = await deploy("RegenScenario", {
@@ -41,11 +48,7 @@ module.exports = async (hre) => {
   });
 
 
-  const SystemController = await deploy("SystemController", {
-    from: deployer,
-    log: true,
-    args: [ScenarioFactory.address],
-  });
+
 
   const Planet = await deploy("Planet", {
     from: deployer,
