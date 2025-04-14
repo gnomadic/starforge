@@ -12,6 +12,23 @@ module.exports = async (hre) => {
 
   console.log("----- deploying")
 
+  const Scenario = await deploy("Scenario", {
+    from: deployer,
+    log: true,
+  });
+
+
+  const ScenarioFactory = await deploy("ScenarioFactory", {
+    from: deployer,
+    log: true,
+  });
+
+  const RegenScenario  = await deploy("RegenScenario", {
+    from: deployer,
+    log: true,
+    args: [ScenarioFactory.address, "TODO ipfs url"],
+  });
+
 
   const PlanetRenderer = await deploy("PlanetRenderer", {
     from: deployer,
@@ -27,6 +44,7 @@ module.exports = async (hre) => {
   const SystemController = await deploy("SystemController", {
     from: deployer,
     log: true,
+    args: [ScenarioFactory.address],
   });
 
   const Planet = await deploy("Planet", {
@@ -44,13 +62,33 @@ module.exports = async (hre) => {
   const UpgradesSystem = await deploy("UpgradesSystem", {
     from: deployer,
     log: true,
-
   });
 
-  const DungeonMaster = await deploy("DungeonMaster", {
+  const ComabtSystem = await deploy("CombatSystem", {
     from: deployer,
     log: true,
   });
+
+  const JobSystem = await deploy("JobSystem", {
+    from: deployer,
+    log: true,
+  });
+
+  const QuestSystem = await deploy("QuestSystem", {
+    from: deployer,
+    log: true,
+  });
+
+  const SupplySystem = await deploy("SupplySystem", {
+    from: deployer,
+    log: true,
+  });
+    
+
+  // const DungeonMaster = await deploy("DungeonMaster", {
+  //   from: deployer,
+  //   log: true,
+  // });
 
   // const InvestmentSystem = await deploy("InvestmentSystem", {
   //   from: deployer,
@@ -120,6 +158,8 @@ module.exports = async (hre) => {
   const upgradesSystemDeployment = await deployments.get("UpgradesSystem");
   const deployedUpgradesSystem = await ethers.getContractAt("UpgradesSystem", upgradesSystemDeployment.address);
 
+// --- tokens
+
   const energyTokenDeployment = await deployments.get("EnergyToken");
   const deployedEnergyToken = await ethers.getContractAt("EnergyToken", energyTokenDeployment.address);
 
@@ -132,8 +172,8 @@ module.exports = async (hre) => {
   const techTokenDeployment = await deployments.get("TechnologyToken");
   const deployedTechToken = await ethers.getContractAt("TechnologyToken", techTokenDeployment.address);
 
-  const DungeonMasterDeployment = await deployments.get("DungeonMaster");
-  const deployedDungeonMaster = await ethers.getContractAt("DungeonMaster", DungeonMasterDeployment.address);
+  // const DungeonMasterDeployment = await deployments.get("DungeonMaster");
+  // const deployedDungeonMaster = await ethers.getContractAt("DungeonMaster", DungeonMasterDeployment.address);
 
 
   // const CraftDeployment = await deployments.get("CraftSystem");
@@ -161,6 +201,8 @@ module.exports = async (hre) => {
   console.log("----- done")
 
   console.log("----- loading prefabs")
+
+
 
   // tx = await deployedCraftLoader.load(craft.address);
   // await tx.wait();
@@ -192,7 +234,7 @@ module.exports = async (hre) => {
   object.SystemController = SystemController.address;
   object.PlanetStats = PlanetStats.address;
   object.UpgradesSystem = UpgradesSystem.address;
-  object.DungeonMaster = DungeonMaster.address;
+  // object.DungeonMaster = DungeonMaster.address;
   object.energyToken = energy.address;
   object.lifeToken = life.address;
   object.matterToken = matter.address;

@@ -31,6 +31,7 @@ contract Planet is ERC721AQueryable, Renderable721, Ownable {
     }
 
     function mint(address to) external payable {
+        if (msg.value < mintCost) revert("Not enough ETH sent");
         _mint(to);
     }
 
@@ -40,7 +41,6 @@ contract Planet is ERC721AQueryable, Renderable721, Ownable {
         _safeMint(to, 1);
 
         systemController.initAll(tokenId);
-
     }
 
     function ownerOf(
@@ -94,7 +94,13 @@ contract Planet is ERC721AQueryable, Renderable721, Ownable {
             );
     }
 
+    function getMintPrice() external view returns (uint256) {
+        return mintCost;
+    }
+
+    function setMintPrice(uint256 newPrice) external onlyOwner {
+        mintCost = newPrice;
+    }
+
     error NotMinted();
-
 }
-

@@ -4,7 +4,7 @@ import { Artifact } from "@/domain/types";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "./ui/card";
 import { cn } from "@/lib/utils";
 import { Button } from "./ui/button";
-import { RarityBadge } from "./gallery/RarityBadge";
+import { RarityBadge } from "./codex/RarityBadge";
 
 
 

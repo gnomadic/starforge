@@ -1,8 +1,8 @@
 
 import React from 'react';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
-import PlanetTab from '@/components/gallery/PlanetTab';
-import ArtifactTab from '@/components/gallery/ArtifactTab';
+import PlanetTab from '@/components/codex/PlanetTab';
+import ArtifactTab from '@/components/codex/ArtifactTab';
 
 const Gallery: React.FC = () => {
 

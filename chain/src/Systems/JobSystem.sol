@@ -1,7 +1,9 @@
-pragma solidity ^0.8.0;
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.24;
 
 import {ISystem, ISystemController, TokenRate} from "./interfaces/ISystem.sol";
 import {IVotable} from "../interfaces/IVotable.sol";
+import {IScenario} from "../Scenario.sol";
 
 contract JobSystem is ISystem, IVotable {
     struct Resource {
@@ -13,7 +15,7 @@ contract JobSystem is ISystem, IVotable {
         string id;
         string title;
         string description;
-        Resource tokenData; 
+        Resource tokenData;
         uint256 baseEmissionBoost;
     }
 
@@ -23,18 +25,13 @@ contract JobSystem is ISystem, IVotable {
     event JobActivated(address indexed player, string jobId);
     event JobDeactivated(address indexed player, string jobId);
 
-    function finalizeProposal(string calldata payload) external override {
-
-        
-    }
+    function finalizeProposal(string calldata payload) external override {}
 
     function init(
         ISystemController /*controller*/,
+        IScenario /*scenario*/,
         uint256 /*tokenId*/
-    ) external override {
-
-
-    }
+    ) external override {}
 
     function sync(uint256 /*tokenId*/) external override {}
 
@@ -51,5 +48,11 @@ contract JobSystem is ISystem, IVotable {
         // Revert any boosts applied
         delete activeJobs[msg.sender];
         emit JobDeactivated(msg.sender, /* previously active jobId */ "");
+    }
+
+    function activateEntity(
+        IScenario scenario
+    ) external override returns (address) {
+        return address(this);
     }
 }

@@ -1,7 +1,9 @@
+// SPDX-License-Identifier: MIT
 pragma solidity ^0.8.24;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
 import {ISystem, ISystemController, TokenRate} from "./interfaces/ISystem.sol";
+import {IScenario} from "../Scenario.sol";
 import {IVotable} from "../interfaces/IVotable.sol";
 import {console} from "hardhat/console.sol";
 
@@ -106,6 +108,7 @@ contract UpgradesSystem is Ownable, ISystem, IVotable {
 
     function init(
         ISystemController /*controller*/,
+        IScenario /*scenario*/,
         uint256 /*tokenId*/
     ) external override {}
 
@@ -120,5 +123,11 @@ contract UpgradesSystem is Ownable, ISystem, IVotable {
     function getAllUpgrades() external view returns (Upgrade[] memory) {
         console.log("All Upgrades: %s", upgrades.length);
         return upgrades;
+    }
+
+    function activateEntity(
+        IScenario scenario
+    ) external override returns (address) {
+        return address(this);
     }
 }
