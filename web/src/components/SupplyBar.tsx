@@ -44,9 +44,9 @@ const { supplies, updateSupply, sync, syncReady  } = resourcesContext;
                   <span className="font-mono text-xs font-medium text-white/90">
                     {resource.amount.toFixed(1)}
                   </span>
-                  <span className="font-mono text-xs text-white/70">
+                  {/* <span className="font-mono text-xs text-white/70">
                     +{resource.emissionRate}/s
-                  </span>
+                  </span> */}
                 </div>
               </div>
             </TooltipTrigger>

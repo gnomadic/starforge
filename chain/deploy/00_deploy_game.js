@@ -30,11 +30,6 @@ module.exports = async (hre) => {
     args: [SystemController.address],
   });
 
-  const RegenScenario  = await deploy("RegenScenario", {
-    from: deployer,
-    log: true,
-    args: [ScenarioFactory.address, "TODO ipfs url"],
-  });
 
 
   const PlanetRenderer = await deploy("PlanetRenderer", {
@@ -67,25 +62,25 @@ module.exports = async (hre) => {
     log: true,
   });
 
-  const ComabtSystem = await deploy("CombatSystem", {
-    from: deployer,
-    log: true,
-  });
+  // const ComabtSystem = await deploy("CombatSystem", {
+  //   from: deployer,
+  //   log: true,
+  // });
 
-  const JobSystem = await deploy("JobSystem", {
-    from: deployer,
-    log: true,
-  });
+  // const JobSystem = await deploy("JobSystem", {
+  //   from: deployer,
+  //   log: true,
+  // });
 
-  const QuestSystem = await deploy("QuestSystem", {
-    from: deployer,
-    log: true,
-  });
+  // const QuestSystem = await deploy("QuestSystem", {
+  //   from: deployer,
+  //   log: true,
+  // });
 
-  const SupplySystem = await deploy("SupplySystem", {
-    from: deployer,
-    log: true,
-  });
+  // const SupplySystem = await deploy("SupplySystem", {
+  //   from: deployer,
+  //   log: true,
+  // });
     
 
   // const DungeonMaster = await deploy("DungeonMaster", {
@@ -189,11 +184,14 @@ module.exports = async (hre) => {
   let tx = await deployedSysController.setTokenAddress(Planet.address);
   await tx.wait();
 
+  tx = await deployedSysController.setScenarioFactory(ScenarioFactory.address);
+  await tx.wait();
+
   tx = await deployedSysController.registerSystem(1, PlanetStats.address);
   await tx.wait();
 
-  tx = await deployedSysController.registerSystem(2, UpgradesSystem.address);
-  await tx.wait();
+  // tx = await deployedSysController.registerSystem(2, UpgradesSystem.address);
+  // await tx.wait();
 
   // tx = await deployedSysController.registerSystem(2, InvestmentSystem.address);
   // await tx.wait();
@@ -206,6 +204,11 @@ module.exports = async (hre) => {
   console.log("----- loading prefabs")
 
 
+  const RegenScenario  = await deploy("RegenScenario", {
+    from: deployer,
+    log: true,
+    args: [ScenarioFactory.address, "TODO ipfs url"],
+  });
 
   // tx = await deployedCraftLoader.load(craft.address);
   // await tx.wait();
@@ -237,6 +240,7 @@ module.exports = async (hre) => {
   object.SystemController = SystemController.address;
   object.PlanetStats = PlanetStats.address;
   object.UpgradesSystem = UpgradesSystem.address;
+  object.ScenarioFactory = ScenarioFactory.address;
   // object.DungeonMaster = DungeonMaster.address;
   object.energyToken = energy.address;
   object.lifeToken = life.address;
@@ -281,17 +285,12 @@ module.exports = async (hre) => {
   tx = await deployedTechToken.mint("0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266", BigInt(40000000000000000000))
   await tx.wait();
 
-  tx = await deployedUpgradesSystem.addUpgrade("Basic Energy Collector", "Harnesses solar energy to increase energy production.",
-    [BigInt(10000000000000000000), BigInt(20000000000000000000), BigInt(30000000000000000000), BigInt(40000000000000000000)],
-    [life.address, matter.address, tech.address, energy.address],
-    [BigInt(40000000000000000000), BigInt(30000000000000000000), BigInt(20000000000000000000), BigInt(10000000000000000000)],
-    [energy.address, life.address, matter.address, tech.address],);
-  await tx.wait();
-
-
-
-
-
+  // tx = await deployedUpgradesSystem.addUpgrade("Basic Energy Collector", "Harnesses solar energy to increase energy production.",
+  //   [BigInt(10000000000000000000), BigInt(20000000000000000000), BigInt(30000000000000000000), BigInt(40000000000000000000)],
+  //   [life.address, matter.address, tech.address, energy.address],
+  //   [BigInt(40000000000000000000), BigInt(30000000000000000000), BigInt(20000000000000000000), BigInt(10000000000000000000)],
+  //   [energy.address, life.address, matter.address, tech.address],);
+  // await tx.wait();
 };
 
 module.exports.tags = ["engine", "everything"];

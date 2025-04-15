@@ -3,18 +3,20 @@ import React from 'react';
 import { useGameStore } from '@/lib/gameState';
 import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
 import { useDeployment } from '@/hooks/useDeployment';
-import { useReadPlanetStatsSystemGetStats } from "@/generated";
+// import { useReadPlanetStatsSystemGetStats } from "@/generated";
 
 interface PlanetStatsProps {
   selectedTokenId: bigint;
+  stats: readonly number[];
 }
 
-const PlanetStats: React.FC<PlanetStatsProps> = ({ selectedTokenId }) => {
+const PlanetStats: React.FC<PlanetStatsProps> = ({ selectedTokenId, stats }) => {
 
   const { deploy } = useDeployment()
 
-  const { data: stats } = useReadPlanetStatsSystemGetStats({ args: [selectedTokenId], address: deploy.PlanetStatsSystem })
+  // const { data: stats } = useReadPlanetStatsSystemGetStats({ args: [selectedTokenId], address: deploy.PlanetStatsSystem })
 
+  
 
   const upgrades = useGameStore(state => state.upgrades);
   const resources = useGameStore(state => state.resources);
@@ -54,11 +56,11 @@ const PlanetStats: React.FC<PlanetStatsProps> = ({ selectedTokenId }) => {
               <div className="w-full bg-white/10 h-2 rounded-full">
                 <div
                   className="bg-orange-300 h-2 rounded-full"
-                  style={{ width: `${stats?.stats ? stats.stats[0] * 5 : 0}%` }}
+                  style={{ width: `${stats ? stats[1] * 5 : 0}%` }}
                 />
               </div>
 
-              <span className="text-xs text-white/70">{stats?.stats[0]}/20</span>
+              <span className="text-xs text-white/70">{stats?.[1]}/20</span>
             </TableCell>
           </TableRow>
           <TableRow>
@@ -67,10 +69,10 @@ const PlanetStats: React.FC<PlanetStatsProps> = ({ selectedTokenId }) => {
               <div className="w-full bg-white/10 h-2 rounded-full">
                 <div
                   className="bg-blue-500 h-2 rounded-full"
-                  style={{ width: `${stats?.stats ? stats.stats[1] * 5 : 0}%` }}
+                  style={{ width: `${stats ? stats[2] * 5 : 0}%` }}
                 />
               </div>
-              <span className="text-xs text-white/70">{stats?.stats[1]}/20</span>
+              <span className="text-xs text-white/70">{stats?.[2]}/20</span>
             </TableCell>
           </TableRow>
           <TableRow>
@@ -79,10 +81,10 @@ const PlanetStats: React.FC<PlanetStatsProps> = ({ selectedTokenId }) => {
               <div className="w-full bg-white/10 h-2 rounded-full">
                 <div
                   className="bg-blue-400 h-2 rounded-full"
-                  style={{ width: `${stats?.stats ? stats.stats[2] * 5 : 0}%` }}
+                  style={{ width: `${stats ? stats[3] * 5 : 0}%` }}
                 />
               </div>
-              <span className="text-xs text-white/70">{stats?.stats[2]}/20</span>
+              <span className="text-xs text-white/70">{stats?.[3]}/20</span>
             </TableCell>
           </TableRow>
           <TableRow>
@@ -91,10 +93,10 @@ const PlanetStats: React.FC<PlanetStatsProps> = ({ selectedTokenId }) => {
               <div className="w-full bg-white/10 h-2 rounded-full">
                 <div
                   className="bg-blue-400 h-2 rounded-full"
-                  style={{ width: `${stats?.stats ? stats.stats[3] * 5 : 0}%` }}
+                  style={{ width: `${stats ? stats[4] * 5 : 0}%` }}
                 />
               </div>
-              <span className="text-xs text-white/70">{stats?.stats[3]}/20</span>
+              <span className="text-xs text-white/70">{stats?.[4]}/20</span>
             </TableCell>
           </TableRow>
           <TableRow>
@@ -103,10 +105,10 @@ const PlanetStats: React.FC<PlanetStatsProps> = ({ selectedTokenId }) => {
               <div className="w-full bg-white/10 h-2 rounded-full">
                 <div
                   className="bg-blue-400 h-2 rounded-full"
-                  style={{ width: `${stats?.stats ? stats.stats[4] * 5 : 0}%` }}
+                  style={{ width: `${stats ? stats[5] * 5 : 0}%` }}
                 />
               </div>
-              <span className="text-xs text-white/70">{stats?.stats[4]}/20</span>
+              <span className="text-xs text-white/70">{stats?.[5]}/20</span>
             </TableCell>
           </TableRow>
           <TableRow>
@@ -115,10 +117,10 @@ const PlanetStats: React.FC<PlanetStatsProps> = ({ selectedTokenId }) => {
               <div className="w-full bg-white/10 h-2 rounded-full">
                 <div
                   className="bg-blue-400 h-2 rounded-full"
-                  style={{ width: `${stats?.stats ? stats.stats[5] * 5 : 0}%` }}
+                  style={{ width: `${stats ? stats[6] * 5 : 0}%` }}
                 />
               </div>
-              <span className="text-xs text-white/70">{stats?.stats[5]}/20</span>
+              <span className="text-xs text-white/70">{stats?.[6]}/20</span>
             </TableCell>
           </TableRow>
         </TableBody>

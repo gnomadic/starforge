@@ -64,10 +64,8 @@ export const SupplyProvider: React.FC<{ children: ReactNode }> = ({ children }) 
   const [supplies, setSupplies] = useState<Supply[]>(initialSupplies);
   const [syncReady, setSyncReady] = useState(true);
 
-
   const { deploy } = useDeployment();
   const { address } = useAccount();
-
 
   const { data: lifeBalance, error: lifeError } = useReadErc20BalanceOf({
     address: deploy.LifeToken,

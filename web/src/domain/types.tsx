@@ -71,6 +71,7 @@ export type Deployment = {
   PlanetStatsSystem: Address;
   UpgradesSystem: Address;
   DungeonMaster: Address;
+  ScenarioFactory: Address;
   EnergyToken: Address;
   LifeToken: Address;
   MatterToken: Address;
@@ -218,7 +219,7 @@ export interface Scenario {
   quests?: Quest[];
   artifacts?: Artifact[];
   enemies?: Enemy[];
-  resources?: Resource[];
+  resources?: Supply[];
   jobs?: ScenarioJob[];
   isActive?: boolean; // Track if scenario is active for current player
 }

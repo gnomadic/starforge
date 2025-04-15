@@ -5,6 +5,7 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 import {ISystem, ISystemController} from "./interfaces/ISystem.sol";
 import {ScenarioFactory} from "../ScenarioFactory.sol";
 import {IScenario} from "../Scenario.sol";
+import { console } from "hardhat/console.sol";
 
 contract SystemController is Ownable, ISystemController {
     ISystem[] public systems;
@@ -31,7 +32,10 @@ contract SystemController is Ownable, ISystemController {
 
     function initAll(uint256 tokenId) external onlyToken {
         //get active scenarios for the current user from the ScenarioFactory
+                console.log("system controller: init all");
+
         IScenario[] memory activeScenarios = scenarioFactory.getActivePlayerScenarios(_msgSender());
+        console.log("there are %s active scenarios", activeScenarios.length);
         for (uint256 i = 0; i < activeScenarios.length; i++) {
             IScenario scenario = activeScenarios[i];
             for (uint256 j = 0; i < systems.length; i++) {
@@ -56,6 +60,7 @@ contract SystemController is Ownable, ISystemController {
 
     function activateEntities(IScenario scenario) external returns (address[] memory) {
         address[] memory systemEntities = new address[](systems.length);
+        console.log("system controller: activate entities systemlength %s", systems.length);
         for (uint256 i = 0; i < systems.length; i++) {
             systemEntities[i] = systems[i].activateEntity(scenario);
         }

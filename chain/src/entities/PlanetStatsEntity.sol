@@ -27,16 +27,18 @@ contract PlanetStatsEntity is IPlanetStatsEntity {
     mapping(uint256 => uint16[10]) private _statsMapping;
 
     IScenario private _scenario;
+    address private system;
 
     constructor(){}
 
 
     bool initialized = false;
 
-    function initialize(IScenario scenario) external {
+    function initialize(IScenario scenario, address _system) external {
         require(!initialized, "Already initialized");
         initialized = true;
         _scenario = scenario;
+        system = _system;
     }
 
     function getRarityOdds() external view override returns (uint8[5] memory) {
@@ -52,7 +54,7 @@ contract PlanetStatsEntity is IPlanetStatsEntity {
     }
 
     function setStats(uint256 tokenId, uint16[10] calldata newStats) external override {
-        if (msg.sender !=  _scenario.getAdmin()) {
+        if (msg.sender !=  _scenario.getAdmin() && msg.sender != system) {
             revert NotScenarioAdmin();
         }
 

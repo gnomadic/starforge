@@ -6,7 +6,7 @@ import {ISystem, ISystemController} from "./interfaces/ISystem.sol";
 import {IPlanetStatsEntity} from "../entities/PlanetStatsEntity.sol";
 import {IScenario} from "../Scenario.sol";
 import {PlanetStatsEntity} from "../entities/PlanetStatsEntity.sol";
-
+import { console } from "hardhat/console.sol";
 interface IPlanetStatsSystem {
     // function calculateStatsForMint(uint256 tokenId) external;
     // function getMintPrice() external view returns (uint256);
@@ -28,7 +28,10 @@ contract PlanetStatsSystem is IPlanetStatsSystem, Ownable, ISystem {
 
         address entityAddress = scenario.getEntity(address(this));
         IPlanetStatsEntity entity = IPlanetStatsEntity(entityAddress);
-
+        console.log(
+            "PlanetStatsSystem: calculateStatsForMint: entityAddress: %s",
+            entityAddress
+        );
         uint8[5] memory odds = entity.getRarityOdds();
         uint8 rarity = 5;
         uint8 rateCount = 0;
@@ -42,8 +45,14 @@ contract PlanetStatsSystem is IPlanetStatsSystem, Ownable, ISystem {
             }
         }
 
+// TODO this is funky because I want to reserve some spots in the array
         uint16[10] memory stats = getStartingStats(scenario, tokenId, rarity);
-        entity.setStats(tokenId, stats);
+        uint16[10] memory statsWithRarity;
+        statsWithRarity[0] = rarity;
+        for (uint8 index = 1; index < stats.length - 1; index++) {
+            statsWithRarity[index] = stats[index];
+        }
+        entity.setStats(tokenId, statsWithRarity);
         // IPlanetStatsEntity(planetStatsEntity).setStats(tokenId, stats, rarity, 0);
     }
 
@@ -110,7 +119,11 @@ contract PlanetStatsSystem is IPlanetStatsSystem, Ownable, ISystem {
         // TODO replace this with proxy clone.
         PlanetStatsEntity entityAddress = new PlanetStatsEntity();
 
-        entityAddress.initialize(scenario);
+        entityAddress.initialize(scenario, address(this));
+        console.log(
+            "PlanetStatsSystem: activateEntity: entityAddress: %s",
+            address(entityAddress)
+        );
         return address(entityAddress);
     }
 }

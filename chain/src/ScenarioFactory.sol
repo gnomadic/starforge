@@ -3,6 +3,7 @@ pragma solidity ^0.8.24;
 
 import {Context} from "@openzeppelin/contracts/utils/Context.sol";
 import {ISystem, ISystemController} from "./systems/interfaces/ISystem.sol";
+import { console } from "hardhat/console.sol";
 
 import {IScenario, Scenario} from "./Scenario.sol";
 
@@ -29,13 +30,16 @@ contract ScenarioFactory is Context {
     function createScenario(
         string memory metadataURI
     ) external returns (address) {
+        //TODO replace with proxy cloneable
         Scenario newScenario = new Scenario();
 
         scenarios.push(newScenario);
 
+        console.log("creating scenario %s", address(newScenario));
         address[] memory entities = systemController.activateEntities(
             newScenario
         );
+        // console.log("entities %s", entities[0]);
         ISystem[] memory systems = systemController.getSystems();
 
         newScenario.initialize(_msgSender(), metadataURI, systems, entities);
@@ -50,14 +54,20 @@ contract ScenarioFactory is Context {
     function getActivePlayerScenarios(
         address player
     ) external view returns (IScenario[] memory) {
+                console.log("getting active scenarios?");
+
         PlayerScenario[] memory playerScenarios = players[player];
         uint256 activeCount = 1;
+        console.log("there are %s active scenarios", activeCount);
 
         for (uint256 i = 0; i < playerScenarios.length; i++) {
             if (playerScenarios[i].active) {
                 activeCount++;
             }
         }
+
+        console.log("there are %s active scenarios", activeCount);
+        
 
         IScenario[] memory activeScenarios = new IScenario[](activeCount);
         activeScenarios[0] = scenarios[0]; //Every player always has the first scenario

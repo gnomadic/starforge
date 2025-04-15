@@ -8,6 +8,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { WagmiProvider } from 'wagmi';
 import { config } from '@/domain/WagmiConfig';
 import { SupplyProvider } from '@/components/SupplyContext';
+import { ScenarioProvider } from '@/components/ScenarioContext';
 // import { SupplyProvider } from '@/components/SupplyProvider';
 
 
@@ -19,8 +20,10 @@ export function Providers({ children }: { children: React.ReactNode }) {
       <QueryClientProvider client={queryClient} >
         <RainbowKitProvider>
         <SupplyProvider>
+          <ScenarioProvider>
 
-          {children}
+            {children}
+          </ScenarioProvider>
           </SupplyProvider>
           </RainbowKitProvider>
       </QueryClientProvider>
