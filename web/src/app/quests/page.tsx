@@ -239,8 +239,7 @@ const Quests: React.FC = () => {
   };
   
   return (
-    <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
-      <Navbar />
+    <div className="min-h-screen text-foreground overflow-x-hidden">
       
       <main className="pt-28 pb-20 px-6 max-w-7xl mx-auto">
         <div className="mb-8">

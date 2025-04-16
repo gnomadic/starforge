@@ -37,9 +37,9 @@ const MintSection: React.FC<MintSectionProps> = ({ className }) => {
   const { data: image, isLoading: loadingImage } = useReadPlanetGenerateSvg({ address: deploy.Planet, args: [BigInt(0)] });
   const [preview, setPreview] = useState<string>("");
 
-      const { data: hash, error: writeError, writeContract } = useWritePlanetMint();
-      
-      const { isLoading, isSuccess, data } = useWaitForTransactionReceipt({ hash })
+  const { data: hash, error: writeError, writeContract } = useWritePlanetMint();
+
+  const { isLoading, isSuccess, data } = useWaitForTransactionReceipt({ hash })
 
 
   useEffect(() => {
@@ -89,7 +89,8 @@ const MintSection: React.FC<MintSectionProps> = ({ className }) => {
 
   return (
     <section id="mint" className={cn("relative min-h-screen flex flex-col items-center justify-center py-24 px-6", className)}>
-      <div className="absolute inset-0 -z-10 bg-gradient-to-b from-background/0 via-background to-background/10" />
+      {/* <div className="absolute inset-0 -z-10 bg-gradient-to-b from-background/0 via-background to-background/10" /> */}
+      {/* <div className="absolute inset-0 -z-10 bg-gradient-to-b from-background/10 via-background to-background/0" /> */}
 
       <div className="w-full max-w-5xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -115,7 +116,8 @@ const MintSection: React.FC<MintSectionProps> = ({ className }) => {
                 </div>
               ))} */}
 
-              <div className="bg-white/5 border border-white/10 rounded-lg px-4 py-2 font-signika">
+              {/* <div className="bg-white/5 border border-white/10 rounded-lg px-4 py-2 font-signika"> */}
+              <div className="glass rounded-lg px-4 py-2 font-signika">
 
                 <HueControl
                   reset={() => {
@@ -164,6 +166,7 @@ const MintSection: React.FC<MintSectionProps> = ({ className }) => {
 
             </div>
           </div>
+  
 
           <div className="reveal-on-scroll delay-200">
             <div className="glass rounded-2xl p-6 border border-white/10">

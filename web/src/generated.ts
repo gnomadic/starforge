@@ -943,6 +943,25 @@ export const scenarioFactoryAbi = [
   },
   {
     type: 'function',
+    inputs: [{ name: 'player', internalType: 'address', type: 'address' }],
+    name: 'getAllScenarioData',
+    outputs: [
+      {
+        name: '',
+        internalType: 'struct ScenarioFactory.ScenarioData[]',
+        type: 'tuple[]',
+        components: [
+          { name: 'metadataURI', internalType: 'string', type: 'string' },
+          { name: 'admin', internalType: 'address', type: 'address' },
+          { name: 'scenarioAddress', internalType: 'address', type: 'address' },
+          { name: 'active', internalType: 'bool', type: 'bool' },
+        ],
+      },
+    ],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
     inputs: [
       { name: '', internalType: 'address', type: 'address' },
       { name: '', internalType: 'uint256', type: 'uint256' },
@@ -2477,6 +2496,15 @@ export const useReadScenarioFactoryGetActivePlayerScenarios =
   /*#__PURE__*/ createUseReadContract({
     abi: scenarioFactoryAbi,
     functionName: 'getActivePlayerScenarios',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link scenarioFactoryAbi}__ and `functionName` set to `"getAllScenarioData"`
+ */
+export const useReadScenarioFactoryGetAllScenarioData =
+  /*#__PURE__*/ createUseReadContract({
+    abi: scenarioFactoryAbi,
+    functionName: 'getAllScenarioData',
   })
 
 /**
@@ -4204,6 +4232,15 @@ export const readScenarioFactoryGetActivePlayerScenarios =
   /*#__PURE__*/ createReadContract({
     abi: scenarioFactoryAbi,
     functionName: 'getActivePlayerScenarios',
+  })
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link scenarioFactoryAbi}__ and `functionName` set to `"getAllScenarioData"`
+ */
+export const readScenarioFactoryGetAllScenarioData =
+  /*#__PURE__*/ createReadContract({
+    abi: scenarioFactoryAbi,
+    functionName: 'getAllScenarioData',
   })
 
 /**

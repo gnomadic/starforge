@@ -207,7 +207,7 @@ module.exports = async (hre) => {
   const RegenScenario  = await deploy("RegenScenario", {
     from: deployer,
     log: true,
-    args: [ScenarioFactory.address, "TODO ipfs url"],
+    args: [ScenarioFactory.address, "bafkreia6ms7spfoyvkk7yrfes7laca62uwwougi56arlonj75ysbznuwci"],
   });
 
   // tx = await deployedCraftLoader.load(craft.address);

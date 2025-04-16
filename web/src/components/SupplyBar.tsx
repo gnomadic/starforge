@@ -1,18 +1,10 @@
 
 import React from 'react';
 import { cn } from '@/lib/utils';
-import { Heart, Circle, Zap, Cpu, RefreshCw } from 'lucide-react';
+import { RefreshCw } from 'lucide-react';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { useSupplies } from './SupplyContext';
-// import { useIsMobile } from '@/hooks/use-mobile';
 import { Button } from '@/components/ui/button';
-
-// export interface Supply {
-//   type: 'life' | 'matter' | 'energy' | 'technology';
-//   amount: number;
-//   icon: React.ReactNode;
-//   color: string;
-// }
 
 interface SupplyBarProps {
   className?: string;
@@ -44,9 +36,6 @@ const { supplies, updateSupply, sync, syncReady  } = resourcesContext;
                   <span className="font-mono text-xs font-medium text-white/90">
                     {resource.amount.toFixed(1)}
                   </span>
-                  {/* <span className="font-mono text-xs text-white/70">
-                    +{resource.emissionRate}/s
-                  </span> */}
                 </div>
               </div>
             </TooltipTrigger>
@@ -59,7 +48,7 @@ const { supplies, updateSupply, sync, syncReady  } = resourcesContext;
         </TooltipProvider>
       ))}
       
-      <TooltipProvider>
+      {/* <TooltipProvider>
         <Tooltip>
           <TooltipTrigger asChild>
             <Button 
@@ -86,7 +75,7 @@ const { supplies, updateSupply, sync, syncReady  } = resourcesContext;
             <p>{syncReady ? 'Sync Available!' : 'Sync Unavailable'}</p>
           </TooltipContent>
         </Tooltip>
-      </TooltipProvider>
+      </TooltipProvider> */}
     </div>
   );
 };

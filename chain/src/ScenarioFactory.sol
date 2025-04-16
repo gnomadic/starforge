@@ -73,6 +73,7 @@ contract ScenarioFactory is Context {
         activeScenarios[0] = scenarios[0]; //Every player always has the first scenario
         uint256 index = 1;
 
+
         for (uint256 i = 0; i < playerScenarios.length; i++) {
             if (playerScenarios[i].active) {
                 activeScenarios[index] = playerScenarios[i].scenario;
@@ -80,5 +81,28 @@ contract ScenarioFactory is Context {
             }
         }
         return activeScenarios;
+    }
+
+    struct ScenarioData {
+        string metadataURI;
+        address admin;
+        address scenarioAddress;
+        bool active;
+    }
+
+    function getAllScenarioData(address player) external view returns (ScenarioData[] memory) {
+        ScenarioData[] memory scenarioDataArray = new ScenarioData[](scenarios.length);
+
+        for (uint256 i = 0; i < scenarios.length; i++) {
+            bool activated = (i == 0) || players[player][i].active;
+
+            scenarioDataArray[i] = ScenarioData({
+                metadataURI: scenarios[i].metadataURI(),
+                admin: scenarios[i].getAdmin(),
+                scenarioAddress: address(scenarios[i]),
+                active: activated
+            });
+        }
+        return scenarioDataArray;
     }
 }

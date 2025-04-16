@@ -2,7 +2,6 @@
 
 import React, { useState } from 'react';
 import { NFTGrid } from '@/components/codex/NFTGrid';
-import UpgradePanel from '@/components/codex/UpgradePanel';
 import { useReadPlanetTokensOfOwner } from "@/generated";
 import { useAccount } from "wagmi";
 import { useDeployment } from "@/hooks/useDeployment";
@@ -29,17 +28,10 @@ const PlanetTab: React.FC<PlanetTabProps> = ({ }) => {
         selectedTokenId={selectedTokenId}
       />
       <div className="grid grid-cols-1  gap-8 pt-8">
-        {/* <div/> */}
-        {/* <div className="col-span-2"> */}
         <div>
           <PlanetCard
             selectedTokenId={BigInt(selectedTokenId)} />
         </div>
-        {/* <div/> */}
-        {/* <div className="order-1 lg:order-2">
-          <UpgradePanel
-            selectedTokenId={selectedTokenId} />
-        </div> */}
       </div>
     </>
   );

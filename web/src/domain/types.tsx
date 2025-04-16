@@ -248,3 +248,8 @@ export interface ScenarioForm {
   resourceDetails?: any[];
   jobDetails?: any[];
 }
+
+export interface ScenarioMetadata  {
+  name: string;
+  description: string;
+}

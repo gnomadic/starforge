@@ -5,6 +5,8 @@ type Params = {
   ipfsURL: string
 }
 
+const IPFS_READ_BASE = "https://ipfs.io/ipfs/"
+
 export async function GET(request: NextRequest, context: { params: Params }) {
   const url = request.nextUrl.searchParams.get('ipfsURL');
 
@@ -14,7 +16,7 @@ export async function GET(request: NextRequest, context: { params: Params }) {
     
   }
   console.log('fetching: ', url)
-  const res = await fetch(url as string);
+  const res = await fetch(IPFS_READ_BASE + url as string);
   
   if (!res.ok) {
     // This will activate the closest `error.js` Error Boundary

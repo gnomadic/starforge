@@ -50,20 +50,20 @@ const PlanetCard: React.FC<PlanetCardProps> = ({ selectedTokenId }) => {
               size={512}
               tokenId={selectedTokenId}
             />
-            <h3 className="text-lg font-medium my-2 pt-2">Entropy</h3>
-            <div className="mt-2 w-full bg-white/10 h-2 rounded-full mx-auto md:mx-2">
-              <div
-                className="bg-red-500 h-2 rounded-full"
-                // style={{ width: `${stats?.entropy}%` }}
-              />
+            {/* <h3 className="text-lg font-medium my-2 pt-2">Entropy</h3> */}
+            {/* <div className="mt-2 w-full bg-white/10 h-2 rounded-full mx-auto md:mx-2"> */}
+              {/* <div */}
+                {/* className="bg-red-500 h-2 rounded-full" */}
+                {/* // style={{ width: `${stats?.entropy}%` }} */}
+              {/* /> */}
               {/* <span className="float-right text-xs text-white/70 pt-2">{stats?.entropy} / 100</span> */}
-            </div>
+            {/* </div> */}
 
           </div>
 
           <PlanetStats
           stats={entityData}
-            selectedTokenId={selectedTokenId}
+            // selectedTokenId={selectedTokenId}
           />
         </div>
       </CardContent>

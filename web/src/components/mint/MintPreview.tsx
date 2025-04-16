@@ -40,7 +40,7 @@ export default function MintPreview({ preview, size, tokenId }: MintPreviewProps
                     ? placeholder
                     : "data:image/svg+xml;base64," + rendered!
             }
-            className="mx-auto rounded-lg shadow-2xl"
+            className="mx-auto rounded-lg shadow-2xl border border-white/10"
             width={size}
             height={size}
         />

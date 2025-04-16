@@ -6,11 +6,11 @@ import { useDeployment } from '@/hooks/useDeployment';
 // import { useReadPlanetStatsSystemGetStats } from "@/generated";
 
 interface PlanetStatsProps {
-  selectedTokenId: bigint;
-  stats: readonly number[];
+  // selectedTokenId: bigint;
+  stats: readonly [number, number, number, number, number, number, number, number, number, number] | undefined;
 }
 
-const PlanetStats: React.FC<PlanetStatsProps> = ({ selectedTokenId, stats }) => {
+const PlanetStats: React.FC<PlanetStatsProps> = ({ stats }) => {
 
   const { deploy } = useDeployment()
 
