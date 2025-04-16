@@ -1,22 +1,18 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.24;
 
-import "@openzeppelin/contracts/access/Ownable.sol";
 import {ISystem, ISystemController} from "./interfaces/ISystem.sol";
-import {IPlanetStatsEntity} from "../entities/PlanetStatsEntity.sol";
+// import {IPlanetStatsEntity} from "../entities/PlanetStatsEntity.sol";
 import {IScenario} from "../Scenario.sol";
 import {PlanetStatsEntity} from "../entities/PlanetStatsEntity.sol";
 import { console } from "hardhat/console.sol";
-interface IPlanetStatsSystem {
-    // function calculateStatsForMint(uint256 tokenId) external;
-    // function getMintPrice() external view returns (uint256);
-}
 
-contract PlanetStatsSystem is IPlanetStatsSystem, Ownable, ISystem {
+
+contract PlanetStatsSystem is ISystem {
     address planetAddress;
     uint256 _nonce;
 
-    constructor(address _planetAddress) Ownable(_msgSender()) {
+    constructor(address _planetAddress)  {
         planetAddress = _planetAddress;
     }
 
@@ -27,7 +23,7 @@ contract PlanetStatsSystem is IPlanetStatsSystem, Ownable, ISystem {
         uint8 randomNumber = getRandom(100, tokenId);
 
         address entityAddress = scenario.getEntity(address(this));
-        IPlanetStatsEntity entity = IPlanetStatsEntity(entityAddress);
+        PlanetStatsEntity entity = PlanetStatsEntity(entityAddress);
         console.log(
             "PlanetStatsSystem: calculateStatsForMint: entityAddress: %s",
             entityAddress
@@ -65,13 +61,13 @@ contract PlanetStatsSystem is IPlanetStatsSystem, Ownable, ISystem {
 
         // uint8 points = _startingStats[gen];
         address entityAddress = scenario.getEntity(address(this));
-        IPlanetStatsEntity entity = IPlanetStatsEntity(entityAddress);
+        PlanetStatsEntity entity = PlanetStatsEntity(entityAddress);
 
         uint8 points = entity.getStartingStats(gen);
         uint16[10] memory stats;
 
         while (points > 0) {
-            randomNumber = getRandom(6, points);
+            randomNumber = getRandom(entity.getNumberOfStats(), points);
             if (stats[randomNumber] < 20) {
                 stats[randomNumber] = stats[randomNumber] + 1;
                 points = points - 1;
