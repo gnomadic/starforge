@@ -107,7 +107,7 @@ contract PlanetStatsSystem is ISystem {
         IScenario scenario,
         uint256 tokenId
     ) external override {
-        // controller.scenarios.
+        // TODO add permissiong here
 
         calculateStatsForMint(scenario, tokenId);
     }

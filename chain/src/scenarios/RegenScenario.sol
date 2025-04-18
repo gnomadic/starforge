@@ -6,7 +6,8 @@ import { Scenario } from "../Scenario.sol";
 import { console } from "hardhat/console.sol";
 import { PlanetStatsEntity } from "../entities/PlanetStatsEntity.sol";
 import { SupplyEntity } from "../entities/SupplyEntity.sol";
-import {SystemController} from "../systems/SystemController.sol";
+import { SystemController } from "../systems/SystemController.sol";
+import { SupplySystem } from "../systems/SupplySystem.sol";
 
 contract RegenScenario {
 
@@ -33,7 +34,15 @@ contract RegenScenario {
         planetStatsEntity.setNumberOfStats(6);
         planetStatsEntity.setStartingStats([80, 78, 76, 74, 72]);
 
-        SupplyEntity supplyEntity = SupplyEntity(scenario.getEntity(address(controller.getSystem(0))));
+        SupplySystem supplySystem = SupplySystem(address(controller.getSystem(2)));
+
+        console.log("supplySystem: %s", address(supplySystem));
+        supplySystem.deployToken(scenario, "LIFE", "LIFE");
+        // supplySystem.deployToken(scenario, "ENERGY", "ENERGY");
+        // supplySystem.deployToken(scenario, "MATTER", "MATTER");
+        // supplySystem.deployToken(scenario, "TECHNOLOGY", "TECHNOLOGY");
+
+        // SupplyEntity supplyEntity = SupplyEntity(scenario.getEntity(address(controller.getSystem(2))));
 
         
 

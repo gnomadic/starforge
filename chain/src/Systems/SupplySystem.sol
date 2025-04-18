@@ -6,6 +6,8 @@ import {IScenario} from "../Scenario.sol";
 import {SupplyEntity} from "../entities/SupplyEntity.sol";
 import {SupplyTokenFactory} from "../tokens/SupplyTokenFactory.sol";
 
+import {console} from "hardhat/console.sol";
+
 contract SupplySystem is ISystem {
     struct Resource {
         address tokenAddress;
@@ -54,4 +56,36 @@ contract SupplySystem is ISystem {
 
         return address(supplyAddress);
     }
+
+    function deployToken(
+        IScenario scenario,
+        string memory tokenName,
+        string memory tokenSymbol
+    ) external returns (address) {
+        if (scenario.getAdmin() != msg.sender) {
+            revert NotAdmin();
+        }
+
+        SupplyEntity entity = SupplyEntity(
+            scenario.getEntity(address(this))
+        );
+
+        console.log(
+            "SupplySystem: deployToken: entityAddress: %s",
+            address(entity)
+        );
+
+        address newToken = 
+            _supplyTokenFactory.createSupplyToken(
+                _systemController,
+                tokenName,
+                tokenSymbol
+            );
+
+        console.log("adding token %s", tokenName);
+        entity.addToken(tokenName, newToken);
+        return newToken;
+    }
+
+    error NotAdmin();
 }
