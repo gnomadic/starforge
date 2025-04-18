@@ -16,6 +16,20 @@ contract PlanetStatsSystem is ISystem {
         planetAddress = _planetAddress;
     }
 
+        bool registered = false;
+    address private _systemController;
+
+    function registerSystem(address systemController) external {
+        if (registered) {
+            revert AlreadyRegistered();
+        }
+        registered = true;
+        _systemController = systemController;
+
+    }
+
+    error AlreadyRegistered();
+
     function calculateStatsForMint(
         IScenario scenario,
         uint256 tokenId
@@ -49,7 +63,6 @@ contract PlanetStatsSystem is ISystem {
             statsWithRarity[index] = stats[index];
         }
         entity.setStats(tokenId, statsWithRarity);
-        // IPlanetStatsEntity(planetStatsEntity).setStats(tokenId, stats, rarity, 0);
     }
 
     function getStartingStats(
@@ -112,6 +125,11 @@ contract PlanetStatsSystem is ISystem {
     }
 
     function activateEntity(IScenario scenario) external override returns (address) {
+        address current = scenario.getEntity(address(this));
+        if (current != address(0)) {
+            return current;
+        }
+
         // TODO replace this with proxy clone.
         PlanetStatsEntity entityAddress = new PlanetStatsEntity();
 
@@ -122,4 +140,6 @@ contract PlanetStatsSystem is ISystem {
         );
         return address(entityAddress);
     }
+
+    error NotScenario();
 }

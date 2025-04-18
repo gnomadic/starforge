@@ -62,6 +62,24 @@ module.exports = async (hre) => {
     log: true,
   });
 
+  const SupplyToken = await deploy("SupplyToken", {
+    from: deployer,
+    log: true,
+  });
+
+  const SupplyTokenFactory = await deploy("SupplyTokenFactory", {
+    from: deployer,
+    log: true,
+    args: [SupplyToken.address]
+  });
+
+
+  const SupplySystem = await deploy("SupplySystem", {
+    from: deployer,
+    log: true,
+    args: [SupplyTokenFactory.address]
+  });
+
   // const ComabtSystem = await deploy("CombatSystem", {
   //   from: deployer,
   //   log: true,
@@ -190,6 +208,9 @@ module.exports = async (hre) => {
   tx = await deployedSysController.registerSystem(1, PlanetStats.address);
   await tx.wait();
 
+  tx = await deployedSysController.registerSystem(2, SupplySystem.address);
+  await tx.wait();
+
   // tx = await deployedSysController.registerSystem(2, UpgradesSystem.address);
   // await tx.wait();
 
@@ -241,6 +262,8 @@ module.exports = async (hre) => {
   object.PlanetStats = PlanetStats.address;
   object.UpgradesSystem = UpgradesSystem.address;
   object.ScenarioFactory = ScenarioFactory.address;
+  object.SupplySystem = SupplySystem.address;
+  
   // object.DungeonMaster = DungeonMaster.address;
   object.energyToken = energy.address;
   object.lifeToken = life.address;

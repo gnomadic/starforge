@@ -14,6 +14,7 @@ interface IScenario {
 
 contract Scenario is IScenario {
     
+    address public systemController;
     address public admin;
     string public metadataURI;
 
@@ -23,12 +24,15 @@ contract Scenario is IScenario {
     constructor(){}
 
     bool initialized = false;
+
     
-    function initialize(address _admin, string memory _metadataURI, ISystem[] memory systems, address[] memory entities) external {
+    function initialize(address _admin, address _systemController, string memory _metadataURI, ISystem[] memory systems, address[] memory entities) external {
         require(!initialized, "Already initialized");
         initialized = true;
         metadataURI = _metadataURI;
+        systemController = _systemController;
         admin = _admin;
+        
         for (uint i = 0; i < systems.length; i++) {
             dataEntities[address(systems[i])] = entities[i];
         }

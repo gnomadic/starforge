@@ -2,17 +2,27 @@
 pragma solidity ^0.8.24;
 
 import {ISystem, ISystemController, TokenRate} from "./interfaces/ISystem.sol";
-import {IVotable} from "../interfaces/IVotable.sol";
 import {IScenario} from "../Scenario.sol";
 
-contract QuestSystem is ISystem, IVotable {
+contract QuestSystem is ISystem {
     struct Resource {
         address tokenAddress;
         string tokenName;
     }
 
-    function finalizeProposal(string calldata payload) external override {}
+    bool registered = false;
+    address private _systemController;
 
+    function registerSystem(address systemController) external {
+        if (registered) {
+            revert AlreadyRegistered();
+        }
+        registered = true;
+        _systemController = systemController;
+
+    }
+
+    error AlreadyRegistered();
     function init(
         ISystemController /*controller*/,
         IScenario /*scenario*/,

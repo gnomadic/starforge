@@ -2,7 +2,11 @@
 pragma solidity ^0.8.24;
 
 import { ScenarioFactory } from "../ScenarioFactory.sol";
+import { Scenario } from "../Scenario.sol";
 import { console } from "hardhat/console.sol";
+import { PlanetStatsEntity } from "../entities/PlanetStatsEntity.sol";
+import { SupplyEntity } from "../entities/SupplyEntity.sol";
+import {SystemController} from "../systems/SystemController.sol";
 
 contract RegenScenario {
 
@@ -22,7 +26,17 @@ contract RegenScenario {
         console.log("regen: creating scenario %s", _metadataURI);
         address regen = factory.createScenario(_metadataURI);
 
+        Scenario scenario = Scenario(regen);
+        SystemController controller = SystemController(scenario.systemController());
+
+        PlanetStatsEntity planetStatsEntity = PlanetStatsEntity(scenario.getEntity(address(controller.getSystem(1))));
+        planetStatsEntity.setNumberOfStats(6);
+        planetStatsEntity.setStartingStats([80, 78, 76, 74, 72]);
+
+        SupplyEntity supplyEntity = SupplyEntity(scenario.getEntity(address(controller.getSystem(0))));
+
         
+
 
         
 

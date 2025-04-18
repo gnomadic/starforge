@@ -7,7 +7,7 @@ import {IScenario} from "../Scenario.sol";
 import {IVotable} from "../interfaces/IVotable.sol";
 import {console} from "hardhat/console.sol";
 
-contract UpgradesSystem is Ownable, ISystem, IVotable {
+contract UpgradesSystem is Ownable, ISystem {
     struct Upgrade {
         uint256 id;
         string name;
@@ -24,48 +24,53 @@ contract UpgradesSystem is Ownable, ISystem, IVotable {
 
     constructor() Ownable(_msgSender()) {}
 
-    // // IVotable interface
-    // function propose(
-    //     string calldata payload
-    // ) external override returns (uint256 proposalId) {
-    //     proposals.push(ProposedUpgrade({payload: payload, executed: false}));
-    //     return proposals.length - 1;
-    // }
+    bool registered = false;
+    address private _systemController;
 
-    function finalizeProposal(string calldata payload) external override {
-        (
-            string memory _name,
-            string memory _description,
-            uint256[] memory _costRate,
-            address[] memory _costToken,
-            uint256[] memory _benefitRate,
-            address[] memory _benefitToken
-        ) = abi.decode(
-                bytes(payload),
-                (string, string, uint256[], address[], uint256[], address[])
-            );
-
-        require(
-            _costRate.length == _costToken.length,
-            "Cost amount and token length mismatch"
-        );
-        require(
-            _benefitRate.length == _benefitToken.length,
-            "Benefit amount and token length mismatch"
-        );
-
-        Upgrade memory newUpgrade = Upgrade({
-            id: upgrades.length,
-            name: _name,
-            description: _description,
-            costRate: _costRate,
-            costToken: _costToken,
-            benefitRate: _benefitRate,
-            benefitToken: _benefitToken
-        });
-
-        upgrades.push(newUpgrade);
+    function registerSystem(address systemController) external {
+        if (registered) {
+            revert AlreadyRegistered();
+        }
+        registered = true;
+        _systemController = systemController;
     }
+
+    error AlreadyRegistered();
+
+    // function finalizeProposal(string calldata payload) external override {
+    //     (
+    //         string memory _name,
+    //         string memory _description,
+    //         uint256[] memory _costRate,
+    //         address[] memory _costToken,
+    //         uint256[] memory _benefitRate,
+    //         address[] memory _benefitToken
+    //     ) = abi.decode(
+    //             bytes(payload),
+    //             (string, string, uint256[], address[], uint256[], address[])
+    //         );
+
+    //     require(
+    //         _costRate.length == _costToken.length,
+    //         "Cost amount and token length mismatch"
+    //     );
+    //     require(
+    //         _benefitRate.length == _benefitToken.length,
+    //         "Benefit amount and token length mismatch"
+    //     );
+
+    //     Upgrade memory newUpgrade = Upgrade({
+    //         id: upgrades.length,
+    //         name: _name,
+    //         description: _description,
+    //         costRate: _costRate,
+    //         costToken: _costToken,
+    //         benefitRate: _benefitRate,
+    //         benefitToken: _benefitToken
+    //     });
+
+    //     upgrades.push(newUpgrade);
+    // }
 
     // Existing methods
     function addUpgrade(

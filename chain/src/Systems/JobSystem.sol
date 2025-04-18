@@ -2,10 +2,9 @@
 pragma solidity ^0.8.24;
 
 import {ISystem, ISystemController, TokenRate} from "./interfaces/ISystem.sol";
-import {IVotable} from "../interfaces/IVotable.sol";
 import {IScenario} from "../Scenario.sol";
 
-contract JobSystem is ISystem, IVotable {
+contract JobSystem is ISystem {
     struct Resource {
         address tokenAddress;
         string tokenName;
@@ -25,7 +24,19 @@ contract JobSystem is ISystem, IVotable {
     event JobActivated(address indexed player, string jobId);
     event JobDeactivated(address indexed player, string jobId);
 
-    function finalizeProposal(string calldata payload) external override {}
+        bool registered = false;
+    address private _systemController;
+
+    function registerSystem(address systemController) external {
+        if (registered) {
+            revert AlreadyRegistered();
+        }
+        registered = true;
+        _systemController = systemController;
+
+    }
+
+    error AlreadyRegistered();
 
     function init(
         ISystemController /*controller*/,

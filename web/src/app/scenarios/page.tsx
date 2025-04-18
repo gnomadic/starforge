@@ -78,7 +78,6 @@ const Scenarios = () => {
             {scenarios?.map((scenario, index) => (
                 <ScenarioCard
                   key={index}
-                  isActive={false}
                   ipfs={scenario.metadataURI}
                   admin={scenario.admin}
                   active={scenario.active}

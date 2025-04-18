@@ -9,7 +9,6 @@ import { Address } from 'viem';
 import { useIPFS } from '@/hooks/useIPFS';
 
 interface ScenarioCardProps {
-  isActive?: boolean;
   ipfs?: string | undefined;
   admin?: Address;
   active?: boolean;
@@ -18,7 +17,8 @@ interface ScenarioCardProps {
 
 const ScenarioCard: React.FC<ScenarioCardProps> = ({ 
   ipfs,
-  isActive = false
+  admin,
+  active,
 }) => {
 
   const { data, error } = useIPFS<ScenarioMetadata>(ipfs);
@@ -27,14 +27,14 @@ const ScenarioCard: React.FC<ScenarioCardProps> = ({
   const contentTypes = ['Stats', 'Quests', 'Artifacts', 'Enemies', 'Resources', 'Jobs']
   
   return (
-    <Card className={`transition-all hover:border-primary/50 ${isActive ? 'border-primary ring-2 ring-primary/20' : 'border-white/10'}`}>
+    <Card className={`transition-all hover:border-primary/50 ${active ? 'border-primary ring-2 ring-primary/20' : 'border-white/10'}`}>
       <div className="h-36 overflow-hidden bg-gradient-to-br from-gray-500/20 via-slate-500/20 to-zinc-500/20 relative">
    
           <div className="flex items-center justify-center h-full">
             <div className="text-4xl font-bold text-white/10">{data?.name.substring(0, 1)}</div>
           </div>
    
-        {isActive && (
+        {active && (
           <div className="absolute top-2 right-2">
             <Badge variant="default" className="bg-primary text-primary-foreground">
               Active
@@ -75,11 +75,11 @@ const ScenarioCard: React.FC<ScenarioCardProps> = ({
         <Button 
           size="sm" 
           onClick={() => {}}
-          variant={isActive ? "secondary" : "default"}
-          disabled={isActive}
+          variant={active ? "secondary" : "default"}
+          disabled={active}
         >
           <Play className="h-4 w-4 mr-1" />
-          {isActive ? 'Active' : 'Activate'}
+          {active ? 'Active' : 'Activate'}
         </Button>
       </CardFooter>
     </Card>

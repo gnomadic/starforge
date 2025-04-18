@@ -3,16 +3,14 @@ pragma solidity ^0.8.24;
 
 import {IScenario} from "../Scenario.sol";
 
-
-contract SupplyEntity  {
-
+contract SupplyEntity {
     string[] private tokenNames;
     address[] private tokenAddresses;
-    
+
     IScenario private _scenario;
     address private system;
 
-    constructor(){}
+    constructor() {}
 
     bool initialized = false;
 
@@ -31,11 +29,17 @@ contract SupplyEntity  {
         return tokenAddresses;
     }
 
-    function setTokens(string[] memory name, address[] memory addresses) external {
-        if (msg.sender !=  _scenario.getAdmin()) {
+    function setTokens(
+        string[] memory name,
+        address[] memory addresses
+    ) external {
+        if (msg.sender != _scenario.getAdmin()) {
             revert NotScenarioAdmin();
         }
-        require(name.length == addresses.length, "Name and address arrays must be the same length");
+        require(
+            name.length == addresses.length,
+            "Name and address arrays must be the same length"
+        );
         for (uint256 i = 0; i < name.length; i++) {
             tokenNames.push(name[i]);
             tokenAddresses.push(addresses[i]);

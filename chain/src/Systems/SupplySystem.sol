@@ -4,6 +4,7 @@ pragma solidity ^0.8.24;
 import {ISystem, ISystemController, TokenRate} from "./interfaces/ISystem.sol";
 import {IScenario} from "../Scenario.sol";
 import {SupplyEntity} from "../entities/SupplyEntity.sol";
+import {SupplyTokenFactory} from "../tokens/SupplyTokenFactory.sol";
 
 contract SupplySystem is ISystem {
     struct Resource {
@@ -11,7 +12,24 @@ contract SupplySystem is ISystem {
         string tokenName;
     }
 
-    // function finalizeProposal(string calldata payload) external override {}
+    SupplyTokenFactory private _supplyTokenFactory;
+
+    constructor(address supplyTokenFactory) {
+        _supplyTokenFactory = SupplyTokenFactory(supplyTokenFactory);
+    }
+
+    bool registered = false;
+    address private _systemController;
+
+    function registerSystem(address systemController) external {
+        if (registered) {
+            revert AlreadyRegistered();
+        }
+        registered = true;
+        _systemController = systemController;
+    }
+
+    error AlreadyRegistered();
 
     function init(
         ISystemController /*controller*/,
@@ -21,7 +39,14 @@ contract SupplySystem is ISystem {
 
     function sync(uint256 /*tokenId*/) external override {}
 
-    function activateEntity(IScenario scenario) external override returns (address) {
+    function activateEntity(
+        IScenario scenario
+    ) external override returns (address) {
+        address current = scenario.getEntity(address(this));
+        if (current != address(0)) {
+            return current;
+        }
+
         // TODO replace this with proxy clone.
         SupplyEntity supplyAddress = new SupplyEntity();
 

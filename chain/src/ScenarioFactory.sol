@@ -42,7 +42,7 @@ contract ScenarioFactory is Context {
         // console.log("entities %s", entities[0]);
         ISystem[] memory systems = systemController.getSystems();
 
-        newScenario.initialize(_msgSender(), metadataURI, systems, entities);
+        newScenario.initialize(_msgSender(), address(systemController), metadataURI, systems, entities);
 
         emit ScenarioDeployed(msg.sender, address(newScenario));
 

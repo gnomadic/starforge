@@ -32,7 +32,7 @@ contract SystemController is Ownable, ISystemController {
 
     function initAll(uint256 tokenId) external onlyToken {
         //get active scenarios for the current user from the ScenarioFactory
-                console.log("system controller: init all");
+        console.log("system controller: init all");
 
         IScenario[] memory activeScenarios = scenarioFactory.getActivePlayerScenarios(_msgSender());
         console.log("there are %s active scenarios", activeScenarios.length);
@@ -56,6 +56,15 @@ contract SystemController is Ownable, ISystemController {
 
     function getSystems() external view returns (ISystem[] memory) {
         return systems;
+    }
+
+    function isSystem(address systemAddress) external view returns (bool) {
+        for (uint256 i = 0; i < systems.length; i++) {
+            if (address(systems[i]) == systemAddress) {
+                return true;
+            }
+        }
+        return false;
     }
 
     function activateEntities(IScenario scenario) external returns (address[] memory) {
