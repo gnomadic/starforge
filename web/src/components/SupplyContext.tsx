@@ -4,15 +4,16 @@ import React, { createContext, useContext, useState, ReactNode, useEffect } from
 import { Heart, Circle, Zap, Cpu } from 'lucide-react';
 import { Supply } from '@/domain/types';
 import SupplyBar from './SupplyBar';
-import { useReadErc20BalanceOf } from '@/generated';
+import { useReadErc20BalanceOf, useReadScenarioGetEntity, useReadSupplyEntityGetTokenAddresses, useReadSupplyEntityGetTokenBalances, useReadSupplyEntityGetTokenNames } from '@/generated';
 import { useDeployment } from '@/hooks/useDeployment';
 import { useAccount } from 'wagmi';
+import { useScenarios } from './ScenarioContext';
 
 // Define the initial Supply values
 const initialSupplies: Supply[] = [
   {
     id: '1',
-    type: 'life',
+    type: 'LIFE',
     amount: 0,
     emissionRate: 0.1,
     icon: <Heart className="h-4 w-4 text-red-400" />,
@@ -20,7 +21,7 @@ const initialSupplies: Supply[] = [
   },
   {
     id: '2',
-    type: 'matter',
+    type: 'MATTER',
     amount: 0,
     emissionRate: 0.2,
     icon: <Circle className="h-4 w-4 text-blue-400" />,
@@ -28,7 +29,7 @@ const initialSupplies: Supply[] = [
   },
   {
     id: '3',
-    type: 'energy',
+    type: 'ENERGY',
     amount: 0,
     emissionRate: 0.15,
     icon: <Zap className="h-4 w-4 text-yellow-400" />,
@@ -36,7 +37,7 @@ const initialSupplies: Supply[] = [
   },
   {
     id: '4',
-    type: 'technology',
+    type: 'TECHNOLOGY',
     amount: 0,
     emissionRate: 0.05,
     icon: <Cpu className="h-4 w-4 text-emerald-400" />,
@@ -66,6 +67,14 @@ export const SupplyProvider: React.FC<{ children: ReactNode }> = ({ children }) 
 
   const { deploy } = useDeployment();
   const { address } = useAccount();
+  const { scenarios } = useScenarios();
+
+  const { data: whichEntity } = useReadScenarioGetEntity({ args: [deploy.SupplySystem], address: scenarios ? scenarios[0] : "0x0" }) 
+  const { data: tokenBalances } = useReadSupplyEntityGetTokenBalances({ args: [address ? address : "0x0"], address: whichEntity })
+  const { data: tokenNames } = useReadSupplyEntityGetTokenNames({ args: [], address: whichEntity })
+  
+
+  // const { data: tokenAddresses} = useReadSupplyEntityGetTokenAddresses({
 
   const { data: lifeBalance, error: lifeError } = useReadErc20BalanceOf({
     address: deploy.LifeToken,
@@ -88,27 +97,58 @@ export const SupplyProvider: React.FC<{ children: ReactNode }> = ({ children }) 
   });
 
   useEffect(() => {
+    if (tokenNames && tokenBalances) {
+      if (tokenNames.length !== tokenBalances.length) {
+        console.error("Token names and addresses length mismatch");
+        return;
+      }
+
+      const tokenData = tokenNames.map((name, index) => ({
+        name,
+        balance: tokenBalances[index],
+      }));
+
+      console.log("Token Data: ", tokenData);
+      setSupplies((prev) =>
+        prev.map((supply) => {
+          const token = tokenData.find((t) => t.name === supply.type);
+          if (token) {
+            updateSupply(supply.type, Number(token.balance) / 1e18);
+            // console.log("Token: ", { ...supply, address: token.address });
+            // return { ...supply, address: token.address };
+          }
+          return supply;
+        })
+
+
+      );
+
+
+    }
     console.log(
       "lifeBalance: ", lifeBalance,
       "energyBalance: ", energyBalance,
       "matterBalance: ", matterBalance,
-      "techBalance: ", techBalance
+      "techBalance: ", techBalance,
+      "tokenBalances: ", tokenBalances,
+      "tokenNames: ", tokenNames,
     )
-    if (lifeBalance) {
-      updateSupply('life', Number(lifeBalance) / 1e18);
+    // if (lifeBalance) {
+    //   updateSupply('LIFE', Number(lifeBalance) / 1e18);
+    // }
+    // if (energyBalance) {
+    //   updateSupply('ENERGY', Number(energyBalance) / 1e18);
+    // }
+    // if (matterBalance) {
+    //   updateSupply('MATTER', Number(matterBalance) / 1e18);
+    // }
+    // if (techBalance) {
+    //   updateSupply('TECHNOLOGY', Number(techBalance) / 1e18);
+    // }
 
-    }
-    if (energyBalance) {
-      updateSupply('energy', Number(energyBalance) / 1e18);
-    }
-    if (matterBalance) {
-      updateSupply('matter', Number(matterBalance) / 1e18);
-    }
-    if (techBalance) {
-      updateSupply('technology', Number(techBalance) / 1e18);
-    }
+
   }
-    , [lifeBalance, energyBalance, matterBalance, techBalance]);
+    , [lifeBalance, energyBalance, matterBalance, techBalance, tokenBalances, tokenNames]);
 
   // useEffect(() => {
   //   // set the address in the Supply from the deploy

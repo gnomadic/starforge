@@ -22,7 +22,7 @@
       <stop stop-color="hsl(347, 56%, 83%)" offset="100%" />
     </radialGradient>
 
-        <radialGradient id="dope2">
+    <radialGradient id="dope2">
       <stop stop-color="hsl(247, 0%, 0%)" offset="00%" />
       <stop stop-color="hsl(247, 56%, 41%)" offset="70%" />
       <stop stop-color="hsl(247, 56%, 53%)" offset="90%" />
@@ -42,8 +42,8 @@
       <feBlend in2="SourceGraphic" />
     </filter>
 
-    <mask id="mapmassk">
-      <rect width="100%" height="100%" fill="black" />
+    <mask id="rounded">
+      <rect width="100%" height="100%" fill="white" />
       <!-- <g fill="#fff"> -->
 
       <!-- <circle cx="67" cy="67" r="55" />
@@ -73,17 +73,28 @@
         <circle cx="474" cy="330" r="12" />
         <circle cx="330" cy="474" r="12" /> -->
 
-      <circle cx="512" cy="512" r="450" fill="white" />
+      <circle cx="512" cy="512" r="450" fill="black" />
       <!-- </g> -->
+
+    </mask>
+
+        <mask id="unrounded">
+      <rect width="100%" height="100%" fill="black" />
+
+
+      <circle cx="512" cy="512" r="450" fill="white" />
+      
 
     </mask>
 
     <radialGradient id="galaxy">
       <stop stop-color="#258" />
-      <stop offset="0" stop-color="black" />
-      <stop offset="0.4" stop-color="black" />
-      <stop offset=".6" stop-color="#7cc" />
-      <stop offset=".8" stop-color="#c51" stop-opacity=".5" />
+      <!-- <stop offset="0" stop-color="black" /> -->
+      
+      <!-- <stop offset="0" stop-color="black" /> -->
+      <stop offset=".2" stop-color="#7cc" />
+      <stop offset=".4" stop-color="#c51" stop-opacity=".5" />
+      <stop offset=".9" stop-opacity=".01" />
       <stop offset="1" stop-opacity="0" />
       <!-- <stop offset="1" stop-opacity="0" /> -->
 
@@ -123,25 +134,32 @@
   <svg viewBox="0 0 1024 1024" clip-path="url(#box)">
 
     <rect width="100%" height="100%" fill="black" />
-    <rect x="0" y='0' stroke="black" fill="#426786" stroke-width="2" width="1024" height="1024" mask="url(#mapmask)" />
-    <rect width="100%" height="100%" filter="url(#stars)" opacity="0.3" mask="url(#mapmask)" />
-    <rect width="100%" height="100%" filter="url(#stars)" opacity="0.3" mask="url(#mapmask)" />
-    <rect width="100%" height="100%" filter="url(#clouds)" fill="url(#cloudGradient)" opacity="1"
-      mask="url(#mapmask)" />
+    <rect x="0" y='0' stroke="black" fill="#426786" stroke-width="2" width="1024" height="1024" />
+    <rect width="100%" height="100%" filter="url(#stars)" opacity="0.3" />
+    <rect width="100%" height="100%" filter="url(#stars)" opacity="0.3" />
+    <rect width="100%" height="100%" filter="url(#clouds)" fill="url(#cloudGradient)" opacity="1" />
 
 
 
-    <!-- <circle cx="50%" cy="50%" r="71%" fill="url(#galaxy)" filter="url(#galaxyfilter)" mask="url(#mapmask)"/> -->
-    <rect width="100%" height="100%" y="-10%" fill="url(#galaxy)" filter="url(#galaxyfilter)" mask="url(#mapmask)" />
-    <circle cx="512" cy="412" r="130" filter="url(#stars)" opacity="0.3" mask="url(#mapmask)" />
-    <circle cx="512" cy="412" r="150" fill="none" filter="url(#light)" />
-    <circle cx="512" cy="412" r="50" fill="url(#dope)" />
+    <!-- <circle cx="50%" cy="50%" r="100%" fill="url(#galaxy)" filter="url(#galaxyfilter)"/> -->
+    <!-- <rect width="50%" height="100%" y="-10%" x="30%" fill="url(#galaxy)" filter="url(#galaxyfilter)"  transform="skewX(20)"/> -->
+    <!-- <circle cx="512" cy="412" r="130" filter="url(#stars)" opacity="0.3" /> -->
+    <circle cx="350" cy="400" r="150" fill="none" filter="url(#light)" />
+    <circle cx="350" cy="400" r="50" fill="url(#dope)" />
     <!-- <circle cx="512" cy="412" r="100" fill="url(#dope2)" filter="url(#planet)" mask="url(#planetmask)" opacity="0.8" /> -->
-    <!-- 
+<!--     
     <circle cx="512" cy="412" r="100" stroke="lack" fill="hsl(180, 25%, 80%)" stroke-width="12" filter="url(#planet)"
       mask="url(#planetmask)" opacity="0.5" /> -->
 
-    <rect x="-10%" y="80%" width="120%" height="90%" filter="url(#groundfilter)" />
+    <rect x="-10%" y="75%" width="120%" height="90%" filter="url(#groundfilter)" />
+
+    <rect width="100%" height="100%" fill="#1d2d39" mask="url(#rounded)" />
+    <circle cx="512" cy="512" r="450" fill="none" stroke="white" stroke-width="2" />
+    <!-- <circle cx="50%" cy="50%" r="71%" fill="url(#galaxy)" filter="url(#galaxyfilter)"/> -->
+
+    <!-- <rect width="100%" height="100%" filter="url(#stars)" opacity="1" mask="url(#rounded)" /> -->
+
+
 
     <!--     
     <ellipse cx="512" cy="512" rx="400" ry="250" fill="none" stroke="white" stroke-width="2"

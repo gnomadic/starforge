@@ -30,6 +30,14 @@ contract SupplyEntity {
         return tokenAddresses;
     }
 
+    function getTokenBalances(address account) external view returns (uint256[] memory) {
+        uint256[] memory balances = new uint256[](tokenAddresses.length);
+        for (uint256 i = 0; i < tokenAddresses.length; i++) {
+            balances[i] = IERC20(tokenAddresses[i]).balanceOf(account);
+        }
+        return balances;
+    }
+
     // function setTokens(
     //     string[] memory name,
     //     address[] memory addresses
@@ -63,4 +71,10 @@ contract SupplyEntity {
     }
 
     error NotScenarioAdmin();
+}
+
+
+interface IERC20 {
+    function balanceOf(address account) external view returns (uint256);
+    
 }

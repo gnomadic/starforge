@@ -68,10 +68,12 @@ export interface CraftingSystemGameState {
 export type Deployment = {
   Planet: Address;
   SystemController: Address;
+  ScenarioFactory: Address;
   PlanetStatsSystem: Address;
+  SupplySystem: Address;
+
   UpgradesSystem: Address;
   DungeonMaster: Address;
-  ScenarioFactory: Address;
   EnergyToken: Address;
   LifeToken: Address;
   MatterToken: Address;
@@ -122,7 +124,7 @@ export type ResourceType = 'energy' | 'matter' | 'life' | 'technology';
 
 export interface Supply {
   // type: 'gold' | 'energy' | 'cosmic-dust' | 'stardust';
-  type: 'energy' | 'matter' | 'life' | 'technology';
+  type: 'ENERGY' | 'MATTER' | 'LIFE' | 'TECHNOLOGY';
   amount: number;
   emissionRate: number;
   // icon: string;

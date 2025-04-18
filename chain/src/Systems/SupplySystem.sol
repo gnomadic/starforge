@@ -27,8 +27,14 @@ contract SupplySystem is ISystem {
         if (registered) {
             revert AlreadyRegistered();
         }
+
+        
         registered = true;
         _systemController = systemController;
+        console.log(
+            "SupplySystem: registerSystem: systemController: %s",
+            _systemController
+        );
     }
 
     error AlreadyRegistered();
@@ -78,6 +84,7 @@ contract SupplySystem is ISystem {
         address newToken = 
             _supplyTokenFactory.createSupplyToken(
                 _systemController,
+                address(scenario),
                 tokenName,
                 tokenSymbol
             );
@@ -86,6 +93,8 @@ contract SupplySystem is ISystem {
         entity.addToken(tokenName, newToken);
         return newToken;
     }
+
+    
 
     error NotAdmin();
 }

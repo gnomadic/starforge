@@ -6,7 +6,7 @@ import "@openzeppelin/contracts/proxy/Clones.sol";
 import { console } from "hardhat/console.sol";
 
 interface ISupplyToken {
-    function initialize(string memory name, string memory symbol, address systemController) external;
+    function initialize(string memory name, string memory symbol, address systemController, address scenario) external;
 }
 
 contract SupplyTokenFactory {
@@ -23,6 +23,7 @@ contract SupplyTokenFactory {
 
     function createSupplyToken(
         address systemController,
+        address scenario,
         string memory name,
         string memory symbol
     ) external returns (address) {
@@ -32,11 +33,11 @@ contract SupplyTokenFactory {
         address proxy = implementation.clone();
                 console.log("ok cloned at %s", proxy);
 
-        ISupplyToken(proxy).initialize(name, symbol, systemController);
+        ISupplyToken(proxy).initialize(name, symbol, systemController, scenario );
                 console.log("intialized token %s", name);
 
         emit SupplyTokenCreated(proxy, msg.sender, name, symbol);
-                console.log("done");
+                console.log('done');
 
         return proxy;
     }

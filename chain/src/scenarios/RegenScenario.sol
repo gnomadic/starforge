@@ -37,10 +37,18 @@ contract RegenScenario {
         SupplySystem supplySystem = SupplySystem(address(controller.getSystem(2)));
 
         console.log("supplySystem: %s", address(supplySystem));
-        supplySystem.deployToken(scenario, "LIFE", "LIFE");
-        // supplySystem.deployToken(scenario, "ENERGY", "ENERGY");
-        // supplySystem.deployToken(scenario, "MATTER", "MATTER");
-        // supplySystem.deployToken(scenario, "TECHNOLOGY", "TECHNOLOGY");
+        address life = supplySystem.deployToken(scenario, "LIFE", "LIFE");
+        address energy = supplySystem.deployToken(scenario, "ENERGY", "ENERGY");
+        address matter = supplySystem.deployToken(scenario, "MATTER", "MATTER");
+        address tech = supplySystem.deployToken(scenario, "TECHNOLOGY", "TECHNOLOGY");
+
+console.log("life is at: %s", life);
+        Mintable(life).mint(0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266, 10000000000000000000);
+        Mintable(energy).mint(0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266, 20000000000000000000);
+        Mintable(matter).mint(0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266, 30000000000000000000);    
+        Mintable(tech).mint(0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266, 40000000000000000000);
+
+
 
         // SupplyEntity supplyEntity = SupplyEntity(scenario.getEntity(address(controller.getSystem(2))));
 
@@ -56,4 +64,10 @@ contract RegenScenario {
     }
 
 
+
+
+}
+
+interface Mintable {
+    function mint(address to, uint256 amount) external;
 }

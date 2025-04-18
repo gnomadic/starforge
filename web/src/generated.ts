@@ -154,47 +154,16 @@ export const dungeonMasterAbi = [
 ] as const
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// IPlanetStatsEntity
+// IERC20
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-export const iPlanetStatsEntityAbi = [
+export const ierc20Abi = [
   {
     type: 'function',
-    inputs: [],
-    name: 'getRarityOdds',
-    outputs: [{ name: '', internalType: 'uint8[5]', type: 'uint8[5]' }],
+    inputs: [{ name: 'account', internalType: 'address', type: 'address' }],
+    name: 'balanceOf',
+    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
     stateMutability: 'view',
-  },
-  {
-    type: 'function',
-    inputs: [{ name: 'gen', internalType: 'uint8', type: 'uint8' }],
-    name: 'getStartingStats',
-    outputs: [{ name: '', internalType: 'uint8', type: 'uint8' }],
-    stateMutability: 'nonpayable',
-  },
-  {
-    type: 'function',
-    inputs: [{ name: 'tokenId', internalType: 'uint256', type: 'uint256' }],
-    name: 'getStats',
-    outputs: [{ name: '', internalType: 'uint16[10]', type: 'uint16[10]' }],
-    stateMutability: 'view',
-  },
-  {
-    type: 'function',
-    inputs: [{ name: 'newOdds', internalType: 'uint8[5]', type: 'uint8[5]' }],
-    name: 'setRarityOdds',
-    outputs: [],
-    stateMutability: 'nonpayable',
-  },
-  {
-    type: 'function',
-    inputs: [
-      { name: 'tokenId', internalType: 'uint256', type: 'uint256' },
-      { name: 'newStats', internalType: 'uint16[10]', type: 'uint16[10]' },
-    ],
-    name: 'setStats',
-    outputs: [],
-    stateMutability: 'nonpayable',
   },
 ] as const
 
@@ -673,6 +642,13 @@ export const planetStatsEntityAbi = [
   {
     type: 'function',
     inputs: [],
+    name: 'getNumberOfStats',
+    outputs: [{ name: '', internalType: 'uint8', type: 'uint8' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
     name: 'getRarityOdds',
     outputs: [{ name: '', internalType: 'uint8[5]', type: 'uint8[5]' }],
     stateMutability: 'view',
@@ -698,6 +674,15 @@ export const planetStatsEntityAbi = [
       { name: '_system', internalType: 'address', type: 'address' },
     ],
     name: 'initialize',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'newNumberOfStats', internalType: 'uint8', type: 'uint8' },
+    ],
+    name: 'setNumberOfStats',
     outputs: [],
     stateMutability: 'nonpayable',
   },
@@ -741,35 +726,8 @@ export const planetStatsSystemAbi = [
     ],
     stateMutability: 'nonpayable',
   },
-  {
-    type: 'error',
-    inputs: [{ name: 'owner', internalType: 'address', type: 'address' }],
-    name: 'OwnableInvalidOwner',
-  },
-  {
-    type: 'error',
-    inputs: [{ name: 'account', internalType: 'address', type: 'address' }],
-    name: 'OwnableUnauthorizedAccount',
-  },
-  {
-    type: 'event',
-    anonymous: false,
-    inputs: [
-      {
-        name: 'previousOwner',
-        internalType: 'address',
-        type: 'address',
-        indexed: true,
-      },
-      {
-        name: 'newOwner',
-        internalType: 'address',
-        type: 'address',
-        indexed: true,
-      },
-    ],
-    name: 'OwnershipTransferred',
-  },
+  { type: 'error', inputs: [], name: 'AlreadyRegistered' },
+  { type: 'error', inputs: [], name: 'NotScenario' },
   {
     type: 'function',
     inputs: [
@@ -796,15 +754,10 @@ export const planetStatsSystemAbi = [
   },
   {
     type: 'function',
-    inputs: [],
-    name: 'owner',
-    outputs: [{ name: '', internalType: 'address', type: 'address' }],
-    stateMutability: 'view',
-  },
-  {
-    type: 'function',
-    inputs: [],
-    name: 'renounceOwnership',
+    inputs: [
+      { name: 'systemController', internalType: 'address', type: 'address' },
+    ],
+    name: 'registerSystem',
     outputs: [],
     stateMutability: 'nonpayable',
   },
@@ -812,13 +765,6 @@ export const planetStatsSystemAbi = [
     type: 'function',
     inputs: [{ name: 'tokenId', internalType: 'uint256', type: 'uint256' }],
     name: 'sync',
-    outputs: [],
-    stateMutability: 'nonpayable',
-  },
-  {
-    type: 'function',
-    inputs: [{ name: 'newOwner', internalType: 'address', type: 'address' }],
-    name: 'transferOwnership',
     outputs: [],
     stateMutability: 'nonpayable',
   },
@@ -855,6 +801,7 @@ export const scenarioAbi = [
     type: 'function',
     inputs: [
       { name: '_admin', internalType: 'address', type: 'address' },
+      { name: '_systemController', internalType: 'address', type: 'address' },
       { name: '_metadataURI', internalType: 'string', type: 'string' },
       {
         name: 'systems',
@@ -887,6 +834,13 @@ export const scenarioAbi = [
     name: 'setMetadataURI',
     outputs: [],
     stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'systemController',
+    outputs: [{ name: '', internalType: 'address', type: 'address' }],
+    stateMutability: 'view',
   },
 ] as const
 
@@ -992,6 +946,119 @@ export const scenarioFactoryAbi = [
 ] as const
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// SupplyEntity
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+export const supplyEntityAbi = [
+  { type: 'constructor', inputs: [], stateMutability: 'nonpayable' },
+  { type: 'error', inputs: [], name: 'NotScenarioAdmin' },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'name', internalType: 'string', type: 'string' },
+      { name: 'tokenAddress', internalType: 'address', type: 'address' },
+    ],
+    name: 'addToken',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'getTokenAddresses',
+    outputs: [{ name: '', internalType: 'address[]', type: 'address[]' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: 'account', internalType: 'address', type: 'address' }],
+    name: 'getTokenBalances',
+    outputs: [{ name: '', internalType: 'uint256[]', type: 'uint256[]' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'getTokenNames',
+    outputs: [{ name: '', internalType: 'string[]', type: 'string[]' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'scenario', internalType: 'contract IScenario', type: 'address' },
+      { name: '_system', internalType: 'address', type: 'address' },
+    ],
+    name: 'initialize',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+] as const
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// SupplySystem
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+export const supplySystemAbi = [
+  {
+    type: 'constructor',
+    inputs: [
+      { name: 'supplyTokenFactory', internalType: 'address', type: 'address' },
+    ],
+    stateMutability: 'nonpayable',
+  },
+  { type: 'error', inputs: [], name: 'AlreadyRegistered' },
+  { type: 'error', inputs: [], name: 'NotAdmin' },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'scenario', internalType: 'contract IScenario', type: 'address' },
+    ],
+    name: 'activateEntity',
+    outputs: [{ name: '', internalType: 'address', type: 'address' }],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'scenario', internalType: 'contract IScenario', type: 'address' },
+      { name: 'tokenName', internalType: 'string', type: 'string' },
+      { name: 'tokenSymbol', internalType: 'string', type: 'string' },
+    ],
+    name: 'deployToken',
+    outputs: [{ name: '', internalType: 'address', type: 'address' }],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: '', internalType: 'contract ISystemController', type: 'address' },
+      { name: '', internalType: 'contract IScenario', type: 'address' },
+      { name: '', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'init',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'systemController', internalType: 'address', type: 'address' },
+    ],
+    name: 'registerSystem',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+    name: 'sync',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+] as const
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // SystemController
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -1057,6 +1124,15 @@ export const systemControllerAbi = [
     name: 'initAll',
     outputs: [],
     stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'systemAddress', internalType: 'address', type: 'address' },
+    ],
+    name: 'isSystem',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'view',
   },
   {
     type: 'function',
@@ -1156,6 +1232,7 @@ export const systemControllerAbi = [
 
 export const upgradesSystemAbi = [
   { type: 'constructor', inputs: [], stateMutability: 'nonpayable' },
+  { type: 'error', inputs: [], name: 'AlreadyRegistered' },
   {
     type: 'error',
     inputs: [{ name: 'owner', internalType: 'address', type: 'address' }],
@@ -1205,13 +1282,6 @@ export const upgradesSystemAbi = [
       { name: '_benefitToken', internalType: 'address[]', type: 'address[]' },
     ],
     name: 'addUpgrade',
-    outputs: [],
-    stateMutability: 'nonpayable',
-  },
-  {
-    type: 'function',
-    inputs: [{ name: 'payload', internalType: 'string', type: 'string' }],
-    name: 'finalizeProposal',
     outputs: [],
     stateMutability: 'nonpayable',
   },
@@ -1274,6 +1344,15 @@ export const upgradesSystemAbi = [
       { name: 'upgradeId', internalType: 'uint256', type: 'uint256' },
     ],
     name: 'purchaseUpgrade',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'systemController', internalType: 'address', type: 'address' },
+    ],
+    name: 'registerSystem',
     outputs: [],
     stateMutability: 'nonpayable',
   },
@@ -1576,96 +1655,19 @@ export const useWatchDungeonMasterOwnershipTransferredEvent =
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link iPlanetStatsEntityAbi}__
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ierc20Abi}__
  */
-export const useReadIPlanetStatsEntity = /*#__PURE__*/ createUseReadContract({
-  abi: iPlanetStatsEntityAbi,
+export const useReadIerc20 = /*#__PURE__*/ createUseReadContract({
+  abi: ierc20Abi,
 })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link iPlanetStatsEntityAbi}__ and `functionName` set to `"getRarityOdds"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ierc20Abi}__ and `functionName` set to `"balanceOf"`
  */
-export const useReadIPlanetStatsEntityGetRarityOdds =
-  /*#__PURE__*/ createUseReadContract({
-    abi: iPlanetStatsEntityAbi,
-    functionName: 'getRarityOdds',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link iPlanetStatsEntityAbi}__ and `functionName` set to `"getStats"`
- */
-export const useReadIPlanetStatsEntityGetStats =
-  /*#__PURE__*/ createUseReadContract({
-    abi: iPlanetStatsEntityAbi,
-    functionName: 'getStats',
-  })
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link iPlanetStatsEntityAbi}__
- */
-export const useWriteIPlanetStatsEntity = /*#__PURE__*/ createUseWriteContract({
-  abi: iPlanetStatsEntityAbi,
+export const useReadIerc20BalanceOf = /*#__PURE__*/ createUseReadContract({
+  abi: ierc20Abi,
+  functionName: 'balanceOf',
 })
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link iPlanetStatsEntityAbi}__ and `functionName` set to `"getStartingStats"`
- */
-export const useWriteIPlanetStatsEntityGetStartingStats =
-  /*#__PURE__*/ createUseWriteContract({
-    abi: iPlanetStatsEntityAbi,
-    functionName: 'getStartingStats',
-  })
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link iPlanetStatsEntityAbi}__ and `functionName` set to `"setRarityOdds"`
- */
-export const useWriteIPlanetStatsEntitySetRarityOdds =
-  /*#__PURE__*/ createUseWriteContract({
-    abi: iPlanetStatsEntityAbi,
-    functionName: 'setRarityOdds',
-  })
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link iPlanetStatsEntityAbi}__ and `functionName` set to `"setStats"`
- */
-export const useWriteIPlanetStatsEntitySetStats =
-  /*#__PURE__*/ createUseWriteContract({
-    abi: iPlanetStatsEntityAbi,
-    functionName: 'setStats',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link iPlanetStatsEntityAbi}__
- */
-export const useSimulateIPlanetStatsEntity =
-  /*#__PURE__*/ createUseSimulateContract({ abi: iPlanetStatsEntityAbi })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link iPlanetStatsEntityAbi}__ and `functionName` set to `"getStartingStats"`
- */
-export const useSimulateIPlanetStatsEntityGetStartingStats =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: iPlanetStatsEntityAbi,
-    functionName: 'getStartingStats',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link iPlanetStatsEntityAbi}__ and `functionName` set to `"setRarityOdds"`
- */
-export const useSimulateIPlanetStatsEntitySetRarityOdds =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: iPlanetStatsEntityAbi,
-    functionName: 'setRarityOdds',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link iPlanetStatsEntityAbi}__ and `functionName` set to `"setStats"`
- */
-export const useSimulateIPlanetStatsEntitySetStats =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: iPlanetStatsEntityAbi,
-    functionName: 'setStats',
-  })
 
 /**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link iScenarioAbi}__
@@ -2132,6 +2134,15 @@ export const useReadPlanetStatsEntity = /*#__PURE__*/ createUseReadContract({
 })
 
 /**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link planetStatsEntityAbi}__ and `functionName` set to `"getNumberOfStats"`
+ */
+export const useReadPlanetStatsEntityGetNumberOfStats =
+  /*#__PURE__*/ createUseReadContract({
+    abi: planetStatsEntityAbi,
+    functionName: 'getNumberOfStats',
+  })
+
+/**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link planetStatsEntityAbi}__ and `functionName` set to `"getRarityOdds"`
  */
 export const useReadPlanetStatsEntityGetRarityOdds =
@@ -2172,6 +2183,15 @@ export const useWritePlanetStatsEntityInitialize =
   /*#__PURE__*/ createUseWriteContract({
     abi: planetStatsEntityAbi,
     functionName: 'initialize',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link planetStatsEntityAbi}__ and `functionName` set to `"setNumberOfStats"`
+ */
+export const useWritePlanetStatsEntitySetNumberOfStats =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: planetStatsEntityAbi,
+    functionName: 'setNumberOfStats',
   })
 
 /**
@@ -2217,6 +2237,15 @@ export const useSimulatePlanetStatsEntityInitialize =
   })
 
 /**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link planetStatsEntityAbi}__ and `functionName` set to `"setNumberOfStats"`
+ */
+export const useSimulatePlanetStatsEntitySetNumberOfStats =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: planetStatsEntityAbi,
+    functionName: 'setNumberOfStats',
+  })
+
+/**
  * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link planetStatsEntityAbi}__ and `functionName` set to `"setRarityOdds"`
  */
 export const useSimulatePlanetStatsEntitySetRarityOdds =
@@ -2241,22 +2270,6 @@ export const useSimulatePlanetStatsEntitySetStats =
   /*#__PURE__*/ createUseSimulateContract({
     abi: planetStatsEntityAbi,
     functionName: 'setStats',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link planetStatsSystemAbi}__
- */
-export const useReadPlanetStatsSystem = /*#__PURE__*/ createUseReadContract({
-  abi: planetStatsSystemAbi,
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link planetStatsSystemAbi}__ and `functionName` set to `"owner"`
- */
-export const useReadPlanetStatsSystemOwner =
-  /*#__PURE__*/ createUseReadContract({
-    abi: planetStatsSystemAbi,
-    functionName: 'owner',
   })
 
 /**
@@ -2285,12 +2298,12 @@ export const useWritePlanetStatsSystemInit =
   })
 
 /**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link planetStatsSystemAbi}__ and `functionName` set to `"renounceOwnership"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link planetStatsSystemAbi}__ and `functionName` set to `"registerSystem"`
  */
-export const useWritePlanetStatsSystemRenounceOwnership =
+export const useWritePlanetStatsSystemRegisterSystem =
   /*#__PURE__*/ createUseWriteContract({
     abi: planetStatsSystemAbi,
-    functionName: 'renounceOwnership',
+    functionName: 'registerSystem',
   })
 
 /**
@@ -2300,15 +2313,6 @@ export const useWritePlanetStatsSystemSync =
   /*#__PURE__*/ createUseWriteContract({
     abi: planetStatsSystemAbi,
     functionName: 'sync',
-  })
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link planetStatsSystemAbi}__ and `functionName` set to `"transferOwnership"`
- */
-export const useWritePlanetStatsSystemTransferOwnership =
-  /*#__PURE__*/ createUseWriteContract({
-    abi: planetStatsSystemAbi,
-    functionName: 'transferOwnership',
   })
 
 /**
@@ -2336,12 +2340,12 @@ export const useSimulatePlanetStatsSystemInit =
   })
 
 /**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link planetStatsSystemAbi}__ and `functionName` set to `"renounceOwnership"`
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link planetStatsSystemAbi}__ and `functionName` set to `"registerSystem"`
  */
-export const useSimulatePlanetStatsSystemRenounceOwnership =
+export const useSimulatePlanetStatsSystemRegisterSystem =
   /*#__PURE__*/ createUseSimulateContract({
     abi: planetStatsSystemAbi,
-    functionName: 'renounceOwnership',
+    functionName: 'registerSystem',
   })
 
 /**
@@ -2351,30 +2355,6 @@ export const useSimulatePlanetStatsSystemSync =
   /*#__PURE__*/ createUseSimulateContract({
     abi: planetStatsSystemAbi,
     functionName: 'sync',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link planetStatsSystemAbi}__ and `functionName` set to `"transferOwnership"`
- */
-export const useSimulatePlanetStatsSystemTransferOwnership =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: planetStatsSystemAbi,
-    functionName: 'transferOwnership',
-  })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link planetStatsSystemAbi}__
- */
-export const useWatchPlanetStatsSystemEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({ abi: planetStatsSystemAbi })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link planetStatsSystemAbi}__ and `eventName` set to `"OwnershipTransferred"`
- */
-export const useWatchPlanetStatsSystemOwnershipTransferredEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: planetStatsSystemAbi,
-    eventName: 'OwnershipTransferred',
   })
 
 /**
@@ -2415,6 +2395,15 @@ export const useReadScenarioMetadataUri = /*#__PURE__*/ createUseReadContract({
   abi: scenarioAbi,
   functionName: 'metadataURI',
 })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link scenarioAbi}__ and `functionName` set to `"systemController"`
+ */
+export const useReadScenarioSystemController =
+  /*#__PURE__*/ createUseReadContract({
+    abi: scenarioAbi,
+    functionName: 'systemController',
+  })
 
 /**
  * Wraps __{@link useWriteContract}__ with `abi` set to __{@link scenarioAbi}__
@@ -2581,6 +2570,192 @@ export const useWatchScenarioFactoryScenarioDeployedEvent =
   })
 
 /**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link supplyEntityAbi}__
+ */
+export const useReadSupplyEntity = /*#__PURE__*/ createUseReadContract({
+  abi: supplyEntityAbi,
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link supplyEntityAbi}__ and `functionName` set to `"getTokenAddresses"`
+ */
+export const useReadSupplyEntityGetTokenAddresses =
+  /*#__PURE__*/ createUseReadContract({
+    abi: supplyEntityAbi,
+    functionName: 'getTokenAddresses',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link supplyEntityAbi}__ and `functionName` set to `"getTokenBalances"`
+ */
+export const useReadSupplyEntityGetTokenBalances =
+  /*#__PURE__*/ createUseReadContract({
+    abi: supplyEntityAbi,
+    functionName: 'getTokenBalances',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link supplyEntityAbi}__ and `functionName` set to `"getTokenNames"`
+ */
+export const useReadSupplyEntityGetTokenNames =
+  /*#__PURE__*/ createUseReadContract({
+    abi: supplyEntityAbi,
+    functionName: 'getTokenNames',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link supplyEntityAbi}__
+ */
+export const useWriteSupplyEntity = /*#__PURE__*/ createUseWriteContract({
+  abi: supplyEntityAbi,
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link supplyEntityAbi}__ and `functionName` set to `"addToken"`
+ */
+export const useWriteSupplyEntityAddToken =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: supplyEntityAbi,
+    functionName: 'addToken',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link supplyEntityAbi}__ and `functionName` set to `"initialize"`
+ */
+export const useWriteSupplyEntityInitialize =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: supplyEntityAbi,
+    functionName: 'initialize',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link supplyEntityAbi}__
+ */
+export const useSimulateSupplyEntity = /*#__PURE__*/ createUseSimulateContract({
+  abi: supplyEntityAbi,
+})
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link supplyEntityAbi}__ and `functionName` set to `"addToken"`
+ */
+export const useSimulateSupplyEntityAddToken =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: supplyEntityAbi,
+    functionName: 'addToken',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link supplyEntityAbi}__ and `functionName` set to `"initialize"`
+ */
+export const useSimulateSupplyEntityInitialize =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: supplyEntityAbi,
+    functionName: 'initialize',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link supplySystemAbi}__
+ */
+export const useWriteSupplySystem = /*#__PURE__*/ createUseWriteContract({
+  abi: supplySystemAbi,
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link supplySystemAbi}__ and `functionName` set to `"activateEntity"`
+ */
+export const useWriteSupplySystemActivateEntity =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: supplySystemAbi,
+    functionName: 'activateEntity',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link supplySystemAbi}__ and `functionName` set to `"deployToken"`
+ */
+export const useWriteSupplySystemDeployToken =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: supplySystemAbi,
+    functionName: 'deployToken',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link supplySystemAbi}__ and `functionName` set to `"init"`
+ */
+export const useWriteSupplySystemInit = /*#__PURE__*/ createUseWriteContract({
+  abi: supplySystemAbi,
+  functionName: 'init',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link supplySystemAbi}__ and `functionName` set to `"registerSystem"`
+ */
+export const useWriteSupplySystemRegisterSystem =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: supplySystemAbi,
+    functionName: 'registerSystem',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link supplySystemAbi}__ and `functionName` set to `"sync"`
+ */
+export const useWriteSupplySystemSync = /*#__PURE__*/ createUseWriteContract({
+  abi: supplySystemAbi,
+  functionName: 'sync',
+})
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link supplySystemAbi}__
+ */
+export const useSimulateSupplySystem = /*#__PURE__*/ createUseSimulateContract({
+  abi: supplySystemAbi,
+})
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link supplySystemAbi}__ and `functionName` set to `"activateEntity"`
+ */
+export const useSimulateSupplySystemActivateEntity =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: supplySystemAbi,
+    functionName: 'activateEntity',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link supplySystemAbi}__ and `functionName` set to `"deployToken"`
+ */
+export const useSimulateSupplySystemDeployToken =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: supplySystemAbi,
+    functionName: 'deployToken',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link supplySystemAbi}__ and `functionName` set to `"init"`
+ */
+export const useSimulateSupplySystemInit =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: supplySystemAbi,
+    functionName: 'init',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link supplySystemAbi}__ and `functionName` set to `"registerSystem"`
+ */
+export const useSimulateSupplySystemRegisterSystem =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: supplySystemAbi,
+    functionName: 'registerSystem',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link supplySystemAbi}__ and `functionName` set to `"sync"`
+ */
+export const useSimulateSupplySystemSync =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: supplySystemAbi,
+    functionName: 'sync',
+  })
+
+/**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link systemControllerAbi}__
  */
 export const useReadSystemController = /*#__PURE__*/ createUseReadContract({
@@ -2603,6 +2778,15 @@ export const useReadSystemControllerGetSystems =
   /*#__PURE__*/ createUseReadContract({
     abi: systemControllerAbi,
     functionName: 'getSystems',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link systemControllerAbi}__ and `functionName` set to `"isSystem"`
+ */
+export const useReadSystemControllerIsSystem =
+  /*#__PURE__*/ createUseReadContract({
+    abi: systemControllerAbi,
+    functionName: 'isSystem',
   })
 
 /**
@@ -2879,15 +3063,6 @@ export const useWriteUpgradesSystemAddUpgrade =
   })
 
 /**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link upgradesSystemAbi}__ and `functionName` set to `"finalizeProposal"`
- */
-export const useWriteUpgradesSystemFinalizeProposal =
-  /*#__PURE__*/ createUseWriteContract({
-    abi: upgradesSystemAbi,
-    functionName: 'finalizeProposal',
-  })
-
-/**
  * Wraps __{@link useWriteContract}__ with `abi` set to __{@link upgradesSystemAbi}__ and `functionName` set to `"init"`
  */
 export const useWriteUpgradesSystemInit = /*#__PURE__*/ createUseWriteContract({
@@ -2902,6 +3077,15 @@ export const useWriteUpgradesSystemPurchaseUpgrade =
   /*#__PURE__*/ createUseWriteContract({
     abi: upgradesSystemAbi,
     functionName: 'purchaseUpgrade',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link upgradesSystemAbi}__ and `functionName` set to `"registerSystem"`
+ */
+export const useWriteUpgradesSystemRegisterSystem =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: upgradesSystemAbi,
+    functionName: 'registerSystem',
   })
 
 /**
@@ -2955,15 +3139,6 @@ export const useSimulateUpgradesSystemAddUpgrade =
   })
 
 /**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link upgradesSystemAbi}__ and `functionName` set to `"finalizeProposal"`
- */
-export const useSimulateUpgradesSystemFinalizeProposal =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: upgradesSystemAbi,
-    functionName: 'finalizeProposal',
-  })
-
-/**
  * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link upgradesSystemAbi}__ and `functionName` set to `"init"`
  */
 export const useSimulateUpgradesSystemInit =
@@ -2979,6 +3154,15 @@ export const useSimulateUpgradesSystemPurchaseUpgrade =
   /*#__PURE__*/ createUseSimulateContract({
     abi: upgradesSystemAbi,
     functionName: 'purchaseUpgrade',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link upgradesSystemAbi}__ and `functionName` set to `"registerSystem"`
+ */
+export const useSimulateUpgradesSystemRegisterSystem =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: upgradesSystemAbi,
+    functionName: 'registerSystem',
   })
 
 /**
@@ -3337,96 +3521,17 @@ export const watchDungeonMasterOwnershipTransferredEvent =
   })
 
 /**
- * Wraps __{@link readContract}__ with `abi` set to __{@link iPlanetStatsEntityAbi}__
+ * Wraps __{@link readContract}__ with `abi` set to __{@link ierc20Abi}__
  */
-export const readIPlanetStatsEntity = /*#__PURE__*/ createReadContract({
-  abi: iPlanetStatsEntityAbi,
+export const readIerc20 = /*#__PURE__*/ createReadContract({ abi: ierc20Abi })
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link ierc20Abi}__ and `functionName` set to `"balanceOf"`
+ */
+export const readIerc20BalanceOf = /*#__PURE__*/ createReadContract({
+  abi: ierc20Abi,
+  functionName: 'balanceOf',
 })
-
-/**
- * Wraps __{@link readContract}__ with `abi` set to __{@link iPlanetStatsEntityAbi}__ and `functionName` set to `"getRarityOdds"`
- */
-export const readIPlanetStatsEntityGetRarityOdds =
-  /*#__PURE__*/ createReadContract({
-    abi: iPlanetStatsEntityAbi,
-    functionName: 'getRarityOdds',
-  })
-
-/**
- * Wraps __{@link readContract}__ with `abi` set to __{@link iPlanetStatsEntityAbi}__ and `functionName` set to `"getStats"`
- */
-export const readIPlanetStatsEntityGetStats = /*#__PURE__*/ createReadContract({
-  abi: iPlanetStatsEntityAbi,
-  functionName: 'getStats',
-})
-
-/**
- * Wraps __{@link writeContract}__ with `abi` set to __{@link iPlanetStatsEntityAbi}__
- */
-export const writeIPlanetStatsEntity = /*#__PURE__*/ createWriteContract({
-  abi: iPlanetStatsEntityAbi,
-})
-
-/**
- * Wraps __{@link writeContract}__ with `abi` set to __{@link iPlanetStatsEntityAbi}__ and `functionName` set to `"getStartingStats"`
- */
-export const writeIPlanetStatsEntityGetStartingStats =
-  /*#__PURE__*/ createWriteContract({
-    abi: iPlanetStatsEntityAbi,
-    functionName: 'getStartingStats',
-  })
-
-/**
- * Wraps __{@link writeContract}__ with `abi` set to __{@link iPlanetStatsEntityAbi}__ and `functionName` set to `"setRarityOdds"`
- */
-export const writeIPlanetStatsEntitySetRarityOdds =
-  /*#__PURE__*/ createWriteContract({
-    abi: iPlanetStatsEntityAbi,
-    functionName: 'setRarityOdds',
-  })
-
-/**
- * Wraps __{@link writeContract}__ with `abi` set to __{@link iPlanetStatsEntityAbi}__ and `functionName` set to `"setStats"`
- */
-export const writeIPlanetStatsEntitySetStats =
-  /*#__PURE__*/ createWriteContract({
-    abi: iPlanetStatsEntityAbi,
-    functionName: 'setStats',
-  })
-
-/**
- * Wraps __{@link simulateContract}__ with `abi` set to __{@link iPlanetStatsEntityAbi}__
- */
-export const simulateIPlanetStatsEntity = /*#__PURE__*/ createSimulateContract({
-  abi: iPlanetStatsEntityAbi,
-})
-
-/**
- * Wraps __{@link simulateContract}__ with `abi` set to __{@link iPlanetStatsEntityAbi}__ and `functionName` set to `"getStartingStats"`
- */
-export const simulateIPlanetStatsEntityGetStartingStats =
-  /*#__PURE__*/ createSimulateContract({
-    abi: iPlanetStatsEntityAbi,
-    functionName: 'getStartingStats',
-  })
-
-/**
- * Wraps __{@link simulateContract}__ with `abi` set to __{@link iPlanetStatsEntityAbi}__ and `functionName` set to `"setRarityOdds"`
- */
-export const simulateIPlanetStatsEntitySetRarityOdds =
-  /*#__PURE__*/ createSimulateContract({
-    abi: iPlanetStatsEntityAbi,
-    functionName: 'setRarityOdds',
-  })
-
-/**
- * Wraps __{@link simulateContract}__ with `abi` set to __{@link iPlanetStatsEntityAbi}__ and `functionName` set to `"setStats"`
- */
-export const simulateIPlanetStatsEntitySetStats =
-  /*#__PURE__*/ createSimulateContract({
-    abi: iPlanetStatsEntityAbi,
-    functionName: 'setStats',
-  })
 
 /**
  * Wraps __{@link readContract}__ with `abi` set to __{@link iScenarioAbi}__
@@ -3875,6 +3980,15 @@ export const readPlanetStatsEntity = /*#__PURE__*/ createReadContract({
 })
 
 /**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link planetStatsEntityAbi}__ and `functionName` set to `"getNumberOfStats"`
+ */
+export const readPlanetStatsEntityGetNumberOfStats =
+  /*#__PURE__*/ createReadContract({
+    abi: planetStatsEntityAbi,
+    functionName: 'getNumberOfStats',
+  })
+
+/**
  * Wraps __{@link readContract}__ with `abi` set to __{@link planetStatsEntityAbi}__ and `functionName` set to `"getRarityOdds"`
  */
 export const readPlanetStatsEntityGetRarityOdds =
@@ -3914,6 +4028,15 @@ export const writePlanetStatsEntityInitialize =
   /*#__PURE__*/ createWriteContract({
     abi: planetStatsEntityAbi,
     functionName: 'initialize',
+  })
+
+/**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link planetStatsEntityAbi}__ and `functionName` set to `"setNumberOfStats"`
+ */
+export const writePlanetStatsEntitySetNumberOfStats =
+  /*#__PURE__*/ createWriteContract({
+    abi: planetStatsEntityAbi,
+    functionName: 'setNumberOfStats',
   })
 
 /**
@@ -3958,6 +4081,15 @@ export const simulatePlanetStatsEntityInitialize =
   })
 
 /**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link planetStatsEntityAbi}__ and `functionName` set to `"setNumberOfStats"`
+ */
+export const simulatePlanetStatsEntitySetNumberOfStats =
+  /*#__PURE__*/ createSimulateContract({
+    abi: planetStatsEntityAbi,
+    functionName: 'setNumberOfStats',
+  })
+
+/**
  * Wraps __{@link simulateContract}__ with `abi` set to __{@link planetStatsEntityAbi}__ and `functionName` set to `"setRarityOdds"`
  */
 export const simulatePlanetStatsEntitySetRarityOdds =
@@ -3985,21 +4117,6 @@ export const simulatePlanetStatsEntitySetStats =
   })
 
 /**
- * Wraps __{@link readContract}__ with `abi` set to __{@link planetStatsSystemAbi}__
- */
-export const readPlanetStatsSystem = /*#__PURE__*/ createReadContract({
-  abi: planetStatsSystemAbi,
-})
-
-/**
- * Wraps __{@link readContract}__ with `abi` set to __{@link planetStatsSystemAbi}__ and `functionName` set to `"owner"`
- */
-export const readPlanetStatsSystemOwner = /*#__PURE__*/ createReadContract({
-  abi: planetStatsSystemAbi,
-  functionName: 'owner',
-})
-
-/**
  * Wraps __{@link writeContract}__ with `abi` set to __{@link planetStatsSystemAbi}__
  */
 export const writePlanetStatsSystem = /*#__PURE__*/ createWriteContract({
@@ -4024,12 +4141,12 @@ export const writePlanetStatsSystemInit = /*#__PURE__*/ createWriteContract({
 })
 
 /**
- * Wraps __{@link writeContract}__ with `abi` set to __{@link planetStatsSystemAbi}__ and `functionName` set to `"renounceOwnership"`
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link planetStatsSystemAbi}__ and `functionName` set to `"registerSystem"`
  */
-export const writePlanetStatsSystemRenounceOwnership =
+export const writePlanetStatsSystemRegisterSystem =
   /*#__PURE__*/ createWriteContract({
     abi: planetStatsSystemAbi,
-    functionName: 'renounceOwnership',
+    functionName: 'registerSystem',
   })
 
 /**
@@ -4039,15 +4156,6 @@ export const writePlanetStatsSystemSync = /*#__PURE__*/ createWriteContract({
   abi: planetStatsSystemAbi,
   functionName: 'sync',
 })
-
-/**
- * Wraps __{@link writeContract}__ with `abi` set to __{@link planetStatsSystemAbi}__ and `functionName` set to `"transferOwnership"`
- */
-export const writePlanetStatsSystemTransferOwnership =
-  /*#__PURE__*/ createWriteContract({
-    abi: planetStatsSystemAbi,
-    functionName: 'transferOwnership',
-  })
 
 /**
  * Wraps __{@link simulateContract}__ with `abi` set to __{@link planetStatsSystemAbi}__
@@ -4075,12 +4183,12 @@ export const simulatePlanetStatsSystemInit =
   })
 
 /**
- * Wraps __{@link simulateContract}__ with `abi` set to __{@link planetStatsSystemAbi}__ and `functionName` set to `"renounceOwnership"`
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link planetStatsSystemAbi}__ and `functionName` set to `"registerSystem"`
  */
-export const simulatePlanetStatsSystemRenounceOwnership =
+export const simulatePlanetStatsSystemRegisterSystem =
   /*#__PURE__*/ createSimulateContract({
     abi: planetStatsSystemAbi,
-    functionName: 'renounceOwnership',
+    functionName: 'registerSystem',
   })
 
 /**
@@ -4090,30 +4198,6 @@ export const simulatePlanetStatsSystemSync =
   /*#__PURE__*/ createSimulateContract({
     abi: planetStatsSystemAbi,
     functionName: 'sync',
-  })
-
-/**
- * Wraps __{@link simulateContract}__ with `abi` set to __{@link planetStatsSystemAbi}__ and `functionName` set to `"transferOwnership"`
- */
-export const simulatePlanetStatsSystemTransferOwnership =
-  /*#__PURE__*/ createSimulateContract({
-    abi: planetStatsSystemAbi,
-    functionName: 'transferOwnership',
-  })
-
-/**
- * Wraps __{@link watchContractEvent}__ with `abi` set to __{@link planetStatsSystemAbi}__
- */
-export const watchPlanetStatsSystemEvent =
-  /*#__PURE__*/ createWatchContractEvent({ abi: planetStatsSystemAbi })
-
-/**
- * Wraps __{@link watchContractEvent}__ with `abi` set to __{@link planetStatsSystemAbi}__ and `eventName` set to `"OwnershipTransferred"`
- */
-export const watchPlanetStatsSystemOwnershipTransferredEvent =
-  /*#__PURE__*/ createWatchContractEvent({
-    abi: planetStatsSystemAbi,
-    eventName: 'OwnershipTransferred',
   })
 
 /**
@@ -4153,6 +4237,14 @@ export const readScenarioGetEntity = /*#__PURE__*/ createReadContract({
 export const readScenarioMetadataUri = /*#__PURE__*/ createReadContract({
   abi: scenarioAbi,
   functionName: 'metadataURI',
+})
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link scenarioAbi}__ and `functionName` set to `"systemController"`
+ */
+export const readScenarioSystemController = /*#__PURE__*/ createReadContract({
+  abi: scenarioAbi,
+  functionName: 'systemController',
 })
 
 /**
@@ -4317,6 +4409,186 @@ export const watchScenarioFactoryScenarioDeployedEvent =
   })
 
 /**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link supplyEntityAbi}__
+ */
+export const readSupplyEntity = /*#__PURE__*/ createReadContract({
+  abi: supplyEntityAbi,
+})
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link supplyEntityAbi}__ and `functionName` set to `"getTokenAddresses"`
+ */
+export const readSupplyEntityGetTokenAddresses =
+  /*#__PURE__*/ createReadContract({
+    abi: supplyEntityAbi,
+    functionName: 'getTokenAddresses',
+  })
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link supplyEntityAbi}__ and `functionName` set to `"getTokenBalances"`
+ */
+export const readSupplyEntityGetTokenBalances =
+  /*#__PURE__*/ createReadContract({
+    abi: supplyEntityAbi,
+    functionName: 'getTokenBalances',
+  })
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link supplyEntityAbi}__ and `functionName` set to `"getTokenNames"`
+ */
+export const readSupplyEntityGetTokenNames = /*#__PURE__*/ createReadContract({
+  abi: supplyEntityAbi,
+  functionName: 'getTokenNames',
+})
+
+/**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link supplyEntityAbi}__
+ */
+export const writeSupplyEntity = /*#__PURE__*/ createWriteContract({
+  abi: supplyEntityAbi,
+})
+
+/**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link supplyEntityAbi}__ and `functionName` set to `"addToken"`
+ */
+export const writeSupplyEntityAddToken = /*#__PURE__*/ createWriteContract({
+  abi: supplyEntityAbi,
+  functionName: 'addToken',
+})
+
+/**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link supplyEntityAbi}__ and `functionName` set to `"initialize"`
+ */
+export const writeSupplyEntityInitialize = /*#__PURE__*/ createWriteContract({
+  abi: supplyEntityAbi,
+  functionName: 'initialize',
+})
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link supplyEntityAbi}__
+ */
+export const simulateSupplyEntity = /*#__PURE__*/ createSimulateContract({
+  abi: supplyEntityAbi,
+})
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link supplyEntityAbi}__ and `functionName` set to `"addToken"`
+ */
+export const simulateSupplyEntityAddToken =
+  /*#__PURE__*/ createSimulateContract({
+    abi: supplyEntityAbi,
+    functionName: 'addToken',
+  })
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link supplyEntityAbi}__ and `functionName` set to `"initialize"`
+ */
+export const simulateSupplyEntityInitialize =
+  /*#__PURE__*/ createSimulateContract({
+    abi: supplyEntityAbi,
+    functionName: 'initialize',
+  })
+
+/**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link supplySystemAbi}__
+ */
+export const writeSupplySystem = /*#__PURE__*/ createWriteContract({
+  abi: supplySystemAbi,
+})
+
+/**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link supplySystemAbi}__ and `functionName` set to `"activateEntity"`
+ */
+export const writeSupplySystemActivateEntity =
+  /*#__PURE__*/ createWriteContract({
+    abi: supplySystemAbi,
+    functionName: 'activateEntity',
+  })
+
+/**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link supplySystemAbi}__ and `functionName` set to `"deployToken"`
+ */
+export const writeSupplySystemDeployToken = /*#__PURE__*/ createWriteContract({
+  abi: supplySystemAbi,
+  functionName: 'deployToken',
+})
+
+/**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link supplySystemAbi}__ and `functionName` set to `"init"`
+ */
+export const writeSupplySystemInit = /*#__PURE__*/ createWriteContract({
+  abi: supplySystemAbi,
+  functionName: 'init',
+})
+
+/**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link supplySystemAbi}__ and `functionName` set to `"registerSystem"`
+ */
+export const writeSupplySystemRegisterSystem =
+  /*#__PURE__*/ createWriteContract({
+    abi: supplySystemAbi,
+    functionName: 'registerSystem',
+  })
+
+/**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link supplySystemAbi}__ and `functionName` set to `"sync"`
+ */
+export const writeSupplySystemSync = /*#__PURE__*/ createWriteContract({
+  abi: supplySystemAbi,
+  functionName: 'sync',
+})
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link supplySystemAbi}__
+ */
+export const simulateSupplySystem = /*#__PURE__*/ createSimulateContract({
+  abi: supplySystemAbi,
+})
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link supplySystemAbi}__ and `functionName` set to `"activateEntity"`
+ */
+export const simulateSupplySystemActivateEntity =
+  /*#__PURE__*/ createSimulateContract({
+    abi: supplySystemAbi,
+    functionName: 'activateEntity',
+  })
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link supplySystemAbi}__ and `functionName` set to `"deployToken"`
+ */
+export const simulateSupplySystemDeployToken =
+  /*#__PURE__*/ createSimulateContract({
+    abi: supplySystemAbi,
+    functionName: 'deployToken',
+  })
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link supplySystemAbi}__ and `functionName` set to `"init"`
+ */
+export const simulateSupplySystemInit = /*#__PURE__*/ createSimulateContract({
+  abi: supplySystemAbi,
+  functionName: 'init',
+})
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link supplySystemAbi}__ and `functionName` set to `"registerSystem"`
+ */
+export const simulateSupplySystemRegisterSystem =
+  /*#__PURE__*/ createSimulateContract({
+    abi: supplySystemAbi,
+    functionName: 'registerSystem',
+  })
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link supplySystemAbi}__ and `functionName` set to `"sync"`
+ */
+export const simulateSupplySystemSync = /*#__PURE__*/ createSimulateContract({
+  abi: supplySystemAbi,
+  functionName: 'sync',
+})
+
+/**
  * Wraps __{@link readContract}__ with `abi` set to __{@link systemControllerAbi}__
  */
 export const readSystemController = /*#__PURE__*/ createReadContract({
@@ -4337,6 +4609,14 @@ export const readSystemControllerGetSystem = /*#__PURE__*/ createReadContract({
 export const readSystemControllerGetSystems = /*#__PURE__*/ createReadContract({
   abi: systemControllerAbi,
   functionName: 'getSystems',
+})
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link systemControllerAbi}__ and `functionName` set to `"isSystem"`
+ */
+export const readSystemControllerIsSystem = /*#__PURE__*/ createReadContract({
+  abi: systemControllerAbi,
+  functionName: 'isSystem',
 })
 
 /**
@@ -4610,15 +4890,6 @@ export const writeUpgradesSystemAddUpgrade = /*#__PURE__*/ createWriteContract({
 })
 
 /**
- * Wraps __{@link writeContract}__ with `abi` set to __{@link upgradesSystemAbi}__ and `functionName` set to `"finalizeProposal"`
- */
-export const writeUpgradesSystemFinalizeProposal =
-  /*#__PURE__*/ createWriteContract({
-    abi: upgradesSystemAbi,
-    functionName: 'finalizeProposal',
-  })
-
-/**
  * Wraps __{@link writeContract}__ with `abi` set to __{@link upgradesSystemAbi}__ and `functionName` set to `"init"`
  */
 export const writeUpgradesSystemInit = /*#__PURE__*/ createWriteContract({
@@ -4633,6 +4904,15 @@ export const writeUpgradesSystemPurchaseUpgrade =
   /*#__PURE__*/ createWriteContract({
     abi: upgradesSystemAbi,
     functionName: 'purchaseUpgrade',
+  })
+
+/**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link upgradesSystemAbi}__ and `functionName` set to `"registerSystem"`
+ */
+export const writeUpgradesSystemRegisterSystem =
+  /*#__PURE__*/ createWriteContract({
+    abi: upgradesSystemAbi,
+    functionName: 'registerSystem',
   })
 
 /**
@@ -4687,15 +4967,6 @@ export const simulateUpgradesSystemAddUpgrade =
   })
 
 /**
- * Wraps __{@link simulateContract}__ with `abi` set to __{@link upgradesSystemAbi}__ and `functionName` set to `"finalizeProposal"`
- */
-export const simulateUpgradesSystemFinalizeProposal =
-  /*#__PURE__*/ createSimulateContract({
-    abi: upgradesSystemAbi,
-    functionName: 'finalizeProposal',
-  })
-
-/**
  * Wraps __{@link simulateContract}__ with `abi` set to __{@link upgradesSystemAbi}__ and `functionName` set to `"init"`
  */
 export const simulateUpgradesSystemInit = /*#__PURE__*/ createSimulateContract({
@@ -4710,6 +4981,15 @@ export const simulateUpgradesSystemPurchaseUpgrade =
   /*#__PURE__*/ createSimulateContract({
     abi: upgradesSystemAbi,
     functionName: 'purchaseUpgrade',
+  })
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link upgradesSystemAbi}__ and `functionName` set to `"registerSystem"`
+ */
+export const simulateUpgradesSystemRegisterSystem =
+  /*#__PURE__*/ createSimulateContract({
+    abi: upgradesSystemAbi,
+    functionName: 'registerSystem',
   })
 
 /**
