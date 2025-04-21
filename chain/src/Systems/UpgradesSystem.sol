@@ -135,4 +135,8 @@ contract UpgradesSystem is Ownable, ISystem {
     ) external override returns (address) {
         return address(this);
     }
+
+    function getId() external view returns (string memory) {
+        return "UPGRADE";
+    }
 }

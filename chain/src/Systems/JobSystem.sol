@@ -3,28 +3,10 @@ pragma solidity ^0.8.24;
 
 import {ISystem, ISystemController, TokenRate} from "./interfaces/ISystem.sol";
 import {IScenario} from "../Scenario.sol";
+import {JobEntity} from "../entities/JobEntity.sol";
 
 contract JobSystem is ISystem {
-    struct Resource {
-        address tokenAddress;
-        string tokenName;
-    }
-
-    struct Job {
-        string id;
-        string title;
-        string description;
-        Resource tokenData;
-        uint256 baseEmissionBoost;
-    }
-
-    Job[] public availableJobs;
-    mapping(address => string) public activeJobs;
-
-    event JobActivated(address indexed player, string jobId);
-    event JobDeactivated(address indexed player, string jobId);
-
-        bool registered = false;
+    bool registered = false;
     address private _systemController;
 
     function registerSystem(address systemController) external {
@@ -33,7 +15,6 @@ contract JobSystem is ISystem {
         }
         registered = true;
         _systemController = systemController;
-
     }
 
     error AlreadyRegistered();
@@ -46,24 +27,42 @@ contract JobSystem is ISystem {
 
     function sync(uint256 /*tokenId*/) external override {}
 
-    function activateJob(string memory jobId) external {
-        // Locate job from availableJobs
-        // Adjust emission rates or token rates as needed
-        // Record active job
-        activeJobs[msg.sender] = jobId;
-        emit JobActivated(msg.sender, jobId);
+    function activateJob(string memory jobId) public {
+        // if (bytes(activeJobs[msg.sender].id).length != 0) {
+            // finishJob();
+        // }
+        // activeJobs[msg.sender] = LiveJob(jobId, block.timestamp);
     }
 
-    function deactivateJob() external {
-        // Locate the player's active job
-        // Revert any boosts applied
-        delete activeJobs[msg.sender];
-        emit JobDeactivated(msg.sender, /* previously active jobId */ "");
+    function finishJob() public {
+        // LiveJob memory job = activeJobs[msg.sender];
+        // if (bytes(job.id).length == 0) {
+        //     revert NoActiveJob();
+        // }
+        // if (block.timestamp < job.startedAt + availableJobs[0].duration) {
+        //     revert AlreadyActiveJob();
+        // }
+
+        // delete activeJobs[msg.sender];
     }
 
     function activateEntity(
         IScenario scenario
     ) external override returns (address) {
-        return address(this);
+        address current = scenario.getEntity(address(this));
+        if (current != address(0)) {
+            return current;
+        }
+
+        // TODO replace this with proxy clone.
+        JobEntity entity = new JobEntity();
+
+        entity.initialize(scenario, address(this));
+
+        return address(entity);
+    }
+
+    function getId() external view returns (string memory) {
+        return "JOB";
     }
 }

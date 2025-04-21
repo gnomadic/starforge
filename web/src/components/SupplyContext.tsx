@@ -74,27 +74,7 @@ export const SupplyProvider: React.FC<{ children: ReactNode }> = ({ children }) 
   const { data: tokenNames } = useReadSupplyEntityGetTokenNames({ args: [], address: whichEntity })
   
 
-  // const { data: tokenAddresses} = useReadSupplyEntityGetTokenAddresses({
 
-  const { data: lifeBalance, error: lifeError } = useReadErc20BalanceOf({
-    address: deploy.LifeToken,
-    args: [address ? address : "0x"],
-  });
-
-  const { data: energyBalance } = useReadErc20BalanceOf({
-    address: deploy.EnergyToken,
-    args: [address ? address : "0x"],
-  });
-
-  const { data: matterBalance } = useReadErc20BalanceOf({
-    address: deploy.MatterToken,
-    args: [address ? address : "0x"],
-  });
-
-  const { data: techBalance } = useReadErc20BalanceOf({
-    address: deploy.TechToken,
-    args: [address ? address : "0x"],
-  });
 
   useEffect(() => {
     if (tokenNames && tokenBalances) {
@@ -125,14 +105,7 @@ export const SupplyProvider: React.FC<{ children: ReactNode }> = ({ children }) 
 
 
     }
-    console.log(
-      "lifeBalance: ", lifeBalance,
-      "energyBalance: ", energyBalance,
-      "matterBalance: ", matterBalance,
-      "techBalance: ", techBalance,
-      "tokenBalances: ", tokenBalances,
-      "tokenNames: ", tokenNames,
-    )
+
     // if (lifeBalance) {
     //   updateSupply('LIFE', Number(lifeBalance) / 1e18);
     // }
@@ -148,7 +121,7 @@ export const SupplyProvider: React.FC<{ children: ReactNode }> = ({ children }) 
 
 
   }
-    , [lifeBalance, energyBalance, matterBalance, techBalance, tokenBalances, tokenNames]);
+    , [ tokenBalances, tokenNames]);
 
   // useEffect(() => {
   //   // set the address in the Supply from the deploy
@@ -177,7 +150,7 @@ export const SupplyProvider: React.FC<{ children: ReactNode }> = ({ children }) 
     setSupplies((prev) =>
       prev.map((Supply) =>
         Supply.type === type
-          ? { ...Supply, amount: Math.max(0, Supply.amount + amount) }
+          ? { ...Supply, amount: Math.max(0, amount) }
           : Supply
       )
     );

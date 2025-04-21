@@ -16,12 +16,14 @@ interface ISystem {
     function sync(uint256 tokenId) external;
 
     function activateEntity(IScenario scenario) external returns (address);
+
+    function getId() external view returns (string memory);
 }
 
 interface ISystemController {
     function initAll(uint256 tokenId) external;
 
-    function getSystem(uint8 id) external view returns (ISystem);
+    function getSystem(string memory id) external view returns (ISystem);
 
     function getSystems() external view returns (ISystem[] memory);
 

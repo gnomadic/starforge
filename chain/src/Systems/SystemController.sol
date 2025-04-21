@@ -5,11 +5,11 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 import {ISystem, ISystemController} from "./interfaces/ISystem.sol";
 import {ScenarioFactory} from "../ScenarioFactory.sol";
 import {IScenario} from "../Scenario.sol";
-import { console } from "hardhat/console.sol";
+import {console} from "hardhat/console.sol";
 
 contract SystemController is Ownable, ISystemController {
     ISystem[] public systems;
-    mapping(uint8 => ISystem) public systemMap;
+    mapping(string => ISystem) public systemMap;
     // mapping(uint8 => address) public systemEntities;
 
     address public tokenAddress;
@@ -17,16 +17,15 @@ contract SystemController is Ownable, ISystemController {
 
     constructor() Ownable(_msgSender()) {
         // scenarioFactory = scenarios;
-        
     }
 
     function setScenarioFactory(ScenarioFactory scenarios) external onlyOwner {
         scenarioFactory = scenarios;
     }
 
-    function registerSystem(uint8 id, ISystem system) external onlyOwner {
+    function registerSystem(ISystem system) external onlyOwner {
         systems.push(system);
-        systemMap[id] = system;
+        systemMap[system.getId()] = system;
         system.registerSystem(address(this));
         // systemEntities[id] = system.getEntity();
     }
@@ -35,7 +34,8 @@ contract SystemController is Ownable, ISystemController {
         //get active scenarios for the current user from the ScenarioFactory
         console.log("system controller: init all");
 
-        IScenario[] memory activeScenarios = scenarioFactory.getActivePlayerScenarios(_msgSender());
+        IScenario[] memory activeScenarios = scenarioFactory
+            .getActivePlayerScenarios(_msgSender());
         console.log("there are %s active scenarios", activeScenarios.length);
         for (uint256 i = 0; i < activeScenarios.length; i++) {
             IScenario scenario = activeScenarios[i];
@@ -51,7 +51,7 @@ contract SystemController is Ownable, ISystemController {
         }
     }
 
-    function getSystem(uint8 id) external view returns (ISystem) {
+    function getSystem(string memory id) external view returns (ISystem) {
         return systemMap[id];
     }
 
@@ -68,15 +68,19 @@ contract SystemController is Ownable, ISystemController {
         return false;
     }
 
-    function activateEntities(IScenario scenario) external returns (address[] memory) {
+    function activateEntities(
+        IScenario scenario
+    ) external returns (address[] memory) {
         address[] memory systemEntities = new address[](systems.length);
-        console.log("system controller: activate entities systemlength %s", systems.length);
+        console.log(
+            "system controller: activate entities systemlength %s",
+            systems.length
+        );
         for (uint256 i = 0; i < systems.length; i++) {
             systemEntities[i] = systems[i].activateEntity(scenario);
         }
         return systemEntities;
     }
-
 
     // TODO will have to refactor to this to support multiple tokens
     modifier onlyToken() {

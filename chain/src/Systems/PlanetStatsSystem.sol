@@ -5,18 +5,17 @@ import {ISystem, ISystemController} from "./interfaces/ISystem.sol";
 // import {IPlanetStatsEntity} from "../entities/PlanetStatsEntity.sol";
 import {IScenario} from "../Scenario.sol";
 import {PlanetStatsEntity} from "../entities/PlanetStatsEntity.sol";
-import { console } from "hardhat/console.sol";
-
+import {console} from "hardhat/console.sol";
 
 contract PlanetStatsSystem is ISystem {
     address planetAddress;
     uint256 _nonce;
 
-    constructor(address _planetAddress)  {
+    constructor(address _planetAddress) {
         planetAddress = _planetAddress;
     }
 
-        bool registered = false;
+    bool registered = false;
     address private _systemController;
 
     function registerSystem(address systemController) external {
@@ -25,7 +24,6 @@ contract PlanetStatsSystem is ISystem {
         }
         registered = true;
         _systemController = systemController;
-
     }
 
     error AlreadyRegistered();
@@ -55,7 +53,7 @@ contract PlanetStatsSystem is ISystem {
             }
         }
 
-// TODO this is funky because I want to reserve some spots in the array
+        // TODO this is funky because I want to reserve some spots in the array
         uint16[10] memory stats = getStartingStats(scenario, tokenId, rarity);
         uint16[10] memory statsWithRarity;
         statsWithRarity[0] = rarity;
@@ -124,7 +122,9 @@ contract PlanetStatsSystem is ISystem {
         _nonce = newValue;
     }
 
-    function activateEntity(IScenario scenario) external override returns (address) {
+    function activateEntity(
+        IScenario scenario
+    ) external override returns (address) {
         address current = scenario.getEntity(address(this));
         if (current != address(0)) {
             return current;
@@ -139,6 +139,10 @@ contract PlanetStatsSystem is ISystem {
             address(entityAddress)
         );
         return address(entityAddress);
+    }
+
+    function getId() external view returns (string memory) {
+        return "STAT";
     }
 
     error NotScenario();

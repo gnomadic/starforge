@@ -32,9 +32,16 @@
       <stop stop-color="hsl(347, 56%, 83%)" offset="100%" />
     </radialGradient>
     <filter id="light" primitiveUnits="objectBoundingBox">
-      <feTurbulence type="fractalNoise" baseFrequency="0.015" />
+      <feTurbulence type="fractalNoise" baseFrequency="0.015" >
+        <animate attributeName="baseFrequency" values="0.01;0.015;0.01" dur="10s" repeatCount="indefinite"  />
+        </feTurbulence>
       <feSpecularLighting specularConstant="50" specularExponent="100" surfaceScale="1"
+
         lighting-color="hsl(0deg 00% 60%)">
+
+        
+
+
         <fePointLight x=".5" y=".5" z=".33" />
       </feSpecularLighting>
       <feBlend in2="SourceGraphic" />
@@ -67,7 +74,9 @@
 
 
     <filter id="galaxyfilter">
-      <feTurbulence type="fractalNoise" baseFrequency=".01" numOctaves="5" seed="10" />
+      <feTurbulence type="fractalNoise" baseFrequency=".01" seed="10" numOctaves="10">
+        <animate attributeName="baseFrequency" values=".01;.02;.01" dur="30s" repeatCount="indefinite"  />
+      </feTurbulence>
       <feDisplacementMap in="SourceGraphic" scale="100" />
     </filter>
 
@@ -90,7 +99,6 @@
 
     <!-- sky -->
     <rect x="0" y='0' stroke="black" fill="#426786" stroke-width="2" width="1024" height="1024" />
-
     <rect width="100%" height="100%" filter="url(#stars)" opacity="0.3" />
     <rect width="100%" height="100%" filter="url(#stars)" opacity="0.3" />
     <rect width="100%" height="100%" filter="url(#clouds)" fill="url(#cloudGradient)" opacity="1" />

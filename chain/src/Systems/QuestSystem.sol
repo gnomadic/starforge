@@ -19,10 +19,10 @@ contract QuestSystem is ISystem {
         }
         registered = true;
         _systemController = systemController;
-
     }
 
     error AlreadyRegistered();
+
     function init(
         ISystemController /*controller*/,
         IScenario /*scenario*/,
@@ -35,5 +35,9 @@ contract QuestSystem is ISystem {
         IScenario scenario
     ) external override returns (address) {
         return address(this);
+    }
+
+    function getId() external view returns (string memory) {
+        return "QUEST";
     }
 }

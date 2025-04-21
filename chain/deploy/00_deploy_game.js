@@ -42,6 +42,21 @@ module.exports = async (hre) => {
     log: true,
   });
 
+  const FunkRenderer = await deploy("FunkRenderer", {
+    from: deployer,
+    log: true,
+  });
+
+  const SilhouetteRenderer = await deploy("SilhouetteRenderer", {
+    from: deployer,
+    log: true,
+  });
+
+  const SkyRenderer = await deploy("SkyRenderer", {
+    from: deployer,
+    log: true,
+  });
+
 
 
 
@@ -140,25 +155,25 @@ module.exports = async (hre) => {
 
   console.log("----- Deploying Tokens");
 
-  const energy = await deploy("EnergyToken", {
-    from: deployer,
-    log: true
-  });
+  // const energy = await deploy("EnergyToken", {
+  //   from: deployer,
+  //   log: true
+  // });
 
-  const life = await deploy("LifeToken", {
-    from: deployer,
-    log: true
-  });
+  // const life = await deploy("LifeToken", {
+  //   from: deployer,
+  //   log: true
+  // });
 
-  const matter = await deploy("MatterToken", {
-    from: deployer,
-    log: true
-  });
+  // const matter = await deploy("MatterToken", {
+  //   from: deployer,
+  //   log: true
+  // });
 
-  const tech = await deploy("TechnologyToken", {
-    from: deployer,
-    log: true
-  });
+  // const tech = await deploy("TechnologyToken", {
+  //   from: deployer,
+  //   log: true
+  // });
 
 
   console.log("----- done")
@@ -176,17 +191,17 @@ module.exports = async (hre) => {
 
 // --- tokens
 
-  const energyTokenDeployment = await deployments.get("EnergyToken");
-  const deployedEnergyToken = await ethers.getContractAt("EnergyToken", energyTokenDeployment.address);
+  // const energyTokenDeployment = await deployments.get("EnergyToken");
+  // const deployedEnergyToken = await ethers.getContractAt("EnergyToken", energyTokenDeployment.address);
 
-  const lifeTokenDeployment = await deployments.get("LifeToken");
-  const deployedLifeToken = await ethers.getContractAt("LifeToken", lifeTokenDeployment.address);
+  // const lifeTokenDeployment = await deployments.get("LifeToken");
+  // const deployedLifeToken = await ethers.getContractAt("LifeToken", lifeTokenDeployment.address);
 
-  const matterTokenDeployment = await deployments.get("MatterToken");
-  const deployedMatterToken = await ethers.getContractAt("MatterToken", matterTokenDeployment.address);
+  // const matterTokenDeployment = await deployments.get("MatterToken");
+  // const deployedMatterToken = await ethers.getContractAt("MatterToken", matterTokenDeployment.address);
 
-  const techTokenDeployment = await deployments.get("TechnologyToken");
-  const deployedTechToken = await ethers.getContractAt("TechnologyToken", techTokenDeployment.address);
+  // const techTokenDeployment = await deployments.get("TechnologyToken");
+  // const deployedTechToken = await ethers.getContractAt("TechnologyToken", techTokenDeployment.address);
 
   // const DungeonMasterDeployment = await deployments.get("DungeonMaster");
   // const deployedDungeonMaster = await ethers.getContractAt("DungeonMaster", DungeonMasterDeployment.address);
@@ -205,10 +220,10 @@ module.exports = async (hre) => {
   tx = await deployedSysController.setScenarioFactory(ScenarioFactory.address);
   await tx.wait();
 
-  tx = await deployedSysController.registerSystem(1, PlanetStats.address);
+  tx = await deployedSysController.registerSystem(PlanetStats.address);
   await tx.wait();
 
-  tx = await deployedSysController.registerSystem(2, SupplySystem.address);
+  tx = await deployedSysController.registerSystem(SupplySystem.address);
   await tx.wait();
 
   // tx = await deployedSysController.registerSystem(2, UpgradesSystem.address);
@@ -245,8 +260,15 @@ module.exports = async (hre) => {
 
   console.log("----- configuring renderer")
 
+  tx = await deployedRenderer.addStepRenderer(SkyRenderer.address);
+  await tx.wait();
+  tx = await deployedRenderer.addStepRenderer(FunkRenderer.address);
+  await tx.wait();
   tx = await deployedRenderer.addStepRenderer(SpaceOrbStepRenderer.address);
   await tx.wait();
+  tx = await deployedRenderer.addStepRenderer(SilhouetteRenderer.address);
+  await tx.wait();
+  
 
   console.log("----- done")
 
@@ -265,10 +287,10 @@ module.exports = async (hre) => {
   object.SupplySystem = SupplySystem.address;
   
   // object.DungeonMaster = DungeonMaster.address;
-  object.energyToken = energy.address;
-  object.lifeToken = life.address;
-  object.matterToken = matter.address;
-  object.techToken = tech.address;
+  // object.energyToken = energy.address;
+  // object.lifeToken = life.address;
+  // object.matterToken = matter.address;
+  // object.techToken = tech.address;
 
 
 
@@ -296,17 +318,17 @@ module.exports = async (hre) => {
   tx = await deployedPlanet.mint("0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266")
   await tx.wait();
 
-  tx = await deployedLifeToken.mint("0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266", BigInt(10000000000000000000))
-  await tx.wait();
+  // tx = await deployedLifeToken.mint("0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266", BigInt(10000000000000000000))
+  // await tx.wait();
 
-  tx = await deployedEnergyToken.mint("0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266", BigInt(20000000000000000000))
-  await tx.wait();
+  // tx = await deployedEnergyToken.mint("0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266", BigInt(20000000000000000000))
+  // await tx.wait();
 
-  tx = await deployedMatterToken.mint("0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266", BigInt(30000000000000000000))
-  await tx.wait();
+  // tx = await deployedMatterToken.mint("0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266", BigInt(30000000000000000000))
+  // await tx.wait();
 
-  tx = await deployedTechToken.mint("0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266", BigInt(40000000000000000000))
-  await tx.wait();
+  // tx = await deployedTechToken.mint("0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266", BigInt(40000000000000000000))
+  // await tx.wait();
 
   // tx = await deployedUpgradesSystem.addUpgrade("Basic Energy Collector", "Harnesses solar energy to increase energy production.",
   //   [BigInt(10000000000000000000), BigInt(20000000000000000000), BigInt(30000000000000000000), BigInt(40000000000000000000)],

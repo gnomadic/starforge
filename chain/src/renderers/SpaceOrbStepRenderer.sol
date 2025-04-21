@@ -19,49 +19,88 @@ contract SpaceOrbStepRenderer is IStepRenderer {
         uint256 hue = seed % 360;
         return
             string.concat(
-                '<linearGradient id="cloudGradient" gradientTransform="rotate(20)">',
-                '<stop stop-opacity=".1" offset="67%" />',
-                '<stop stop-opacity=".3" offset="75%" />',
-                '<stop stop-opacity=".1" offset="85%" />',
-                "</linearGradient>",
-                '<filter id="clouds" x="-50%" y="-50%" height="200%" width="200%">',
-                '<feGaussianBlur in="sky" stdDeviation="20" result="skyblur" />',
-                '<feTurbulence type="fractalNoise" baseFrequency=".01" numOctaves="5" result="skynoise" seed="',
-                LibString.toString(seed),
-                '" />',
-                '<feColorMatrix values="1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 3 -1 -1 0 0" />',
-                '<feComposite operator="in" in2="SourceGraphic" />',
-                "</filter>",
-                '<radialGradient id="dope">',
-                '<stop stop-color="hsl(',
-                LibString.toString(hue),
-                ', 0%, 0%)" offset="00%" />',
-                '<stop stop-color="hsl(',
-                LibString.toString(hue),
-                ', 56%, 41%)" offset="70%" />',
-                '<stop stop-color="hsl(',
-                LibString.toString(hue),
-                ', 56%, 53%)" offset="90%" />',
-                '<stop stop-color="hsl(',
-                LibString.toString(hue),
-                ', 56%, 63%)" offset="95%" />',
-                '<stop stop-color="hsl(',
-                LibString.toString(hue),
-                ', 56%, 83%)" offset="100%" />',
-                "</radialGradient>",
-                '<filter id="stars">',
-                '<feTurbulence baseFrequency=".2" seed="',
-                LibString.toString(seed),
-                '" />',
-                '<feColorMatrix values="0 0 0 9 -4 0 0 0 9 -4 0 0 0 9 -4 0 0 0 0 1" />',
-                "</filter>",
-                '<filter id="light" primitiveUnits="objectBoundingBox">',
-                '<feTurbulence type="fractalNoise" baseFrequency="0.015" />',
-                '<feSpecularLighting specularConstant="50" specularExponent="100" surfaceScale="1" lighting-color="hsl(0deg 00% 60%)">',
-                '<fePointLight x=".5" y=".5" z=".33" />',
-                "</feSpecularLighting>",
-                '<feBlend in2="SourceGraphic" />',
-                "</filter>"
+
+    '<radialGradient id="dope">'
+    '<stop stop-color="hsl(347, 0%, 0%)" offset="00%" />'
+    '<stop stop-color="hsl(347, 56%, 41%)" offset="70%" />'
+    '<stop stop-color="hsl(347, 56%, 53%)" offset="90%" />'
+    '<stop stop-color="hsl(347, 56%, 63%)" offset="95%" />'
+    '<stop stop-color="hsl(347, 56%, 83%)" offset="100%" />'
+    '</radialGradient>'
+    '<filter id="light" primitiveUnits="objectBoundingBox">'
+    '<feTurbulence type="fractalNoise" baseFrequency="0.015" >'
+    '<animate attributeName="baseFrequency" values="0.01;0.015;0.01" dur="10s" repeatCount="indefinite"  />'
+    '</feTurbulence>'
+    '<feSpecularLighting specularConstant="50" specularExponent="100" surfaceScale="1" lighting-color="hsl(0deg 00% 60%)">'
+    '<fePointLight x=".5" y=".5" z=".33" />'
+    '</feSpecularLighting>'
+    '<feBlend in2="SourceGraphic" />'
+    '</filter>'
+    '<radialGradient id="portalStars">',
+    '<stop stop-opacity="1" offset="0%" stop-color="white" />',
+    '<stop stop-opacity="0" offset="100%" stop-color="white" />',
+    '</radialGradient>',
+    '<mask id="portalView">',
+    '<circle cx="700" cy="350" r="220" fill="url(#portalStars)" />',
+    '</mask>',
+    '<radialGradient id="galaxy">',
+    '<stop offset="0.4" stop-color="black" />',
+    '<stop offset=".5" stop-color="#7cc" />',
+    '<stop offset=".6" stop-color="#c51" stop-opacity=".5" />',
+    '<stop offset=".8" stop-opacity=".01" />',
+    '<stop offset="1" stop-opacity="0" />',
+    '</radialGradient>',
+    '<filter id="galaxyfilter">',
+    '<feTurbulence type="fractalNoise" baseFrequency=".01" seed="10" numOctaves="10">',
+    '<animate attributeName="baseFrequency" values=".01;.02;.01" dur="30s" repeatCount="indefinite"  />',
+    '</feTurbulence>',
+    '<feDisplacementMap in="SourceGraphic" scale="100" />',
+    '</filter>'
+
+
+                // '<linearGradient id="cloudGradient" gradientTransform="rotate(20)">',
+                // '<stop stop-opacity=".1" offset="67%" />',
+                // '<stop stop-opacity=".3" offset="75%" />',
+                // '<stop stop-opacity=".1" offset="85%" />',
+                // "</linearGradient>",
+                // '<filter id="clouds" x="-50%" y="-50%" height="200%" width="200%">',
+                // '<feGaussianBlur in="sky" stdDeviation="20" result="skyblur" />',
+                // '<feTurbulence type="fractalNoise" baseFrequency=".01" numOctaves="5" result="skynoise" seed="',
+                // LibString.toString(seed),
+                // '" />',
+                // '<feColorMatrix values="1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 3 -1 -1 0 0" />',
+                // '<feComposite operator="in" in2="SourceGraphic" />',
+                // "</filter>",
+                // '<radialGradient id="dope">',
+                // '<stop stop-color="hsl(',
+                // LibString.toString(hue),
+                // ', 0%, 0%)" offset="00%" />',
+                // '<stop stop-color="hsl(',
+                // LibString.toString(hue),
+                // ', 56%, 41%)" offset="70%" />',
+                // '<stop stop-color="hsl(',
+                // LibString.toString(hue),
+                // ', 56%, 53%)" offset="90%" />',
+                // '<stop stop-color="hsl(',
+                // LibString.toString(hue),
+                // ', 56%, 63%)" offset="95%" />',
+                // '<stop stop-color="hsl(',
+                // LibString.toString(hue),
+                // ', 56%, 83%)" offset="100%" />',
+                // "</radialGradient>",
+                // '<filter id="stars">',
+                // '<feTurbulence baseFrequency=".2" seed="',
+                // LibString.toString(seed),
+                // '" />',
+                // '<feColorMatrix values="0 0 0 9 -4 0 0 0 9 -4 0 0 0 9 -4 0 0 0 0 1" />',
+                // "</filter>",
+                // '<filter id="light" primitiveUnits="objectBoundingBox">',
+                // '<feTurbulence type="fractalNoise" baseFrequency="0.015" />',
+                // '<feSpecularLighting specularConstant="50" specularExponent="100" surfaceScale="1" lighting-color="hsl(0deg 00% 60%)">',
+                // '<fePointLight x=".5" y=".5" z=".33" />',
+                // "</feSpecularLighting>",
+                // '<feBlend in2="SourceGraphic" />',
+                // "</filter>"
             );
     }
 
@@ -71,19 +110,14 @@ contract SpaceOrbStepRenderer is IStepRenderer {
  
         return
             string.concat(
-                '<rect width="100%" height="100%" fill="black" />',
-                '<rect width="100%" height="100%" filter="url(#stars)" opacity="0.3" />',
-                '<rect width="100%" height="100%" filter="url(#clouds)" fill="url(#cloudGradient)" opacity="1" />',
-                '<circle cx="512" cy="512" r="300" fill="none" filter="url(#light)" />',
-                '<circle cx="512" cy="512" r="100" fill="url(#dope)" />',
-                generateRings(tokenId)
-                // '<ellipse cx="512" cy="512" rx="400" ry="250" fill="none" stroke="white" stroke-width="2" transform="rotate(40, 512, 512)" />',
-                // '<ellipse cx="512" cy="512" rx="425" ry="275" fill="none" stroke="white" stroke-width="1" transform="rotate(20, 512, 512)" />',
-                // '<ellipse cx="512" cy="512" rx="750" ry="300" fill="none" stroke="white" stroke-width="2" transform="rotate(120, 512, 512)" />',
-                // '<ellipse cx="512" cy="512" rx="750" ry="300" fill="none" stroke="white" stroke-width="2" transform="rotate(120, 512, 512)" />',
-                // '<ellipse cx="512" cy="512" rx="750" ry="300" fill="none" stroke="white" stroke-width="2" transform="rotate(120, 512, 512)" />',
-                // '<ellipse cx="512" cy="512" rx="750" ry="300" fill="none" stroke="white" stroke-width="2" transform="rotate(120, 512, 512)" />',
-                // '<ellipse cx="512" cy="512" rx="750" ry="300" fill="none" stroke="white" stroke-width="2" transform="rotate(120, 512, 512)" />'
+
+    '<circle cx="700" cy="350" r="46%" fill="url(#galaxy)" filter="url(#galaxyfilter)" />',
+    '<!-- <path d="M10 10 h500 v 500 h -500 z" fill="url(#galaxy)" filter="url(#galaxyfilter)"  />  -->',
+    '<circle cx="700" cy="350" r="150" filter="url(#stars)" opacity="1" mask="url(#portalView)" />',
+    '<circle cx="700" cy="350" r="230" fill="none" filter="url(#light)" />',
+    '<circle cx="700" cy="350" r="75" fill="url(#dope)" />'
+
+
             );
     }
 
