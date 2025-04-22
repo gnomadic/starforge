@@ -27,7 +27,7 @@ const PlanetCard: React.FC<PlanetCardProps> = ({ selectedTokenId }) => {
 
   const { scenarios } = useScenarios();
 
-  const {data: whichEntity } = useReadScenarioGetEntity({ args: [deploy.PlanetStatsSystem], address: "0x75537828f2ce51be7289709686A69CbFDbB714F1" }) 
+  const {data: whichEntity } = useReadScenarioGetEntity({ args: [deploy.PlanetStats], address: "0x75537828f2ce51be7289709686A69CbFDbB714F1" }) 
 
   const { data: entityData, error, isLoading} = useReadPlanetStatsEntityGetStats({ args: [selectedTokenId], address: "0x3b02ff1e626ed7a8fd6ec5299e2c54e1421b626b" })//whichEntity })// scenarios ? scenarios[0] : "0x0" })
 

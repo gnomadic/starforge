@@ -100,10 +100,10 @@ module.exports = async (hre) => {
   //   log: true,
   // });
 
-  // const JobSystem = await deploy("JobSystem", {
-  //   from: deployer,
-  //   log: true,
-  // });
+  const JobSystem = await deploy("JobSystem", {
+    from: deployer,
+    log: true,
+  });
 
   // const QuestSystem = await deploy("QuestSystem", {
   //   from: deployer,
@@ -226,6 +226,9 @@ module.exports = async (hre) => {
   tx = await deployedSysController.registerSystem(SupplySystem.address);
   await tx.wait();
 
+  tx = await deployedSysController.registerSystem(JobSystem.address);
+  await tx.wait();
+
   // tx = await deployedSysController.registerSystem(2, UpgradesSystem.address);
   // await tx.wait();
 
@@ -281,10 +284,12 @@ module.exports = async (hre) => {
   const object = {};
   object.Planet = Planet.address;
   object.SystemController = SystemController.address;
-  object.PlanetStats = PlanetStats.address;
-  object.UpgradesSystem = UpgradesSystem.address;
   object.ScenarioFactory = ScenarioFactory.address;
+  object.PlanetStats = PlanetStats.address;
   object.SupplySystem = SupplySystem.address;
+  object.JobSystem = JobSystem.address;
+  object.UpgradesSystem = UpgradesSystem.address;
+
   
   // object.DungeonMaster = DungeonMaster.address;
   // object.energyToken = energy.address;

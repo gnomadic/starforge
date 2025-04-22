@@ -8,6 +8,7 @@ import {PlanetStatsEntity} from "../entities/PlanetStatsEntity.sol";
 import {SupplyEntity} from "../entities/SupplyEntity.sol";
 import {SystemController} from "../systems/SystemController.sol";
 import {SupplySystem} from "../systems/SupplySystem.sol";
+import {JobEntity} from "../entities/JobEntity.sol";
 
 contract RegenScenario {
     ScenarioFactory factory;
@@ -30,13 +31,64 @@ contract RegenScenario {
             scenario.systemController()
         );
 
+        loadStats(scenario, controller);
+        loadSupply(scenario, controller);
+        loadJobs(scenario, controller);
+
+
+    
+    }
+
+    function loadJobs(Scenario scenario, SystemController controller) internal {
+        JobEntity jobsEntity = JobEntity(
+            scenario.getEntity(address(controller.getSystem("JOB")))
+        );
+
+        jobsEntity.addJob(
+            "life",
+            "Biohacking",
+            "Study cosmic life forms to increase life production.",
+            "LIFE",
+            1000000000000000000
+        );
+
+                jobsEntity.addJob(
+            "matter",
+            "Matter Collector",
+            "Collect interstellar particles to increase matter production.",
+            "MATTER",
+            1000000000000000000
+        );
+
+                jobsEntity.addJob(
+            "energy",
+            "Energy Harvester",
+            "Capture cosmic radiation to boost energy production.",
+            "ENERGY",
+            1000000000000000000
+        );
+
+                jobsEntity.addJob(
+            "technology",
+            "Tech Engineer",
+            "Research advanced technologies to increase tech production.",
+            "TECHNOLOGY",
+            1000000000000000000
+        );
+
+    }
+
+    function loadStats(Scenario scenario, SystemController controller) internal {
+
         PlanetStatsEntity planetStatsEntity = PlanetStatsEntity(
             scenario.getEntity(address(controller.getSystem("STAT")))
         );
         planetStatsEntity.setNumberOfStats(6);
         planetStatsEntity.setStartingStats([80, 78, 76, 74, 72]);
+    }
 
-        SupplySystem supplySystem = SupplySystem(
+    function loadSupply(Scenario scenario, SystemController controller) internal {
+       SupplySystem supplySystem = SupplySystem(
             address(controller.getSystem("SUPPLY"))
         );
 

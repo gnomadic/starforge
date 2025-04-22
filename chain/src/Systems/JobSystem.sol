@@ -63,6 +63,7 @@ contract JobSystem is ISystem {
         if (hoursLive == 0) {
             revert NoTimePassed();
         }
+        // TODO make this 12 hour job limit in the entity.
         if (hoursLive > 12) {
             hoursLive = 12;
         }

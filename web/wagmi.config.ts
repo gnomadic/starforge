@@ -30,6 +30,8 @@ export default defineConfig({
         'PlanetStatsEntity.sol/**',
         'SupplySystem.sol/**',
         'SupplyEntity.sol/**',
+        'JobSystem.sol/**',
+        'JobEntity.sol/**',
       ],
     }),
     react(),

@@ -1,8 +1,15 @@
+"use client";
+
 import React, { useEffect } from 'react';
 import { Briefcase } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { useSupplies } from '@/components/SupplyContext';
+import { useReadJobEntityGetAvailableJobs, useReadScenarioGetEntity } from '@/generated';
+import { useAccount } from 'wagmi';
+import { useScenarios } from '@/components/ScenarioContext';
+import { bigIntReplacer } from '@/domain/utils';
+import { useDeployment } from '@/hooks/useDeployment';
 
 interface Job {
   id: string;
@@ -13,6 +20,20 @@ interface Job {
   icon: React.ReactNode;
   color: string;
 }
+
+interface JobDeco {
+  icon: React.ReactNode;
+  color: string;
+}
+
+const DECOS: JobDeco[] = [
+  {    icon: <Briefcase className="h-5 w-5 text-red-400" />,
+    color: 'bg-red-950/60 hover:bg-red-900/60'
+  },{    icon: <Briefcase className="h-5 w-5 text-blue-400" />,
+    color: 'bg-blue-950/60 hover:bg-blue-900/60'}, {    icon: <Briefcase className="h-5 w-5 text-yellow-400" />,
+      color: 'bg-yellow-950/60 hover:bg-yellow-900/60'}, {    icon: <Briefcase className="h-5 w-5 text-emerald-400" />,
+        color: 'bg-emerald-950/60 hover:bg-emerald-900/60'}
+]
 
 const AVAILABLE_JOBS: Job[] = [
   {
@@ -76,18 +97,38 @@ const Jobs: React.FC = () => {
 //     }
 //   };
 
+  
+  // const { address } = useAccount();
+  const { deploy } = useDeployment();
+  const { scenarios } = useScenarios();
+
+
+    const { data: whichEntity } = useReadScenarioGetEntity({ args: [deploy.JobSystem], address: scenarios ? scenarios[0] : "0x0" }) 
+  
+
+const {data, isLoading, error } = useReadJobEntityGetAvailableJobs({
+  args: [],
+  address: whichEntity
+})
+
+
+
   return (
     <div className="container mx-auto py-20 pt-32">
       <div className="flex flex-col gap-8">
         <div className="text-center">
           <h1 className="text-4xl font-bold mb-4">Cosmic Jobs</h1>
           <p className="text-lg text-gray-400 max-w-2xl mx-auto">
-            Choose a job to automatically generate resources. You can only have one active job at a time.
+            Choose a job to generate resources over time. You can only have one active job at a time.
           </p>
+          {/* <p>whichEntity: {JSON.stringify(whichEntity, bigIntReplacer)}</p>
+          <p>data: {JSON.stringify(data, bigIntReplacer)}</p>
+          <p>isLoading: {JSON.stringify(isLoading, bigIntReplacer)}</p>
+          <p>error: {JSON.stringify(error, bigIntReplacer)}</p> */}
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {AVAILABLE_JOBS.map((job) => {
+          {data?.map((job, index) => {
             const isActive = false;//activeJob?.id === job.id;
             
             return (
@@ -95,14 +136,14 @@ const Jobs: React.FC = () => {
                 key={job.id} 
                 className={`border transition-all ${isActive ? 'border-primary ring-2 ring-primary/20' : 'border-border/40'}`}
               >
-                <CardHeader className={`${job.color} rounded-t-lg`}>
+                <CardHeader className={`${DECOS[index].color} rounded-t-lg`}>
                   <div className="flex justify-between items-center">
                     <div>
                       <CardTitle className="text-lg font-semibold text-white">{job.title}</CardTitle>
-                      <CardDescription className="text-white/80">{job.resourceType}</CardDescription>
+                      <CardDescription className="text-white/80">{job.tokenName}</CardDescription>
                     </div>
                     <div className="p-2 rounded-full bg-black/20">
-                      {job.icon}
+                      {DECOS[index].icon}
                     </div>
                   </div>
                 </CardHeader>
@@ -112,7 +153,7 @@ const Jobs: React.FC = () => {
                   <div className="flex justify-between items-center border-t border-border/40 pt-4">
                     <div className="text-sm">
                       <div className="text-muted-foreground">Boost</div>
-                      <div className="font-semibold">+{job.baseEmissionBoost}/s</div>
+                      <div className="font-semibold">+{Number(job.amountPerHour) / 1e18}/s</div>
                     </div>
                     <Button
                       variant={isActive ? "default" : "outline"}

@@ -69,11 +69,11 @@ export type Deployment = {
   Planet: Address;
   SystemController: Address;
   ScenarioFactory: Address;
-  PlanetStatsSystem: Address;
+  PlanetStats: Address;
   SupplySystem: Address;
-
+  JobSystem: Address
   UpgradesSystem: Address;
-  DungeonMaster: Address;
+  // DungeonMaster: Address;
   // EnergyToken: Address;
   // LifeToken: Address;
   // MatterToken: Address;

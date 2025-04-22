@@ -48,10 +48,10 @@ const updateTokens = (deployment: Deployment) => {
     tokens.length = 0; // Clear the array
     // Populate the tokens array with the new tokens from the deployment
     tokens.push(
-      { displayName: 'life', address: deployment.LifeToken },
-      { displayName: 'matter', address: deployment.MatterToken }, 
-      { displayName: 'energy', address: deployment.EnergyToken },
-      { displayName: 'technology', address: deployment.TechToken },
+      // { displayName: 'life', address: deployment.LifeToken },
+      // { displayName: 'matter', address: deployment.MatterToken }, 
+      // { displayName: 'energy', address: deployment.EnergyToken },
+      // { displayName: 'technology', address: deployment.TechToken },
     )
 
   // }, [deployment]);

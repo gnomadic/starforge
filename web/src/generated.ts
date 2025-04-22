@@ -209,6 +209,214 @@ export const iScenarioAbi = [
 ] as const
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// JobEntity
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+export const jobEntityAbi = [
+  { type: 'constructor', inputs: [], stateMutability: 'nonpayable' },
+  { type: 'error', inputs: [], name: 'AlreadyActiveJob' },
+  { type: 'error', inputs: [], name: 'NoActiveJob' },
+  { type: 'error', inputs: [], name: 'NotScenarioAdmin' },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'jobId', internalType: 'string', type: 'string' },
+      { name: 'player', internalType: 'address', type: 'address' },
+    ],
+    name: 'activateJob',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: '', internalType: 'address', type: 'address' }],
+    name: 'activeJobs',
+    outputs: [
+      { name: 'id', internalType: 'string', type: 'string' },
+      { name: 'startedAt', internalType: 'uint256', type: 'uint256' },
+    ],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'id', internalType: 'string', type: 'string' },
+      { name: 'title', internalType: 'string', type: 'string' },
+      { name: 'description', internalType: 'string', type: 'string' },
+      { name: 'tokenName', internalType: 'string', type: 'string' },
+      { name: 'amountPerHour', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'addJob',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+    name: 'availableJobs',
+    outputs: [
+      { name: 'id', internalType: 'string', type: 'string' },
+      { name: 'title', internalType: 'string', type: 'string' },
+      { name: 'description', internalType: 'string', type: 'string' },
+      { name: 'tokenName', internalType: 'string', type: 'string' },
+      { name: 'amountPerHour', internalType: 'uint256', type: 'uint256' },
+    ],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: 'player', internalType: 'address', type: 'address' }],
+    name: 'endJob',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: 'player', internalType: 'address', type: 'address' }],
+    name: 'getActiveJob',
+    outputs: [
+      { name: '', internalType: 'string', type: 'string' },
+      { name: '', internalType: 'uint256', type: 'uint256' },
+    ],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'getAvailableJobs',
+    outputs: [
+      {
+        name: '',
+        internalType: 'struct Job[]',
+        type: 'tuple[]',
+        components: [
+          { name: 'id', internalType: 'string', type: 'string' },
+          { name: 'title', internalType: 'string', type: 'string' },
+          { name: 'description', internalType: 'string', type: 'string' },
+          { name: 'tokenName', internalType: 'string', type: 'string' },
+          { name: 'amountPerHour', internalType: 'uint256', type: 'uint256' },
+        ],
+      },
+    ],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: 'jobId', internalType: 'string', type: 'string' }],
+    name: 'getJob',
+    outputs: [
+      {
+        name: '',
+        internalType: 'struct Job',
+        type: 'tuple',
+        components: [
+          { name: 'id', internalType: 'string', type: 'string' },
+          { name: 'title', internalType: 'string', type: 'string' },
+          { name: 'description', internalType: 'string', type: 'string' },
+          { name: 'tokenName', internalType: 'string', type: 'string' },
+          { name: 'amountPerHour', internalType: 'uint256', type: 'uint256' },
+        ],
+      },
+    ],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'scenario', internalType: 'contract IScenario', type: 'address' },
+      { name: '_system', internalType: 'address', type: 'address' },
+    ],
+    name: 'initialize',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: '', internalType: 'string', type: 'string' }],
+    name: 'jobById',
+    outputs: [
+      { name: 'id', internalType: 'string', type: 'string' },
+      { name: 'title', internalType: 'string', type: 'string' },
+      { name: 'description', internalType: 'string', type: 'string' },
+      { name: 'tokenName', internalType: 'string', type: 'string' },
+      { name: 'amountPerHour', internalType: 'uint256', type: 'uint256' },
+    ],
+    stateMutability: 'view',
+  },
+] as const
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// JobSystem
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+export const jobSystemAbi = [
+  { type: 'error', inputs: [], name: 'AlreadyRegistered' },
+  { type: 'error', inputs: [], name: 'NoTimePassed' },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'scenario', internalType: 'contract IScenario', type: 'address' },
+    ],
+    name: 'activateEntity',
+    outputs: [{ name: '', internalType: 'address', type: 'address' }],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'scenario', internalType: 'contract IScenario', type: 'address' },
+      { name: 'jobId', internalType: 'string', type: 'string' },
+    ],
+    name: 'activateJob',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'scenario', internalType: 'contract IScenario', type: 'address' },
+    ],
+    name: 'finishJob',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'getId',
+    outputs: [{ name: '', internalType: 'string', type: 'string' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: '', internalType: 'contract ISystemController', type: 'address' },
+      { name: '', internalType: 'contract IScenario', type: 'address' },
+      { name: '', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'init',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'systemController', internalType: 'address', type: 'address' },
+    ],
+    name: 'registerSystem',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+    name: 'sync',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+] as const
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Planet
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -1808,6 +2016,274 @@ export const useReadIScenarioGetEntity = /*#__PURE__*/ createUseReadContract({
   abi: iScenarioAbi,
   functionName: 'getEntity',
 })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link jobEntityAbi}__
+ */
+export const useReadJobEntity = /*#__PURE__*/ createUseReadContract({
+  abi: jobEntityAbi,
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link jobEntityAbi}__ and `functionName` set to `"activeJobs"`
+ */
+export const useReadJobEntityActiveJobs = /*#__PURE__*/ createUseReadContract({
+  abi: jobEntityAbi,
+  functionName: 'activeJobs',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link jobEntityAbi}__ and `functionName` set to `"availableJobs"`
+ */
+export const useReadJobEntityAvailableJobs =
+  /*#__PURE__*/ createUseReadContract({
+    abi: jobEntityAbi,
+    functionName: 'availableJobs',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link jobEntityAbi}__ and `functionName` set to `"getActiveJob"`
+ */
+export const useReadJobEntityGetActiveJob = /*#__PURE__*/ createUseReadContract(
+  { abi: jobEntityAbi, functionName: 'getActiveJob' },
+)
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link jobEntityAbi}__ and `functionName` set to `"getAvailableJobs"`
+ */
+export const useReadJobEntityGetAvailableJobs =
+  /*#__PURE__*/ createUseReadContract({
+    abi: jobEntityAbi,
+    functionName: 'getAvailableJobs',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link jobEntityAbi}__ and `functionName` set to `"getJob"`
+ */
+export const useReadJobEntityGetJob = /*#__PURE__*/ createUseReadContract({
+  abi: jobEntityAbi,
+  functionName: 'getJob',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link jobEntityAbi}__ and `functionName` set to `"jobById"`
+ */
+export const useReadJobEntityJobById = /*#__PURE__*/ createUseReadContract({
+  abi: jobEntityAbi,
+  functionName: 'jobById',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link jobEntityAbi}__
+ */
+export const useWriteJobEntity = /*#__PURE__*/ createUseWriteContract({
+  abi: jobEntityAbi,
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link jobEntityAbi}__ and `functionName` set to `"activateJob"`
+ */
+export const useWriteJobEntityActivateJob =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: jobEntityAbi,
+    functionName: 'activateJob',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link jobEntityAbi}__ and `functionName` set to `"addJob"`
+ */
+export const useWriteJobEntityAddJob = /*#__PURE__*/ createUseWriteContract({
+  abi: jobEntityAbi,
+  functionName: 'addJob',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link jobEntityAbi}__ and `functionName` set to `"endJob"`
+ */
+export const useWriteJobEntityEndJob = /*#__PURE__*/ createUseWriteContract({
+  abi: jobEntityAbi,
+  functionName: 'endJob',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link jobEntityAbi}__ and `functionName` set to `"initialize"`
+ */
+export const useWriteJobEntityInitialize = /*#__PURE__*/ createUseWriteContract(
+  { abi: jobEntityAbi, functionName: 'initialize' },
+)
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link jobEntityAbi}__
+ */
+export const useSimulateJobEntity = /*#__PURE__*/ createUseSimulateContract({
+  abi: jobEntityAbi,
+})
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link jobEntityAbi}__ and `functionName` set to `"activateJob"`
+ */
+export const useSimulateJobEntityActivateJob =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: jobEntityAbi,
+    functionName: 'activateJob',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link jobEntityAbi}__ and `functionName` set to `"addJob"`
+ */
+export const useSimulateJobEntityAddJob =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: jobEntityAbi,
+    functionName: 'addJob',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link jobEntityAbi}__ and `functionName` set to `"endJob"`
+ */
+export const useSimulateJobEntityEndJob =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: jobEntityAbi,
+    functionName: 'endJob',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link jobEntityAbi}__ and `functionName` set to `"initialize"`
+ */
+export const useSimulateJobEntityInitialize =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: jobEntityAbi,
+    functionName: 'initialize',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link jobSystemAbi}__
+ */
+export const useReadJobSystem = /*#__PURE__*/ createUseReadContract({
+  abi: jobSystemAbi,
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link jobSystemAbi}__ and `functionName` set to `"getId"`
+ */
+export const useReadJobSystemGetId = /*#__PURE__*/ createUseReadContract({
+  abi: jobSystemAbi,
+  functionName: 'getId',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link jobSystemAbi}__
+ */
+export const useWriteJobSystem = /*#__PURE__*/ createUseWriteContract({
+  abi: jobSystemAbi,
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link jobSystemAbi}__ and `functionName` set to `"activateEntity"`
+ */
+export const useWriteJobSystemActivateEntity =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: jobSystemAbi,
+    functionName: 'activateEntity',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link jobSystemAbi}__ and `functionName` set to `"activateJob"`
+ */
+export const useWriteJobSystemActivateJob =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: jobSystemAbi,
+    functionName: 'activateJob',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link jobSystemAbi}__ and `functionName` set to `"finishJob"`
+ */
+export const useWriteJobSystemFinishJob = /*#__PURE__*/ createUseWriteContract({
+  abi: jobSystemAbi,
+  functionName: 'finishJob',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link jobSystemAbi}__ and `functionName` set to `"init"`
+ */
+export const useWriteJobSystemInit = /*#__PURE__*/ createUseWriteContract({
+  abi: jobSystemAbi,
+  functionName: 'init',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link jobSystemAbi}__ and `functionName` set to `"registerSystem"`
+ */
+export const useWriteJobSystemRegisterSystem =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: jobSystemAbi,
+    functionName: 'registerSystem',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link jobSystemAbi}__ and `functionName` set to `"sync"`
+ */
+export const useWriteJobSystemSync = /*#__PURE__*/ createUseWriteContract({
+  abi: jobSystemAbi,
+  functionName: 'sync',
+})
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link jobSystemAbi}__
+ */
+export const useSimulateJobSystem = /*#__PURE__*/ createUseSimulateContract({
+  abi: jobSystemAbi,
+})
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link jobSystemAbi}__ and `functionName` set to `"activateEntity"`
+ */
+export const useSimulateJobSystemActivateEntity =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: jobSystemAbi,
+    functionName: 'activateEntity',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link jobSystemAbi}__ and `functionName` set to `"activateJob"`
+ */
+export const useSimulateJobSystemActivateJob =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: jobSystemAbi,
+    functionName: 'activateJob',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link jobSystemAbi}__ and `functionName` set to `"finishJob"`
+ */
+export const useSimulateJobSystemFinishJob =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: jobSystemAbi,
+    functionName: 'finishJob',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link jobSystemAbi}__ and `functionName` set to `"init"`
+ */
+export const useSimulateJobSystemInit = /*#__PURE__*/ createUseSimulateContract(
+  { abi: jobSystemAbi, functionName: 'init' },
+)
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link jobSystemAbi}__ and `functionName` set to `"registerSystem"`
+ */
+export const useSimulateJobSystemRegisterSystem =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: jobSystemAbi,
+    functionName: 'registerSystem',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link jobSystemAbi}__ and `functionName` set to `"sync"`
+ */
+export const useSimulateJobSystemSync = /*#__PURE__*/ createUseSimulateContract(
+  { abi: jobSystemAbi, functionName: 'sync' },
+)
 
 /**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link planetAbi}__
@@ -3797,6 +4273,267 @@ export const readIScenarioGetAdmin = /*#__PURE__*/ createReadContract({
 export const readIScenarioGetEntity = /*#__PURE__*/ createReadContract({
   abi: iScenarioAbi,
   functionName: 'getEntity',
+})
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link jobEntityAbi}__
+ */
+export const readJobEntity = /*#__PURE__*/ createReadContract({
+  abi: jobEntityAbi,
+})
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link jobEntityAbi}__ and `functionName` set to `"activeJobs"`
+ */
+export const readJobEntityActiveJobs = /*#__PURE__*/ createReadContract({
+  abi: jobEntityAbi,
+  functionName: 'activeJobs',
+})
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link jobEntityAbi}__ and `functionName` set to `"availableJobs"`
+ */
+export const readJobEntityAvailableJobs = /*#__PURE__*/ createReadContract({
+  abi: jobEntityAbi,
+  functionName: 'availableJobs',
+})
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link jobEntityAbi}__ and `functionName` set to `"getActiveJob"`
+ */
+export const readJobEntityGetActiveJob = /*#__PURE__*/ createReadContract({
+  abi: jobEntityAbi,
+  functionName: 'getActiveJob',
+})
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link jobEntityAbi}__ and `functionName` set to `"getAvailableJobs"`
+ */
+export const readJobEntityGetAvailableJobs = /*#__PURE__*/ createReadContract({
+  abi: jobEntityAbi,
+  functionName: 'getAvailableJobs',
+})
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link jobEntityAbi}__ and `functionName` set to `"getJob"`
+ */
+export const readJobEntityGetJob = /*#__PURE__*/ createReadContract({
+  abi: jobEntityAbi,
+  functionName: 'getJob',
+})
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link jobEntityAbi}__ and `functionName` set to `"jobById"`
+ */
+export const readJobEntityJobById = /*#__PURE__*/ createReadContract({
+  abi: jobEntityAbi,
+  functionName: 'jobById',
+})
+
+/**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link jobEntityAbi}__
+ */
+export const writeJobEntity = /*#__PURE__*/ createWriteContract({
+  abi: jobEntityAbi,
+})
+
+/**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link jobEntityAbi}__ and `functionName` set to `"activateJob"`
+ */
+export const writeJobEntityActivateJob = /*#__PURE__*/ createWriteContract({
+  abi: jobEntityAbi,
+  functionName: 'activateJob',
+})
+
+/**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link jobEntityAbi}__ and `functionName` set to `"addJob"`
+ */
+export const writeJobEntityAddJob = /*#__PURE__*/ createWriteContract({
+  abi: jobEntityAbi,
+  functionName: 'addJob',
+})
+
+/**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link jobEntityAbi}__ and `functionName` set to `"endJob"`
+ */
+export const writeJobEntityEndJob = /*#__PURE__*/ createWriteContract({
+  abi: jobEntityAbi,
+  functionName: 'endJob',
+})
+
+/**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link jobEntityAbi}__ and `functionName` set to `"initialize"`
+ */
+export const writeJobEntityInitialize = /*#__PURE__*/ createWriteContract({
+  abi: jobEntityAbi,
+  functionName: 'initialize',
+})
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link jobEntityAbi}__
+ */
+export const simulateJobEntity = /*#__PURE__*/ createSimulateContract({
+  abi: jobEntityAbi,
+})
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link jobEntityAbi}__ and `functionName` set to `"activateJob"`
+ */
+export const simulateJobEntityActivateJob =
+  /*#__PURE__*/ createSimulateContract({
+    abi: jobEntityAbi,
+    functionName: 'activateJob',
+  })
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link jobEntityAbi}__ and `functionName` set to `"addJob"`
+ */
+export const simulateJobEntityAddJob = /*#__PURE__*/ createSimulateContract({
+  abi: jobEntityAbi,
+  functionName: 'addJob',
+})
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link jobEntityAbi}__ and `functionName` set to `"endJob"`
+ */
+export const simulateJobEntityEndJob = /*#__PURE__*/ createSimulateContract({
+  abi: jobEntityAbi,
+  functionName: 'endJob',
+})
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link jobEntityAbi}__ and `functionName` set to `"initialize"`
+ */
+export const simulateJobEntityInitialize = /*#__PURE__*/ createSimulateContract(
+  { abi: jobEntityAbi, functionName: 'initialize' },
+)
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link jobSystemAbi}__
+ */
+export const readJobSystem = /*#__PURE__*/ createReadContract({
+  abi: jobSystemAbi,
+})
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link jobSystemAbi}__ and `functionName` set to `"getId"`
+ */
+export const readJobSystemGetId = /*#__PURE__*/ createReadContract({
+  abi: jobSystemAbi,
+  functionName: 'getId',
+})
+
+/**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link jobSystemAbi}__
+ */
+export const writeJobSystem = /*#__PURE__*/ createWriteContract({
+  abi: jobSystemAbi,
+})
+
+/**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link jobSystemAbi}__ and `functionName` set to `"activateEntity"`
+ */
+export const writeJobSystemActivateEntity = /*#__PURE__*/ createWriteContract({
+  abi: jobSystemAbi,
+  functionName: 'activateEntity',
+})
+
+/**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link jobSystemAbi}__ and `functionName` set to `"activateJob"`
+ */
+export const writeJobSystemActivateJob = /*#__PURE__*/ createWriteContract({
+  abi: jobSystemAbi,
+  functionName: 'activateJob',
+})
+
+/**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link jobSystemAbi}__ and `functionName` set to `"finishJob"`
+ */
+export const writeJobSystemFinishJob = /*#__PURE__*/ createWriteContract({
+  abi: jobSystemAbi,
+  functionName: 'finishJob',
+})
+
+/**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link jobSystemAbi}__ and `functionName` set to `"init"`
+ */
+export const writeJobSystemInit = /*#__PURE__*/ createWriteContract({
+  abi: jobSystemAbi,
+  functionName: 'init',
+})
+
+/**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link jobSystemAbi}__ and `functionName` set to `"registerSystem"`
+ */
+export const writeJobSystemRegisterSystem = /*#__PURE__*/ createWriteContract({
+  abi: jobSystemAbi,
+  functionName: 'registerSystem',
+})
+
+/**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link jobSystemAbi}__ and `functionName` set to `"sync"`
+ */
+export const writeJobSystemSync = /*#__PURE__*/ createWriteContract({
+  abi: jobSystemAbi,
+  functionName: 'sync',
+})
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link jobSystemAbi}__
+ */
+export const simulateJobSystem = /*#__PURE__*/ createSimulateContract({
+  abi: jobSystemAbi,
+})
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link jobSystemAbi}__ and `functionName` set to `"activateEntity"`
+ */
+export const simulateJobSystemActivateEntity =
+  /*#__PURE__*/ createSimulateContract({
+    abi: jobSystemAbi,
+    functionName: 'activateEntity',
+  })
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link jobSystemAbi}__ and `functionName` set to `"activateJob"`
+ */
+export const simulateJobSystemActivateJob =
+  /*#__PURE__*/ createSimulateContract({
+    abi: jobSystemAbi,
+    functionName: 'activateJob',
+  })
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link jobSystemAbi}__ and `functionName` set to `"finishJob"`
+ */
+export const simulateJobSystemFinishJob = /*#__PURE__*/ createSimulateContract({
+  abi: jobSystemAbi,
+  functionName: 'finishJob',
+})
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link jobSystemAbi}__ and `functionName` set to `"init"`
+ */
+export const simulateJobSystemInit = /*#__PURE__*/ createSimulateContract({
+  abi: jobSystemAbi,
+  functionName: 'init',
+})
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link jobSystemAbi}__ and `functionName` set to `"registerSystem"`
+ */
+export const simulateJobSystemRegisterSystem =
+  /*#__PURE__*/ createSimulateContract({
+    abi: jobSystemAbi,
+    functionName: 'registerSystem',
+  })
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link jobSystemAbi}__ and `functionName` set to `"sync"`
+ */
+export const simulateJobSystemSync = /*#__PURE__*/ createSimulateContract({
+  abi: jobSystemAbi,
+  functionName: 'sync',
 })
 
 /**

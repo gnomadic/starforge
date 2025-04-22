@@ -9,7 +9,7 @@ import {console} from "hardhat/console.sol";
         string id;
         string title;
         string description;
-        address token;
+        // address token;
         string tokenName;
         uint256 amountPerHour;        
     }
@@ -94,17 +94,18 @@ contract JobEntity {
         string memory title,
         string memory description,
         string memory tokenName,
-        address token,
+        // address token,
         uint256 amountPerHour
     ) external {
         if (msg.sender != _scenario.getAdmin() && msg.sender != system) {
             revert NotScenarioAdmin();
         }
+        console.log("Adding job %s", id);
         Job memory newJob = Job(
             id,
             title,
             description,
-            token,
+            // token,
             tokenName,
             amountPerHour
         );
