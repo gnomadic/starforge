@@ -3,18 +3,19 @@ pragma solidity ^0.8.24;
 
 import {ISystem, ISystemController, TokenRate} from "./interfaces/ISystem.sol";
 import {IScenario} from "../Scenario.sol";
-import {JobEntity} from "../entities/JobEntity.sol";
+import {JobEntity, Job} from "../entities/JobEntity.sol";
+import {SupplySystem} from "./SupplySystem.sol";
 
 contract JobSystem is ISystem {
     bool registered = false;
-    address private _systemController;
+    ISystemController private _systemController;
 
     function registerSystem(address systemController) external {
         if (registered) {
             revert AlreadyRegistered();
         }
         registered = true;
-        _systemController = systemController;
+        _systemController = ISystemController(systemController);
     }
 
     error AlreadyRegistered();
@@ -27,23 +28,48 @@ contract JobSystem is ISystem {
 
     function sync(uint256 /*tokenId*/) external override {}
 
-    function activateJob(string memory jobId) public {
-        // if (bytes(activeJobs[msg.sender].id).length != 0) {
-            // finishJob();
-        // }
-        // activeJobs[msg.sender] = LiveJob(jobId, block.timestamp);
+    function activateJob(IScenario scenario, string memory jobId) public {
+        JobEntity entity = JobEntity(scenario.getEntity(address(this)));
+        (string memory activeJobId, uint256 startedAt) = entity.getActiveJob(
+            msg.sender
+        );
+
+        if (bytes(activeJobId).length > 0) {
+            finishJob(scenario);
+        }
+
+        entity.activateJob(jobId, msg.sender);
     }
 
-    function finishJob() public {
-        // LiveJob memory job = activeJobs[msg.sender];
-        // if (bytes(job.id).length == 0) {
-        //     revert NoActiveJob();
-        // }
-        // if (block.timestamp < job.startedAt + availableJobs[0].duration) {
-        //     revert AlreadyActiveJob();
-        // }
+    // if the player has an already active job, end it and mint rewards
+    // then activate new job
+    // }
 
-        // delete activeJobs[msg.sender];
+    function finishJob(IScenario scenario) public {
+        // if the player has an already active job, end it and mint rewards
+
+        JobEntity entity = JobEntity(scenario.getEntity(address(this)));
+        (string memory activeJobId, uint256 startedAt) = entity.getActiveJob(
+            msg.sender
+        );
+        Job memory job = entity.getJob(activeJobId);
+
+        SupplySystem supply = SupplySystem(
+            address(_systemController.getSystem("SUPPLY"))
+        );
+
+        uint256 secondsLive = block.timestamp - startedAt;
+        uint256 hoursLive = secondsLive / 3600;
+        if (hoursLive == 0) {
+            revert NoTimePassed();
+        }
+        if (hoursLive > 12) {
+            hoursLive = 12;
+        }
+
+        uint256 amount = hoursLive * job.amountPerHour;
+
+        supply.mint(scenario, msg.sender, job.tokenName, amount);
     }
 
     function activateEntity(
@@ -65,4 +91,6 @@ contract JobSystem is ISystem {
     function getId() external view returns (string memory) {
         return "JOB";
     }
+
+    error NoTimePassed();
 }

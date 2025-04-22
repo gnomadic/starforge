@@ -4,15 +4,19 @@ pragma solidity ^0.8.24;
 import {IScenario} from "../Scenario.sol";
 import {console} from "hardhat/console.sol";
 
-contract JobEntity {
+
     struct Job {
         string id;
         string title;
         string description;
         address token;
-        uint256 amount;
-        uint256 duration;
+        string tokenName;
+        uint256 amountPerHour;        
     }
+
+    
+contract JobEntity {
+
 
     struct LiveJob {
         string id;
@@ -20,6 +24,7 @@ contract JobEntity {
     }
 
     Job[] public availableJobs;
+    mapping(string => Job) public jobById;
 
     mapping(address => LiveJob) public activeJobs;
 
@@ -43,17 +48,54 @@ contract JobEntity {
 
     function getActiveJob(
         address player
-    ) external view returns (string memory) {
-        return activeJobs[player].id;
+    ) external view returns (string memory, uint256) {
+        return (activeJobs[player].id, activeJobs[player].startedAt);
+    }
+
+    function activateJob(
+        string memory jobId,
+        address player
+    ) external {
+        if (msg.sender != _scenario.getAdmin() && msg.sender != system) {
+            revert NotScenarioAdmin();
+        }
+        if (bytes(activeJobs[player].id).length != 0) {
+            revert AlreadyActiveJob();
+        }
+
+        activeJobs[player] = LiveJob(jobId, block.timestamp);
+       
+        revert NoActiveJob();
+    }
+
+    function getJob(
+        string memory jobId
+    ) external view returns (Job memory) {
+        return jobById[jobId];
+    }
+
+    function endJob(address player) external {
+        if (msg.sender != _scenario.getAdmin() && msg.sender != system) {
+            revert NotScenarioAdmin();
+        }
+        LiveJob memory job = activeJobs[player];
+        if (bytes(job.id).length == 0) {
+            revert NoActiveJob();
+        }
+        // if (block.timestamp < job.startedAt + availableJobs[0].duration) {
+        //     revert AlreadyActiveJob();
+        // }
+
+        delete activeJobs[player];
     }
 
     function addJob(
         string memory id,
         string memory title,
         string memory description,
+        string memory tokenName,
         address token,
-        uint256 amount,
-        uint256 duration
+        uint256 amountPerHour
     ) external {
         if (msg.sender != _scenario.getAdmin() && msg.sender != system) {
             revert NotScenarioAdmin();
@@ -63,8 +105,8 @@ contract JobEntity {
             title,
             description,
             token,
-            amount,
-            duration
+            tokenName,
+            amountPerHour
         );
         availableJobs.push(newJob);
     }

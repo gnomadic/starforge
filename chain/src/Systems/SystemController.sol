@@ -27,7 +27,6 @@ contract SystemController is Ownable, ISystemController {
         systems.push(system);
         systemMap[system.getId()] = system;
         system.registerSystem(address(this));
-        // systemEntities[id] = system.getEntity();
     }
 
     function initAll(uint256 tokenId) external onlyToken {

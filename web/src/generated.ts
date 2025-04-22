@@ -165,6 +165,26 @@ export const ierc20Abi = [
     outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
     stateMutability: 'view',
   },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'from', internalType: 'address', type: 'address' },
+      { name: 'amount', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'burn',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'to', internalType: 'address', type: 'address' },
+      { name: 'amount', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'mint',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
 ] as const
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -739,6 +759,13 @@ export const planetStatsSystemAbi = [
   },
   {
     type: 'function',
+    inputs: [],
+    name: 'getId',
+    outputs: [{ name: '', internalType: 'string', type: 'string' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
     inputs: [
       {
         name: 'controller',
@@ -964,6 +991,13 @@ export const supplyEntityAbi = [
   },
   {
     type: 'function',
+    inputs: [{ name: 'name', internalType: 'string', type: 'string' }],
+    name: 'getTokenAddress',
+    outputs: [{ name: '', internalType: 'address', type: 'address' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
     inputs: [],
     name: 'getTokenAddresses',
     outputs: [{ name: '', internalType: 'address[]', type: 'address[]' }],
@@ -1022,6 +1056,18 @@ export const supplySystemAbi = [
     type: 'function',
     inputs: [
       { name: 'scenario', internalType: 'contract IScenario', type: 'address' },
+      { name: 'player', internalType: 'address', type: 'address' },
+      { name: 'tokenName', internalType: 'string', type: 'string' },
+      { name: 'amount', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'burn',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'scenario', internalType: 'contract IScenario', type: 'address' },
       { name: 'tokenName', internalType: 'string', type: 'string' },
       { name: 'tokenSymbol', internalType: 'string', type: 'string' },
     ],
@@ -1031,12 +1077,31 @@ export const supplySystemAbi = [
   },
   {
     type: 'function',
+    inputs: [],
+    name: 'getId',
+    outputs: [{ name: '', internalType: 'string', type: 'string' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
     inputs: [
       { name: '', internalType: 'contract ISystemController', type: 'address' },
       { name: '', internalType: 'contract IScenario', type: 'address' },
       { name: '', internalType: 'uint256', type: 'uint256' },
     ],
     name: 'init',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'scenario', internalType: 'contract IScenario', type: 'address' },
+      { name: 'player', internalType: 'address', type: 'address' },
+      { name: 'tokenName', internalType: 'string', type: 'string' },
+      { name: 'amount', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'mint',
     outputs: [],
     stateMutability: 'nonpayable',
   },
@@ -1104,7 +1169,7 @@ export const systemControllerAbi = [
   },
   {
     type: 'function',
-    inputs: [{ name: 'id', internalType: 'uint8', type: 'uint8' }],
+    inputs: [{ name: 'id', internalType: 'string', type: 'string' }],
     name: 'getSystem',
     outputs: [{ name: '', internalType: 'contract ISystem', type: 'address' }],
     stateMutability: 'view',
@@ -1144,7 +1209,6 @@ export const systemControllerAbi = [
   {
     type: 'function',
     inputs: [
-      { name: 'id', internalType: 'uint8', type: 'uint8' },
       { name: 'system', internalType: 'contract ISystem', type: 'address' },
     ],
     name: 'registerSystem',
@@ -1198,7 +1262,7 @@ export const systemControllerAbi = [
   },
   {
     type: 'function',
-    inputs: [{ name: '', internalType: 'uint8', type: 'uint8' }],
+    inputs: [{ name: '', internalType: 'string', type: 'string' }],
     name: 'systemMap',
     outputs: [{ name: '', internalType: 'contract ISystem', type: 'address' }],
     stateMutability: 'view',
@@ -1316,6 +1380,13 @@ export const upgradesSystemAbi = [
     inputs: [{ name: 'tokenId', internalType: 'uint256', type: 'uint256' }],
     name: 'getAppliedUpgrades',
     outputs: [{ name: '', internalType: 'uint256[]', type: 'uint256[]' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'getId',
+    outputs: [{ name: '', internalType: 'string', type: 'string' }],
     stateMutability: 'view',
   },
   {
@@ -1667,6 +1738,52 @@ export const useReadIerc20 = /*#__PURE__*/ createUseReadContract({
 export const useReadIerc20BalanceOf = /*#__PURE__*/ createUseReadContract({
   abi: ierc20Abi,
   functionName: 'balanceOf',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ierc20Abi}__
+ */
+export const useWriteIerc20 = /*#__PURE__*/ createUseWriteContract({
+  abi: ierc20Abi,
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ierc20Abi}__ and `functionName` set to `"burn"`
+ */
+export const useWriteIerc20Burn = /*#__PURE__*/ createUseWriteContract({
+  abi: ierc20Abi,
+  functionName: 'burn',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ierc20Abi}__ and `functionName` set to `"mint"`
+ */
+export const useWriteIerc20Mint = /*#__PURE__*/ createUseWriteContract({
+  abi: ierc20Abi,
+  functionName: 'mint',
+})
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ierc20Abi}__
+ */
+export const useSimulateIerc20 = /*#__PURE__*/ createUseSimulateContract({
+  abi: ierc20Abi,
+})
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ierc20Abi}__ and `functionName` set to `"burn"`
+ */
+export const useSimulateIerc20Burn = /*#__PURE__*/ createUseSimulateContract({
+  abi: ierc20Abi,
+  functionName: 'burn',
+})
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ierc20Abi}__ and `functionName` set to `"mint"`
+ */
+export const useSimulateIerc20Mint = /*#__PURE__*/ createUseSimulateContract({
+  abi: ierc20Abi,
+  functionName: 'mint',
 })
 
 /**
@@ -2273,6 +2390,22 @@ export const useSimulatePlanetStatsEntitySetStats =
   })
 
 /**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link planetStatsSystemAbi}__
+ */
+export const useReadPlanetStatsSystem = /*#__PURE__*/ createUseReadContract({
+  abi: planetStatsSystemAbi,
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link planetStatsSystemAbi}__ and `functionName` set to `"getId"`
+ */
+export const useReadPlanetStatsSystemGetId =
+  /*#__PURE__*/ createUseReadContract({
+    abi: planetStatsSystemAbi,
+    functionName: 'getId',
+  })
+
+/**
  * Wraps __{@link useWriteContract}__ with `abi` set to __{@link planetStatsSystemAbi}__
  */
 export const useWritePlanetStatsSystem = /*#__PURE__*/ createUseWriteContract({
@@ -2577,6 +2710,15 @@ export const useReadSupplyEntity = /*#__PURE__*/ createUseReadContract({
 })
 
 /**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link supplyEntityAbi}__ and `functionName` set to `"getTokenAddress"`
+ */
+export const useReadSupplyEntityGetTokenAddress =
+  /*#__PURE__*/ createUseReadContract({
+    abi: supplyEntityAbi,
+    functionName: 'getTokenAddress',
+  })
+
+/**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link supplyEntityAbi}__ and `functionName` set to `"getTokenAddresses"`
  */
 export const useReadSupplyEntityGetTokenAddresses =
@@ -2654,6 +2796,21 @@ export const useSimulateSupplyEntityInitialize =
   })
 
 /**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link supplySystemAbi}__
+ */
+export const useReadSupplySystem = /*#__PURE__*/ createUseReadContract({
+  abi: supplySystemAbi,
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link supplySystemAbi}__ and `functionName` set to `"getId"`
+ */
+export const useReadSupplySystemGetId = /*#__PURE__*/ createUseReadContract({
+  abi: supplySystemAbi,
+  functionName: 'getId',
+})
+
+/**
  * Wraps __{@link useWriteContract}__ with `abi` set to __{@link supplySystemAbi}__
  */
 export const useWriteSupplySystem = /*#__PURE__*/ createUseWriteContract({
@@ -2670,6 +2827,14 @@ export const useWriteSupplySystemActivateEntity =
   })
 
 /**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link supplySystemAbi}__ and `functionName` set to `"burn"`
+ */
+export const useWriteSupplySystemBurn = /*#__PURE__*/ createUseWriteContract({
+  abi: supplySystemAbi,
+  functionName: 'burn',
+})
+
+/**
  * Wraps __{@link useWriteContract}__ with `abi` set to __{@link supplySystemAbi}__ and `functionName` set to `"deployToken"`
  */
 export const useWriteSupplySystemDeployToken =
@@ -2684,6 +2849,14 @@ export const useWriteSupplySystemDeployToken =
 export const useWriteSupplySystemInit = /*#__PURE__*/ createUseWriteContract({
   abi: supplySystemAbi,
   functionName: 'init',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link supplySystemAbi}__ and `functionName` set to `"mint"`
+ */
+export const useWriteSupplySystemMint = /*#__PURE__*/ createUseWriteContract({
+  abi: supplySystemAbi,
+  functionName: 'mint',
 })
 
 /**
@@ -2720,6 +2893,15 @@ export const useSimulateSupplySystemActivateEntity =
   })
 
 /**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link supplySystemAbi}__ and `functionName` set to `"burn"`
+ */
+export const useSimulateSupplySystemBurn =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: supplySystemAbi,
+    functionName: 'burn',
+  })
+
+/**
  * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link supplySystemAbi}__ and `functionName` set to `"deployToken"`
  */
 export const useSimulateSupplySystemDeployToken =
@@ -2735,6 +2917,15 @@ export const useSimulateSupplySystemInit =
   /*#__PURE__*/ createUseSimulateContract({
     abi: supplySystemAbi,
     functionName: 'init',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link supplySystemAbi}__ and `functionName` set to `"mint"`
+ */
+export const useSimulateSupplySystemMint =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: supplySystemAbi,
+    functionName: 'mint',
   })
 
 /**
@@ -3028,6 +3219,14 @@ export const useReadUpgradesSystemGetAppliedUpgrades =
     abi: upgradesSystemAbi,
     functionName: 'getAppliedUpgrades',
   })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link upgradesSystemAbi}__ and `functionName` set to `"getId"`
+ */
+export const useReadUpgradesSystemGetId = /*#__PURE__*/ createUseReadContract({
+  abi: upgradesSystemAbi,
+  functionName: 'getId',
+})
 
 /**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link upgradesSystemAbi}__ and `functionName` set to `"owner"`
@@ -3531,6 +3730,50 @@ export const readIerc20 = /*#__PURE__*/ createReadContract({ abi: ierc20Abi })
 export const readIerc20BalanceOf = /*#__PURE__*/ createReadContract({
   abi: ierc20Abi,
   functionName: 'balanceOf',
+})
+
+/**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link ierc20Abi}__
+ */
+export const writeIerc20 = /*#__PURE__*/ createWriteContract({ abi: ierc20Abi })
+
+/**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link ierc20Abi}__ and `functionName` set to `"burn"`
+ */
+export const writeIerc20Burn = /*#__PURE__*/ createWriteContract({
+  abi: ierc20Abi,
+  functionName: 'burn',
+})
+
+/**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link ierc20Abi}__ and `functionName` set to `"mint"`
+ */
+export const writeIerc20Mint = /*#__PURE__*/ createWriteContract({
+  abi: ierc20Abi,
+  functionName: 'mint',
+})
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link ierc20Abi}__
+ */
+export const simulateIerc20 = /*#__PURE__*/ createSimulateContract({
+  abi: ierc20Abi,
+})
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link ierc20Abi}__ and `functionName` set to `"burn"`
+ */
+export const simulateIerc20Burn = /*#__PURE__*/ createSimulateContract({
+  abi: ierc20Abi,
+  functionName: 'burn',
+})
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link ierc20Abi}__ and `functionName` set to `"mint"`
+ */
+export const simulateIerc20Mint = /*#__PURE__*/ createSimulateContract({
+  abi: ierc20Abi,
+  functionName: 'mint',
 })
 
 /**
@@ -4117,6 +4360,21 @@ export const simulatePlanetStatsEntitySetStats =
   })
 
 /**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link planetStatsSystemAbi}__
+ */
+export const readPlanetStatsSystem = /*#__PURE__*/ createReadContract({
+  abi: planetStatsSystemAbi,
+})
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link planetStatsSystemAbi}__ and `functionName` set to `"getId"`
+ */
+export const readPlanetStatsSystemGetId = /*#__PURE__*/ createReadContract({
+  abi: planetStatsSystemAbi,
+  functionName: 'getId',
+})
+
+/**
  * Wraps __{@link writeContract}__ with `abi` set to __{@link planetStatsSystemAbi}__
  */
 export const writePlanetStatsSystem = /*#__PURE__*/ createWriteContract({
@@ -4416,6 +4674,13 @@ export const readSupplyEntity = /*#__PURE__*/ createReadContract({
 })
 
 /**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link supplyEntityAbi}__ and `functionName` set to `"getTokenAddress"`
+ */
+export const readSupplyEntityGetTokenAddress = /*#__PURE__*/ createReadContract(
+  { abi: supplyEntityAbi, functionName: 'getTokenAddress' },
+)
+
+/**
  * Wraps __{@link readContract}__ with `abi` set to __{@link supplyEntityAbi}__ and `functionName` set to `"getTokenAddresses"`
  */
 export const readSupplyEntityGetTokenAddresses =
@@ -4490,6 +4755,21 @@ export const simulateSupplyEntityInitialize =
   })
 
 /**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link supplySystemAbi}__
+ */
+export const readSupplySystem = /*#__PURE__*/ createReadContract({
+  abi: supplySystemAbi,
+})
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link supplySystemAbi}__ and `functionName` set to `"getId"`
+ */
+export const readSupplySystemGetId = /*#__PURE__*/ createReadContract({
+  abi: supplySystemAbi,
+  functionName: 'getId',
+})
+
+/**
  * Wraps __{@link writeContract}__ with `abi` set to __{@link supplySystemAbi}__
  */
 export const writeSupplySystem = /*#__PURE__*/ createWriteContract({
@@ -4506,6 +4786,14 @@ export const writeSupplySystemActivateEntity =
   })
 
 /**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link supplySystemAbi}__ and `functionName` set to `"burn"`
+ */
+export const writeSupplySystemBurn = /*#__PURE__*/ createWriteContract({
+  abi: supplySystemAbi,
+  functionName: 'burn',
+})
+
+/**
  * Wraps __{@link writeContract}__ with `abi` set to __{@link supplySystemAbi}__ and `functionName` set to `"deployToken"`
  */
 export const writeSupplySystemDeployToken = /*#__PURE__*/ createWriteContract({
@@ -4519,6 +4807,14 @@ export const writeSupplySystemDeployToken = /*#__PURE__*/ createWriteContract({
 export const writeSupplySystemInit = /*#__PURE__*/ createWriteContract({
   abi: supplySystemAbi,
   functionName: 'init',
+})
+
+/**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link supplySystemAbi}__ and `functionName` set to `"mint"`
+ */
+export const writeSupplySystemMint = /*#__PURE__*/ createWriteContract({
+  abi: supplySystemAbi,
+  functionName: 'mint',
 })
 
 /**
@@ -4555,6 +4851,14 @@ export const simulateSupplySystemActivateEntity =
   })
 
 /**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link supplySystemAbi}__ and `functionName` set to `"burn"`
+ */
+export const simulateSupplySystemBurn = /*#__PURE__*/ createSimulateContract({
+  abi: supplySystemAbi,
+  functionName: 'burn',
+})
+
+/**
  * Wraps __{@link simulateContract}__ with `abi` set to __{@link supplySystemAbi}__ and `functionName` set to `"deployToken"`
  */
 export const simulateSupplySystemDeployToken =
@@ -4569,6 +4873,14 @@ export const simulateSupplySystemDeployToken =
 export const simulateSupplySystemInit = /*#__PURE__*/ createSimulateContract({
   abi: supplySystemAbi,
   functionName: 'init',
+})
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link supplySystemAbi}__ and `functionName` set to `"mint"`
+ */
+export const simulateSupplySystemMint = /*#__PURE__*/ createSimulateContract({
+  abi: supplySystemAbi,
+  functionName: 'mint',
 })
 
 /**
@@ -4856,6 +5168,14 @@ export const readUpgradesSystemGetAppliedUpgrades =
     abi: upgradesSystemAbi,
     functionName: 'getAppliedUpgrades',
   })
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link upgradesSystemAbi}__ and `functionName` set to `"getId"`
+ */
+export const readUpgradesSystemGetId = /*#__PURE__*/ createReadContract({
+  abi: upgradesSystemAbi,
+  functionName: 'getId',
+})
 
 /**
  * Wraps __{@link readContract}__ with `abi` set to __{@link upgradesSystemAbi}__ and `functionName` set to `"owner"`

@@ -74,10 +74,10 @@ export type Deployment = {
 
   UpgradesSystem: Address;
   DungeonMaster: Address;
-  EnergyToken: Address;
-  LifeToken: Address;
-  MatterToken: Address;
-  TechToken: Address;
+  // EnergyToken: Address;
+  // LifeToken: Address;
+  // MatterToken: Address;
+  // TechToken: Address;
 
 
 
