@@ -7,7 +7,7 @@ import ArtifactTab from '@/components/codex/ArtifactTab';
 const Gallery: React.FC = () => {
 
   return (
-    <div className="min-h-screen text-foreground overflow-x-hidden">
+    <div className="min-h-screen text-foreground overflow-x-hidden md:pt-24">
       <main className="pt-28 pb-20 px-6 max-w-7xl mx-auto">
         <div className="mb-8">
           <h1 className="text-4xl font-display font-bold mb-2">Your Cosmic Collection</h1>

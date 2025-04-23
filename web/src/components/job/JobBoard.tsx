@@ -58,18 +58,7 @@ function getDecoByResourceType(resourceType: string): JobDeco {
 }
 
 interface JobBoardProps {
-    // isActive: boolean;
-    // getDecoByResourceType: (resourceType: string) => {
-    //     icon: React.ReactNode;
-    //     color: string;
-    // }
-    // job: {
-    //     id: string;
-    //     title: string;
-    //     description: string;
-    //     tokenName: string;
-    //     amountPerHour: bigint;
-    // };
+
 }
 
 
@@ -148,8 +137,7 @@ export default function JobBoard({ }: JobBoardProps) {
                             <CollapsibleContent className="p-4 pt-0 bg-black/20 space-y-4">
                                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 p-6">
                                     {data?.filter((job) => (job.tokenName === supply.type)).map((job, index) => {
-                                        const isActive = false;//activeJob?.id === job.id;
-
+                                        const isActive = false;
                                         return (
                                             <JobCard
                                                 key={job.id}
