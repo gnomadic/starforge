@@ -37,8 +37,9 @@ contract PlanetStatsSystem is ISystem {
         address entityAddress = scenario.getEntity(address(this));
         PlanetStatsEntity entity = PlanetStatsEntity(entityAddress);
         console.log(
-            "PlanetStatsSystem: calculateStatsForMint: entityAddress: %s",
-            entityAddress
+            "PlanetStatsSystem: calculateStatsForMint: entityAddress: %s and tokenId: %s",
+            entityAddress,
+            tokenId
         );
 
         string[] memory statSetNames = entity.getStatSetNames();
@@ -86,27 +87,6 @@ contract PlanetStatsSystem is ISystem {
             entity.setStatSet(tokenId, statSetName, stats);
         }
 
-        // uint8[5] memory odds = entity.getRarityOdds();
-        // uint8 rarity = 5;
-        // uint8 rateCount = 0;
-
-        // for (uint8 index = 0; index < odds.length; index++) {
-        //     if (randomNumber <= rateCount + (odds[index])) {
-        //         rarity = index;
-        //         break;
-        //     } else {
-        //         rateCount = rateCount + odds[index];
-        //     }
-        // }
-
-        // // TODO this is funky because I want to reserve some spots in the array
-        // uint16[10] memory stats = getStartingStats(scenario, tokenId, rarity);
-        // uint16[10] memory statsWithRarity;
-        // statsWithRarity[0] = rarity;
-        // for (uint8 index = 1; index < stats.length - 1; index++) {
-        //     statsWithRarity[index] = stats[index];
-        // }
-        // entity.setStats(tokenId, stats);
     }
 
     function getStartingStatsForGatchaSet(
@@ -123,7 +103,7 @@ contract PlanetStatsSystem is ISystem {
     {
         uint8 randomNumber;
 
-        uint8 points = entity.getAvailablePoints(statSetName)[rarity];
+        uint8 points = entity.getAvailablePoints(statSetName)[rarity - 1];
         uint16[] memory stats = entity.getStartingPoints(statSetName);
         for (uint256 i = 0; i < stats.length; i++) {
             stats[i] = 0;
@@ -195,6 +175,7 @@ contract PlanetStatsSystem is ISystem {
         uint256 tokenId
     ) external override {
         // TODO add permissiong here
+        console.log("PlanetStatsSystem: init");
 
         calculateStatsForMint(scenario, tokenId);
     }

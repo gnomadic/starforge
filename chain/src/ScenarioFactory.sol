@@ -58,7 +58,7 @@ contract ScenarioFactory is Context {
 
         PlayerScenario[] memory playerScenarios = players[player];
         uint256 activeCount = 1;
-        console.log("there are %s active scenarios", activeCount);
+        // console.log("there are %s active scenarios", activeCount);
 
         for (uint256 i = 0; i < playerScenarios.length; i++) {
             if (playerScenarios[i].active) {
@@ -66,7 +66,7 @@ contract ScenarioFactory is Context {
             }
         }
 
-        console.log("there are %s active scenarios", activeCount);
+        // console.log("there are %s active scenarios", activeCount);
         
 
         IScenario[] memory activeScenarios = new IScenario[](activeCount);

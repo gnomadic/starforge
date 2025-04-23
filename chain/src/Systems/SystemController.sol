@@ -27,6 +27,10 @@ contract SystemController is Ownable, ISystemController {
         systems.push(system);
         systemMap[system.getId()] = system;
         system.registerSystem(address(this));
+        console.log(
+            "system controller: register system %s",
+            address(system)
+        );
     }
 
     function initAll(uint256 tokenId) external onlyToken {
@@ -38,7 +42,13 @@ contract SystemController is Ownable, ISystemController {
         console.log("there are %s active scenarios", activeScenarios.length);
         for (uint256 i = 0; i < activeScenarios.length; i++) {
             IScenario scenario = activeScenarios[i];
-            for (uint256 j = 0; i < systems.length; i++) {
+            console.log("There are %s systems", systems.length);
+            for (uint256 j = 0; j < systems.length; j++) {
+                console.log(
+                    "system controller: init system %s",
+                    address(systems[j])
+                );
+
                 systems[j].init(this, scenario, tokenId);
             }
         }

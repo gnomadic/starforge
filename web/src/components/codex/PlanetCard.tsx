@@ -31,7 +31,7 @@ const PlanetCard: React.FC<PlanetCardProps> = ({ selectedTokenId }) => {
 
   // const { data: entityData, error, isLoading } = useReadPlanetStatsEntityGetStats({ args: [selectedTokenId], address: "0x3b02ff1e626ed7a8fd6ec5299e2c54e1421b626b" })//whichEntity })// scenarios ? scenarios[0] : "0x0" })
   const { data: statSets } = useReadPlanetStatsEntityGetStatSetNames({ args: [], address: whichEntity })//whichEntity })// scenarios ? scenarios[0] : "0x0" });
-
+const {data: rarity} = useReadPlanetStatsEntityGetStatSet({ args: [selectedTokenId, "RARITY"], address: whichEntity })//whichEntity })// scenarios ? scenarios[0] : "0x0" });
 
   return (
     <Card className="bg-black/30 border-white/10 backdrop-blur-sm">
@@ -39,8 +39,8 @@ const PlanetCard: React.FC<PlanetCardProps> = ({ selectedTokenId }) => {
         <CardTitle className="flex items-center gap-3">
           {/* <span>{stats.name}</span> */}
           <span>Lost Planet #{selectedTokenId.toString()}</span>
-          {/* <RarityBadge rarity={entityData?.[0]} /> */}
-          <RarityBadge rarity={0} />
+          <p>{JSON.stringify(rarity, bigIntReplacer)}</p>
+          <RarityBadge rarity={rarity?.[0]} />
         </CardTitle>
         <CardDescription>
           <p>{JSON.stringify(statSets)}</p>
