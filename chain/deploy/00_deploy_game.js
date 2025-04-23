@@ -153,30 +153,7 @@ module.exports = async (hre) => {
 
   console.log("----- done")
 
-  console.log("----- Deploying Tokens");
 
-  // const energy = await deploy("EnergyToken", {
-  //   from: deployer,
-  //   log: true
-  // });
-
-  // const life = await deploy("LifeToken", {
-  //   from: deployer,
-  //   log: true
-  // });
-
-  // const matter = await deploy("MatterToken", {
-  //   from: deployer,
-  //   log: true
-  // });
-
-  // const tech = await deploy("TechnologyToken", {
-  //   from: deployer,
-  //   log: true
-  // });
-
-
-  console.log("----- done")
 
   console.log("----- configuring systems");
 
@@ -190,28 +167,6 @@ module.exports = async (hre) => {
   const deployedUpgradesSystem = await ethers.getContractAt("UpgradesSystem", upgradesSystemDeployment.address);
 
 // --- tokens
-
-  // const energyTokenDeployment = await deployments.get("EnergyToken");
-  // const deployedEnergyToken = await ethers.getContractAt("EnergyToken", energyTokenDeployment.address);
-
-  // const lifeTokenDeployment = await deployments.get("LifeToken");
-  // const deployedLifeToken = await ethers.getContractAt("LifeToken", lifeTokenDeployment.address);
-
-  // const matterTokenDeployment = await deployments.get("MatterToken");
-  // const deployedMatterToken = await ethers.getContractAt("MatterToken", matterTokenDeployment.address);
-
-  // const techTokenDeployment = await deployments.get("TechnologyToken");
-  // const deployedTechToken = await ethers.getContractAt("TechnologyToken", techTokenDeployment.address);
-
-  // const DungeonMasterDeployment = await deployments.get("DungeonMaster");
-  // const deployedDungeonMaster = await ethers.getContractAt("DungeonMaster", DungeonMasterDeployment.address);
-
-
-  // const CraftDeployment = await deployments.get("CraftSystem");
-  // const deployedCraft = await ethers.getContractAt("CraftSystem", CraftDeployment.address);
-
-  // const CraftLoaderDeployment = await deployments.get("CraftSystemLoader");
-  // const deployedCraftLoader = await ethers.getContractAt("CraftSystemLoader", CraftLoaderDeployment.address);
 
 
   let tx = await deployedSysController.setTokenAddress(Planet.address);
@@ -229,14 +184,6 @@ module.exports = async (hre) => {
   tx = await deployedSysController.registerSystem(JobSystem.address);
   await tx.wait();
 
-  // tx = await deployedSysController.registerSystem(2, UpgradesSystem.address);
-  // await tx.wait();
-
-  // tx = await deployedSysController.registerSystem(2, InvestmentSystem.address);
-  // await tx.wait();
-
-  // tx = await deployedCraft.setLoader(craftLoader.address);
-  // await tx.wait();
 
   console.log("----- done")
 
@@ -290,14 +237,6 @@ module.exports = async (hre) => {
   object.JobSystem = JobSystem.address;
   object.UpgradesSystem = UpgradesSystem.address;
 
-  
-  // object.DungeonMaster = DungeonMaster.address;
-  // object.energyToken = energy.address;
-  // object.lifeToken = life.address;
-  // object.matterToken = matter.address;
-  // object.techToken = tech.address;
-
-
 
   const filename = "../deployments/" + networkName + "/entropical-deployment.json";
 
@@ -323,24 +262,7 @@ module.exports = async (hre) => {
   tx = await deployedPlanet.mint("0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266")
   await tx.wait();
 
-  // tx = await deployedLifeToken.mint("0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266", BigInt(10000000000000000000))
-  // await tx.wait();
 
-  // tx = await deployedEnergyToken.mint("0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266", BigInt(20000000000000000000))
-  // await tx.wait();
-
-  // tx = await deployedMatterToken.mint("0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266", BigInt(30000000000000000000))
-  // await tx.wait();
-
-  // tx = await deployedTechToken.mint("0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266", BigInt(40000000000000000000))
-  // await tx.wait();
-
-  // tx = await deployedUpgradesSystem.addUpgrade("Basic Energy Collector", "Harnesses solar energy to increase energy production.",
-  //   [BigInt(10000000000000000000), BigInt(20000000000000000000), BigInt(30000000000000000000), BigInt(40000000000000000000)],
-  //   [life.address, matter.address, tech.address, energy.address],
-  //   [BigInt(40000000000000000000), BigInt(30000000000000000000), BigInt(20000000000000000000), BigInt(10000000000000000000)],
-  //   [energy.address, life.address, matter.address, tech.address],);
-  // await tx.wait();
 };
 
 module.exports.tags = ["engine", "everything"];

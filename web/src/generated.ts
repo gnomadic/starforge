@@ -869,30 +869,70 @@ export const planetStatsEntityAbi = [
   { type: 'error', inputs: [], name: 'NotScenarioAdmin' },
   {
     type: 'function',
-    inputs: [],
-    name: 'getNumberOfStats',
-    outputs: [{ name: '', internalType: 'uint8', type: 'uint8' }],
+    inputs: [
+      { name: 'statSetName', internalType: 'string', type: 'string' },
+      { name: 'startingPoints', internalType: 'uint16[]', type: 'uint16[]' },
+      { name: 'points', internalType: 'uint8[]', type: 'uint8[]' },
+      { name: 'pointNames', internalType: 'string[]', type: 'string[]' },
+    ],
+    name: 'createGatchaStatSet',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'statSetName', internalType: 'string', type: 'string' },
+      { name: 'startingPoints', internalType: 'uint16[]', type: 'uint16[]' },
+      { name: 'pointNames', internalType: 'string[]', type: 'string[]' },
+    ],
+    name: 'createStatSet',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: 'statSetName', internalType: 'string', type: 'string' }],
+    name: 'getAvailablePoints',
+    outputs: [{ name: '', internalType: 'uint8[]', type: 'uint8[]' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: 'statSetName', internalType: 'string', type: 'string' }],
+    name: 'getStartingPoints',
+    outputs: [{ name: '', internalType: 'uint16[]', type: 'uint16[]' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'tokenId', internalType: 'uint256', type: 'uint256' },
+      { name: 'statSetName', internalType: 'string', type: 'string' },
+    ],
+    name: 'getStatSet',
+    outputs: [{ name: '', internalType: 'uint16[]', type: 'uint16[]' }],
     stateMutability: 'view',
   },
   {
     type: 'function',
     inputs: [],
-    name: 'getRarityOdds',
-    outputs: [{ name: '', internalType: 'uint8[5]', type: 'uint8[5]' }],
+    name: 'getStatSetNames',
+    outputs: [{ name: '', internalType: 'string[]', type: 'string[]' }],
     stateMutability: 'view',
   },
   {
     type: 'function',
-    inputs: [{ name: 'gen', internalType: 'uint8', type: 'uint8' }],
-    name: 'getStartingStats',
-    outputs: [{ name: '', internalType: 'uint8', type: 'uint8' }],
+    inputs: [{ name: 'statSetName', internalType: 'string', type: 'string' }],
+    name: 'getStatSetPointNames',
+    outputs: [{ name: '', internalType: 'string[]', type: 'string[]' }],
     stateMutability: 'view',
   },
   {
     type: 'function',
-    inputs: [{ name: 'tokenId', internalType: 'uint256', type: 'uint256' }],
-    name: 'getStats',
-    outputs: [{ name: '', internalType: 'uint16[10]', type: 'uint16[10]' }],
+    inputs: [],
+    name: 'getStatSetRarityOdds',
+    outputs: [{ name: '', internalType: 'uint8[]', type: 'uint8[]' }],
     stateMutability: 'view',
   },
   {
@@ -908,35 +948,18 @@ export const planetStatsEntityAbi = [
   {
     type: 'function',
     inputs: [
-      { name: 'newNumberOfStats', internalType: 'uint8', type: 'uint8' },
-    ],
-    name: 'setNumberOfStats',
-    outputs: [],
-    stateMutability: 'nonpayable',
-  },
-  {
-    type: 'function',
-    inputs: [{ name: 'newOdds', internalType: 'uint8[5]', type: 'uint8[5]' }],
-    name: 'setRarityOdds',
-    outputs: [],
-    stateMutability: 'nonpayable',
-  },
-  {
-    type: 'function',
-    inputs: [
-      { name: 'newStartingStats', internalType: 'uint8[5]', type: 'uint8[5]' },
-    ],
-    name: 'setStartingStats',
-    outputs: [],
-    stateMutability: 'nonpayable',
-  },
-  {
-    type: 'function',
-    inputs: [
       { name: 'tokenId', internalType: 'uint256', type: 'uint256' },
-      { name: 'newStats', internalType: 'uint16[10]', type: 'uint16[10]' },
+      { name: 'statSetName', internalType: 'string', type: 'string' },
+      { name: 'newStats', internalType: 'uint16[]', type: 'uint16[]' },
     ],
-    name: 'setStats',
+    name: 'setStatSet',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: 'rarityOdds', internalType: 'uint8[]', type: 'uint8[]' }],
+    name: 'setStatSetRarityOdds',
     outputs: [],
     stateMutability: 'nonpayable',
   },
@@ -970,7 +993,7 @@ export const planetStatsSystemAbi = [
     inputs: [],
     name: 'getId',
     outputs: [{ name: '', internalType: 'string', type: 'string' }],
-    stateMutability: 'view',
+    stateMutability: 'pure',
   },
   {
     type: 'function',
@@ -2727,39 +2750,57 @@ export const useReadPlanetStatsEntity = /*#__PURE__*/ createUseReadContract({
 })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link planetStatsEntityAbi}__ and `functionName` set to `"getNumberOfStats"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link planetStatsEntityAbi}__ and `functionName` set to `"getAvailablePoints"`
  */
-export const useReadPlanetStatsEntityGetNumberOfStats =
+export const useReadPlanetStatsEntityGetAvailablePoints =
   /*#__PURE__*/ createUseReadContract({
     abi: planetStatsEntityAbi,
-    functionName: 'getNumberOfStats',
+    functionName: 'getAvailablePoints',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link planetStatsEntityAbi}__ and `functionName` set to `"getRarityOdds"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link planetStatsEntityAbi}__ and `functionName` set to `"getStartingPoints"`
  */
-export const useReadPlanetStatsEntityGetRarityOdds =
+export const useReadPlanetStatsEntityGetStartingPoints =
   /*#__PURE__*/ createUseReadContract({
     abi: planetStatsEntityAbi,
-    functionName: 'getRarityOdds',
+    functionName: 'getStartingPoints',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link planetStatsEntityAbi}__ and `functionName` set to `"getStartingStats"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link planetStatsEntityAbi}__ and `functionName` set to `"getStatSet"`
  */
-export const useReadPlanetStatsEntityGetStartingStats =
+export const useReadPlanetStatsEntityGetStatSet =
   /*#__PURE__*/ createUseReadContract({
     abi: planetStatsEntityAbi,
-    functionName: 'getStartingStats',
+    functionName: 'getStatSet',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link planetStatsEntityAbi}__ and `functionName` set to `"getStats"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link planetStatsEntityAbi}__ and `functionName` set to `"getStatSetNames"`
  */
-export const useReadPlanetStatsEntityGetStats =
+export const useReadPlanetStatsEntityGetStatSetNames =
   /*#__PURE__*/ createUseReadContract({
     abi: planetStatsEntityAbi,
-    functionName: 'getStats',
+    functionName: 'getStatSetNames',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link planetStatsEntityAbi}__ and `functionName` set to `"getStatSetPointNames"`
+ */
+export const useReadPlanetStatsEntityGetStatSetPointNames =
+  /*#__PURE__*/ createUseReadContract({
+    abi: planetStatsEntityAbi,
+    functionName: 'getStatSetPointNames',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link planetStatsEntityAbi}__ and `functionName` set to `"getStatSetRarityOdds"`
+ */
+export const useReadPlanetStatsEntityGetStatSetRarityOdds =
+  /*#__PURE__*/ createUseReadContract({
+    abi: planetStatsEntityAbi,
+    functionName: 'getStatSetRarityOdds',
   })
 
 /**
@@ -2768,6 +2809,24 @@ export const useReadPlanetStatsEntityGetStats =
 export const useWritePlanetStatsEntity = /*#__PURE__*/ createUseWriteContract({
   abi: planetStatsEntityAbi,
 })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link planetStatsEntityAbi}__ and `functionName` set to `"createGatchaStatSet"`
+ */
+export const useWritePlanetStatsEntityCreateGatchaStatSet =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: planetStatsEntityAbi,
+    functionName: 'createGatchaStatSet',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link planetStatsEntityAbi}__ and `functionName` set to `"createStatSet"`
+ */
+export const useWritePlanetStatsEntityCreateStatSet =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: planetStatsEntityAbi,
+    functionName: 'createStatSet',
+  })
 
 /**
  * Wraps __{@link useWriteContract}__ with `abi` set to __{@link planetStatsEntityAbi}__ and `functionName` set to `"initialize"`
@@ -2779,39 +2838,21 @@ export const useWritePlanetStatsEntityInitialize =
   })
 
 /**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link planetStatsEntityAbi}__ and `functionName` set to `"setNumberOfStats"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link planetStatsEntityAbi}__ and `functionName` set to `"setStatSet"`
  */
-export const useWritePlanetStatsEntitySetNumberOfStats =
+export const useWritePlanetStatsEntitySetStatSet =
   /*#__PURE__*/ createUseWriteContract({
     abi: planetStatsEntityAbi,
-    functionName: 'setNumberOfStats',
+    functionName: 'setStatSet',
   })
 
 /**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link planetStatsEntityAbi}__ and `functionName` set to `"setRarityOdds"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link planetStatsEntityAbi}__ and `functionName` set to `"setStatSetRarityOdds"`
  */
-export const useWritePlanetStatsEntitySetRarityOdds =
+export const useWritePlanetStatsEntitySetStatSetRarityOdds =
   /*#__PURE__*/ createUseWriteContract({
     abi: planetStatsEntityAbi,
-    functionName: 'setRarityOdds',
-  })
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link planetStatsEntityAbi}__ and `functionName` set to `"setStartingStats"`
- */
-export const useWritePlanetStatsEntitySetStartingStats =
-  /*#__PURE__*/ createUseWriteContract({
-    abi: planetStatsEntityAbi,
-    functionName: 'setStartingStats',
-  })
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link planetStatsEntityAbi}__ and `functionName` set to `"setStats"`
- */
-export const useWritePlanetStatsEntitySetStats =
-  /*#__PURE__*/ createUseWriteContract({
-    abi: planetStatsEntityAbi,
-    functionName: 'setStats',
+    functionName: 'setStatSetRarityOdds',
   })
 
 /**
@@ -2819,6 +2860,24 @@ export const useWritePlanetStatsEntitySetStats =
  */
 export const useSimulatePlanetStatsEntity =
   /*#__PURE__*/ createUseSimulateContract({ abi: planetStatsEntityAbi })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link planetStatsEntityAbi}__ and `functionName` set to `"createGatchaStatSet"`
+ */
+export const useSimulatePlanetStatsEntityCreateGatchaStatSet =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: planetStatsEntityAbi,
+    functionName: 'createGatchaStatSet',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link planetStatsEntityAbi}__ and `functionName` set to `"createStatSet"`
+ */
+export const useSimulatePlanetStatsEntityCreateStatSet =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: planetStatsEntityAbi,
+    functionName: 'createStatSet',
+  })
 
 /**
  * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link planetStatsEntityAbi}__ and `functionName` set to `"initialize"`
@@ -2830,39 +2889,21 @@ export const useSimulatePlanetStatsEntityInitialize =
   })
 
 /**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link planetStatsEntityAbi}__ and `functionName` set to `"setNumberOfStats"`
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link planetStatsEntityAbi}__ and `functionName` set to `"setStatSet"`
  */
-export const useSimulatePlanetStatsEntitySetNumberOfStats =
+export const useSimulatePlanetStatsEntitySetStatSet =
   /*#__PURE__*/ createUseSimulateContract({
     abi: planetStatsEntityAbi,
-    functionName: 'setNumberOfStats',
+    functionName: 'setStatSet',
   })
 
 /**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link planetStatsEntityAbi}__ and `functionName` set to `"setRarityOdds"`
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link planetStatsEntityAbi}__ and `functionName` set to `"setStatSetRarityOdds"`
  */
-export const useSimulatePlanetStatsEntitySetRarityOdds =
+export const useSimulatePlanetStatsEntitySetStatSetRarityOdds =
   /*#__PURE__*/ createUseSimulateContract({
     abi: planetStatsEntityAbi,
-    functionName: 'setRarityOdds',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link planetStatsEntityAbi}__ and `functionName` set to `"setStartingStats"`
- */
-export const useSimulatePlanetStatsEntitySetStartingStats =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: planetStatsEntityAbi,
-    functionName: 'setStartingStats',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link planetStatsEntityAbi}__ and `functionName` set to `"setStats"`
- */
-export const useSimulatePlanetStatsEntitySetStats =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: planetStatsEntityAbi,
-    functionName: 'setStats',
+    functionName: 'setStatSetRarityOdds',
   })
 
 /**
@@ -4960,39 +5001,56 @@ export const readPlanetStatsEntity = /*#__PURE__*/ createReadContract({
 })
 
 /**
- * Wraps __{@link readContract}__ with `abi` set to __{@link planetStatsEntityAbi}__ and `functionName` set to `"getNumberOfStats"`
+ * Wraps __{@link readContract}__ with `abi` set to __{@link planetStatsEntityAbi}__ and `functionName` set to `"getAvailablePoints"`
  */
-export const readPlanetStatsEntityGetNumberOfStats =
+export const readPlanetStatsEntityGetAvailablePoints =
   /*#__PURE__*/ createReadContract({
     abi: planetStatsEntityAbi,
-    functionName: 'getNumberOfStats',
+    functionName: 'getAvailablePoints',
   })
 
 /**
- * Wraps __{@link readContract}__ with `abi` set to __{@link planetStatsEntityAbi}__ and `functionName` set to `"getRarityOdds"`
+ * Wraps __{@link readContract}__ with `abi` set to __{@link planetStatsEntityAbi}__ and `functionName` set to `"getStartingPoints"`
  */
-export const readPlanetStatsEntityGetRarityOdds =
+export const readPlanetStatsEntityGetStartingPoints =
   /*#__PURE__*/ createReadContract({
     abi: planetStatsEntityAbi,
-    functionName: 'getRarityOdds',
+    functionName: 'getStartingPoints',
   })
 
 /**
- * Wraps __{@link readContract}__ with `abi` set to __{@link planetStatsEntityAbi}__ and `functionName` set to `"getStartingStats"`
+ * Wraps __{@link readContract}__ with `abi` set to __{@link planetStatsEntityAbi}__ and `functionName` set to `"getStatSet"`
  */
-export const readPlanetStatsEntityGetStartingStats =
+export const readPlanetStatsEntityGetStatSet = /*#__PURE__*/ createReadContract(
+  { abi: planetStatsEntityAbi, functionName: 'getStatSet' },
+)
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link planetStatsEntityAbi}__ and `functionName` set to `"getStatSetNames"`
+ */
+export const readPlanetStatsEntityGetStatSetNames =
   /*#__PURE__*/ createReadContract({
     abi: planetStatsEntityAbi,
-    functionName: 'getStartingStats',
+    functionName: 'getStatSetNames',
   })
 
 /**
- * Wraps __{@link readContract}__ with `abi` set to __{@link planetStatsEntityAbi}__ and `functionName` set to `"getStats"`
+ * Wraps __{@link readContract}__ with `abi` set to __{@link planetStatsEntityAbi}__ and `functionName` set to `"getStatSetPointNames"`
  */
-export const readPlanetStatsEntityGetStats = /*#__PURE__*/ createReadContract({
-  abi: planetStatsEntityAbi,
-  functionName: 'getStats',
-})
+export const readPlanetStatsEntityGetStatSetPointNames =
+  /*#__PURE__*/ createReadContract({
+    abi: planetStatsEntityAbi,
+    functionName: 'getStatSetPointNames',
+  })
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link planetStatsEntityAbi}__ and `functionName` set to `"getStatSetRarityOdds"`
+ */
+export const readPlanetStatsEntityGetStatSetRarityOdds =
+  /*#__PURE__*/ createReadContract({
+    abi: planetStatsEntityAbi,
+    functionName: 'getStatSetRarityOdds',
+  })
 
 /**
  * Wraps __{@link writeContract}__ with `abi` set to __{@link planetStatsEntityAbi}__
@@ -5000,6 +5058,24 @@ export const readPlanetStatsEntityGetStats = /*#__PURE__*/ createReadContract({
 export const writePlanetStatsEntity = /*#__PURE__*/ createWriteContract({
   abi: planetStatsEntityAbi,
 })
+
+/**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link planetStatsEntityAbi}__ and `functionName` set to `"createGatchaStatSet"`
+ */
+export const writePlanetStatsEntityCreateGatchaStatSet =
+  /*#__PURE__*/ createWriteContract({
+    abi: planetStatsEntityAbi,
+    functionName: 'createGatchaStatSet',
+  })
+
+/**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link planetStatsEntityAbi}__ and `functionName` set to `"createStatSet"`
+ */
+export const writePlanetStatsEntityCreateStatSet =
+  /*#__PURE__*/ createWriteContract({
+    abi: planetStatsEntityAbi,
+    functionName: 'createStatSet',
+  })
 
 /**
  * Wraps __{@link writeContract}__ with `abi` set to __{@link planetStatsEntityAbi}__ and `functionName` set to `"initialize"`
@@ -5011,38 +5087,22 @@ export const writePlanetStatsEntityInitialize =
   })
 
 /**
- * Wraps __{@link writeContract}__ with `abi` set to __{@link planetStatsEntityAbi}__ and `functionName` set to `"setNumberOfStats"`
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link planetStatsEntityAbi}__ and `functionName` set to `"setStatSet"`
  */
-export const writePlanetStatsEntitySetNumberOfStats =
+export const writePlanetStatsEntitySetStatSet =
   /*#__PURE__*/ createWriteContract({
     abi: planetStatsEntityAbi,
-    functionName: 'setNumberOfStats',
+    functionName: 'setStatSet',
   })
 
 /**
- * Wraps __{@link writeContract}__ with `abi` set to __{@link planetStatsEntityAbi}__ and `functionName` set to `"setRarityOdds"`
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link planetStatsEntityAbi}__ and `functionName` set to `"setStatSetRarityOdds"`
  */
-export const writePlanetStatsEntitySetRarityOdds =
+export const writePlanetStatsEntitySetStatSetRarityOdds =
   /*#__PURE__*/ createWriteContract({
     abi: planetStatsEntityAbi,
-    functionName: 'setRarityOdds',
+    functionName: 'setStatSetRarityOdds',
   })
-
-/**
- * Wraps __{@link writeContract}__ with `abi` set to __{@link planetStatsEntityAbi}__ and `functionName` set to `"setStartingStats"`
- */
-export const writePlanetStatsEntitySetStartingStats =
-  /*#__PURE__*/ createWriteContract({
-    abi: planetStatsEntityAbi,
-    functionName: 'setStartingStats',
-  })
-
-/**
- * Wraps __{@link writeContract}__ with `abi` set to __{@link planetStatsEntityAbi}__ and `functionName` set to `"setStats"`
- */
-export const writePlanetStatsEntitySetStats = /*#__PURE__*/ createWriteContract(
-  { abi: planetStatsEntityAbi, functionName: 'setStats' },
-)
 
 /**
  * Wraps __{@link simulateContract}__ with `abi` set to __{@link planetStatsEntityAbi}__
@@ -5050,6 +5110,24 @@ export const writePlanetStatsEntitySetStats = /*#__PURE__*/ createWriteContract(
 export const simulatePlanetStatsEntity = /*#__PURE__*/ createSimulateContract({
   abi: planetStatsEntityAbi,
 })
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link planetStatsEntityAbi}__ and `functionName` set to `"createGatchaStatSet"`
+ */
+export const simulatePlanetStatsEntityCreateGatchaStatSet =
+  /*#__PURE__*/ createSimulateContract({
+    abi: planetStatsEntityAbi,
+    functionName: 'createGatchaStatSet',
+  })
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link planetStatsEntityAbi}__ and `functionName` set to `"createStatSet"`
+ */
+export const simulatePlanetStatsEntityCreateStatSet =
+  /*#__PURE__*/ createSimulateContract({
+    abi: planetStatsEntityAbi,
+    functionName: 'createStatSet',
+  })
 
 /**
  * Wraps __{@link simulateContract}__ with `abi` set to __{@link planetStatsEntityAbi}__ and `functionName` set to `"initialize"`
@@ -5061,39 +5139,21 @@ export const simulatePlanetStatsEntityInitialize =
   })
 
 /**
- * Wraps __{@link simulateContract}__ with `abi` set to __{@link planetStatsEntityAbi}__ and `functionName` set to `"setNumberOfStats"`
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link planetStatsEntityAbi}__ and `functionName` set to `"setStatSet"`
  */
-export const simulatePlanetStatsEntitySetNumberOfStats =
+export const simulatePlanetStatsEntitySetStatSet =
   /*#__PURE__*/ createSimulateContract({
     abi: planetStatsEntityAbi,
-    functionName: 'setNumberOfStats',
+    functionName: 'setStatSet',
   })
 
 /**
- * Wraps __{@link simulateContract}__ with `abi` set to __{@link planetStatsEntityAbi}__ and `functionName` set to `"setRarityOdds"`
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link planetStatsEntityAbi}__ and `functionName` set to `"setStatSetRarityOdds"`
  */
-export const simulatePlanetStatsEntitySetRarityOdds =
+export const simulatePlanetStatsEntitySetStatSetRarityOdds =
   /*#__PURE__*/ createSimulateContract({
     abi: planetStatsEntityAbi,
-    functionName: 'setRarityOdds',
-  })
-
-/**
- * Wraps __{@link simulateContract}__ with `abi` set to __{@link planetStatsEntityAbi}__ and `functionName` set to `"setStartingStats"`
- */
-export const simulatePlanetStatsEntitySetStartingStats =
-  /*#__PURE__*/ createSimulateContract({
-    abi: planetStatsEntityAbi,
-    functionName: 'setStartingStats',
-  })
-
-/**
- * Wraps __{@link simulateContract}__ with `abi` set to __{@link planetStatsEntityAbi}__ and `functionName` set to `"setStats"`
- */
-export const simulatePlanetStatsEntitySetStats =
-  /*#__PURE__*/ createSimulateContract({
-    abi: planetStatsEntityAbi,
-    functionName: 'setStats',
+    functionName: 'setStatSetRarityOdds',
   })
 
 /**

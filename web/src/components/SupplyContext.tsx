@@ -13,7 +13,7 @@ import { useScenarios } from './ScenarioContext';
 const initialSupplies: Supply[] = [
   {
     id: '1',
-    type: 'LIFE',
+    type: 'bioflux',
     amount: 0,
     emissionRate: 0.1,
     icon: <Heart className="h-4 w-4 text-red-400" />,
@@ -106,44 +106,9 @@ export const SupplyProvider: React.FC<{ children: ReactNode }> = ({ children }) 
 
     }
 
-    // if (lifeBalance) {
-    //   updateSupply('LIFE', Number(lifeBalance) / 1e18);
-    // }
-    // if (energyBalance) {
-    //   updateSupply('ENERGY', Number(energyBalance) / 1e18);
-    // }
-    // if (matterBalance) {
-    //   updateSupply('MATTER', Number(matterBalance) / 1e18);
-    // }
-    // if (techBalance) {
-    //   updateSupply('TECHNOLOGY', Number(techBalance) / 1e18);
-    // }
-
 
   }
     , [ tokenBalances, tokenNames]);
-
-  // useEffect(() => {
-  //   // set the address in the Supply from the deploy
-  //   setSupplies((prev) =>
-  //     prev.map((supply) => {
-  //       switch (supply.type) {
-  //         case 'life':
-  //           return { ...supply, address: deploy.LifeToken };
-  //         case 'energy':
-  //           return { ...supply, address: deploy.EnergyToken };
-  //         case 'matter':
-  //           return { ...supply, address: deploy.MatterToken };
-  //         case 'technology':
-  //           return { ...supply, address: deploy.TechToken };
-  //         default:
-  //           return supply;
-  //       }
-  //     })
-  //   );
-
-  // }, [deploy]);
-
 
 
   const updateSupply = (type: Supply['type'], amount: number) => {

@@ -34,9 +34,6 @@ contract RegenScenario {
         loadStats(scenario, controller);
         loadSupply(scenario, controller);
         loadJobs(scenario, controller);
-
-
-    
     }
 
     function loadJobs(Scenario scenario, SystemController controller) internal {
@@ -45,14 +42,14 @@ contract RegenScenario {
         );
 
         jobsEntity.addJob(
-            "life",
+            "Bioflux_one",
             "Biohacking",
             "Study cosmic life forms to increase life production.",
-            "LIFE",
+            "Bioflux",
             1000000000000000000
         );
 
-                jobsEntity.addJob(
+        jobsEntity.addJob(
             "matter",
             "Matter Collector",
             "Collect interstellar particles to increase matter production.",
@@ -60,7 +57,7 @@ contract RegenScenario {
             1000000000000000000
         );
 
-                jobsEntity.addJob(
+        jobsEntity.addJob(
             "energy",
             "Energy Harvester",
             "Capture cosmic radiation to boost energy production.",
@@ -68,32 +65,80 @@ contract RegenScenario {
             1000000000000000000
         );
 
-                jobsEntity.addJob(
+        jobsEntity.addJob(
             "technology",
             "Tech Engineer",
             "Research advanced technologies to increase tech production.",
             "TECHNOLOGY",
             1000000000000000000
         );
-
     }
 
-    function loadStats(Scenario scenario, SystemController controller) internal {
-
+    function loadStats(
+        Scenario scenario,
+        SystemController controller
+    ) internal {
         PlanetStatsEntity planetStatsEntity = PlanetStatsEntity(
             scenario.getEntity(address(controller.getSystem("STAT")))
         );
-        planetStatsEntity.setNumberOfStats(6);
-        planetStatsEntity.setStartingStats([80, 78, 76, 74, 72]);
+
+        uint8[] memory gatchaPoints = new uint8[](5);
+        gatchaPoints[0] = 80;
+        gatchaPoints[1] = 78;
+        gatchaPoints[2] = 76;
+        gatchaPoints[3] = 74;
+        gatchaPoints[4] = 72;
+
+        uint8[] memory rarityOdds = new uint8[](5);
+        rarityOdds[0] = 1;
+        rarityOdds[1] = 5;
+        rarityOdds[2] = 13;
+        rarityOdds[3] = 25;
+        rarityOdds[4] = 75;
+
+        uint16[] memory startingValue = new uint16[](6);
+        startingValue[0] = 65535;
+        startingValue[1] = 65535;
+        startingValue[2] = 65535;
+        startingValue[3] = 65535;
+        startingValue[4] = 65535;
+        startingValue[5] = 65535;
+
+        string[] memory statSetNames = new string[](6);
+        statSetNames[0] = "Temperature";
+        statSetNames[1] = "Water";
+        statSetNames[2] = "Biomass";
+        statSetNames[3] = "Atmosphere";
+        statSetNames[4] = "Density";
+        statSetNames[5] = "Anomaly";
+
+        
+        console.log("setting rarity");
+        planetStatsEntity.setStatSetRarityOdds(rarityOdds);
+        console.log("creating gatcha stats");
+        planetStatsEntity.createGatchaStatSet(
+            "Core Stats",
+            startingValue,
+            gatchaPoints,
+            statSetNames
+        );
+
+
+
+        // planetStatsEntity.setNumberOfStats(6);
+        // planetStatsEntity.setStartingStats([80, 78, 76, 74, 72]);
     }
 
-    function loadSupply(Scenario scenario, SystemController controller) internal {
-       SupplySystem supplySystem = SupplySystem(
+    function loadSupply(
+        Scenario scenario,
+        SystemController controller
+    ) internal {
+        SupplySystem supplySystem = SupplySystem(
             address(controller.getSystem("SUPPLY"))
         );
 
         // console.log("supplySystem: %s", address(supplySystem));
-        address life = supplySystem.deployToken(scenario, "LIFE", "LIFE");
+        address life = supplySystem.deployToken(scenario, "Bioflux", "SF-BIO");
         address energy = supplySystem.deployToken(scenario, "ENERGY", "ENERGY");
         address matter = supplySystem.deployToken(scenario, "MATTER", "MATTER");
         address tech = supplySystem.deployToken(

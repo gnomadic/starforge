@@ -11,15 +11,6 @@ import { useScenarios } from '@/components/ScenarioContext';
 import { bigIntReplacer } from '@/domain/utils';
 import { useDeployment } from '@/hooks/useDeployment';
 
-interface Job {
-  id: string;
-  title: string;
-  description: string;
-  resourceType: 'life' | 'matter' | 'energy' | 'technology';
-  baseEmissionBoost: number;
-  icon: React.ReactNode;
-  color: string;
-}
 
 interface JobDeco {
   icon: React.ReactNode;
@@ -35,44 +26,7 @@ const DECOS: JobDeco[] = [
         color: 'bg-emerald-950/60 hover:bg-emerald-900/60'}
 ]
 
-const AVAILABLE_JOBS: Job[] = [
-  {
-    id: 'life-researcher',
-    title: 'Life Researcher',
-    description: 'Study cosmic life forms to increase life production.',
-    resourceType: 'life',
-    baseEmissionBoost: 0.2,
-    icon: <Briefcase className="h-5 w-5 text-red-400" />,
-    color: 'bg-red-950/60 hover:bg-red-900/60'
-  },
-  {
-    id: 'matter-collector',
-    title: 'Matter Collector',
-    description: 'Collect interstellar particles to increase matter production.',
-    resourceType: 'matter',
-    baseEmissionBoost: 0.3,
-    icon: <Briefcase className="h-5 w-5 text-blue-400" />,
-    color: 'bg-blue-950/60 hover:bg-blue-900/60'
-  },
-  {
-    id: 'energy-harvester',
-    title: 'Energy Harvester',
-    description: 'Capture cosmic radiation to boost energy production.',
-    resourceType: 'energy',
-    baseEmissionBoost: 0.25,
-    icon: <Briefcase className="h-5 w-5 text-yellow-400" />,
-    color: 'bg-yellow-950/60 hover:bg-yellow-900/60'
-  },
-  {
-    id: 'tech-engineer',
-    title: 'Tech Engineer',
-    description: 'Research advanced technologies to increase tech production.',
-    resourceType: 'technology',
-    baseEmissionBoost: 0.15,
-    icon: <Briefcase className="h-5 w-5 text-emerald-400" />,
-    color: 'bg-emerald-950/60 hover:bg-emerald-900/60'
-  }
-];
+
 
 const Jobs: React.FC = () => {
 //   const { resources, activeJob, setActiveJob } = useSupplies();
@@ -152,8 +106,8 @@ const {data, isLoading, error } = useReadJobEntityGetAvailableJobs({
                   
                   <div className="flex justify-between items-center border-t border-border/40 pt-4">
                     <div className="text-sm">
-                      <div className="text-muted-foreground">Boost</div>
-                      <div className="font-semibold">+{Number(job.amountPerHour) / 1e18}/s</div>
+                      <div className="text-muted-foreground">Earn</div>
+                      <div className="font-semibold">+{Number(job.amountPerHour) / 1e18} per hour</div>
                     </div>
                     <Button
                       variant={isActive ? "default" : "outline"}

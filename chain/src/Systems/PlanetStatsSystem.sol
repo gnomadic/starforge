@@ -40,8 +40,12 @@ contract PlanetStatsSystem is ISystem {
             "PlanetStatsSystem: calculateStatsForMint: entityAddress: %s",
             entityAddress
         );
-        uint8[5] memory odds = entity.getRarityOdds();
-        uint8 rarity = 5;
+
+        string[] memory statSetNames = entity.getStatSetNames();
+
+        // uint8 randomNumber;
+        uint8[] memory odds = entity.getStatSetRarityOdds();
+        uint8 rarity = uint8(odds.length);
         uint8 rateCount = 0;
 
         for (uint8 index = 0; index < odds.length; index++) {
@@ -53,32 +57,83 @@ contract PlanetStatsSystem is ISystem {
             }
         }
 
-        // TODO this is funky because I want to reserve some spots in the array
-        uint16[10] memory stats = getStartingStats(scenario, tokenId, rarity);
-        uint16[10] memory statsWithRarity;
-        statsWithRarity[0] = rarity;
-        for (uint8 index = 1; index < stats.length - 1; index++) {
-            statsWithRarity[index] = stats[index];
+        uint16[] memory raritySet = new uint16[](1);
+        raritySet[0] = uint16(rarity);
+
+        console.log("setting rarity %s", rarity);
+        entity.setStatSet(tokenId, "RARITY", raritySet);
+
+        for (uint256 i = 0; i < statSetNames.length; i++) {
+            string memory statSetName = statSetNames[i];
+            uint16 firstTest = entity.getStartingPoints(statSetName)[0];
+            uint16[] memory stats;
+
+            if (firstTest == 65535) {
+                // gatcha set
+
+                stats = getStartingStatsForGatchaSet(
+                    entity,
+                    tokenId,
+                    statSetName,
+                    rarity
+                );
+            } else {
+                // default set
+                stats = getStartingStatsForDefaultSet(entity, statSetName);
+            }
+
+            // console.log("setting stats %s", statSetName);
+            entity.setStatSet(tokenId, statSetName, stats);
         }
-        entity.setStats(tokenId, statsWithRarity);
+
+        // uint8[5] memory odds = entity.getRarityOdds();
+        // uint8 rarity = 5;
+        // uint8 rateCount = 0;
+
+        // for (uint8 index = 0; index < odds.length; index++) {
+        //     if (randomNumber <= rateCount + (odds[index])) {
+        //         rarity = index;
+        //         break;
+        //     } else {
+        //         rateCount = rateCount + odds[index];
+        //     }
+        // }
+
+        // // TODO this is funky because I want to reserve some spots in the array
+        // uint16[10] memory stats = getStartingStats(scenario, tokenId, rarity);
+        // uint16[10] memory statsWithRarity;
+        // statsWithRarity[0] = rarity;
+        // for (uint8 index = 1; index < stats.length - 1; index++) {
+        //     statsWithRarity[index] = stats[index];
+        // }
+        // entity.setStats(tokenId, stats);
     }
 
-    function getStartingStats(
-        IScenario scenario,
+    function getStartingStatsForGatchaSet(
+        PlanetStatsEntity entity,
         uint256 tokenId,
-        uint8 gen
-    ) internal returns (uint16[10] memory) {
+        string memory statSetName,
+        uint8 rarity
+    )
+        internal
+        returns (
+            // uint8 gen
+            uint16[] memory
+        )
+    {
         uint8 randomNumber;
 
-        // uint8 points = _startingStats[gen];
-        address entityAddress = scenario.getEntity(address(this));
-        PlanetStatsEntity entity = PlanetStatsEntity(entityAddress);
-
-        uint8 points = entity.getStartingStats(gen);
-        uint16[10] memory stats;
+        uint8 points = entity.getAvailablePoints(statSetName)[rarity];
+        uint16[] memory stats = entity.getStartingPoints(statSetName);
+        for (uint256 i = 0; i < stats.length; i++) {
+            stats[i] = 0;
+        }
 
         while (points > 0) {
-            randomNumber = getRandom(entity.getNumberOfStats(), points);
+            randomNumber = getRandom(
+               uint8(stats.length),
+                tokenId + points
+            );
             if (stats[randomNumber] < 20) {
                 stats[randomNumber] = stats[randomNumber] + 1;
                 points = points - 1;
@@ -86,6 +141,40 @@ contract PlanetStatsSystem is ISystem {
         }
         return stats;
     }
+
+    function getStartingStatsForDefaultSet(
+        PlanetStatsEntity entity,
+        string memory statSetName
+    ) internal view returns (uint16[] memory) {
+        return entity.getStartingPoints(statSetName);
+    }
+
+    // function getStartingStats(
+    //     IScenario scenario,
+    //     uint256 tokenId,
+    //     uint8 gen
+    // ) internal returns (uint16[10] memory) {
+    //     uint8 randomNumber;
+
+    //     // uint8 points = _startingStats[gen];
+    //     address entityAddress = scenario.getEntity(address(this));
+    //     PlanetStatsEntity entity = PlanetStatsEntity(entityAddress);
+
+    //     uint8 points = entity.getStartingStats(gen);
+    //     uint16[10] memory stats;
+
+    //     while (points > 0) {
+    //         randomNumber = getRandom(
+    //             entity.getNumberOfStats(),
+    //             tokenId + points
+    //         );
+    //         if (stats[randomNumber] < 20) {
+    //             stats[randomNumber] = stats[randomNumber] + 1;
+    //             points = points - 1;
+    //         }
+    //     }
+    //     return stats;
+    // }
 
     function getRandom(
         uint8 outOf,
@@ -141,7 +230,7 @@ contract PlanetStatsSystem is ISystem {
         return address(entityAddress);
     }
 
-    function getId() external view returns (string memory) {
+    function getId() external pure returns (string memory) {
         return "STAT";
     }
 
