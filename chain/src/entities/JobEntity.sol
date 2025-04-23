@@ -4,19 +4,19 @@ pragma solidity ^0.8.24;
 import {IScenario} from "../Scenario.sol";
 import {console} from "hardhat/console.sol";
 
+struct Job {
+    string id;
+    string title;
+    string description;
+    string tokenName;
+    uint256 amountPerHour;
+    uint256 timeLimit;
+    string skillSetName;
+    uint8 skillSetIndex;
+    uint16 skillSetRequirement;
+}
 
-    struct Job {
-        string id;
-        string title;
-        string description;
-        // address token;
-        string tokenName;
-        uint256 amountPerHour;        
-    }
-
-    
 contract JobEntity {
-
 
     struct LiveJob {
         string id;
@@ -52,10 +52,7 @@ contract JobEntity {
         return (activeJobs[player].id, activeJobs[player].startedAt);
     }
 
-    function activateJob(
-        string memory jobId,
-        address player
-    ) external {
+    function activateJob(string memory jobId, address player) external {
         if (msg.sender != _scenario.getAdmin() && msg.sender != system) {
             revert NotScenarioAdmin();
         }
@@ -64,13 +61,11 @@ contract JobEntity {
         }
 
         activeJobs[player] = LiveJob(jobId, block.timestamp);
-       
+
         revert NoActiveJob();
     }
 
-    function getJob(
-        string memory jobId
-    ) external view returns (Job memory) {
+    function getJob(string memory jobId) external view returns (Job memory) {
         return jobById[jobId];
     }
 
@@ -82,9 +77,6 @@ contract JobEntity {
         if (bytes(job.id).length == 0) {
             revert NoActiveJob();
         }
-        // if (block.timestamp < job.startedAt + availableJobs[0].duration) {
-        //     revert AlreadyActiveJob();
-        // }
 
         delete activeJobs[player];
     }
@@ -94,8 +86,11 @@ contract JobEntity {
         string memory title,
         string memory description,
         string memory tokenName,
-        // address token,
-        uint256 amountPerHour
+        uint256 amountPerHour,
+        uint256 timeLimit,
+        string memory skillSetName,
+        uint8 skillSetIndex,
+        uint16 skillSetRequirement
     ) external {
         if (msg.sender != _scenario.getAdmin() && msg.sender != system) {
             revert NotScenarioAdmin();
@@ -105,9 +100,12 @@ contract JobEntity {
             id,
             title,
             description,
-            // token,
             tokenName,
-            amountPerHour
+            amountPerHour,
+            timeLimit,
+            skillSetName,
+            skillSetIndex,
+            skillSetRequirement
         );
         availableJobs.push(newJob);
     }

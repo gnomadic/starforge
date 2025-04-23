@@ -4,7 +4,6 @@ pragma solidity ^0.8.24;
 import {IScenario} from "../Scenario.sol";
 import {console} from "hardhat/console.sol";
 
-
 contract PlanetStatsEntity {
     //let's sketch it out
     // so we map a token id to a stat set, which is a string -> array of numbers.
@@ -23,7 +22,6 @@ contract PlanetStatsEntity {
 
     string[] private _statSetNames;
 
-
     IScenario private _scenario;
     address private system;
 
@@ -38,9 +36,7 @@ contract PlanetStatsEntity {
         system = _system;
     }
 
-    function setStatSetRarityOdds(
-        uint8[] calldata rarityOdds
-    ) external {
+    function setStatSetRarityOdds(uint8[] calldata rarityOdds) external {
         if (msg.sender != _scenario.getAdmin()) {
             revert NotScenarioAdmin();
         }
@@ -60,7 +56,9 @@ contract PlanetStatsEntity {
         }
         if (points.length != _statSetRarityOdds.length) {
             // TODO maybe a more specific error
-            console.log("Starting points length does not match rarity odds length");
+            console.log(
+                "Starting points length does not match rarity odds length"
+            );
             revert NotScenarioAdmin();
         }
         _startingStatSetValues[statSetName] = startingPoints;
@@ -87,18 +85,19 @@ contract PlanetStatsEntity {
         _statSetNames.push(statSetName);
     }
 
-
-
-
     function getStatSetNames() external view returns (string[] memory) {
         return _statSetNames;
     }
 
-    function getAvailablePoints(string memory statSetName) external view returns (uint8[] memory) {
+    function getAvailablePoints(
+        string memory statSetName
+    ) external view returns (uint8[] memory) {
         return _statSetPointsAvailable[statSetName];
     }
 
-    function getStartingPoints(string memory statSetName) external view returns (uint16[] memory) {
+    function getStartingPoints(
+        string memory statSetName
+    ) external view returns (uint16[] memory) {
         return _startingStatSetValues[statSetName];
     }
 
@@ -136,11 +135,22 @@ contract PlanetStatsEntity {
         return _statSets[tokenId][statSetName];
     }
 
+    function checkSkill(
+        uint256 tokenId,
+        string memory skillSetName,
+        uint8 skillSetIndex,
+        uint16 skillSetRequirement
+    ) external view returns (bool) {
+        if (msg.sender != _scenario.getAdmin() && msg.sender != system) {
+            revert NotScenarioAdmin();
+        }
 
-
-
-
-
+        uint16[] memory stats = _statSets[tokenId][
+            skillSetName
+        ];
+        console.log("comparing: %s %s %s", skillSetName, stats[skillSetIndex], skillSetRequirement);
+        return stats[skillSetIndex] >= skillSetRequirement;
+    }
 
     error NotScenarioAdmin();
 }

@@ -5,6 +5,7 @@ import {ISystem, ISystemController, TokenRate} from "./interfaces/ISystem.sol";
 import {IScenario} from "../Scenario.sol";
 import {JobEntity, Job} from "../entities/JobEntity.sol";
 import {SupplySystem} from "./SupplySystem.sol";
+import {PlanetStatsSystem} from "./PlanetStatsSystem.sol";
 
 contract JobSystem is ISystem {
     bool registered = false;
@@ -41,9 +42,43 @@ contract JobSystem is ISystem {
         entity.activateJob(jobId, msg.sender);
     }
 
-    // if the player has an already active job, end it and mint rewards
-    // then activate new job
-    // }
+    function getAvailableJobs(IScenario scenario, uint256 tokenId) external view returns (Job[] memory) {
+        JobEntity entity = JobEntity(scenario.getEntity(address(this)));
+        Job[] memory allJobs = entity.getAvailableJobs();
+        uint256 count = 0;
+
+        for (uint256 i = 0; i < allJobs.length; i++) {
+            if (canPlayerPerformJob(scenario, tokenId, allJobs[i])) {
+                count++;
+            }
+        }
+
+        Job[] memory availableJobs = new Job[](count);
+        uint256 index = 0;
+
+        for (uint256 i = 0; i < allJobs.length; i++) {
+            if (canPlayerPerformJob(scenario, tokenId, allJobs[i])) {
+                availableJobs[index] = allJobs[i];
+                index++;
+            }
+        }
+
+        return availableJobs;
+    }
+
+
+    function canPlayerPerformJob(IScenario scenario, uint256 tokenId, Job memory job) internal view returns (bool) {
+
+        return PlanetStatsSystem(address(_systemController.getSystem("STAT"))).checkSkill(
+            scenario,
+            tokenId,
+            job.skillSetName,
+            job.skillSetIndex,
+            job.skillSetRequirement
+        );
+
+
+    }
 
     function finishJob(IScenario scenario) public {
         // if the player has an already active job, end it and mint rewards
@@ -63,9 +98,8 @@ contract JobSystem is ISystem {
         if (hoursLive == 0) {
             revert NoTimePassed();
         }
-        // TODO make this 12 hour job limit in the entity.
-        if (hoursLive > 12) {
-            hoursLive = 12;
+        if (hoursLive > job.timeLimit) {
+            hoursLive = job.timeLimit;
         }
 
         uint256 amount = hoursLive * job.amountPerHour;

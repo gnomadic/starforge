@@ -201,8 +201,27 @@ contract PlanetStatsSystem is ISystem {
         return address(entityAddress);
     }
 
+
     function getId() external pure returns (string memory) {
         return "STAT";
+    }
+
+    function checkSkill(
+        IScenario scenario,
+        uint256 tokenId,
+        string memory skillSetName,
+        uint8 skillSetIndex,
+        uint16 skillSetRequirement
+    ) external view returns (bool) {
+        PlanetStatsEntity entity = PlanetStatsEntity(
+            scenario.getEntity(address(this))
+        );
+        if (bytes(skillSetName).length == 0) {
+            return true;
+        }
+
+    console.log("skill check %s", entity.checkSkill(tokenId, skillSetName, skillSetIndex, skillSetRequirement));
+        return entity.checkSkill(tokenId, skillSetName, skillSetIndex, skillSetRequirement);
     }
 
     error NotScenario();

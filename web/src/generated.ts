@@ -245,6 +245,10 @@ export const jobEntityAbi = [
       { name: 'description', internalType: 'string', type: 'string' },
       { name: 'tokenName', internalType: 'string', type: 'string' },
       { name: 'amountPerHour', internalType: 'uint256', type: 'uint256' },
+      { name: 'timeLimit', internalType: 'uint256', type: 'uint256' },
+      { name: 'skillSetName', internalType: 'string', type: 'string' },
+      { name: 'skillSetIndex', internalType: 'uint8', type: 'uint8' },
+      { name: 'skillSetRequirement', internalType: 'uint16', type: 'uint16' },
     ],
     name: 'addJob',
     outputs: [],
@@ -260,6 +264,10 @@ export const jobEntityAbi = [
       { name: 'description', internalType: 'string', type: 'string' },
       { name: 'tokenName', internalType: 'string', type: 'string' },
       { name: 'amountPerHour', internalType: 'uint256', type: 'uint256' },
+      { name: 'timeLimit', internalType: 'uint256', type: 'uint256' },
+      { name: 'skillSetName', internalType: 'string', type: 'string' },
+      { name: 'skillSetIndex', internalType: 'uint8', type: 'uint8' },
+      { name: 'skillSetRequirement', internalType: 'uint16', type: 'uint16' },
     ],
     stateMutability: 'view',
   },
@@ -295,6 +303,14 @@ export const jobEntityAbi = [
           { name: 'description', internalType: 'string', type: 'string' },
           { name: 'tokenName', internalType: 'string', type: 'string' },
           { name: 'amountPerHour', internalType: 'uint256', type: 'uint256' },
+          { name: 'timeLimit', internalType: 'uint256', type: 'uint256' },
+          { name: 'skillSetName', internalType: 'string', type: 'string' },
+          { name: 'skillSetIndex', internalType: 'uint8', type: 'uint8' },
+          {
+            name: 'skillSetRequirement',
+            internalType: 'uint16',
+            type: 'uint16',
+          },
         ],
       },
     ],
@@ -315,6 +331,14 @@ export const jobEntityAbi = [
           { name: 'description', internalType: 'string', type: 'string' },
           { name: 'tokenName', internalType: 'string', type: 'string' },
           { name: 'amountPerHour', internalType: 'uint256', type: 'uint256' },
+          { name: 'timeLimit', internalType: 'uint256', type: 'uint256' },
+          { name: 'skillSetName', internalType: 'string', type: 'string' },
+          { name: 'skillSetIndex', internalType: 'uint8', type: 'uint8' },
+          {
+            name: 'skillSetRequirement',
+            internalType: 'uint16',
+            type: 'uint16',
+          },
         ],
       },
     ],
@@ -340,6 +364,10 @@ export const jobEntityAbi = [
       { name: 'description', internalType: 'string', type: 'string' },
       { name: 'tokenName', internalType: 'string', type: 'string' },
       { name: 'amountPerHour', internalType: 'uint256', type: 'uint256' },
+      { name: 'timeLimit', internalType: 'uint256', type: 'uint256' },
+      { name: 'skillSetName', internalType: 'string', type: 'string' },
+      { name: 'skillSetIndex', internalType: 'uint8', type: 'uint8' },
+      { name: 'skillSetRequirement', internalType: 'uint16', type: 'uint16' },
     ],
     stateMutability: 'view',
   },
@@ -379,6 +407,37 @@ export const jobSystemAbi = [
     name: 'finishJob',
     outputs: [],
     stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'scenario', internalType: 'contract IScenario', type: 'address' },
+      { name: 'tokenId', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'getAvailableJobs',
+    outputs: [
+      {
+        name: '',
+        internalType: 'struct Job[]',
+        type: 'tuple[]',
+        components: [
+          { name: 'id', internalType: 'string', type: 'string' },
+          { name: 'title', internalType: 'string', type: 'string' },
+          { name: 'description', internalType: 'string', type: 'string' },
+          { name: 'tokenName', internalType: 'string', type: 'string' },
+          { name: 'amountPerHour', internalType: 'uint256', type: 'uint256' },
+          { name: 'timeLimit', internalType: 'uint256', type: 'uint256' },
+          { name: 'skillSetName', internalType: 'string', type: 'string' },
+          { name: 'skillSetIndex', internalType: 'uint8', type: 'uint8' },
+          {
+            name: 'skillSetRequirement',
+            internalType: 'uint16',
+            type: 'uint16',
+          },
+        ],
+      },
+    ],
+    stateMutability: 'view',
   },
   {
     type: 'function',
@@ -870,6 +929,18 @@ export const planetStatsEntityAbi = [
   {
     type: 'function',
     inputs: [
+      { name: 'tokenId', internalType: 'uint256', type: 'uint256' },
+      { name: 'skillSetName', internalType: 'string', type: 'string' },
+      { name: 'skillSetIndex', internalType: 'uint8', type: 'uint8' },
+      { name: 'skillSetRequirement', internalType: 'uint16', type: 'uint16' },
+    ],
+    name: 'checkSkill',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
       { name: 'statSetName', internalType: 'string', type: 'string' },
       { name: 'startingPoints', internalType: 'uint16[]', type: 'uint16[]' },
       { name: 'points', internalType: 'uint8[]', type: 'uint8[]' },
@@ -996,6 +1067,19 @@ export const planetStatsSystemAbi = [
     name: 'activateEntity',
     outputs: [{ name: '', internalType: 'address', type: 'address' }],
     stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'scenario', internalType: 'contract IScenario', type: 'address' },
+      { name: 'tokenId', internalType: 'uint256', type: 'uint256' },
+      { name: 'skillSetName', internalType: 'string', type: 'string' },
+      { name: 'skillSetIndex', internalType: 'uint8', type: 'uint8' },
+      { name: 'skillSetRequirement', internalType: 'uint16', type: 'uint16' },
+    ],
+    name: 'checkSkill',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'view',
   },
   {
     type: 'function',
@@ -2195,6 +2279,15 @@ export const useReadJobSystem = /*#__PURE__*/ createUseReadContract({
 })
 
 /**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link jobSystemAbi}__ and `functionName` set to `"getAvailableJobs"`
+ */
+export const useReadJobSystemGetAvailableJobs =
+  /*#__PURE__*/ createUseReadContract({
+    abi: jobSystemAbi,
+    functionName: 'getAvailableJobs',
+  })
+
+/**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link jobSystemAbi}__ and `functionName` set to `"getId"`
  */
 export const useReadJobSystemGetId = /*#__PURE__*/ createUseReadContract({
@@ -2759,6 +2852,15 @@ export const useReadPlanetStatsEntity = /*#__PURE__*/ createUseReadContract({
 })
 
 /**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link planetStatsEntityAbi}__ and `functionName` set to `"checkSkill"`
+ */
+export const useReadPlanetStatsEntityCheckSkill =
+  /*#__PURE__*/ createUseReadContract({
+    abi: planetStatsEntityAbi,
+    functionName: 'checkSkill',
+  })
+
+/**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link planetStatsEntityAbi}__ and `functionName` set to `"getAvailablePoints"`
  */
 export const useReadPlanetStatsEntityGetAvailablePoints =
@@ -2930,6 +3032,15 @@ export const useSimulatePlanetStatsEntitySetStatSetRarityOdds =
 export const useReadPlanetStatsSystem = /*#__PURE__*/ createUseReadContract({
   abi: planetStatsSystemAbi,
 })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link planetStatsSystemAbi}__ and `functionName` set to `"checkSkill"`
+ */
+export const useReadPlanetStatsSystemCheckSkill =
+  /*#__PURE__*/ createUseReadContract({
+    abi: planetStatsSystemAbi,
+    functionName: 'checkSkill',
+  })
 
 /**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link planetStatsSystemAbi}__ and `functionName` set to `"getId"`
@@ -4475,6 +4586,14 @@ export const readJobSystem = /*#__PURE__*/ createReadContract({
 })
 
 /**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link jobSystemAbi}__ and `functionName` set to `"getAvailableJobs"`
+ */
+export const readJobSystemGetAvailableJobs = /*#__PURE__*/ createReadContract({
+  abi: jobSystemAbi,
+  functionName: 'getAvailableJobs',
+})
+
+/**
  * Wraps __{@link readContract}__ with `abi` set to __{@link jobSystemAbi}__ and `functionName` set to `"getId"`
  */
 export const readJobSystemGetId = /*#__PURE__*/ createReadContract({
@@ -5019,6 +5138,13 @@ export const readPlanetStatsEntity = /*#__PURE__*/ createReadContract({
 })
 
 /**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link planetStatsEntityAbi}__ and `functionName` set to `"checkSkill"`
+ */
+export const readPlanetStatsEntityCheckSkill = /*#__PURE__*/ createReadContract(
+  { abi: planetStatsEntityAbi, functionName: 'checkSkill' },
+)
+
+/**
  * Wraps __{@link readContract}__ with `abi` set to __{@link planetStatsEntityAbi}__ and `functionName` set to `"getAvailablePoints"`
  */
 export const readPlanetStatsEntityGetAvailablePoints =
@@ -5189,6 +5315,13 @@ export const simulatePlanetStatsEntitySetStatSetRarityOdds =
 export const readPlanetStatsSystem = /*#__PURE__*/ createReadContract({
   abi: planetStatsSystemAbi,
 })
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link planetStatsSystemAbi}__ and `functionName` set to `"checkSkill"`
+ */
+export const readPlanetStatsSystemCheckSkill = /*#__PURE__*/ createReadContract(
+  { abi: planetStatsSystemAbi, functionName: 'checkSkill' },
+)
 
 /**
  * Wraps __{@link readContract}__ with `abi` set to __{@link planetStatsSystemAbi}__ and `functionName` set to `"getId"`
