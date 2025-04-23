@@ -4,19 +4,6 @@ pragma solidity ^0.8.24;
 import {IScenario} from "../Scenario.sol";
 import {console} from "hardhat/console.sol";
 
-// interface IPlanetStatsEntity {
-
-//     // function getMintPrice() external view returns (uint256);
-//     // function setMintPrice(uint256 newPrice) external;
-
-//     function getRarityOdds() external view returns (uint8[5] memory);
-//     function setRarityOdds(uint8[5] memory newOdds) external;
-
-//     function getStats(uint256 tokenId) external view returns (uint16[10] memory);
-//     function setStats(uint256 tokenId, uint16[10] calldata newStats) external;
-
-//     function getStartingStats(uint8 gen) external returns (uint8);
-// }
 
 contract PlanetStatsEntity {
     //let's sketch it out
@@ -31,6 +18,7 @@ contract PlanetStatsEntity {
     mapping(string => uint16[]) private _startingStatSetValues; // statSetName => starting points, if it's 65535 it's gatcha
     mapping(string => uint8[]) private _statSetPointsAvailable; // statSetName => number of points to distribute based on rarity
     mapping(string => string[]) private _statSetPointNames; // statSetName => stat names
+    mapping(string => uint16[]) private _statSetMaxValues; // statSetName => max values for each stat
     uint8[] private _statSetRarityOdds;
 
     string[] private _statSetNames;
@@ -63,6 +51,7 @@ contract PlanetStatsEntity {
         string memory statSetName,
         uint16[] calldata startingPoints,
         uint8[] calldata points,
+        uint16[] calldata maxValues,
         string[] memory pointNames
     ) external {
         if (msg.sender != _scenario.getAdmin()) {
@@ -77,6 +66,7 @@ contract PlanetStatsEntity {
         _startingStatSetValues[statSetName] = startingPoints;
         _statSetPointsAvailable[statSetName] = points;
         _statSetPointNames[statSetName] = pointNames;
+        _statSetMaxValues[statSetName] = maxValues;
 
         _statSetNames.push(statSetName);
     }
@@ -84,15 +74,15 @@ contract PlanetStatsEntity {
     function createStatSet(
         string memory statSetName,
         uint16[] calldata startingPoints,
-                string[] memory pointNames
-
-
+        uint16[] calldata maxValues,
+        string[] memory pointNames
     ) external {
         if (msg.sender != _scenario.getAdmin()) {
             revert NotScenarioAdmin();
         }
         _startingStatSetValues[statSetName] = startingPoints;
         _statSetPointNames[statSetName] = pointNames;
+        _statSetMaxValues[statSetName] = maxValues;
 
         _statSetNames.push(statSetName);
     }
@@ -116,6 +106,12 @@ contract PlanetStatsEntity {
         string memory statSetName
     ) external view returns (string[] memory) {
         return _statSetPointNames[statSetName];
+    }
+
+    function getStatSetMaxValues(
+        string memory statSetName
+    ) external view returns (uint16[] memory) {
+        return _statSetMaxValues[statSetName];
     }
 
     function setStatSet(

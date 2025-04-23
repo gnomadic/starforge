@@ -86,7 +86,6 @@ contract PlanetStatsSystem is ISystem {
             // console.log("setting stats %s", statSetName);
             entity.setStatSet(tokenId, statSetName, stats);
         }
-
     }
 
     function getStartingStatsForGatchaSet(
@@ -94,13 +93,7 @@ contract PlanetStatsSystem is ISystem {
         uint256 tokenId,
         string memory statSetName,
         uint8 rarity
-    )
-        internal
-        returns (
-            // uint8 gen
-            uint16[] memory
-        )
-    {
+    ) internal returns (uint16[] memory) {
         uint8 randomNumber;
 
         uint8 points = entity.getAvailablePoints(statSetName)[rarity - 1];
@@ -110,10 +103,7 @@ contract PlanetStatsSystem is ISystem {
         }
 
         while (points > 0) {
-            randomNumber = getRandom(
-               uint8(stats.length),
-                tokenId + points
-            );
+            randomNumber = getRandom(uint8(stats.length), tokenId + points);
             if (stats[randomNumber] < 20) {
                 stats[randomNumber] = stats[randomNumber] + 1;
                 points = points - 1;

@@ -104,6 +104,14 @@ contract RegenScenario {
         startingValue[4] = 65535;
         startingValue[5] = 65535;
 
+        uint16[] memory maxValues = new uint16[](6);
+        maxValues[0] = 20;
+        maxValues[1] = 20;
+        maxValues[2] = 20;
+        maxValues[3] = 20;
+        maxValues[4] = 20;
+        maxValues[5] = 20;
+
         string[] memory statSetNames = new string[](6);
         statSetNames[0] = "Temperature";
         statSetNames[1] = "Water";
@@ -113,15 +121,44 @@ contract RegenScenario {
         statSetNames[5] = "Anomaly";
 
         
-        console.log("setting rarity");
+        // console.log("setting rarity");
         planetStatsEntity.setStatSetRarityOdds(rarityOdds);
-        console.log("creating gatcha stats");
+        // console.log("creating gatcha stats");
         planetStatsEntity.createGatchaStatSet(
             "Core Stats",
             startingValue,
             gatchaPoints,
+            maxValues,
             statSetNames
         );
+
+             uint16[] memory jobSkillValues = new uint16[](4);
+        jobSkillValues[0] = 0;
+        jobSkillValues[1] = 0;
+        jobSkillValues[2] = 0;
+        jobSkillValues[3] = 0;
+
+                     uint16[] memory maxJobSkillValues = new uint16[](4);
+        maxJobSkillValues[0] = 99;
+        maxJobSkillValues[1] = 99;
+        maxJobSkillValues[2] = 99;
+        maxJobSkillValues[3] = 99;
+
+
+
+        string[] memory jobSkillNames = new string[](4);
+        jobSkillNames[0] = "Bioflux";
+        jobSkillNames[1] = "ENERGY";
+        jobSkillNames[2] = "MATTER";
+        jobSkillNames[3] = "TECHNOLOGY";
+
+        planetStatsEntity.createStatSet(
+            "Job Skills",
+            jobSkillValues,
+            maxJobSkillValues,
+            jobSkillNames
+        );
+        
 
 
 

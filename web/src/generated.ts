@@ -873,6 +873,7 @@ export const planetStatsEntityAbi = [
       { name: 'statSetName', internalType: 'string', type: 'string' },
       { name: 'startingPoints', internalType: 'uint16[]', type: 'uint16[]' },
       { name: 'points', internalType: 'uint8[]', type: 'uint8[]' },
+      { name: 'maxValues', internalType: 'uint16[]', type: 'uint16[]' },
       { name: 'pointNames', internalType: 'string[]', type: 'string[]' },
     ],
     name: 'createGatchaStatSet',
@@ -884,6 +885,7 @@ export const planetStatsEntityAbi = [
     inputs: [
       { name: 'statSetName', internalType: 'string', type: 'string' },
       { name: 'startingPoints', internalType: 'uint16[]', type: 'uint16[]' },
+      { name: 'maxValues', internalType: 'uint16[]', type: 'uint16[]' },
       { name: 'pointNames', internalType: 'string[]', type: 'string[]' },
     ],
     name: 'createStatSet',
@@ -911,6 +913,13 @@ export const planetStatsEntityAbi = [
       { name: 'statSetName', internalType: 'string', type: 'string' },
     ],
     name: 'getStatSet',
+    outputs: [{ name: '', internalType: 'uint16[]', type: 'uint16[]' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: 'statSetName', internalType: 'string', type: 'string' }],
+    name: 'getStatSetMaxValues',
     outputs: [{ name: '', internalType: 'uint16[]', type: 'uint16[]' }],
     stateMutability: 'view',
   },
@@ -2774,6 +2783,15 @@ export const useReadPlanetStatsEntityGetStatSet =
   /*#__PURE__*/ createUseReadContract({
     abi: planetStatsEntityAbi,
     functionName: 'getStatSet',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link planetStatsEntityAbi}__ and `functionName` set to `"getStatSetMaxValues"`
+ */
+export const useReadPlanetStatsEntityGetStatSetMaxValues =
+  /*#__PURE__*/ createUseReadContract({
+    abi: planetStatsEntityAbi,
+    functionName: 'getStatSetMaxValues',
   })
 
 /**
@@ -5024,6 +5042,15 @@ export const readPlanetStatsEntityGetStartingPoints =
 export const readPlanetStatsEntityGetStatSet = /*#__PURE__*/ createReadContract(
   { abi: planetStatsEntityAbi, functionName: 'getStatSet' },
 )
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link planetStatsEntityAbi}__ and `functionName` set to `"getStatSetMaxValues"`
+ */
+export const readPlanetStatsEntityGetStatSetMaxValues =
+  /*#__PURE__*/ createReadContract({
+    abi: planetStatsEntityAbi,
+    functionName: 'getStatSetMaxValues',
+  })
 
 /**
  * Wraps __{@link readContract}__ with `abi` set to __{@link planetStatsEntityAbi}__ and `functionName` set to `"getStatSetNames"`
