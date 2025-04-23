@@ -43,34 +43,74 @@ contract RegenScenario {
 
         jobsEntity.addJob(
             "Bioflux_one",
-            "Biohacking",
-            "Study cosmic life forms to increase life production.",
+            "Spore Harvester",
+            "Collect dormant spores from decayed biomes. Risk of minor fungal infection.",
             "Bioflux",
+            2000000000000000000
+        );
+
+        jobsEntity.addJob(
+            "Bioflux_two",
+            "Bloom Engineer",
+            "Cultivate and harvest synthetic algae blooms in controlled lakes.",
+            "Bioflux",
+            5000000000000000000
+        );
+
+        jobsEntity.addJob(
+            "Bioflux_three",
+            "Mycoformer",
+            "Manage a vast underground mycelial nexus. Requires drone control and biohazard gear.",
+            "Bioflux",
+            12000000000000000000
+        );
+
+        jobsEntity.addJob(
+            "Hydrocite_one",
+            "Ice Miner",
+            "Drill into surface frost veins to extract raw water crystals.",
+            "Hydrocite",
             1000000000000000000
         );
 
         jobsEntity.addJob(
-            "matter",
-            "Matter Collector",
-            "Collect interstellar particles to increase matter production.",
-            "MATTER",
-            1000000000000000000
+            "Hydrocite_two",
+            "Comet Splitter",
+            "Harvest from captured micro-comets in low orbit. Precision required.",
+            "Hydrocite",
+            3000000000000000000
         );
 
         jobsEntity.addJob(
-            "energy",
-            "Energy Harvester",
-            "Capture cosmic radiation to boost energy production.",
-            "ENERGY",
-            1000000000000000000
+            "Hydrocite_three",
+            "Glacier Diver",
+            "Dive into unstable ancient glaciers for deep-core Hydrocite. Extremely cold.",
+            "Hydrocite",
+            9000000000000000000
         );
 
         jobsEntity.addJob(
-            "technology",
-            "Tech Engineer",
-            "Research advanced technologies to increase tech production.",
-            "TECHNOLOGY",
-            1000000000000000000
+            "Solaris_one",
+            "Dust Sweeper",
+            "Clean solar panel fields coated in Solaris residue. Easy but tedious.",
+            "Solaris Dust",
+            9000000000000000000
+        );
+
+        jobsEntity.addJob(
+            "Solaris_two",
+            "Reflector Technician",
+            "Tune ancient solar arrays to beam-storm hotspots and collect Dust.",
+            "Solaris Dust",
+            9000000000000000000
+        );
+
+        jobsEntity.addJob(
+            "Solaris_three",
+            "Flare Diver",
+            "Ride solar storms in magnetic suits to capture high-density Dust clouds. High risk, high reward.",
+            "Solaris Dust",
+            9000000000000000000
         );
     }
 
@@ -120,7 +160,6 @@ contract RegenScenario {
         statSetNames[4] = "Density";
         statSetNames[5] = "Anomaly";
 
-        
         // console.log("setting rarity");
         planetStatsEntity.setStatSetRarityOdds(rarityOdds);
         // console.log("creating gatcha stats");
@@ -132,25 +171,20 @@ contract RegenScenario {
             statSetNames
         );
 
-             uint16[] memory jobSkillValues = new uint16[](4);
+        uint16[] memory jobSkillValues = new uint16[](3);
         jobSkillValues[0] = 0;
         jobSkillValues[1] = 0;
         jobSkillValues[2] = 0;
-        jobSkillValues[3] = 0;
 
-                     uint16[] memory maxJobSkillValues = new uint16[](4);
+        uint16[] memory maxJobSkillValues = new uint16[](3);
         maxJobSkillValues[0] = 99;
         maxJobSkillValues[1] = 99;
         maxJobSkillValues[2] = 99;
-        maxJobSkillValues[3] = 99;
 
-
-
-        string[] memory jobSkillNames = new string[](4);
+        string[] memory jobSkillNames = new string[](3);
         jobSkillNames[0] = "Bioflux";
-        jobSkillNames[1] = "ENERGY";
-        jobSkillNames[2] = "MATTER";
-        jobSkillNames[3] = "TECHNOLOGY";
+        jobSkillNames[1] = "Hydrocite";
+        jobSkillNames[2] = "Solaris Dust";
 
         planetStatsEntity.createStatSet(
             "Job Skills",
@@ -158,9 +192,6 @@ contract RegenScenario {
             maxJobSkillValues,
             jobSkillNames
         );
-        
-
-
 
         // planetStatsEntity.setNumberOfStats(6);
         // planetStatsEntity.setStartingStats([80, 78, 76, 74, 72]);
@@ -175,32 +206,58 @@ contract RegenScenario {
         );
 
         // console.log("supplySystem: %s", address(supplySystem));
-        address life = supplySystem.deployToken(scenario, "Bioflux", "SF-BIO");
-        address energy = supplySystem.deployToken(scenario, "ENERGY", "ENERGY");
-        address matter = supplySystem.deployToken(scenario, "MATTER", "MATTER");
-        address tech = supplySystem.deployToken(
+        address bioflux = supplySystem.deployToken(
             scenario,
-            "TECHNOLOGY",
-            "TECHNOLOGY"
+            "Bioflux",
+            "SF-BIO"
         );
 
+        // Description: A rare organic energy harvested from microbial blooms and ancient spores awakened during terraforming.
+        // Use: Required to activate greenhouses, seed terraforming zones, or evolve planetary biomes.
+        // Why it’s fun: It’s living energy—players feel like they’re literally growing the planet back to life.
+
+        address hydrocite = supplySystem.deployToken(
+            scenario,
+            "Hydrocite",
+            "SF-HYDRO"
+        );
+
+        // Description: A crystalline form of frozen water laced with trace elements, found deep in glacial cores or comet strikes.
+        // Use: Needed for irrigation, cooling systems, and biosphere stabilization.
+        // Why it’s fun: Players might mine ice comets or melt old glaciers, visually tying progress to changing the planet's surface.
+
+        address dust = supplySystem.deployToken(
+            scenario,
+            "Solaris Dust",
+            "SF-DUST"
+        );
+
+        // Description: Hyper-reactive nanodust that absorbs and stores solar energy, originally used to power ancient tech.
+        // Use: Powers terraforming engines, energizes drones, and unlocks dormant alien structures.
+        // Why it’s fun: It’s glowing, dangerous, and maybe a little too smart—opens the door for Eldritch crossover.
+        // address tech = supplySystem.deployToken(
+        //     scenario,
+        //     "TECHNOLOGY",
+        //     "TECHNOLOGY"
+        // );
+
         // console.log("life is at: %s", life);
-        Mintable(life).mint(
+        Mintable(bioflux).mint(
             0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266,
             10000000000000000000
         );
-        Mintable(energy).mint(
+        Mintable(hydrocite).mint(
             0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266,
             20000000000000000000
         );
-        Mintable(matter).mint(
+        Mintable(dust).mint(
             0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266,
             30000000000000000000
         );
-        Mintable(tech).mint(
-            0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266,
-            40000000000000000000
-        );
+        // Mintable(tech).mint(
+        //     0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266,
+        //     40000000000000000000
+        // );
     }
 }
 

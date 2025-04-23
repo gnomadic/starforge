@@ -21,8 +21,8 @@ const mockQuests: Quest[] = [
     timeRequired: 180, // 3 minutes
     riskLevel: 'medium',
     supplies: [
-      { id: '1', type: 'ENERGY', amount: 40, icon: '⚡', color: 'bg-yellow-500/20', emissionRate: 0.5 },
-      { id: '1', type: 'TECHNOLOGY', amount: 25, icon: '✨', color: 'bg-blue-500/20' , emissionRate: 0.5 },
+      { id: '1', type: 'Bioflux', amount: 40, icon: '⚡', color: 'bg-yellow-500/20', emissionRate: 0.5 },
+      { id: '1', type: 'Hydrocite', amount: 25, icon: '✨', color: 'bg-blue-500/20' , emissionRate: 0.5 },
     ],
     rewards: [
       { type: 'xp', amount: 150, name: 'Experience', icon: '📊' },
@@ -38,8 +38,8 @@ const mockQuests: Quest[] = [
     timeRequired: 120, // 2 minutes
     riskLevel: 'high',
     supplies: [
-      { id: '1', type: 'ENERGY', amount: 60, icon: '⚡', color: 'bg-red-500/20' , emissionRate: 0.5 },
-      { id: '1', type: 'MATTER', amount: 35, icon: '💫', color: 'bg-yellow-500/20', emissionRate: 0.5 },
+      { id: '1', type: 'Bioflux', amount: 60, icon: '⚡', color: 'bg-red-500/20' , emissionRate: 0.5 },
+      { id: '1', type: 'Solaris Dust', amount: 35, icon: '💫', color: 'bg-yellow-500/20', emissionRate: 0.5 },
     ],
     rewards: [
       { type: 'xp', amount: 200, name: 'Experience', icon: '📊' },
@@ -55,8 +55,8 @@ const mockQuests: Quest[] = [
     timeRequired: 90, // 1.5 minutes
     riskLevel: 'low',
     supplies: [
-      { id: '1', type: 'LIFE', amount: 25, icon: '⚡', color: 'bg-green-500/20' , emissionRate: 0.5 },
-      { id: '1', type: 'TECHNOLOGY', amount: 30, icon: '💰', color: 'bg-yellow-500/20', emissionRate: 0.5 },
+      { id: '1', type: 'Hydrocite', amount: 25, icon: '⚡', color: 'bg-green-500/20' , emissionRate: 0.5 },
+      { id: '1', type: 'Solaris Dust', amount: 30, icon: '💰', color: 'bg-yellow-500/20', emissionRate: 0.5 },
     ],
     rewards: [
       { type: 'xp', amount: 80, name: 'Experience', icon: '📊' },
@@ -72,9 +72,9 @@ const mockQuests: Quest[] = [
     timeRequired: 300, // 5 minutes
     riskLevel: 'extreme',
     supplies: [
-      { id: '1', type: 'MATTER', amount: 85, icon: '⚡', color: 'bg-purple-500/20' , emissionRate: 0.5 },
-      { id: '1', type: 'LIFE', amount: 60, icon: '✨', color: 'bg-red-500/20' , emissionRate: 0.5 },
-      { id: '1', type: 'TECHNOLOGY', amount: 50, icon: '💫', color: 'bg-blue-500/20', emissionRate: 0.5 },
+      { id: '1', type: 'Bioflux', amount: 85, icon: '⚡', color: 'bg-purple-500/20' , emissionRate: 0.5 },
+      { id: '1', type: 'Hydrocite', amount: 60, icon: '✨', color: 'bg-red-500/20' , emissionRate: 0.5 },
+      { id: '1', type: 'Solaris Dust', amount: 50, icon: '💫', color: 'bg-blue-500/20', emissionRate: 0.5 },
     ],
     rewards: [
       { type: 'xp', amount: 500, name: 'Experience', icon: '📊' },

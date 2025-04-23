@@ -124,7 +124,7 @@ export type ResourceType = 'energy' | 'matter' | 'life' | 'technology';
 
 export interface Supply {
   // type: 'gold' | 'energy' | 'cosmic-dust' | 'stardust';
-  type: 'ENERGY' | 'MATTER' | 'LIFE' | 'TECHNOLOGY';
+  type: 'Bioflux' | 'Hydrocite' | 'Solaris Dust' | 'TECHNOLOGY';
   amount: number;
   emissionRate: number;
   // icon: string;

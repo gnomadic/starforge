@@ -1,7 +1,7 @@
 "use client";
 
 import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
-import { Heart, Circle, Zap, Cpu } from 'lucide-react';
+import { Heart, Circle, Zap, Cpu, Shell, Droplet, Sun } from 'lucide-react';
 import { Supply } from '@/domain/types';
 import SupplyBar from './SupplyBar';
 import { useReadErc20BalanceOf, useReadScenarioGetEntity, useReadSupplyEntityGetTokenAddresses, useReadSupplyEntityGetTokenBalances, useReadSupplyEntityGetTokenNames } from '@/generated';
@@ -13,36 +13,36 @@ import { useScenarios } from './ScenarioContext';
 const initialSupplies: Supply[] = [
   {
     id: '1',
-    type: 'bioflux',
+    type: 'Bioflux',
     amount: 0,
     emissionRate: 0.1,
-    icon: <Heart className="h-4 w-4 text-red-400" />,
+    icon: <Shell className="h-4 w-4 text-red-400" />,
     color: 'bg-red-950/60'
   },
   {
     id: '2',
-    type: 'MATTER',
+    type: 'Hydrocite',
     amount: 0,
     emissionRate: 0.2,
-    icon: <Circle className="h-4 w-4 text-blue-400" />,
+    icon: <Droplet className="h-4 w-4 text-blue-400" />,
     color: 'bg-blue-950/60'
   },
   {
     id: '3',
-    type: 'ENERGY',
+    type: 'Solaris Dust',
     amount: 0,
     emissionRate: 0.15,
-    icon: <Zap className="h-4 w-4 text-yellow-400" />,
+    icon: <Sun className="h-4 w-4 text-yellow-400" />,
     color: 'bg-yellow-950/60'
-  },
-  {
-    id: '4',
-    type: 'TECHNOLOGY',
-    amount: 0,
-    emissionRate: 0.05,
-    icon: <Cpu className="h-4 w-4 text-emerald-400" />,
-    color: 'bg-emerald-950/60'
   }
+  // {
+  //   id: '4',
+  //   type: 'TECHNOLOGY',
+  //   amount: 0,
+  //   emissionRate: 0.05,
+  //   icon: <Cpu className="h-4 w-4 text-emerald-400" />,
+  //   color: 'bg-emerald-950/60'
+  // }
 ];
 
 // Create context with default values

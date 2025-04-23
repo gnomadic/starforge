@@ -103,7 +103,8 @@ contract SupplySystem is ISystem {
         SupplyEntity entity = SupplyEntity(scenario.getEntity(address(this)));
 
         console.log(
-            "SupplySystem: deployToken: entityAddress: %s",
+            "SupplySystem: deployToken: tokenName: %s and entityAddress: %s",
+            tokenName,
             address(entity)
         );
 

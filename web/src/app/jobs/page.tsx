@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect } from 'react';
-import { Briefcase } from 'lucide-react';
+import { Shell, Droplet, Sun } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { useSupplies } from '@/components/SupplyContext';
@@ -15,55 +15,71 @@ import { useDeployment } from '@/hooks/useDeployment';
 interface JobDeco {
   icon: React.ReactNode;
   color: string;
+  resourceType: string;
 }
 
 const DECOS: JobDeco[] = [
-  {    icon: <Briefcase className="h-5 w-5 text-red-400" />,
+  {
+    icon: <Shell className="h-5 w-5 text-red-400" />,
+    resourceType: 'Bioflux',
     color: 'bg-red-950/60 hover:bg-red-900/60'
-  },{    icon: <Briefcase className="h-5 w-5 text-blue-400" />,
-    color: 'bg-blue-950/60 hover:bg-blue-900/60'}, {    icon: <Briefcase className="h-5 w-5 text-yellow-400" />,
-      color: 'bg-yellow-950/60 hover:bg-yellow-900/60'}, {    icon: <Briefcase className="h-5 w-5 text-emerald-400" />,
-        color: 'bg-emerald-950/60 hover:bg-emerald-900/60'}
+  }, {
+    icon: <Droplet className="h-5 w-5 text-blue-400" />,
+    resourceType: 'Hydrocite',
+    color: 'bg-blue-950/60 hover:bg-blue-900/60'
+  }, {
+    icon: <Sun className="h-5 w-5 text-yellow-400" />,
+    resourceType: 'Solaris Dust',
+    color: 'bg-yellow-950/60 hover:bg-yellow-900/60'
+  }
 ]
+
+function getDecoByResourceType(resourceType: string): JobDeco {
+  const deco = DECOS.find(deco => deco.resourceType === resourceType);
+  if (!deco) {
+    throw new Error(`No deco found for resource type: ${resourceType}`);
+  }
+  return deco;
+}
 
 
 
 const Jobs: React.FC = () => {
-//   const { resources, activeJob, setActiveJob } = useSupplies();
+  //   const { resources, activeJob, setActiveJob } = useSupplies();
 
-//   const handleJobSelection = (job: Job) => {
-//     if (activeJob && activeJob.id === job.id) {
-//       setActiveJob(null);
-//       toast({
-//         title: "Job Deactivated",
-//         description: `You are no longer working as a ${job.title}.`,
-//       });
-//     } else {
-//       setActiveJob({
-//         id: job.id,
-//         resourceType: job.resourceType,
-//         baseEmissionBoost: job.baseEmissionBoost
-//       });
-//       toast({
-//         title: "Job Activated",
-//         description: `You are now working as a ${job.title}. +${job.baseEmissionBoost}/s to ${job.resourceType}.`,
-//       });
-//     }
-//   };
+  //   const handleJobSelection = (job: Job) => {
+  //     if (activeJob && activeJob.id === job.id) {
+  //       setActiveJob(null);
+  //       toast({
+  //         title: "Job Deactivated",
+  //         description: `You are no longer working as a ${job.title}.`,
+  //       });
+  //     } else {
+  //       setActiveJob({
+  //         id: job.id,
+  //         resourceType: job.resourceType,
+  //         baseEmissionBoost: job.baseEmissionBoost
+  //       });
+  //       toast({
+  //         title: "Job Activated",
+  //         description: `You are now working as a ${job.title}. +${job.baseEmissionBoost}/s to ${job.resourceType}.`,
+  //       });
+  //     }
+  //   };
 
-  
+
   // const { address } = useAccount();
   const { deploy } = useDeployment();
   const { scenarios } = useScenarios();
 
 
-    const { data: whichEntity } = useReadScenarioGetEntity({ args: [deploy.JobSystem], address: scenarios ? scenarios[0] : "0x0" }) 
-  
+  const { data: whichEntity } = useReadScenarioGetEntity({ args: [deploy.JobSystem], address: scenarios ? scenarios[0] : "0x0" })
 
-const {data, isLoading, error } = useReadJobEntityGetAvailableJobs({
-  args: [],
-  address: whichEntity
-})
+
+  const { data, isLoading, error } = useReadJobEntityGetAvailableJobs({
+    args: [],
+    address: whichEntity
+  })
 
 
 
@@ -84,26 +100,26 @@ const {data, isLoading, error } = useReadJobEntityGetAvailableJobs({
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {data?.map((job, index) => {
             const isActive = false;//activeJob?.id === job.id;
-            
+
             return (
-              <Card 
-                key={job.id} 
+              <Card
+                key={job.id}
                 className={`border transition-all ${isActive ? 'border-primary ring-2 ring-primary/20' : 'border-border/40'}`}
               >
-                <CardHeader className={`${DECOS[index].color} rounded-t-lg`}>
+                <CardHeader className={`${getDecoByResourceType(job.tokenName).color} rounded-t-lg`}>
                   <div className="flex justify-between items-center">
                     <div>
                       <CardTitle className="text-lg font-semibold text-white">{job.title}</CardTitle>
                       <CardDescription className="text-white/80">{job.tokenName}</CardDescription>
                     </div>
                     <div className="p-2 rounded-full bg-black/20">
-                      {DECOS[index].icon}
+                      {getDecoByResourceType(job.tokenName).icon}
                     </div>
                   </div>
                 </CardHeader>
                 <CardContent className="pt-6 flex flex-col gap-4">
                   <p className="text-sm text-muted-foreground">{job.description}</p>
-                  
+
                   <div className="flex justify-between items-center border-t border-border/40 pt-4">
                     <div className="text-sm">
                       <div className="text-muted-foreground">Earn</div>

@@ -41,7 +41,7 @@ const { supplies, updateSupply, sync, syncReady  } = resourcesContext;
             </TooltipTrigger>
             <TooltipContent>
               <p className="capitalize">
-                {resource.type}: {resource.amount.toFixed(1)} (+{resource.emissionRate}/s)
+                {resource.type}: {resource.amount.toFixed(1)}
               </p>
             </TooltipContent>
           </Tooltip>
