@@ -17,7 +17,8 @@ const initialSupplies: Supply[] = [
     amount: 0,
     emissionRate: 0.1,
     icon: <Shell className="h-4 w-4 text-red-400" />,
-    color: 'bg-red-950/60'
+    color: 'bg-red-950/60',
+    description: "A rare organic energy harvested from microbial blooms and ancient spores awakened during terraforming."
   },
   {
     id: '2',
@@ -25,7 +26,8 @@ const initialSupplies: Supply[] = [
     amount: 0,
     emissionRate: 0.2,
     icon: <Droplet className="h-4 w-4 text-blue-400" />,
-    color: 'bg-blue-950/60'
+    color: 'bg-blue-950/60',
+    description: "A crystalline form of frozen water laced with trace elements, found deep in glacial cores or comet strikes."
   },
   {
     id: '3',
@@ -33,7 +35,8 @@ const initialSupplies: Supply[] = [
     amount: 0,
     emissionRate: 0.15,
     icon: <Sun className="h-4 w-4 text-yellow-400" />,
-    color: 'bg-yellow-950/60'
+    color: 'bg-yellow-950/60',
+    description: "Hyper-reactive nanodust that absorbs and stores solar energy, originally used to power ancient tech."
   }
   // {
   //   id: '4',

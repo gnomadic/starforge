@@ -131,6 +131,7 @@ export interface Supply {
   icon: React.ReactNode;
   color: string;
   id: string;
+  description?: string;
 }
 
 export interface Reward {
