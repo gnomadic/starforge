@@ -2,7 +2,7 @@
 pragma solidity ^0.8.24;
 
 import {ISystem} from "./systems/interfaces/ISystem.sol";
-import { console } from "hardhat/console.sol";
+// import { console } from "hardhat/console.sol";
 
 
 interface IScenario {
@@ -37,9 +37,9 @@ contract Scenario is IScenario {
             dataEntities[address(systems[i])] = entities[i];
         }
 
-        console.log("initialized with: %s", systems.length);
-        console.log("initialized with system: %s", address(systems[0]));
-        console.log("initialized with entities: %s", dataEntities[address(systems[0])]);
+        // console.log("initialized with: %s", systems.length);
+        // console.log("initialized with system: %s", address(systems[0]));
+        // console.log("initialized with entities: %s", dataEntities[address(systems[0])]);
     
     }
 
@@ -61,8 +61,8 @@ contract Scenario is IScenario {
     }
 
     function getEntity(address _system) external view returns (address) {
-        console.log("getEntity: %s", _system);
-        console.log("getEntity: %s", dataEntities[_system]);
+        // console.log("getEntity: %s", _system);
+        // console.log("getEntity: %s", dataEntities[_system]);
         return dataEntities[_system];
     }
 

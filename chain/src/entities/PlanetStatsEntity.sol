@@ -2,7 +2,7 @@
 pragma solidity ^0.8.24;
 
 import {IScenario} from "../Scenario.sol";
-import {console} from "hardhat/console.sol";
+// import {console} from "hardhat/console.sol";
 
 contract PlanetStatsEntity {
     //let's sketch it out
@@ -54,8 +54,7 @@ contract PlanetStatsEntity {
             revert NotScenarioAdmin();
         }
         if (points.length != _statSetRarityOdds.length) {
-            // TODO maybe a more specific error
-            revert NotScenarioAdmin();
+            revert InvalidStatSet();
         }
         _startingStatSetValues[statSetName] = startingPoints;
         _statSetPointsAvailable[statSetName] = points;
@@ -155,19 +154,20 @@ contract PlanetStatsEntity {
         uint16 amount
     ) external {
         if (msg.sender != _scenario.getAdmin() && msg.sender != system) {
-            console.log("Not scenario admin");
+            // console.log("Not scenario admin");
             revert NotScenarioAdmin();
         }
-        console.log(
-            "PlanetStatsEntity: boostSkill:  skillSetName: %s, skillSetIndex: %s, amount: %s",
-            skillSetName,
-            skillSetIndex,
-            amount
-        );
+        // console.log(
+        //     "PlanetStatsEntity: boostSkill:  skillSetName: %s, skillSetIndex: %s, amount: %s",
+        //     skillSetName,
+        //     skillSetIndex,
+        //     amount
+        // );
         _statSets[tokenId][skillSetName][skillSetIndex] += amount;
     }
 
 
 
     error NotScenarioAdmin();
+    error InvalidStatSet();
 }

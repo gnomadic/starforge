@@ -3,7 +3,7 @@ pragma solidity ^0.8.24;
 
 import {Context} from "@openzeppelin/contracts/utils/Context.sol";
 import {ISystem, ISystemController} from "./systems/interfaces/ISystem.sol";
-import { console } from "hardhat/console.sol";
+// import { console } from "hardhat/console.sol";
 
 import {IScenario, Scenario} from "./Scenario.sol";
 
@@ -35,7 +35,7 @@ contract ScenarioFactory is Context {
 
         scenarios.push(newScenario);
 
-        console.log("creating scenario %s", address(newScenario));
+        // console.log("creating scenario %s", address(newScenario));
         address[] memory entities = systemController.activateEntities(
             newScenario
         );
@@ -54,7 +54,7 @@ contract ScenarioFactory is Context {
     function getActivePlayerScenarios(
         address player
     ) external view returns (IScenario[] memory) {
-                console.log("getting active scenarios?");
+                // console.log("getting active scenarios?");
 
         PlayerScenario[] memory playerScenarios = players[player];
         uint256 activeCount = 1;

@@ -3,7 +3,7 @@ pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/proxy/Clones.sol";
 
-import { console } from "hardhat/console.sol";
+// import { console } from "hardhat/console.sol";
 
 interface ISupplyToken {
     function initialize(string memory name, string memory symbol, address systemController, address scenario) external;
@@ -28,16 +28,16 @@ contract SupplyTokenFactory {
         string memory symbol
     ) external returns (address) {
    
-        console.log("supplyTokenFactory: creating token %s", name);
+        // console.log("supplyTokenFactory: creating token %s", name);
 
         address proxy = implementation.clone();
-                console.log("ok cloned at %s", proxy);
+                // console.log("ok cloned at %s", proxy);
 
         ISupplyToken(proxy).initialize(name, symbol, systemController, scenario );
-                console.log("intialized token %s", name);
+                // console.log("intialized token %s", name);
 
         emit SupplyTokenCreated(proxy, msg.sender, name, symbol);
-                console.log('done');
+                // console.log('done');
 
         return proxy;
     }

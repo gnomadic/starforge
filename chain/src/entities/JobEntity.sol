@@ -2,7 +2,7 @@
 pragma solidity ^0.8.24;
 
 import {IScenario} from "../Scenario.sol";
-import {console} from "hardhat/console.sol";
+// import {console} from "hardhat/console.sol";
 
 struct Job {
     string id;
@@ -54,18 +54,18 @@ contract JobEntity {
     }
 
     function activateJob(string memory jobId, uint256 tokenId) external {
-        console.log("activating job from entity");
+        // console.log("activating job from entity");
         if (msg.sender != _scenario.getAdmin() && msg.sender != system) {
-            console.log("Not scenario admin");
+            // console.log("Not scenario admin");
             revert NotScenarioAdmin();
         }
         if (bytes(activeJobs[tokenId].id).length != 0) {
-            console.log("Already active job");
+            // console.log("Already active job");
             revert AlreadyActiveJob();
         }
 
         activeJobs[tokenId] = LiveJob(jobId, block.timestamp);
-                console.log("done activating job from entity");
+                // console.log("done activating job from entity");
 
 
         
@@ -102,7 +102,7 @@ contract JobEntity {
         if (msg.sender != _scenario.getAdmin() && msg.sender != system) {
             revert NotScenarioAdmin();
         }
-        console.log("Adding job %s", id);
+        // console.log("Adding job %s", id);
         Job memory newJob = Job(
             id,
             title,

@@ -2,7 +2,7 @@
 pragma solidity ^0.8.24;
 
 import {IScenario} from "../Scenario.sol";
-import {console} from "hardhat/console.sol";
+// import {console} from "hardhat/console.sol";
 
 contract SupplyEntity {
     string[] private tokenNames;
@@ -72,14 +72,14 @@ contract SupplyEntity {
     // }
 
     function addToken(string memory name, address tokenAddress) external {
-        console.log("entity adding token %s", name);
+        // console.log("entity adding token %s", name);
         if (msg.sender != system) {
             revert NotScenarioAdmin();
         }
 
-        console.log("pushign to names");
+        // console.log("pushign to names");
         tokenNames.push(name);
-        console.log("pushign to addresses");
+        // console.log("pushign to addresses");
         tokenAddresses.push(tokenAddress);
     }
 

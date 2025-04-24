@@ -6,7 +6,7 @@ import {IScenario} from "../Scenario.sol";
 import {SupplyEntity, IERC20} from "../entities/SupplyEntity.sol";
 import {SupplyTokenFactory} from "../tokens/SupplyTokenFactory.sol";
 
-import {console} from "hardhat/console.sol";
+// import {console} from "hardhat/console.sol";
 
 contract SupplySystem is ISystem {
     struct Resource {
@@ -29,10 +29,10 @@ contract SupplySystem is ISystem {
         }
         registered = true;
         _systemController = systemController;
-        console.log(
-            "SupplySystem: registerSystem: systemController: %s",
-            _systemController
-        );
+        // console.log(
+        //     "SupplySystem: registerSystem: systemController: %s",
+        //     _systemController
+        // );
     }
 
     error AlreadyRegistered();
@@ -69,10 +69,10 @@ contract SupplySystem is ISystem {
     ) external {
         SupplyEntity entity = SupplyEntity(scenario.getEntity(address(this)));
 
-        console.log("SupplySystem: mint: entityAddress: %s", address(entity));
+        // console.log("SupplySystem: mint: entityAddress: %s", address(entity));
 
         address token = entity.getTokenAddress(tokenName);
-        console.log("minting %s", tokenName);
+        // console.log("minting %s", tokenName);
         IERC20(token).mint(player, amount);
     }
 
@@ -84,10 +84,10 @@ contract SupplySystem is ISystem {
     ) external {
         SupplyEntity entity = SupplyEntity(scenario.getEntity(address(this)));
 
-        console.log("SupplySystem: burn: entityAddress: %s", address(entity));
+        // console.log("SupplySystem: burn: entityAddress: %s", address(entity));
 
         address token = entity.getTokenAddress(tokenName);
-        console.log("burning %s", tokenName);
+        // console.log("burning %s", tokenName);
         IERC20(token).burn(player, amount);
     }
 
@@ -102,11 +102,11 @@ contract SupplySystem is ISystem {
 
         SupplyEntity entity = SupplyEntity(scenario.getEntity(address(this)));
 
-        console.log(
-            "SupplySystem: deployToken: tokenName: %s and entityAddress: %s",
-            tokenName,
-            address(entity)
-        );
+        // console.log(
+        //     "SupplySystem: deployToken: tokenName: %s and entityAddress: %s",
+        //     tokenName,
+        //     address(entity)
+        // );
 
         address newToken = _supplyTokenFactory.createSupplyToken(
             _systemController,
@@ -115,7 +115,7 @@ contract SupplySystem is ISystem {
             tokenSymbol
         );
 
-        console.log("adding token %s", tokenName);
+        // console.log("adding token %s", tokenName);
         entity.addToken(tokenName, newToken);
         return newToken;
     }

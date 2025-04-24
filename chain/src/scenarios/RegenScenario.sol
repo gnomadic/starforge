@@ -3,7 +3,7 @@ pragma solidity ^0.8.24;
 
 import {ScenarioFactory} from "../ScenarioFactory.sol";
 import {Scenario} from "../Scenario.sol";
-import {console} from "hardhat/console.sol";
+// import {console} from "hardhat/console.sol";
 import {PlanetStatsEntity} from "../entities/PlanetStatsEntity.sol";
 import {SupplyEntity} from "../entities/SupplyEntity.sol";
 import {SystemController} from "../systems/SystemController.sol";
@@ -23,7 +23,7 @@ contract RegenScenario {
     }
 
     function createScenario(string memory _metadataURI) internal {
-        console.log("regen: creating scenario %s", _metadataURI);
+        // console.log("regen: creating scenario %s", _metadataURI);
         address regen = factory.createScenario(_metadataURI);
 
         Scenario scenario = Scenario(regen);

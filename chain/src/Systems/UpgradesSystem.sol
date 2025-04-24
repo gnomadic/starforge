@@ -4,7 +4,7 @@ pragma solidity ^0.8.24;
 import "@openzeppelin/contracts/access/Ownable.sol";
 import {ISystem, ISystemController, TokenRate} from "./interfaces/ISystem.sol";
 import {IScenario} from "../Scenario.sol";
-import {console} from "hardhat/console.sol";
+// import {console} from "hardhat/console.sol";
 
 contract UpgradesSystem is Ownable, ISystem {
     struct Upgrade {
@@ -125,7 +125,7 @@ contract UpgradesSystem is Ownable, ISystem {
     }
 
     function getAllUpgrades() external view returns (Upgrade[] memory) {
-        console.log("All Upgrades: %s", upgrades.length);
+        // console.log("All Upgrades: %s", upgrades.length);
         return upgrades;
     }
 

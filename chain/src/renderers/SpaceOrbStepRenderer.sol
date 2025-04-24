@@ -5,7 +5,7 @@ pragma solidity 0.8.24;
 import "./interfaces/IStepRenderer.sol";
 import {LibString} from "../../lib/solady/src/utils/LibString.sol";
 
-import "hardhat/console.sol";
+// import "hardhat/console.sol";
 
 contract SpaceOrbStepRenderer is IStepRenderer {
     constructor() {}

@@ -4,7 +4,7 @@ pragma solidity ^0.8.0;
 import "solady/tokens/ERC20.sol";
 import {ISystem, ISystemController} from "../systems/interfaces/ISystem.sol";
 import {IScenario} from "../Scenario.sol";
-import {console} from "hardhat/console.sol";
+// import {console} from "hardhat/console.sol";
 
 contract SupplyToken is ERC20 {
     string private _name;

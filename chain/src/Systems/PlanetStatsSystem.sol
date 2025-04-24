@@ -2,10 +2,9 @@
 pragma solidity ^0.8.24;
 
 import {ISystem, ISystemController} from "./interfaces/ISystem.sol";
-// import {IPlanetStatsEntity} from "../entities/PlanetStatsEntity.sol";
 import {IScenario} from "../Scenario.sol";
 import {PlanetStatsEntity} from "../entities/PlanetStatsEntity.sol";
-import {console} from "hardhat/console.sol";
+// import {console} from "hardhat/console.sol";
 
 contract PlanetStatsSystem is ISystem {
     address planetAddress;
@@ -36,11 +35,11 @@ contract PlanetStatsSystem is ISystem {
 
         address entityAddress = scenario.getEntity(address(this));
         PlanetStatsEntity entity = PlanetStatsEntity(entityAddress);
-        console.log(
-            "PlanetStatsSystem: calculateStatsForMint: entityAddress: %s and tokenId: %s",
-            entityAddress,
-            tokenId
-        );
+        // console.log(
+        //     "PlanetStatsSystem: calculateStatsForMint: entityAddress: %s and tokenId: %s",
+        //     entityAddress,
+        //     tokenId
+        // );
 
         string[] memory statSetNames = entity.getStatSetNames();
 
@@ -61,7 +60,7 @@ contract PlanetStatsSystem is ISystem {
         uint16[] memory raritySet = new uint16[](1);
         raritySet[0] = uint16(rarity);
 
-        console.log("setting rarity %s", rarity);
+        // console.log("setting rarity %s", rarity);
         entity.setStatSet(tokenId, "RARITY", raritySet);
 
         for (uint256 i = 0; i < statSetNames.length; i++) {
@@ -165,7 +164,7 @@ contract PlanetStatsSystem is ISystem {
         uint256 tokenId
     ) external override {
         // TODO add permissiong here
-        console.log("PlanetStatsSystem: init");
+        // console.log("PlanetStatsSystem: init");
 
         calculateStatsForMint(scenario, tokenId);
     }
@@ -194,10 +193,10 @@ contract PlanetStatsSystem is ISystem {
         PlanetStatsEntity entityAddress = new PlanetStatsEntity();
 
         entityAddress.initialize(scenario, address(this));
-        console.log(
-            "PlanetStatsSystem: activateEntity: entityAddress: %s",
-            address(entityAddress)
-        );
+        // console.log(
+        //     "PlanetStatsSystem: activateEntity: entityAddress: %s",
+        //     address(entityAddress)
+        // );
         return address(entityAddress);
     }
 
@@ -233,6 +232,9 @@ contract PlanetStatsSystem is ISystem {
     ) external {
 
         //TODO permissioning 
+        if (msg.sender != scenario.getAdmin() && msg.sender != _systemController) {
+            revert NotScenario();
+        }
         
         PlanetStatsEntity entity = PlanetStatsEntity(
             scenario.getEntity(address(this))
@@ -240,11 +242,11 @@ contract PlanetStatsSystem is ISystem {
         // if (msg.sender != scenario.getAdmin() && msg.sender != _systemController) {
         //     revert NotScenarioAdmin();
         // }
-        console.log(
-            "PlanetStatsSystem: boostSkill: entityAddress: %s and tokenId: %s",
-            address(entity),
-            tokenId
-        );
+        // console.log(
+        //     "PlanetStatsSystem: boostSkill: entityAddress: %s and tokenId: %s",
+        //     address(entity),
+        //     tokenId
+        // );
         entity.boostSkill(tokenId, skillSetName, skillSetIndex, amount);
     }
 
