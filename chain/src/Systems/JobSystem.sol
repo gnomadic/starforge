@@ -7,6 +7,8 @@ import {JobEntity, Job} from "../entities/JobEntity.sol";
 import {SupplySystem} from "./SupplySystem.sol";
 import {PlanetStatsSystem} from "./PlanetStatsSystem.sol";
 
+import {console} from "hardhat/console.sol";
+
 contract JobSystem is ISystem {
     bool registered = false;
     ISystemController private _systemController;
@@ -29,20 +31,30 @@ contract JobSystem is ISystem {
 
     function sync(uint256 /*tokenId*/) external override {}
 
-    function activateJob(IScenario scenario, string memory jobId) public {
+    function activateJob(
+        IScenario scenario,
+        string memory jobId,
+        uint256 tokenId
+    ) public {
         JobEntity entity = JobEntity(scenario.getEntity(address(this)));
         (string memory activeJobId, uint256 startedAt) = entity.getActiveJob(
-            msg.sender
+            tokenId
         );
+        console.log("activeJobId: ", activeJobId);
 
         if (bytes(activeJobId).length > 0) {
-            finishJob(scenario);
+            console.log("well finishing job?");
+            finishJob(scenario, tokenId);
         }
-
-        entity.activateJob(jobId, msg.sender);
+        console.log("activiting job on entity: ", address(entity));
+        entity.activateJob(jobId, tokenId);
+        console.log("done activating job from system");
     }
 
-    function getAvailableJobs(IScenario scenario, uint256 tokenId) external view returns (Job[] memory) {
+    function getAvailableJobs(
+        IScenario scenario,
+        uint256 tokenId
+    ) external view returns (Job[] memory) {
         JobEntity entity = JobEntity(scenario.getEntity(address(this)));
         Job[] memory allJobs = entity.getAvailableJobs();
         uint256 count = 0;
@@ -66,28 +78,41 @@ contract JobSystem is ISystem {
         return availableJobs;
     }
 
-
-    function canPlayerPerformJob(IScenario scenario, uint256 tokenId, Job memory job) internal view returns (bool) {
-
-        return PlanetStatsSystem(address(_systemController.getSystem("STAT"))).checkSkill(
-            scenario,
-            tokenId,
-            job.skillSetName,
-            job.skillSetIndex,
-            job.skillSetRequirement
-        );
-
-
+    function canPlayerPerformJob(
+        IScenario scenario,
+        uint256 tokenId,
+        Job memory job
+    ) internal view returns (bool) {
+        return
+            PlanetStatsSystem(address(_systemController.getSystem("STAT")))
+                .checkSkill(
+                    scenario,
+                    tokenId,
+                    job.skillSetName,
+                    job.skillSetIndex,
+                    job.skillSetRequirement
+                );
     }
 
-    function finishJob(IScenario scenario) public {
+    function finishJob(IScenario scenario, uint256 tokenId) public {
         // if the player has an already active job, end it and mint rewards
 
         JobEntity entity = JobEntity(scenario.getEntity(address(this)));
         (string memory activeJobId, uint256 startedAt) = entity.getActiveJob(
-            msg.sender
+            tokenId
         );
+
+    console.log("Finishing job %s", activeJobId);
+        if (bytes(activeJobId).length == 0) {
+            console.log("no active job");
+            // TODO better error message
+            revert NoTimePassed();
+        }
+
         Job memory job = entity.getJob(activeJobId);
+
+            console.log("loaded full job %s", job.id);
+
 
         SupplySystem supply = SupplySystem(
             address(_systemController.getSystem("SUPPLY"))
@@ -96,15 +121,30 @@ contract JobSystem is ISystem {
         uint256 secondsLive = block.timestamp - startedAt;
         uint256 hoursLive = secondsLive / 3600;
         if (hoursLive == 0) {
-            revert NoTimePassed();
+                    console.log("no time passed");
+            // revert NoTimePassed();
+            hoursLive = 2 hours;
         }
         if (hoursLive > job.timeLimit) {
             hoursLive = job.timeLimit;
         }
+        console.log("boosting skill: %s", job.skillSetName);
+
+        PlanetStatsSystem(address(_systemController.getSystem("STAT")))
+            .boostSkill(
+                scenario,
+                tokenId,
+                job.skillSetName,
+                job.skillSetIndex,
+                job.skillSetBoost
+            );
 
         uint256 amount = hoursLive * job.amountPerHour;
+        console.log("minting");
 
         supply.mint(scenario, msg.sender, job.tokenName, amount);
+        entity.endJob(tokenId);
+        console.log("Finished job");
     }
 
     function activateEntity(

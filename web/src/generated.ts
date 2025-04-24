@@ -221,7 +221,7 @@ export const jobEntityAbi = [
     type: 'function',
     inputs: [
       { name: 'jobId', internalType: 'string', type: 'string' },
-      { name: 'player', internalType: 'address', type: 'address' },
+      { name: 'tokenId', internalType: 'uint256', type: 'uint256' },
     ],
     name: 'activateJob',
     outputs: [],
@@ -229,7 +229,7 @@ export const jobEntityAbi = [
   },
   {
     type: 'function',
-    inputs: [{ name: '', internalType: 'address', type: 'address' }],
+    inputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
     name: 'activeJobs',
     outputs: [
       { name: 'id', internalType: 'string', type: 'string' },
@@ -249,6 +249,7 @@ export const jobEntityAbi = [
       { name: 'skillSetName', internalType: 'string', type: 'string' },
       { name: 'skillSetIndex', internalType: 'uint8', type: 'uint8' },
       { name: 'skillSetRequirement', internalType: 'uint16', type: 'uint16' },
+      { name: 'skillSetBoost', internalType: 'uint16', type: 'uint16' },
     ],
     name: 'addJob',
     outputs: [],
@@ -268,19 +269,20 @@ export const jobEntityAbi = [
       { name: 'skillSetName', internalType: 'string', type: 'string' },
       { name: 'skillSetIndex', internalType: 'uint8', type: 'uint8' },
       { name: 'skillSetRequirement', internalType: 'uint16', type: 'uint16' },
+      { name: 'skillSetBoost', internalType: 'uint16', type: 'uint16' },
     ],
     stateMutability: 'view',
   },
   {
     type: 'function',
-    inputs: [{ name: 'player', internalType: 'address', type: 'address' }],
+    inputs: [{ name: 'tokenId', internalType: 'uint256', type: 'uint256' }],
     name: 'endJob',
     outputs: [],
     stateMutability: 'nonpayable',
   },
   {
     type: 'function',
-    inputs: [{ name: 'player', internalType: 'address', type: 'address' }],
+    inputs: [{ name: 'tokenId', internalType: 'uint256', type: 'uint256' }],
     name: 'getActiveJob',
     outputs: [
       { name: '', internalType: 'string', type: 'string' },
@@ -311,6 +313,7 @@ export const jobEntityAbi = [
             internalType: 'uint16',
             type: 'uint16',
           },
+          { name: 'skillSetBoost', internalType: 'uint16', type: 'uint16' },
         ],
       },
     ],
@@ -339,6 +342,7 @@ export const jobEntityAbi = [
             internalType: 'uint16',
             type: 'uint16',
           },
+          { name: 'skillSetBoost', internalType: 'uint16', type: 'uint16' },
         ],
       },
     ],
@@ -368,6 +372,7 @@ export const jobEntityAbi = [
       { name: 'skillSetName', internalType: 'string', type: 'string' },
       { name: 'skillSetIndex', internalType: 'uint8', type: 'uint8' },
       { name: 'skillSetRequirement', internalType: 'uint16', type: 'uint16' },
+      { name: 'skillSetBoost', internalType: 'uint16', type: 'uint16' },
     ],
     stateMutability: 'view',
   },
@@ -394,6 +399,7 @@ export const jobSystemAbi = [
     inputs: [
       { name: 'scenario', internalType: 'contract IScenario', type: 'address' },
       { name: 'jobId', internalType: 'string', type: 'string' },
+      { name: 'tokenId', internalType: 'uint256', type: 'uint256' },
     ],
     name: 'activateJob',
     outputs: [],
@@ -403,6 +409,7 @@ export const jobSystemAbi = [
     type: 'function',
     inputs: [
       { name: 'scenario', internalType: 'contract IScenario', type: 'address' },
+      { name: 'tokenId', internalType: 'uint256', type: 'uint256' },
     ],
     name: 'finishJob',
     outputs: [],
@@ -434,6 +441,7 @@ export const jobSystemAbi = [
             internalType: 'uint16',
             type: 'uint16',
           },
+          { name: 'skillSetBoost', internalType: 'uint16', type: 'uint16' },
         ],
       },
     ],
@@ -932,6 +940,18 @@ export const planetStatsEntityAbi = [
       { name: 'tokenId', internalType: 'uint256', type: 'uint256' },
       { name: 'skillSetName', internalType: 'string', type: 'string' },
       { name: 'skillSetIndex', internalType: 'uint8', type: 'uint8' },
+      { name: 'amount', internalType: 'uint16', type: 'uint16' },
+    ],
+    name: 'boostSkill',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'tokenId', internalType: 'uint256', type: 'uint256' },
+      { name: 'skillSetName', internalType: 'string', type: 'string' },
+      { name: 'skillSetIndex', internalType: 'uint8', type: 'uint8' },
       { name: 'skillSetRequirement', internalType: 'uint16', type: 'uint16' },
     ],
     name: 'checkSkill',
@@ -1066,6 +1086,19 @@ export const planetStatsSystemAbi = [
     ],
     name: 'activateEntity',
     outputs: [{ name: '', internalType: 'address', type: 'address' }],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'scenario', internalType: 'contract IScenario', type: 'address' },
+      { name: 'tokenId', internalType: 'uint256', type: 'uint256' },
+      { name: 'skillSetName', internalType: 'string', type: 'string' },
+      { name: 'skillSetIndex', internalType: 'uint8', type: 'uint8' },
+      { name: 'amount', internalType: 'uint16', type: 'uint16' },
+    ],
+    name: 'boostSkill',
+    outputs: [],
     stateMutability: 'nonpayable',
   },
   {
@@ -2931,6 +2964,15 @@ export const useWritePlanetStatsEntity = /*#__PURE__*/ createUseWriteContract({
 })
 
 /**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link planetStatsEntityAbi}__ and `functionName` set to `"boostSkill"`
+ */
+export const useWritePlanetStatsEntityBoostSkill =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: planetStatsEntityAbi,
+    functionName: 'boostSkill',
+  })
+
+/**
  * Wraps __{@link useWriteContract}__ with `abi` set to __{@link planetStatsEntityAbi}__ and `functionName` set to `"createGatchaStatSet"`
  */
 export const useWritePlanetStatsEntityCreateGatchaStatSet =
@@ -2980,6 +3022,15 @@ export const useWritePlanetStatsEntitySetStatSetRarityOdds =
  */
 export const useSimulatePlanetStatsEntity =
   /*#__PURE__*/ createUseSimulateContract({ abi: planetStatsEntityAbi })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link planetStatsEntityAbi}__ and `functionName` set to `"boostSkill"`
+ */
+export const useSimulatePlanetStatsEntityBoostSkill =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: planetStatsEntityAbi,
+    functionName: 'boostSkill',
+  })
 
 /**
  * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link planetStatsEntityAbi}__ and `functionName` set to `"createGatchaStatSet"`
@@ -3068,6 +3119,15 @@ export const useWritePlanetStatsSystemActivateEntity =
   })
 
 /**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link planetStatsSystemAbi}__ and `functionName` set to `"boostSkill"`
+ */
+export const useWritePlanetStatsSystemBoostSkill =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: planetStatsSystemAbi,
+    functionName: 'boostSkill',
+  })
+
+/**
  * Wraps __{@link useWriteContract}__ with `abi` set to __{@link planetStatsSystemAbi}__ and `functionName` set to `"init"`
  */
 export const useWritePlanetStatsSystemInit =
@@ -3107,6 +3167,15 @@ export const useSimulatePlanetStatsSystemActivateEntity =
   /*#__PURE__*/ createUseSimulateContract({
     abi: planetStatsSystemAbi,
     functionName: 'activateEntity',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link planetStatsSystemAbi}__ and `functionName` set to `"boostSkill"`
+ */
+export const useSimulatePlanetStatsSystemBoostSkill =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: planetStatsSystemAbi,
+    functionName: 'boostSkill',
   })
 
 /**
@@ -5213,6 +5282,15 @@ export const writePlanetStatsEntity = /*#__PURE__*/ createWriteContract({
 })
 
 /**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link planetStatsEntityAbi}__ and `functionName` set to `"boostSkill"`
+ */
+export const writePlanetStatsEntityBoostSkill =
+  /*#__PURE__*/ createWriteContract({
+    abi: planetStatsEntityAbi,
+    functionName: 'boostSkill',
+  })
+
+/**
  * Wraps __{@link writeContract}__ with `abi` set to __{@link planetStatsEntityAbi}__ and `functionName` set to `"createGatchaStatSet"`
  */
 export const writePlanetStatsEntityCreateGatchaStatSet =
@@ -5263,6 +5341,15 @@ export const writePlanetStatsEntitySetStatSetRarityOdds =
 export const simulatePlanetStatsEntity = /*#__PURE__*/ createSimulateContract({
   abi: planetStatsEntityAbi,
 })
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link planetStatsEntityAbi}__ and `functionName` set to `"boostSkill"`
+ */
+export const simulatePlanetStatsEntityBoostSkill =
+  /*#__PURE__*/ createSimulateContract({
+    abi: planetStatsEntityAbi,
+    functionName: 'boostSkill',
+  })
 
 /**
  * Wraps __{@link simulateContract}__ with `abi` set to __{@link planetStatsEntityAbi}__ and `functionName` set to `"createGatchaStatSet"`
@@ -5348,6 +5435,15 @@ export const writePlanetStatsSystemActivateEntity =
   })
 
 /**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link planetStatsSystemAbi}__ and `functionName` set to `"boostSkill"`
+ */
+export const writePlanetStatsSystemBoostSkill =
+  /*#__PURE__*/ createWriteContract({
+    abi: planetStatsSystemAbi,
+    functionName: 'boostSkill',
+  })
+
+/**
  * Wraps __{@link writeContract}__ with `abi` set to __{@link planetStatsSystemAbi}__ and `functionName` set to `"init"`
  */
 export const writePlanetStatsSystemInit = /*#__PURE__*/ createWriteContract({
@@ -5386,6 +5482,15 @@ export const simulatePlanetStatsSystemActivateEntity =
   /*#__PURE__*/ createSimulateContract({
     abi: planetStatsSystemAbi,
     functionName: 'activateEntity',
+  })
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link planetStatsSystemAbi}__ and `functionName` set to `"boostSkill"`
+ */
+export const simulatePlanetStatsSystemBoostSkill =
+  /*#__PURE__*/ createSimulateContract({
+    abi: planetStatsSystemAbi,
+    functionName: 'boostSkill',
   })
 
 /**

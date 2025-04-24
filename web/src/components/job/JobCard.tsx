@@ -5,10 +5,11 @@ import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { useSupplies } from '@/components/SupplyContext';
+import { bigIntReplacer } from '@/domain/utils';
 
 
 interface JobCardProps {
-    isActive: boolean;
+    activeJobId: readonly [string, bigint] | undefined;
     getDecoByResourceType: (resourceType: string) => {
         icon: React.ReactNode;
         color: string;
@@ -20,13 +21,16 @@ interface JobCardProps {
         tokenName: string;
         amountPerHour: bigint;
     };
+    activate: (jobId: string) => void;
+    deactivate: (jobId: string) => void;
 }
 
 
 
 
-export default function JobCard({ isActive, getDecoByResourceType, job }: JobCardProps) {
+export default function JobCard({ activeJobId, getDecoByResourceType, job, activate, deactivate}: JobCardProps) {
 
+    const isActive = activeJobId?.[0] === job.id;
 
     return (
         <Card
@@ -55,7 +59,7 @@ export default function JobCard({ isActive, getDecoByResourceType, job }: JobCar
                     <Button
                         variant={isActive ? "default" : "outline"}
                         size="sm"
-                    //   onClick={() => handleJobSelection(job)}
+                        onClick={() => isActive ? deactivate(job.id) : activate(job.id)}
                     >
                         {isActive ? "Deactivate" : "Activate"}
                     </Button>

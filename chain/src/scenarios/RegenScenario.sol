@@ -50,7 +50,8 @@ contract RegenScenario {
             12 hours,
             "Job Skills",
             0,
-            0
+            0, 
+            1
         );
 
         jobsEntity.addJob(
@@ -62,7 +63,8 @@ contract RegenScenario {
             12 hours,
             "Job Skills",
             0,
-            25
+            25,
+            1
         );
 
         jobsEntity.addJob(
@@ -74,7 +76,8 @@ contract RegenScenario {
             12 hours,
             "Job Skills",
             0,
-            60
+            60, 
+            1
         );
 
         jobsEntity.addJob(
@@ -86,7 +89,8 @@ contract RegenScenario {
             12 hours,
             "Job Skills",
             1,
-            0
+            0,
+            1
         );
 
         jobsEntity.addJob(
@@ -98,7 +102,8 @@ contract RegenScenario {
             12 hours,
             "Job Skills",
             1,
-            33
+            33,
+            1
         );
 
         jobsEntity.addJob(
@@ -110,7 +115,9 @@ contract RegenScenario {
             12 hours,
             "Job Skills",
             1,
-            70
+            70,
+            1
+
         );
 
         jobsEntity.addJob(
@@ -122,7 +129,8 @@ contract RegenScenario {
             12 hours,
             "Job Skills",
             2,
-            0
+            0,
+            1
         );
 
         jobsEntity.addJob(
@@ -134,7 +142,8 @@ contract RegenScenario {
             12 hours,
             "Job Skills",
             2,
-            20
+            20,
+            1
         );
 
         jobsEntity.addJob(
@@ -146,7 +155,8 @@ contract RegenScenario {
             12 hours,
             "Job Skills",
             2,
-            70
+            70,
+            1
         );
     }
 

@@ -2,11 +2,11 @@
 
 import React, { useEffect, useState } from 'react';
 import { NFTGrid } from '@/components/codex/NFTGrid';
-import { useReadPlanetTokensOfOwner } from "@/generated";
-import { useAccount } from "wagmi";
+import { useReadJobEntityGetActiveJob, useReadPlanetTokensOfOwner, useWriteJobSystemActivateJob, useWriteJobSystemFinishJob } from "@/generated";
+import { useAccount, useWaitForTransactionReceipt } from "wagmi";
 import { useDeployment } from "@/hooks/useDeployment";
 import { zeroAddress } from 'viem';
-import PlanetCard from '@/components/codex/PlanetCard';
+// import PlanetCard from '@/components/codex/PlanetCard';
 
 import { Shell, Droplet, Sun, ArrowDown } from 'lucide-react';
 import { useSupplies } from '@/components/SupplyContext';
@@ -73,11 +73,15 @@ export default function JobBoard({ }: JobBoardProps) {
     const [selectedTokenId, setSelectedTokenId] = useState<bigint>(BigInt(0));
     const { data: held } = useReadPlanetTokensOfOwner({ args: [address ? address : zeroAddress], address: deploy.Planet })
 
-
-
     const { data: whichEntity, isLoading, error } = useReadScenarioGetEntity({ args: [deploy.JobSystem], address: scenarios ? scenarios[0] : "0x0" })
 
-    const { data } = useReadJobEntityGetAvailableJobs({
+
+      const { data: activateJobHash, error: writeError, writeContract: activateJob } = useWriteJobSystemActivateJob();
+      const {data: deactivateJobHash, error: deactivateError, writeContract: finishJob} = useWriteJobSystemFinishJob();
+      const { isLoading: activateJobLoading, isSuccess: activateJobSucesss, data: activateJobData } = useWaitForTransactionReceipt({ hash: activateJobHash })
+    
+
+    const { data: allJobs } = useReadJobEntityGetAvailableJobs({
         args: [],
         address: whichEntity
     })
@@ -87,14 +91,30 @@ export default function JobBoard({ }: JobBoardProps) {
         address: deploy.JobSystem
     })
 
+    const {data: activeJob, refetch: refetchActiveJob} = useReadJobEntityGetActiveJob({
+        args: [selectedTokenId],
+        address: whichEntity
+    })
+    
+
     const [enabled, setEnabled] = React.useState<boolean[]>([]);
 
     useEffect(() => {
-        if (data) {
-            const enabledJobs: boolean[] = new Array(data.length).fill(true);
+        if (allJobs) {
+            const enabledJobs: boolean[] = new Array(allJobs.length).fill(true);
             setEnabled(enabledJobs);
         }
-    }, [data]);
+    }, [allJobs]);
+
+
+    const activateNewJob = async (jobId: string) => {
+        activateJob({ address: deploy.JobSystem, args: [scenarios[0], jobId, selectedTokenId] });
+    }
+
+    const deactivateJob = async (jobId: string) => {
+        finishJob({ address: deploy.JobSystem, args: [scenarios[0], selectedTokenId] });
+
+    }
 
 
     return (
@@ -104,19 +124,20 @@ export default function JobBoard({ }: JobBoardProps) {
                 setSelectedTokenId={setSelectedTokenId}
                 selectedTokenId={selectedTokenId}
             />
+            <div>active: {activeJob}</div>
             <Accordion type="multiple" className="space-y-4">
-
-
                 {supplies.map((supply, index) => {
-                    return <AccordionItem value={supply.type}
+                    return <AccordionItem
+                        key={index}
+                        value={supply.type}
                         className="border border-white/10 rounded-lg overflow-hidden glass"
-                        onClick={() => {
-                            const updatedEnabled = [...enabled];
-                            updatedEnabled[index] = !updatedEnabled[index];
-                            setEnabled(updatedEnabled);
-                        }}
                     >
-                        <div className="flex flex-row items-center justify-between p-3">
+                        <div className="flex flex-row items-center justify-between p-3"
+                            onClick={() => {
+                                const updatedEnabled = [...enabled];
+                                updatedEnabled[index] = !updatedEnabled[index];
+                                setEnabled(updatedEnabled);
+                            }}>
                             <div className="space-y-0.5">
                                 <div className="flex items-center">
                                     {supply.icon}
@@ -136,14 +157,16 @@ export default function JobBoard({ }: JobBoardProps) {
                         <Collapsible open={enabled[index]}>
                             <CollapsibleContent className="p-4 pt-0 bg-black/20 space-y-4">
                                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 p-6">
-                                    {data?.filter((job) => (job.tokenName === supply.type)).map((job, index) => {
+                                    {allJobs?.filter((job) => (job.tokenName === supply.type)).map((job, index) => {
                                         const isActive = false;
                                         return (
                                             <JobCard
                                                 key={job.id}
                                                 job={job}
-                                                isActive={isActive}
+                                                activeJobId={activeJob}
                                                 getDecoByResourceType={getDecoByResourceType}
+                                                activate={activateNewJob}
+                                                deactivate={deactivateJob}
                                             />
                                         );
                                     })}

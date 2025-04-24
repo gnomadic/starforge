@@ -220,8 +220,32 @@ contract PlanetStatsSystem is ISystem {
             return true;
         }
 
-    console.log("skill check %s", entity.checkSkill(tokenId, skillSetName, skillSetIndex, skillSetRequirement));
+    // console.log("skill check %s", entity.checkSkill(tokenId, skillSetName, skillSetIndex, skillSetRequirement));
         return entity.checkSkill(tokenId, skillSetName, skillSetIndex, skillSetRequirement);
+    }
+
+    function boostSkill(
+        IScenario scenario,
+        uint256 tokenId,
+        string memory skillSetName,
+        uint8 skillSetIndex,
+        uint16 amount
+    ) external {
+
+        //TODO permissioning 
+        
+        PlanetStatsEntity entity = PlanetStatsEntity(
+            scenario.getEntity(address(this))
+        );
+        // if (msg.sender != scenario.getAdmin() && msg.sender != _systemController) {
+        //     revert NotScenarioAdmin();
+        // }
+        console.log(
+            "PlanetStatsSystem: boostSkill: entityAddress: %s and tokenId: %s",
+            address(entity),
+            tokenId
+        );
+        entity.boostSkill(tokenId, skillSetName, skillSetIndex, amount);
     }
 
     error NotScenario();

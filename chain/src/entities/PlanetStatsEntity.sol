@@ -51,14 +51,10 @@ contract PlanetStatsEntity {
         string[] memory pointNames
     ) external {
         if (msg.sender != _scenario.getAdmin()) {
-            console.log("Not scenario admin");
             revert NotScenarioAdmin();
         }
         if (points.length != _statSetRarityOdds.length) {
             // TODO maybe a more specific error
-            console.log(
-                "Starting points length does not match rarity odds length"
-            );
             revert NotScenarioAdmin();
         }
         _startingStatSetValues[statSetName] = startingPoints;
@@ -148,9 +144,30 @@ contract PlanetStatsEntity {
         uint16[] memory stats = _statSets[tokenId][
             skillSetName
         ];
-        console.log("comparing: %s %s %s", skillSetName, stats[skillSetIndex], skillSetRequirement);
+        // console.log("comparing: %s %s %s", skillSetName, stats[skillSetIndex], skillSetRequirement);
         return stats[skillSetIndex] >= skillSetRequirement;
     }
+
+    function boostSkill(
+        uint256 tokenId,
+        string memory skillSetName,
+        uint8 skillSetIndex,
+        uint16 amount
+    ) external {
+        if (msg.sender != _scenario.getAdmin() && msg.sender != system) {
+            console.log("Not scenario admin");
+            revert NotScenarioAdmin();
+        }
+        console.log(
+            "PlanetStatsEntity: boostSkill:  skillSetName: %s, skillSetIndex: %s, amount: %s",
+            skillSetName,
+            skillSetIndex,
+            amount
+        );
+        _statSets[tokenId][skillSetName][skillSetIndex] += amount;
+    }
+
+
 
     error NotScenarioAdmin();
 }

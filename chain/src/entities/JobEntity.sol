@@ -14,6 +14,7 @@ struct Job {
     string skillSetName;
     uint8 skillSetIndex;
     uint16 skillSetRequirement;
+    uint16 skillSetBoost;
 }
 
 contract JobEntity {
@@ -24,9 +25,9 @@ contract JobEntity {
     }
 
     Job[] public availableJobs;
-    mapping(string => Job) public jobById;
+    mapping(string => uint256) public jobById;
 
-    mapping(address => LiveJob) public activeJobs;
+    mapping(uint256 => LiveJob) public activeJobs;
 
     IScenario private _scenario;
     address private system;
@@ -47,38 +48,43 @@ contract JobEntity {
     }
 
     function getActiveJob(
-        address player
+        uint256 tokenId
     ) external view returns (string memory, uint256) {
-        return (activeJobs[player].id, activeJobs[player].startedAt);
+        return (activeJobs[tokenId].id, activeJobs[tokenId].startedAt);
     }
 
-    function activateJob(string memory jobId, address player) external {
+    function activateJob(string memory jobId, uint256 tokenId) external {
+        console.log("activating job from entity");
         if (msg.sender != _scenario.getAdmin() && msg.sender != system) {
+            console.log("Not scenario admin");
             revert NotScenarioAdmin();
         }
-        if (bytes(activeJobs[player].id).length != 0) {
+        if (bytes(activeJobs[tokenId].id).length != 0) {
+            console.log("Already active job");
             revert AlreadyActiveJob();
         }
 
-        activeJobs[player] = LiveJob(jobId, block.timestamp);
+        activeJobs[tokenId] = LiveJob(jobId, block.timestamp);
+                console.log("done activating job from entity");
 
-        revert NoActiveJob();
+
+        
     }
 
     function getJob(string memory jobId) external view returns (Job memory) {
-        return jobById[jobId];
+        return availableJobs[jobById[jobId]];
     }
 
-    function endJob(address player) external {
+    function endJob(uint256 tokenId) external {
         if (msg.sender != _scenario.getAdmin() && msg.sender != system) {
             revert NotScenarioAdmin();
         }
-        LiveJob memory job = activeJobs[player];
+        LiveJob memory job = activeJobs[tokenId];
         if (bytes(job.id).length == 0) {
             revert NoActiveJob();
         }
 
-        delete activeJobs[player];
+        delete activeJobs[tokenId];
     }
 
     function addJob(
@@ -90,7 +96,8 @@ contract JobEntity {
         uint256 timeLimit,
         string memory skillSetName,
         uint8 skillSetIndex,
-        uint16 skillSetRequirement
+        uint16 skillSetRequirement,
+        uint16 skillSetBoost
     ) external {
         if (msg.sender != _scenario.getAdmin() && msg.sender != system) {
             revert NotScenarioAdmin();
@@ -105,9 +112,11 @@ contract JobEntity {
             timeLimit,
             skillSetName,
             skillSetIndex,
-            skillSetRequirement
+            skillSetRequirement,
+            skillSetBoost
         );
         availableJobs.push(newJob);
+        jobById[id] = availableJobs.length - 1;
     }
 
     error NotScenarioAdmin();
