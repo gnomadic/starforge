@@ -4,7 +4,6 @@ pragma solidity ^0.8.24;
 import "@openzeppelin/contracts/access/Ownable.sol";
 import {ISystem, ISystemController, TokenRate} from "./interfaces/ISystem.sol";
 import {IScenario} from "../Scenario.sol";
-import {IVotable} from "../interfaces/IVotable.sol";
 import {console} from "hardhat/console.sol";
 
 contract UpgradesSystem is Ownable, ISystem {
