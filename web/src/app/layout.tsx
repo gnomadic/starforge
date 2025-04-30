@@ -23,6 +23,9 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import SpaceAnimation from '@/components/SpaceAnimation';
+import SupplyBar from '@/components/SupplyBar';
+// import { useResources } from '@/components/ResourceContext';
 
 
 const signika = Signika({
@@ -53,10 +56,10 @@ const ptser = PT_Serif({
 
 
 export const metadata: Metadata = {
-  title: 'Entropical',
+  title: 'Starforge',
   description: 'Weave the stars.  Forge Empires.  Uncover the truth.',
   openGraph: {
-    title: 'Entropical',
+    title: 'Starforge',
     description: 'Weave the stars.  Forge Empires.  Uncover the truth.',
   },
 };
@@ -67,37 +70,21 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
   return (
     <html lang='en'>
-      {/* <Head>
-        <title>Adventure Alchemist</title>
-      </Head> */}
-
-      {/* <Header/> */}
-      {/* <NavigationHeader /> */}
-      {/* <MobileNavigationHeader /> */}
-      {/* <main className="flex-grow px-4 py-8">{Component(pageProps)}</main> */}
-
-      {/* <Head>
-        <title>My page title</title>
-      </Head> */}
-      {/* <div className="flex flex-col min-h-screen"> */}
-
       <body className={`${signika.variable} ${outfit.variable} ${nunito.variable} ${ptsans.variable} ${ultra.variable} ${ptser.variable} font-sans bg-black text-white`}>
         <Providers>
-          {/* <Header /> */}
+          <SpaceAnimation />
           <Navbar />
 
           {children}
           <ToastContainer position='bottom-right' />
+
           <Footer />
           <Analytics />
         </Providers>
       </body>
-      {/* </div> */}
-
-      {/* <Footer /> */}
-      {/* <Analytics /> */}
     </html>
   );
 }

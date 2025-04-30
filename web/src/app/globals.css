@@ -113,10 +113,9 @@ body {
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 20 14.3% 4.1%;
-    /* --card: 0 0% 100%; */
-    --card: 49 24% 78%;
+    /* --background: 240 22% 5%;
+    --foreground: 210 40% 98%;
+    --card:  222 47% 14%;
     --card-foreground: 20 14.3% 4.1%;
     --popover: 0 0% 100%;
     --popover-foreground: 20 14.3% 4.1%;
@@ -138,6 +137,35 @@ body {
     --chart-3: 197 37% 24%;
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
+    --radius: 0.5rem; */
+    --background: 240 22% 5%;
+    --foreground: 210 40% 98%;
+
+    --card: 240 17% 8%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 240 22% 5%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 220 98% 61%;
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 240 17% 12%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 240 17% 14%;
+    --muted-foreground: 215 20% 65%;
+
+    --accent: 280 64% 60%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 240 17% 18%;
+    --input: 240 17% 14%;
+    --ring: 220 98% 61%;
+
     --radius: 0.5rem;
   }
   .dark {
@@ -174,5 +202,133 @@ body {
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+@layer components {
+  .cosmic-panel {
+    @apply bg-card/20 backdrop-blur-lg border border-border/40 rounded-lg shadow-lg;
+  }
+  
+  .cosmic-page {
+    @apply min-h-screen px-12 py-6
+  }
+
+  .cosmic-button {
+    @apply bg-secondary/80 hover:bg-secondary/100 text-white px-4 py-2 rounded-lg 
+      transition-all duration-300 backdrop-blur-sm border border-border/20 
+      shadow-md hover:shadow-lg active:scale-95;
+  }
+  
+  .cosmic-glow {
+    @apply relative;
+  }
+  
+  .cosmic-glow::before {
+    content: '';
+    @apply absolute -inset-0.5 bg-primary/20 rounded-lg blur opacity-30 
+      transition-opacity duration-300 group-hover:opacity-60;
+    z-index: -1;
+  }
+
+  
+  .glass {
+    backdrop-filter: blur(8px);
+    background: rgba(30, 30, 40, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  
+  .space-gradient {
+    background: linear-gradient(
+      to bottom,
+      hsl(240, 22%, 5%) 0%,
+      hsl(260, 35%, 12%) 50%,
+      hsl(280, 40%, 15%) 100%
+    );
+  }
+  
+  .text-gradient {
+    background: linear-gradient(90deg, hsl(220, 98%, 61%), hsl(280, 64%, 60%));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  .scroll-indicator {
+    @apply w-6 h-10 rounded-full border-2 border-white/20 flex items-start justify-center absolute bottom-8 left-1/2 -translate-x-1/2;
+  }
+  
+  .scroll-indicator::after {
+    content: '';
+    @apply w-1.5 h-1.5 bg-white/80 rounded-full mt-2 animate-pulse-slow;
+  }
+
+}
+
+
+.animate-fade-up {
+  animation: fadeUp 0.8s ease-out forwards;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.8s ease-out forwards;
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-pulse-slow {
+  animation: pulse 4s ease-in-out infinite;
+}
+
+.animate-glow {
+  animation: glow 4s ease-in-out infinite;
+}
+
+@keyframes fadeUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+@keyframes glow {
+  0%, 100% {
+    filter: brightness(1);
+  }
+  50% {
+    filter: brightness(1.3);
   }
 }

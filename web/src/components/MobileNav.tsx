@@ -19,12 +19,9 @@ export default function MobileNav(props: MobileNavProps) {
       ></div>
       <nav className='relative flex flex-col w-full h-full px-10 py-8 overflow-y-auto border-r bg-slate-900'>
         <Link href='/' onClick={props.onClick}>
-          <div className='text-xl text-white font-mono text-center'>
-          E N T R O P I C A L
+          <div className='text-3xl text-white font-mono text-center'>
+          S T A R F O R G E
           </div>
-          {/* <div className='text-3xl text-white font-nunito text-center'>
-          E N T R O P I C A L
-          </div> */}
         </Link>
         <ul className='gap-8 pt-12 tracking-wider b-32 font-anon text-lightgrey'>
           {NavItems.map((element, i) => {
@@ -61,21 +58,21 @@ export default function MobileNav(props: MobileNavProps) {
             </a>
           </li> */}
 
-          {/* <li className=''>
+          <li className=''>
             <a
               target="_blank"
               rel="noopener noreferrer"
-              href="https://docs.playtavern.com"
+              href="https://play-starforge.gitbook.io/starforge"
             >
-              <div className="relative text-lightgrey">
-                docs
+              <div className="relative pb-8 cursor-pointer">
+                DOCS
                 <ArrowUpRightIcon
-                  className="w-4 h-4 mb-1 -ml-1"
+                  className="w-4 h-4 mb-2"
                   style={{ display: "inline" }}
                 />
               </div>
             </a>
-          </li> */}
+          </li>
         </ul>
       </nav>
     </div>

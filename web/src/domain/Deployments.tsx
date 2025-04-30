@@ -16,10 +16,14 @@ export const Deployments: { [key: string]: Deployment } = {
 
 
   basesep: {
-    Planet: '0x0',
-    SystemController: '0x0',
-    InvestmentSystem: '0x0',
-    GlobalProgress: '0x0',
+    Planet: "0x0",
+    SystemController: "0x0",
+    ScenarioFactory: "0x0",
+    PlanetStats: "0x0",
+    SupplySystem: "0x0",
+    JobSystem: "0x0",
+    UpgradesSystem: "0x0",
+
     displayName: 'Adventure Alchemist',
     currency: 'base sep eth',
     chain: 'base sepolia',
@@ -30,10 +34,14 @@ export const Deployments: { [key: string]: Deployment } = {
   },
 
   localhost: {
-    Planet: '0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9',
-    SystemController: '0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9',
-    InvestmentSystem: '0x5FC8d32690cc91D4c39d9d3abcBD16989F875707',
-    GlobalProgress: '0x0165878A594ca255338adfa4d48449f69242Eb8',
+    Planet: "0x2279B7A0a67DB372996a5FaB50D91eAA73d2eBe6",
+    SystemController: "0x5FbDB2315678afecb367f032d93F642f64180aa3",
+    ScenarioFactory: "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0",
+    PlanetStats: "0x8A791620dd6260079BF849Dc5567aDC3F2FdC318",
+    SupplySystem: "0x0DCd1Bf9A1b36cE34237eEaFef220932846BCD82",
+    JobSystem: "0x9A676e781A523b5d0C0e43731313A708CB607508",
+    UpgradesSystem: "0x610178dA211FEF7D417bC0e6FeD39F05609AD788",
+
     displayName: 'Adventure Alchemist',
     currency: 'eth',
     chain: 'localhost',
@@ -44,10 +52,14 @@ export const Deployments: { [key: string]: Deployment } = {
 
   },
   default: {
-    Planet: '0x0',
-    SystemController: '0x0',
-    InvestmentSystem: '0x0',
-    GlobalProgress: '0x0',
+    Planet: "0x0",
+    SystemController: "0x0",
+    ScenarioFactory: "0x0",
+    PlanetStats: "0x0",
+    SupplySystem: "0x0",
+    JobSystem: "0x0",
+    UpgradesSystem: "0x0",
+
     displayName: 'Adventure Alchemist',
     currency: 'eth',
     chain: 'unknown',

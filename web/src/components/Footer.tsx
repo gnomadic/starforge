@@ -11,10 +11,10 @@ export default function Footer() {
           <div className='flex items-start'>
             <Link href='/'>
     
-              <div className='text-4xl text-white font-mono text-center tracking-wider'>
-              E N T R O P I C A L
+              <div className='text-2xl md:text-4xl text-white font-mono text-center tracking-wider'>
+              S T A R F O R G E
               </div>
-              <div className='mx-5 text-xl uppercase text-subtext'>Forge the stars. Forge Empires. Forge the truth.  </div>
+              <div className='mx-5 pt-5 text-xl uppercase text-subtext'> Weave the stars.  Forge Empires.  Uncover the truth.</div>
             </Link>
           </div>
 

@@ -1,0 +1,126 @@
+<svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <clipPath id="box">
+    <path d="M0 0h512v512H0z"/>
+  </clipPath>
+  <defs>
+
+    <pattern id="pattern" width="1" height="30" patternUnits="userSpaceOnUse">
+        <!-- <circle r="32"/> -->
+        <path d="m0 14h1v2H0" fill="#fff"/>
+        <!-- <circle r="4" fill="black" stroke="#ffff" stroke-width="2"/> -->
+    </pattern>
+    <filter id="filter">
+        <feTurbulence type="fractalNoise" baseFrequency=".02 .008" numOctaves="5"/>
+        <feDisplacementMap in="SourceGraphic" scale="50" result="disp"/>
+    </filter>
+
+
+    <linearGradient id="cloudGradient" gradientTransform="rotate(20)">
+      <stop stop-opacity="0" offset="67%"/>
+      <stop stop-opacity=".6" offset="75%"/>
+      <stop stop-opacity="0" offset="85%"/>
+    </linearGradient>
+        <radialGRadient id="dope" fy='0.5' fx='0.5'>
+      <stop stop-color="hsl(0deg, 0%, 0%)"  offset="00%"/>
+      <stop stop-color="hsl(1deg, 56%, 31%)"  offset="70%"/>
+      <stop stop-color="hsl(347deg, 56%, 53%)"  offset="90%"/>
+      <stop stop-color="hsl(347deg, 56%, 63%)"  offset="95%"/>
+      <stop stop-color="hsl(347deg, 56%, 83%)"  offset="100%"/>
+    <!-- <animate attributeName="fy" dur="5" values="0.5; 0.4; 0.5; 0.6; 0.5" 
+    repeatCount="indefinite"  offset="1" />
+  <animate attributeName="fx" dur="5" values="0.5; 0.4; 0.5; 0.6; 0.5" 
+    repeatCount="indefinite"  offset="1" /> -->
+
+    </radialGRadient>
+    <filter id="clouds" x="-50%" y="-50%" height="200%" width="200%">
+      <feGaussianBlur in="sky" stdDeviation="20" result="skyblur"/>
+      <feTurbulence type="fractalNoise" baseFrequency=".01" numOctaves="5" result="skynoise" seed="4426"/>
+      <feColorMatrix values="1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 3 -1 -1 0 0"/>
+      <feComposite operator="in" in2="SourceGraphic"/>
+    </filter>
+    <filter id="roughpaper">
+      <feTurbulence type="fractalNoise" baseFrequency="0.04" result="noise" numOctaves="5"/>
+      <feDiffuseLighting in="noise" lighting-color="#fff" surfaceScale="2">
+        <feDistantLight azimuth="45" elevation="60"/>
+      </feDiffuseLighting>
+    </filter>
+    <filter id="planet">
+      <feTurbulence type="fractalNoise" baseFrequency=".01" numOctaves="10" seed="102"/>
+      <feDisplacementMap in="SourceGraphic" scale="500"/>
+      <feGaussianBlur stdDeviation="0"/>
+    </filter>
+    <mask id="planetmask">
+      <circle cx="256" cy="306" r="100" fill="white"/>
+    </mask>
+    <filter id="paper">
+      <feTurbulence baseFrequency=".18" type="fractalNoise" numOctaves="1" seed="" result="turb"/>
+      <feColorMatrix in="turb" result="col" type="matrix" values=".33 .33 .33 0 0 
+             .33 .33 .33 0 0 
+             .33 .33 .33 0 0 
+             0 0 0 1 0"/>
+      <feComponentTransfer in="col" result="comp">
+        <feFuncA type="discrete" tableValues="0 0 0 0 0 0 0 .15 .4 .9 1 1"/>
+      </feComponentTransfer>
+      <feComposite operator="in" in2="comp" result="RESULT"/>
+    </filter>
+    <pattern id="lines" viewBox="0,0,10,10" width="2%" height="2%">
+<!--<polygon points="0,0 2,5 0,10 5,8 10,10 8,5 10,0 5,2" />-->
+      <line x1="0" y1="5" x2="10" y2="5" stroke-width="1" stroke="black"/>
+    </pattern>
+            <filter id="stars">
+            <feTurbulence baseFrequency=".35" seed="4426" />
+            <feColorMatrix values="0 0 0 9 -4 0 0 0 9 -4 0 0 0 9 -4 0 0 0 0 1" />
+        </filter>
+  </defs>
+  <svg viewBox="0 0 512 512" clip-path="url(#box)">
+    <!-- <rect width="100%" height="100%" fill="#d5d0ba"/> -->
+<!--<rect width="100%" height="100%"  filter="url(#roughpaper)" />-->
+    <!-- <rect x="32" y="32" stroke="black" fill="#26282a" stroke-width="2" width="448" height="448" mask="url(#mapmask)"/> -->
+    <!-- <rect x="10" y="10" stroke="black" fill="none" stroke-width="2" width="492" height="492"/> -->
+    <rect width="100%" height="100%" filter="url(#stars)" opacity="0.7"/>
+    <path fill="url(#cloudGradient)" filter="url(#clouds)" d="M-512-512h1536v1536h-2048z"/>
+    <!-- <circle cx="256" cy="256" r="200" stroke="black" fill="none" stroke-width="2" filter="url(#planet)"/> -->
+    <!-- <path d="m206 0q141 144-20 183-298 43 -60 263" fill="none" stroke="black" stroke-width="2"/> -->
+    <!-- <path d="m306 0q141 144-20 183-298 43 -10 263" fill="none" stroke="black" stroke-width="2"/> -->
+    <!-- <ellipse rx="150" ry="80" cx="256" cy="406" fill="#d5d0ba" stroke="black" stroke-width="3"/> -->
+
+<!-- <rect width="100%" height="100%" fill="url(#lines)" opacity=".5"/> -->
+
+    <!-- <rect x="" y="33%" width="100%" height="33%" fill="url(#pattern)" filter="url(#filter)"/> -->
+   <circle cx="256" cy="256" r="150" fill="url(#pattern)" filter="url(#filter)"/>
+
+<!--planet-->
+<!-- <circle cx="256" cy="256" r="105" fill="black" /> -->
+  <circle cx="256" cy="256" r="103" fill="url(#dope)" />
+<!-- end planet-->
+
+
+
+<!-- 
+<circle cx="462" cy="256" r="51" fill="none" stroke="white" opacity="0.6" />
+<circle cx="359" cy="256" r="51" fill="none"  stroke="white" opacity="0.6" />
+<circle cx="50" cy="256" r="51" fill="none" stroke="white" opacity="0.6" />
+<circle cx="153" cy="256" r="51" fill="none"  stroke="white" opacity="0.6" />
+<circle cx="256" cy="256" r="51" fill="none"  stroke="white" opacity="0.6" />
+
+     -->
+
+<!-- <circle cx="256" cy="266" r="2" fill="white" />
+<circle cx="256" cy="276" r="3" fill="white" />
+<circle cx="256" cy="286" r="1" fill="white" />
+<circle cx="256" cy="296" r="4" fill="white" /> -->
+
+
+  <!-- <circle cx="128" cy="256" r="128" stroke="white" fill="none" stroke-width="1"/> -->
+  <!-- <circle cx="384" cy="256" r="128" stroke="white" fill="none" stroke-width="1"/> -->
+
+
+
+    
+    <!-- <circle cx="256" cy="306" r="103" fill="black" stroke-width="5"/> -->
+    <!-- <circle cx="256" cy="306" r="100" fill="hsl(120, 25%, 80%)" opacity="1"/> -->
+    <!-- <circle cx="256" cy="306" r="120" fill="none"/> -->
+    <!-- <circle cx="256" cy="306" r="100" stroke="black" fill="hsl(180, 25%, 80%)" stroke-width="12" filter="url(#planet)" mask="url(#planetmask)"/> -->
+<!-- end planet -->
+  </svg>
+</svg>

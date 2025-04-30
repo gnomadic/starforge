@@ -1,0 +1,164 @@
+<svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+  <clipPath id="box">
+    <path d="M0 0h1024v1024H0z" />
+  </clipPath>
+  <defs>
+    <linearGradient id="cloudGradient" gradientTransform="rotate(20)">
+      <stop stop-opacity=".1" offset="67%" />
+      <stop stop-opacity=".3" offset="75%" />
+      <stop stop-opacity=".1" offset="85%" />
+    </linearGradient>
+    <filter id="clouds" x="-50%" y="-50%" height="200%" width="200%">
+      <feGaussianBlur in="sky" stdDeviation="20" result="skyblur" />
+      <feTurbulence type="fractalNoise" baseFrequency=".01" numOctaves="5" result="skynoise" seed="4426" />
+      <feColorMatrix values="1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 3 -1 -1 0 0" />
+      <feComposite operator="in" in2="SourceGraphic" />
+    </filter>
+    <radialGradient id="dope">
+      <stop stop-color="hsl(347, 0%, 0%)" offset="00%" />
+      <stop stop-color="hsl(347, 56%, 41%)" offset="70%" />
+      <stop stop-color="hsl(347, 56%, 53%)" offset="90%" />
+      <stop stop-color="hsl(347, 56%, 63%)" offset="95%" />
+      <stop stop-color="hsl(347, 56%, 83%)" offset="100%" />
+    </radialGradient>
+
+        <radialGradient id="dope2">
+      <stop stop-color="hsl(247, 0%, 0%)" offset="00%" />
+      <stop stop-color="hsl(247, 56%, 41%)" offset="70%" />
+      <stop stop-color="hsl(247, 56%, 53%)" offset="90%" />
+      <stop stop-color="hsl(247, 56%, 63%)" offset="95%" />
+      <stop stop-color="hsl(247, 56%, 83%)" offset="100%" />
+    </radialGradient>
+    <filter id="stars">
+      <feTurbulence baseFrequency=".2" seed="4426" />
+      <feColorMatrix values="0 0 0 9 -4 0 0 0 9 -4 0 0 0 9 -4 0 0 0 0 1" />
+    </filter>
+    <filter id="light" primitiveUnits="objectBoundingBox">
+      <feTurbulence type="fractalNoise" baseFrequency="0.015" />
+      <feSpecularLighting specularConstant="50" specularExponent="100" surfaceScale="1"
+        lighting-color="hsl(0deg 00% 60%)">
+        <fePointLight x=".5" y=".5" z=".33" />
+      </feSpecularLighting>
+      <feBlend in2="SourceGraphic" />
+    </filter>
+
+    <mask id="mapmassk">
+      <rect width="100%" height="100%" fill="black" />
+      <!-- <g fill="#fff"> -->
+
+      <!-- <circle cx="67" cy="67" r="55" />
+        <circle cx="145" cy="45" r="25" />
+        <circle cx="45" cy="145" r="25" />
+        <circle cx="38" cy="182" r="12" />
+        <circle cx="182" cy="38" r="12" />
+
+
+        <circle cx="445" cy="67" r="55" />
+        <circle cx="367" cy="45" r="25" />
+        <circle cx="467" cy="145" r="25" />
+        <circle cx="474" cy="182" r="12" />
+        <circle cx="330" cy="38" r="12" />
+
+
+        <circle cx="67" cy="445" r="55" />
+        <circle cx="45" cy="367" r="25" />
+        <circle cx="145" cy="467" r="25" />
+        <circle cx="38" cy="330" r="12" />
+        <circle cx="182" cy="474" r="12" />
+
+
+        <circle cx="445" cy="445" r="55" />
+        <circle cx="367" cy="467" r="25" />
+        <circle cx="467" cy="367" r="25" />
+        <circle cx="474" cy="330" r="12" />
+        <circle cx="330" cy="474" r="12" /> -->
+
+      <circle cx="512" cy="512" r="450" fill="white" />
+      <!-- </g> -->
+
+    </mask>
+
+    <radialGradient id="galaxy">
+      <stop stop-color="#258" />
+      <stop offset="0" stop-color="black" />
+      <stop offset="0.4" stop-color="black" />
+      <stop offset=".6" stop-color="#7cc" />
+      <stop offset=".8" stop-color="#c51" stop-opacity=".5" />
+      <stop offset="1" stop-opacity="0" />
+      <!-- <stop offset="1" stop-opacity="0" /> -->
+
+      <!-- <stop offset="1" stop-opacity="0"/> -->
+    </radialGradient>
+    <filter id="galaxyfilter">
+      <!-- <feTurbulence baseFrequency="5"/> -->
+      <!-- <feColorMatrix values="0 0 0 9 -5
+                               0 0 0 9 -5
+                               0 0 0 9 -5
+                               0 0 0 0 1" result="s"/> -->
+      <feTurbulence type="fractalNoise" baseFrequency=".01" numOctaves="5" seed="10" />
+      <feDisplacementMap in="SourceGraphic" scale="100" />
+      <!-- <feBlend in="s" mode="screen"/> -->
+    </filter>
+
+    <radialGradient id="ground" fy=".5" fr="2%" cy="9" r="9">
+      <stop stop-color="#fff" />
+      <stop offset=".01%" stop-color="#fc3" />
+      <stop offset=".2" stop-color="#f37" />
+      <stop offset=".8" stop-color="#035" />
+    </radialGradient>
+
+    <filter id="groundfilter" y="-.2">
+      <feTurbulence type="fractalNoise" baseFrequency=".01" numOctaves="5" />
+      <feDisplacementMap in="SourceAlpha" scale="99" />
+    </filter>
+    <filter id="planet">
+      <feTurbulence type="fractalNoise" baseFrequency=".01" numOctaves="4" seed="102" />
+      <feDisplacementMap in="SourceGraphic" scale="600" />
+      <feGaussianBlur stdDeviation="02" />
+    </filter>
+    <mask id="planetmask">
+      <circle cx="512" cy="412" r="96" fill="white" />
+    </mask>
+  </defs>
+  <svg viewBox="0 0 1024 1024" clip-path="url(#box)">
+
+    <rect width="100%" height="100%" fill="black" />
+    <rect x="0" y='0' stroke="black" fill="#426786" stroke-width="2" width="1024" height="1024" mask="url(#mapmask)" />
+    <rect width="100%" height="100%" filter="url(#stars)" opacity="0.3" mask="url(#mapmask)" />
+    <rect width="100%" height="100%" filter="url(#stars)" opacity="0.3" mask="url(#mapmask)" />
+    <rect width="100%" height="100%" filter="url(#clouds)" fill="url(#cloudGradient)" opacity="1"
+      mask="url(#mapmask)" />
+
+
+
+    <!-- <circle cx="50%" cy="50%" r="71%" fill="url(#galaxy)" filter="url(#galaxyfilter)" mask="url(#mapmask)"/> -->
+    <rect width="100%" height="100%" y="-10%" fill="url(#galaxy)" filter="url(#galaxyfilter)" mask="url(#mapmask)" />
+    <circle cx="512" cy="412" r="130" filter="url(#stars)" opacity="0.3" mask="url(#mapmask)" />
+    <circle cx="512" cy="412" r="150" fill="none" filter="url(#light)" />
+    <circle cx="512" cy="412" r="50" fill="url(#dope)" />
+    <!-- <circle cx="512" cy="412" r="100" fill="url(#dope2)" filter="url(#planet)" mask="url(#planetmask)" opacity="0.8" /> -->
+    <!-- 
+    <circle cx="512" cy="412" r="100" stroke="lack" fill="hsl(180, 25%, 80%)" stroke-width="12" filter="url(#planet)"
+      mask="url(#planetmask)" opacity="0.5" /> -->
+
+    <rect x="-10%" y="80%" width="120%" height="90%" filter="url(#groundfilter)" />
+
+    <!--     
+    <ellipse cx="512" cy="512" rx="400" ry="250" fill="none" stroke="white" stroke-width="2"
+      transform="rotate(40, 512, 512)" />
+    <ellipse cx="512" cy="512" rx="425" ry="275" fill="none" stroke="white" stroke-width="1"
+      transform="rotate(20, 512, 512)" />
+    <ellipse cx="512" cy="512" rx="750" ry="300" fill="none" stroke="white" stroke-width="2"
+      transform="rotate(120, 500, 500)" />
+    <ellipse cx="512" cy="512" rx="750" ry="300" fill="none" stroke="white" stroke-width="2"
+      transform="rotate(120, 500, 500)" />
+    <ellipse cx="512" cy="512" rx="750" ry="300" fill="none" stroke="white" stroke-width="2"
+      transform="rotate(120, 500, 500)" />
+    <ellipse cx="512" cy="512" rx="750" ry="300" fill="none" stroke="white" stroke-width="2"
+      transform="rotate(120, 500, 500)" />
+    <ellipse cx="512" cy="512" rx="750" ry="300" fill="none" stroke="white" stroke-width="2"
+      transform="rotate(120, 500, 500)" /> -->
+
+
+  </svg>
+</svg>

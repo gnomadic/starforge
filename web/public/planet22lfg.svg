@@ -1,0 +1,136 @@
+<svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+  <clipPath id="box">
+    <path d="M0 0h1024v1024H0z" />
+  </clipPath>
+  <defs>
+
+
+    <!-- sky -->
+    <linearGradient id="cloudGradient" gradientTransform="rotate(20)">
+      <stop stop-opacity=".1" offset="67%" />
+      <stop stop-opacity=".3" offset="75%" />
+      <stop stop-opacity=".1" offset="85%" />
+    </linearGradient>
+    <filter id="clouds" x="-50%" y="-50%" height="200%" width="200%">
+      <feGaussianBlur in="sky" stdDeviation="20" result="skyblur" />
+      <feTurbulence type="fractalNoise" baseFrequency=".01" numOctaves="5" result="skynoise" seed="4426" />
+      <feColorMatrix values="1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 3 -1 -1 0 0" />
+      <feComposite operator="in" in2="SourceGraphic" />
+    </filter>
+    <filter id="stars">
+      <feTurbulence baseFrequency=".2" seed="4426" />
+      <feColorMatrix values="0 0 0 9 -4 0 0 0 9 -4 0 0 0 9 -4 0 0 0 0 1" />
+    </filter>
+    <!-- sky end -->
+
+    <!-- planet -->
+    <radialGradient id="dope">
+      <stop stop-color="hsl(347, 0%, 0%)" offset="00%" />
+      <stop stop-color="hsl(347, 56%, 41%)" offset="70%" />
+      <stop stop-color="hsl(347, 56%, 53%)" offset="90%" />
+      <stop stop-color="hsl(347, 56%, 63%)" offset="95%" />
+      <stop stop-color="hsl(347, 56%, 83%)" offset="100%" />
+    </radialGradient>
+    <filter id="light" primitiveUnits="objectBoundingBox">
+      <feTurbulence type="fractalNoise" baseFrequency="0.015" >
+        <animate attributeName="baseFrequency" values="0.01;0.015;0.01" dur="10s" repeatCount="indefinite"  />
+        </feTurbulence>
+      <feSpecularLighting specularConstant="50" specularExponent="100" surfaceScale="1"
+
+        lighting-color="hsl(0deg 00% 60%)">
+
+        
+
+
+        <fePointLight x=".5" y=".5" z=".33" />
+      </feSpecularLighting>
+      <feBlend in2="SourceGraphic" />
+    </filter>
+
+    <!-- end planet -->
+
+
+    <!-- portal -->
+    <radialGradient id="portalStars">
+      <stop stop-opacity="1" offset="0%" stop-color="white" />
+      <stop stop-opacity="0" offset="100%" stop-color="white" />
+
+    </radialGradient>
+
+
+
+    <mask id="portalView">
+      <circle cx="700" cy="350" r="220" fill="url(#portalStars)" />
+    </mask>
+
+    <radialGradient id="galaxy">
+      <stop offset="0.4" stop-color="black" />
+      <stop offset=".5" stop-color="#7cc" />
+      <stop offset=".6" stop-color="#c51" stop-opacity=".5" />
+      <stop offset=".8" stop-opacity=".01" />
+      <stop offset="1" stop-opacity="0" />
+
+    </radialGradient>
+
+
+    <filter id="galaxyfilter">
+      <feTurbulence type="fractalNoise" baseFrequency=".01" seed="10" numOctaves="10">
+        <animate attributeName="baseFrequency" values=".01;.02;.01" dur="30s" repeatCount="indefinite"  />
+      </feTurbulence>
+      <feDisplacementMap in="SourceGraphic" scale="100" />
+    </filter>
+
+    <!-- end portal -->
+
+    <!-- ground -->
+    <filter id="groundfilter" y="-.2">
+      <feTurbulence type="fractalNoise" baseFrequency=".01" numOctaves="5" />
+      <feDisplacementMap in="SourceAlpha" scale="99" />
+    </filter>
+
+    <!-- end ground -->
+
+
+
+  </defs>
+  <svg viewBox="0 0 1024 1024" clip-path="url(#box)">
+
+    <rect width="100%" height="100%" fill="black" />
+
+    <!-- sky -->
+    <rect x="0" y='0' stroke="black" fill="#426786" stroke-width="2" width="1024" height="1024" />
+    <rect width="100%" height="100%" filter="url(#stars)" opacity="0.3" />
+    <rect width="100%" height="100%" filter="url(#stars)" opacity="0.3" />
+    <rect width="100%" height="100%" filter="url(#clouds)" fill="url(#cloudGradient)" opacity="1" />
+
+    <!-- end sky -->
+
+
+
+    <!-- deco -->
+
+    <line x1="0" x2="1024" y1="200" y2="200" stroke="white" stroke-width="5" />
+    <line x1="0" x2="1024" y1="300" y2="300" stroke="white" stroke-width="5" />
+    <line x1="0" x2="1024" y1="400" y2="400" stroke="white" stroke-width="5" />
+    <line x1="0" x2="1024" y1="500" y2="500" stroke="white" stroke-width="5" />
+
+    <!-- end deco -->
+
+    <!-- portal -->
+    <circle cx="700" cy="350" r="46%" fill="url(#galaxy)" filter="url(#galaxyfilter)" />
+    <!-- <path d="M10 10 h500 v 500 h -500 z" fill="url(#galaxy)" filter="url(#galaxyfilter)"  />  -->
+    <circle cx="700" cy="350" r="150" filter="url(#stars)" opacity="1" mask="url(#portalView)" />
+
+    <!-- planet -->
+    <circle cx="700" cy="350" r="230" fill="none" filter="url(#light)" />
+    <circle cx="700" cy="350" r="75" fill="url(#dope)" />
+
+
+
+
+    <!-- ground -->
+    <rect x="-10%" y="75%" width="120%" height="90%" filter="url(#groundfilter)" />
+    <!-- end ground -->
+
+  </svg>
+</svg>

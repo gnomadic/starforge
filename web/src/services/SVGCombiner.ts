@@ -23,6 +23,73 @@ export function extractSVG(image: string) {
   return window.atob(String(image).split("base64,").pop()!);
 }
 
+
+
+export function extractDope(svg: string | undefined) {
+
+  if (!svg) return 0;
+
+  // const parsed = extractSVG(svg);
+  const doc = new DOMParser().parseFromString(svg, "text/xml");
+  const gradient = doc.getElementById("dope");
+
+  // console.log(gradient);
+  // // gradient?.childNodes[0].
+  const first = new XMLSerializer().serializeToString(gradient!.childNodes[0]);
+
+  // console.log("first: ", first);
+
+  const value = first.substring(first.indexOf("hsl(") + 4, first.indexOf(","));
+
+  // console.log("value: ", value);
+  // console.log("pulled: ", value);
+  return value;
+}
+
+
+export function replaceDope(svg: string, newHue: number) {
+  const parsed = extractSVG(svg);
+  const doc = new DOMParser().parseFromString(parsed, "text/xml");
+
+//     const primaryNight =
+//       'stop offset="0%" stop-color="hsl(' + newPrimary + ',100%,30%)"';
+//     night?.replaceChild(doc.createElement(primaryNight), night.childNodes[0]);
+// <stop stop-color="hsl(347, 0%, 0%)" offset="00%" />
+// <stop stop-color="hsl(347, 56%, 31%)" offset="70%" />
+// <stop stop-color="hsl(347, 56%, 53%)" offset="90%" />
+// <stop stop-color="hsl(347, 56%, 63%)" offset="95%" />
+// <stop stop-color="hsl(347, 56%, 83%)" offset="100%" />
+
+console.log("new hue: ", newHue);
+
+const newChildren = [
+  'stop stop-color="hsl('+ newHue+', 0%, 0%)" offset="00%"',
+  'stop stop-color="hsl('+ newHue+', 56%, 41%)" offset="70%"',
+  'stop stop-color="hsl('+ newHue+', 56%, 53%)" offset="90%"',
+  'stop stop-color="hsl('+ newHue+', 56%, 63%)" offset="95%"',
+  'stop stop-color="hsl('+ newHue+', 56%, 83%)" offset="100%"'
+]
+
+  const dope = doc.getElementById("dope");
+
+  console.log("old dope: ", dope?.childNodes[0]);
+
+  for (let i = 0; i < newChildren.length; i++) {
+    dope?.replaceChild(doc.createElement(newChildren[i]), dope.childNodes[i]);
+  }
+
+  console.log("new dope: ", dope?.childNodes[0]);
+
+  return new XMLSerializer().serializeToString(doc);
+
+}
+
+
+
+
+
+
+
 // export function replaceNetworkEdges(svg: string, newHue: number) {
 //   const parsed = extractSVG(svg);
 //   const doc = new DOMParser().parseFromString(parsed, "text/xml");

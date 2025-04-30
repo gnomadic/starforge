@@ -1,19 +1,19 @@
 
 import { ethers } from "hardhat";
 // import { getDeployedContract } from "../../deployments/utils.js";
-import { getDeployedContract } from "../../deployments/utils.js"
+// import { getDeployedContract } from "../../deployments/utils.js"
 const hre = require("hardhat");
 const fs = require("fs");
 
 const deployments = hre.deployments;
 
 async function main() {
-  await deployments.fixture(["labs"]);
+  await deployments.fixture(["engine"]);
 
-  let contract = await getDeployedContract("Lab");
+  let contract = await getDeployedContract("Planet");
   console.log("connected");
 
-  const amount_to_generate = 1;
+  const amount_to_generate = 20;
 
   for (let i = 0; i < amount_to_generate; i++) {
     let svg = await contract.generateSVG(i);
@@ -29,3 +29,9 @@ main().catch((error) => {
   console.error(error);
   process.exitCode = 1;
 });
+
+
+async function getDeployedContract(name: string) {
+    const deployment = await deployments.get(name);
+    return await ethers.getContractAt(name, deployment.address);
+}

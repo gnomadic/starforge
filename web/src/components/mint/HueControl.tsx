@@ -23,9 +23,9 @@ export default function HueControl({ title, value, newHue, reset, step = 1, maxV
     }, [value])
 
     return (
-        <div key={title} className="space-y-2 px-2 py-4">
+        <div key={title} className="">
             <div className="flex justify-between items-center">
-                <h3 className="text-lg font-medium">{title}</h3>
+                <h3 className="text-lg font-medium font-signika" >{title}</h3>
             </div>
             <div className='flex mx-auto'>
                 <Button
@@ -48,7 +48,7 @@ export default function HueControl({ title, value, newHue, reset, step = 1, maxV
                         className='px-4'
                     />
                     <p className="text-xs text-muted-foreground text-right pt-2 ">
-                        Value: {curValue}
+                        {curValue}
                     </p>
                 </div>
             </div>

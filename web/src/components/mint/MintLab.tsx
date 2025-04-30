@@ -7,7 +7,7 @@ import { toast } from 'react-toastify';
 import { useAccount, useWaitForTransactionReceipt } from 'wagmi';
 import { Button } from '@/components/ui/button';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
-import useDeployment from '@/hooks/useDeployment';
+import { useDeployment } from '@/hooks/useDeployment';
 import MintPreview from './MintPreview';
 import { extractNoiseSeed, extractPlanetColors, replaceNoiseSeed, replacePlanet } from '@/services/SVGCombiner';
 import { Card, CardDescription, CardHeader, CardTitle } from '../ui/card';
@@ -33,6 +33,7 @@ export default function MintLab(props: MintLabProps) {
     const { data: image, isLoading: loadingImage } = useReadPlanetGenerateSvg({ address: deploy.Planet, args: [BigInt(0)] });
     const [preview, setPreview] = useState<string>("");
     const { data: hash, error: writeError, writeContract } = useWritePlanetMint();
+    
     const { isLoading, isSuccess, data } = useWaitForTransactionReceipt({ hash })
 
     const [satLight, setSatLight] = useState({ sat: 25, light: 80, meter: 80, index: 0 });
@@ -67,8 +68,8 @@ export default function MintLab(props: MintLabProps) {
         if (image == undefined || image == "") {
             return;
         }
-        console.log("image: " + image);
-        console.log("wat: ", window.btoa(String(image)));
+        // console.log("image: " + image);
+        // console.log("wat: ", window.btoa(String(image)));
 
         // const skyColors = extractSkyColors(image);
         // setSkyColorOne(skyColors[0]);
@@ -142,7 +143,7 @@ export default function MintLab(props: MintLabProps) {
         <section className="p-12">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
                 <div className='mx-auto'>
-                    <MintPreview preview={preview} />
+                    <MintPreview preview={preview} size={512} tokenId={BigInt(1)} />
                 </div>
                 <div className='max-w-lg min-w-lg'>
                     <Tabs defaultValue="random" className="">
@@ -169,7 +170,10 @@ export default function MintLab(props: MintLabProps) {
                                 <div className='flex py-8'>
                                     {address ?
                                         <Button className='mx-auto px-12 py-4'
-                                            onClick={() => writeContract({ address: deploy.Planet, args: [address] })}
+                                            onClick={() => {
+                                                console.log("Accept Assignment button clicked");
+                                                writeContract({ address: deploy.Planet, args: [address] });
+                                            }}
                                         >
                                             Accept Assignment 0.0025 ETH
                                         </Button>
