@@ -50,7 +50,7 @@ contract RegenScenario {
             12 hours,
             "Job Skills",
             0,
-            0, 
+            0,
             1
         );
 
@@ -76,7 +76,7 @@ contract RegenScenario {
             12 hours,
             "Job Skills",
             0,
-            60, 
+            60,
             1
         );
 
@@ -117,7 +117,6 @@ contract RegenScenario {
             1,
             70,
             1
-
         );
 
         jobsEntity.addJob(
@@ -125,7 +124,7 @@ contract RegenScenario {
             "Dust Sweeper",
             "Clean solar panel fields coated in Solaris residue. Easy but tedious.",
             "Solaris Dust",
-            5  * 10 ** 17,
+            5 * 10 ** 17,
             12 hours,
             "Job Skills",
             2,
