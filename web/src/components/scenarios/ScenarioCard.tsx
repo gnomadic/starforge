@@ -1,10 +1,9 @@
 import React from 'react';
-import { Scenario, ScenarioMetadata } from '@/domain/types';
+import { ScenarioMetadata } from '@/domain/types';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Play, Users, Calendar } from 'lucide-react';
-import { formatDistanceToNow } from 'date-fns';
 import { Address } from 'viem';
 import { useIPFS } from '@/hooks/useIPFS';
 
