@@ -27,7 +27,7 @@ declare module 'wagmi' {
 
 
 export const config = getDefaultConfig({
-    appName: 'ADVENTURE ALCHEMIST',
+    appName: 'STAR FORGE',
     projectId: 'YOUR_PROJECT_ID',
     wallets: [
       ...wallets,
