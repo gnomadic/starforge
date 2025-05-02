@@ -18,7 +18,6 @@ struct Job {
 }
 
 contract JobEntity {
-
     struct LiveJob {
         string id;
         uint256 startedAt;
@@ -65,10 +64,7 @@ contract JobEntity {
         }
 
         activeJobs[tokenId] = LiveJob(jobId, block.timestamp);
-                // console.log("done activating job from entity");
-
-
-        
+        // console.log("done activating job from entity");
     }
 
     function getJob(string memory jobId) external view returns (Job memory) {

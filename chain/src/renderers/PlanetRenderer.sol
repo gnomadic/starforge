@@ -2,8 +2,8 @@
 pragma solidity 0.8.24;
 
 // import "../ColorUtils.sol";
-import { IRenderer } from "./interfaces/IRenderer.sol";
-import { IStepRenderer } from "./interfaces/IStepRenderer.sol";
+import {IRenderer} from "./interfaces/IRenderer.sol";
+import {IStepRenderer} from "./interfaces/IStepRenderer.sol";
 
 contract PlanetRenderer is IRenderer {
     IStepRenderer[] public stepRenderers;

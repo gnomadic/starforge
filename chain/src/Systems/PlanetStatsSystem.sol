@@ -4,15 +4,11 @@ pragma solidity ^0.8.24;
 import {ISystem, ISystemController} from "./interfaces/ISystem.sol";
 import {IScenario} from "../Scenario.sol";
 import {PlanetStatsEntity} from "../entities/PlanetStatsEntity.sol";
+
 // import {console} from "hardhat/console.sol";
 
 contract PlanetStatsSystem is ISystem {
-    address planetAddress;
     uint256 _nonce;
-
-    constructor(address _planetAddress) {
-        planetAddress = _planetAddress;
-    }
 
     bool registered = false;
     address private _systemController;
@@ -118,33 +114,6 @@ contract PlanetStatsSystem is ISystem {
         return entity.getStartingPoints(statSetName);
     }
 
-    // function getStartingStats(
-    //     IScenario scenario,
-    //     uint256 tokenId,
-    //     uint8 gen
-    // ) internal returns (uint16[10] memory) {
-    //     uint8 randomNumber;
-
-    //     // uint8 points = _startingStats[gen];
-    //     address entityAddress = scenario.getEntity(address(this));
-    //     PlanetStatsEntity entity = PlanetStatsEntity(entityAddress);
-
-    //     uint8 points = entity.getStartingStats(gen);
-    //     uint16[10] memory stats;
-
-    //     while (points > 0) {
-    //         randomNumber = getRandom(
-    //             entity.getNumberOfStats(),
-    //             tokenId + points
-    //         );
-    //         if (stats[randomNumber] < 20) {
-    //             stats[randomNumber] = stats[randomNumber] + 1;
-    //             points = points - 1;
-    //         }
-    //     }
-    //     return stats;
-    // }
-
     function getRandom(
         uint8 outOf,
         uint256 first
@@ -177,10 +146,6 @@ contract PlanetStatsSystem is ISystem {
         return current;
     }
 
-    function setNonce(uint256 newValue) internal {
-        _nonce = newValue;
-    }
-
     function activateEntity(
         IScenario scenario
     ) external override returns (address) {
@@ -200,7 +165,6 @@ contract PlanetStatsSystem is ISystem {
         return address(entityAddress);
     }
 
-
     function getId() external pure returns (string memory) {
         return "STAT";
     }
@@ -219,8 +183,14 @@ contract PlanetStatsSystem is ISystem {
             return true;
         }
 
-    // console.log("skill check %s", entity.checkSkill(tokenId, skillSetName, skillSetIndex, skillSetRequirement));
-        return entity.checkSkill(tokenId, skillSetName, skillSetIndex, skillSetRequirement);
+        // console.log("skill check %s", entity.checkSkill(tokenId, skillSetName, skillSetIndex, skillSetRequirement));
+        return
+            entity.checkSkill(
+                tokenId,
+                skillSetName,
+                skillSetIndex,
+                skillSetRequirement
+            );
     }
 
     function boostSkill(
@@ -230,12 +200,12 @@ contract PlanetStatsSystem is ISystem {
         uint8 skillSetIndex,
         uint16 amount
     ) external {
-
-        //TODO permissioning 
-        if (msg.sender != scenario.getAdmin() && msg.sender != _systemController) {
+        if (
+            msg.sender != scenario.getAdmin() && msg.sender != _systemController
+        ) {
             revert NotScenario();
         }
-        
+
         PlanetStatsEntity entity = PlanetStatsEntity(
             scenario.getEntity(address(this))
         );
