@@ -9,13 +9,9 @@ export default function ExploreTabs() {
     return (
         <Tabs  defaultIndex={0} className="pt-12">
             <TabList>
-                {/* <Tab disabled={true} >EXPLORE {'/'}</Tab> */}
                 <Tab default={true} >GAMES</Tab>
                 <Tab>COMPONENTS</Tab>
             </TabList>
-            {/* <TabPanel>
-                <></>
-            </TabPanel> */}
             <TabPanel>
                 <ExploreGames />
             </TabPanel>
