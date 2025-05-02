@@ -1,5 +1,5 @@
 export const NavItems = [
-  { href: '/demo', label: 'demo' },
+  { href: 'https://starforge-git-main-gnomadics-projects.vercel.app/', label: 'demo' },
   { href: '/create', label: 'create' },
   { href: '/explore', label: 'explore' },
   // { href: '/registry', label: 'registry' },

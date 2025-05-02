@@ -1,15 +1,12 @@
 
 import React from 'react';
-import { useGameStore } from '@/lib/gameState';
 import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
 import { useDeployment } from '@/hooks/useDeployment';
 import { Address } from 'viem';
 import { useReadPlanetStatsEntityGetStatSet, useReadPlanetStatsEntityGetStatSetMaxValues, useReadPlanetStatsEntityGetStatSetPointNames } from '@/generated';
 import { bigIntReplacer } from '@/domain/utils';
-// import { useReadPlanetStatsSystemGetStats } from "@/generated";
 
 interface PlanetStatsProps {
-  // selectedTokenId: bigint;
   stats?: readonly [number, number, number, number, number, number, number, number, number, number] | undefined;
   statSetName: string;
   selectedTokenId: bigint;
@@ -27,30 +24,30 @@ const PlanetStats: React.FC<PlanetStatsProps> = ({ stats, statSetName, selectedT
 
 
 
-  const upgrades = useGameStore(state => state.upgrades);
-  const resources = useGameStore(state => state.resources);
-  const purchaseUpgrade = useGameStore(state => state.purchaseUpgrade);
+  // const upgrades = useGameStore(state => state.upgrades);
+  // const resources = useGameStore(state => state.resources);
+  // const purchaseUpgrade = useGameStore(state => state.purchaseUpgrade);
 
-  const visibleUpgrades = upgrades.filter(upgrade => upgrade.visible);
+  // const visibleUpgrades = upgrades.filter(upgrade => upgrade.visible);
 
-  const canAffordUpgrade = (upgradeId: string) => {
-    const upgrade = upgrades.find(u => u.id === upgradeId);
-    if (!upgrade) return false;
+  // const canAffordUpgrade = (upgradeId: string) => {
+  //   const upgrade = upgrades.find(u => u.id === upgradeId);
+  //   if (!upgrade) return false;
 
-    // Check if we have enough of each resource
-    for (const [resourceId, cost] of Object.entries(upgrade.cost)) {
-      const resource = resources.find(r => r.id === resourceId);
-      if (!resource || resource.amount < cost) {
-        return false;
-      }
-    }
+  //   // Check if we have enough of each resource
+  //   for (const [resourceId, cost] of Object.entries(upgrade.cost)) {
+  //     const resource = resources.find(r => r.id === resourceId);
+  //     if (!resource || resource.amount < cost) {
+  //       return false;
+  //     }
+  //   }
 
-    return true;
-  };
+  //   return true;
+  // };
 
-  if (visibleUpgrades.length === 0) {
-    return null;
-  }
+  // if (visibleUpgrades.length === 0) {
+  //   return null;
+  // }
 
   return (
     <div>

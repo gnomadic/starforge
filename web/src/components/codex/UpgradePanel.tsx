@@ -1,7 +1,6 @@
 "use client";
 
 import React from 'react';
-import { useGameStore } from '@/lib/gameState';
 import { cn } from '@/lib/utils';
 import { ArrowUpCircle, LockIcon, CheckCircle2 } from 'lucide-react';
 import { Card, CardHeader } from '../ui/card';
@@ -28,26 +27,26 @@ const UpgradePanel: React.FC<UpgradePanelProps> = ({ selectedTokenId }) => {
   }
   const { supplies, updateSupply, sync, syncReady } = supplyContext;
 
-  const upgrades = useGameStore(state => state.upgrades);
-  const resources = useGameStore(state => state.resources);
-  const purchaseUpgrade = useGameStore(state => state.purchaseUpgrade);
+  // const upgrades = useGameStore(state => state.upgrades);
+  // const resources = useGameStore(state => state.resources);
+  // const purchaseUpgrade = useGameStore(state => state.purchaseUpgrade);
 
-  const visibleUpgrades = upgrades.filter(upgrade => upgrade.visible);
+  // const visibleUpgrades = upgrades.filter(upgrade => upgrade.visible);
 
-  const canAffordUpgrade = (upgradeId: string) => {
-    const upgrade = upgrades.find(u => u.id === upgradeId);
-    if (!upgrade) return false;
+  // const canAffordUpgrade = (upgradeId: string) => {
+  //   const upgrade = upgrades.find(u => u.id === upgradeId);
+  //   if (!upgrade) return false;
 
-    // Check if we have enough of each resource
-    for (const [resourceId, cost] of Object.entries(upgrade.cost)) {
-      const resource = resources.find(r => r.id === resourceId);
-      if (!resource || resource.amount < cost) {
-        return false;
-      }
-    }
+  //   // Check if we have enough of each resource
+  //   for (const [resourceId, cost] of Object.entries(upgrade.cost)) {
+  //     const resource = resources.find(r => r.id === resourceId);
+  //     if (!resource || resource.amount < cost) {
+  //       return false;
+  //     }
+  //   }
 
-    return true;
-  };
+  //   return true;
+  // };
 
   const canAffordItUpgrade = (upgradeId: bigint) => {
     // const upgrade = upgrades.find(u => u.id === upgradeId);
@@ -69,9 +68,9 @@ const UpgradePanel: React.FC<UpgradePanelProps> = ({ selectedTokenId }) => {
     // Use deploy.SupplyEmissionsSystem and call sync(selectedTokenId)
   };
 
-  if (visibleUpgrades.length === 0) {
-    return null;
-  }
+  // if (visibleUpgrades.length === 0) {
+  //   return null;
+  // }
 
   return (
     <Card className={cn("backdrop-blur-sm p-4", "")}>
