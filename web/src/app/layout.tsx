@@ -2,30 +2,14 @@ import type { Metadata } from 'next';
 import { Outfit, PT_Serif, Signika, Ultra } from 'next/font/google';
 import { Nunito, PT_Sans } from 'next/font/google';
 import './globals.css';
-
-import Head from 'next/head';
 import { Analytics } from '@vercel/analytics/react';
 import '@rainbow-me/rainbowkit/styles.css';
-
-import { getDefaultConfig, RainbowKitProvider } from '@rainbow-me/rainbowkit';
-import { WagmiProvider } from 'wagmi';
-import {
-  mainnet,
-  polygon,
-  optimism,
-  arbitrum,
-  base,
-  sepolia,
-} from 'wagmi/chains';
-import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
 import { Providers } from './providers';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import SpaceAnimation from '@/components/SpaceAnimation';
-import SupplyBar from '@/components/SupplyBar';
-// import { useResources } from '@/components/ResourceContext';
 
 
 const signika = Signika({

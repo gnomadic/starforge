@@ -1,33 +1,12 @@
 import { getDefaultConfig, getDefaultWallets } from "@rainbow-me/rainbowkit";
-import { defineChain, http } from "viem";
-import { base, baseSepolia, mainnet, sepolia } from "viem/chains";
-// import { defineChain } from '../../utils/chain/defineChain.js'
-
-export const localhost = defineChain({
-  id: 31337,
-  name: 'Localhost',
-  nativeCurrency: {
-    decimals: 18,
-    name: 'Ether',
-    symbol: 'ETH',
-  },
-  rpcUrls: {
-    default: { http: ['http://127.0.0.1:8545'] },
-  },
-})
+import { http } from "viem";
+import { base, baseSepolia, localhost, mainnet, sepolia } from "viem/chains";
 
 const { wallets } = getDefaultWallets();
 
 
-declare module 'wagmi' {
-  interface Register {
-    config: typeof config
-  }
-}
-
-
 export const config = getDefaultConfig({
-    appName: 'STAR FORGE',
+    appName: 'TAVERN PROTOCOL',
     projectId: 'YOUR_PROJECT_ID',
     wallets: [
       ...wallets,

@@ -86,7 +86,7 @@ interface ScenarioEditorProps {
 
 const ScenarioEditor: React.FC<ScenarioEditorProps> = ({ onSave, onCancel }) => {
   const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+    // resolver: zodResolver(formSchema),
     defaultValues: {
       title: "",
       description: "",
@@ -106,36 +106,38 @@ const ScenarioEditor: React.FC<ScenarioEditorProps> = ({ onSave, onCancel }) => 
   const resourcesEnabled = form.watch("resources");
   const jobsEnabled = form.watch("jobs");
 
-  const handleSubmit = (values: z.infer<typeof formSchema>) => {
-    if (!values.quests && !values.artifacts && !values.enemies && !values.resources && !values.jobs) {
-      toast.error("Please select at least one content type for your scenario.");
-      return;
-    }
+  // const handleSubmit = (values: z.infer<typeof formSchema>) => {
+  //   if (!values.quests && !values.artifacts && !values.enemies && !values.resources && !values.jobs) {
+  //     toast.error("Please select at least one content type for your scenario.");
+  //     return;
+  //   }
     
-    // Ensure all required fields are present in the data passed to onSave
-    const scenarioData: ScenarioForm = {
-      title: values.title,
-      description: values.description,
-      quests: values.quests,
-      artifacts: values.artifacts,
-      enemies: values.enemies,
-      resources: values.resources,
-      jobs: values.jobs,
-    };
+  //   // Ensure all required fields are present in the data passed to onSave
+  //   const scenarioData: ScenarioForm = {
+  //     title: values.title,
+  //     description: values.description,
+  //     quests: values.quests,
+  //     artifacts: values.artifacts,
+  //     enemies: values.enemies,
+  //     resources: values.resources,
+  //     jobs: values.jobs,
+  //   };
     
-    onSave(scenarioData);
-    toast.success("Scenario created successfully!");
-  };
+  //   onSave(scenarioData);
+  //   toast.success("Scenario created successfully!");
+  // };
 
   return (
     <div className="bg-black/30 rounded-lg border border-white/10 p-6">
       <h2 className="text-2xl font-bold mb-6">Create New Cosmic Scenario</h2>
       
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-8">
+        <form 
+        // onSubmit={form.handleSubmit(handleSubmit)} 
+        className="space-y-8">
           <div className="space-y-4">
             <FormField
-              control={form.control}
+              // control={form.control}
               name="title"
               render={({ field }) => (
                 <FormItem>
@@ -149,7 +151,7 @@ const ScenarioEditor: React.FC<ScenarioEditorProps> = ({ onSave, onCancel }) => 
             />
 
             <FormField
-              control={form.control}
+              // control={form.control}
               name="description"
               render={({ field }) => (
                 <FormItem>
@@ -188,7 +190,7 @@ const ScenarioEditor: React.FC<ScenarioEditorProps> = ({ onSave, onCancel }) => 
                     </FormDescription>
                   </div>
                   <FormField
-                    control={form.control}
+                    // control={form.control}
                     name="heroes"
                     render={({ field }) => (
                       <FormItem className="flex items-center space-x-2">
@@ -206,7 +208,7 @@ const ScenarioEditor: React.FC<ScenarioEditorProps> = ({ onSave, onCancel }) => 
                 <Collapsible open={HeroesEnabled}>
                   <CollapsibleContent className="p-4 pt-0 bg-black/20 space-y-4">
                     <FormField
-                      control={form.control}
+                      // control={form.control}
                       name="heroTitle"
                       render={({ field }) => (
                         <FormItem>
@@ -218,7 +220,7 @@ const ScenarioEditor: React.FC<ScenarioEditorProps> = ({ onSave, onCancel }) => 
                       )}
                     />
                     <FormField
-                      control={form.control}
+                      // control={form.control}
                       name="heroDescription"
                       render={({ field }) => (
                         <FormItem>
@@ -230,7 +232,7 @@ const ScenarioEditor: React.FC<ScenarioEditorProps> = ({ onSave, onCancel }) => 
                       )}
                     />
                     <FormField
-                      control={form.control}
+                      // control={form.control}
                       name="heroReward"
                       render={({ field }) => (
                         <FormItem>
@@ -256,7 +258,7 @@ const ScenarioEditor: React.FC<ScenarioEditorProps> = ({ onSave, onCancel }) => 
                     </FormDescription>
                   </div>
                   <FormField
-                    control={form.control}
+                    // control={form.control}
                     name="quests"
                     render={({ field }) => (
                       <FormItem className="flex items-center space-x-2">
@@ -274,7 +276,7 @@ const ScenarioEditor: React.FC<ScenarioEditorProps> = ({ onSave, onCancel }) => 
                 <Collapsible open={questsEnabled}>
                   <CollapsibleContent className="p-4 pt-0 bg-black/20 space-y-4">
                     <FormField
-                      control={form.control}
+                      // control={form.control}
                       name="questTitle"
                       render={({ field }) => (
                         <FormItem>
@@ -286,7 +288,7 @@ const ScenarioEditor: React.FC<ScenarioEditorProps> = ({ onSave, onCancel }) => 
                       )}
                     />
                     <FormField
-                      control={form.control}
+                      // control={form.control}
                       name="questDescription"
                       render={({ field }) => (
                         <FormItem>
@@ -298,7 +300,7 @@ const ScenarioEditor: React.FC<ScenarioEditorProps> = ({ onSave, onCancel }) => 
                       )}
                     />
                     <FormField
-                      control={form.control}
+                      // control={form.control}
                       name="questReward"
                       render={({ field }) => (
                         <FormItem>
@@ -326,7 +328,7 @@ const ScenarioEditor: React.FC<ScenarioEditorProps> = ({ onSave, onCancel }) => 
                     </FormDescription>
                   </div>
                   <FormField
-                    control={form.control}
+                    // control={form.control}
                     name="artifacts"
                     render={({ field }) => (
                       <FormItem className="flex items-center space-x-2">
@@ -344,7 +346,7 @@ const ScenarioEditor: React.FC<ScenarioEditorProps> = ({ onSave, onCancel }) => 
                 <Collapsible open={artifactsEnabled}>
                   <CollapsibleContent className="p-4 pt-0 bg-black/20 space-y-4">
                     <FormField
-                      control={form.control}
+                      // control={form.control}
                       name="artifactName"
                       render={({ field }) => (
                         <FormItem>
@@ -356,7 +358,7 @@ const ScenarioEditor: React.FC<ScenarioEditorProps> = ({ onSave, onCancel }) => 
                       )}
                     />
                     <FormField
-                      control={form.control}
+                      // control={form.control}
                       name="artifactDescription"
                       render={({ field }) => (
                         <FormItem>
@@ -368,7 +370,7 @@ const ScenarioEditor: React.FC<ScenarioEditorProps> = ({ onSave, onCancel }) => 
                       )}
                     />
                     <FormField
-                      control={form.control}
+                      // control={form.control}
                       name="artifactRarity"
                       render={({ field }) => (
                         <FormItem>
@@ -396,7 +398,7 @@ const ScenarioEditor: React.FC<ScenarioEditorProps> = ({ onSave, onCancel }) => 
                     </FormDescription>
                   </div>
                   <FormField
-                    control={form.control}
+                    // control={form.control}
                     name="enemies"
                     render={({ field }) => (
                       <FormItem className="flex items-center space-x-2">
@@ -414,7 +416,7 @@ const ScenarioEditor: React.FC<ScenarioEditorProps> = ({ onSave, onCancel }) => 
                 <Collapsible open={enemiesEnabled}>
                   <CollapsibleContent className="p-4 pt-0 bg-black/20 space-y-4">
                     <FormField
-                      control={form.control}
+                      // control={form.control}
                       name="enemyName"
                       render={({ field }) => (
                         <FormItem>
@@ -426,7 +428,7 @@ const ScenarioEditor: React.FC<ScenarioEditorProps> = ({ onSave, onCancel }) => 
                       )}
                     />
                     <FormField
-                      control={form.control}
+                      // control={form.control}
                       name="enemyDescription"
                       render={({ field }) => (
                         <FormItem>
@@ -438,7 +440,7 @@ const ScenarioEditor: React.FC<ScenarioEditorProps> = ({ onSave, onCancel }) => 
                       )}
                     />
                     <FormField
-                      control={form.control}
+                      // control={form.control}
                       name="enemyStrength"
                       render={({ field }) => (
                         <FormItem>
@@ -466,7 +468,7 @@ const ScenarioEditor: React.FC<ScenarioEditorProps> = ({ onSave, onCancel }) => 
                     </FormDescription>
                   </div>
                   <FormField
-                    control={form.control}
+                    // control={form.control}
                     name="resources"
                     render={({ field }) => (
                       <FormItem className="flex items-center space-x-2">
@@ -484,7 +486,7 @@ const ScenarioEditor: React.FC<ScenarioEditorProps> = ({ onSave, onCancel }) => 
                 <Collapsible open={resourcesEnabled}>
                   <CollapsibleContent className="p-4 pt-0 bg-black/20 space-y-4">
                     <FormField
-                      control={form.control}
+                      // control={form.control}
                       name="resourceName"
                       render={({ field }) => (
                         <FormItem>
@@ -496,7 +498,7 @@ const ScenarioEditor: React.FC<ScenarioEditorProps> = ({ onSave, onCancel }) => 
                       )}
                     />
                     <FormField
-                      control={form.control}
+                      // control={form.control}
                       name="resourceDescription"
                       render={({ field }) => (
                         <FormItem>
@@ -508,7 +510,7 @@ const ScenarioEditor: React.FC<ScenarioEditorProps> = ({ onSave, onCancel }) => 
                       )}
                     />
                     <FormField
-                      control={form.control}
+                      // control={form.control}
                       name="resourceType"
                       render={({ field }) => (
                         <FormItem>
@@ -536,7 +538,7 @@ const ScenarioEditor: React.FC<ScenarioEditorProps> = ({ onSave, onCancel }) => 
                     </FormDescription>
                   </div>
                   <FormField
-                    control={form.control}
+                    // control={form.control}
                     name="jobs"
                     render={({ field }) => (
                       <FormItem className="flex items-center space-x-2">
@@ -554,7 +556,7 @@ const ScenarioEditor: React.FC<ScenarioEditorProps> = ({ onSave, onCancel }) => 
                 <Collapsible open={jobsEnabled}>
                   <CollapsibleContent className="p-4 pt-0 bg-black/20 space-y-4">
                     <FormField
-                      control={form.control}
+                      // control={form.control}
                       name="jobTitle"
                       render={({ field }) => (
                         <FormItem>
@@ -566,7 +568,7 @@ const ScenarioEditor: React.FC<ScenarioEditorProps> = ({ onSave, onCancel }) => 
                       )}
                     />
                     <FormField
-                      control={form.control}
+                      // control={form.control}
                       name="jobDescription"
                       render={({ field }) => (
                         <FormItem>
@@ -578,7 +580,7 @@ const ScenarioEditor: React.FC<ScenarioEditorProps> = ({ onSave, onCancel }) => 
                       )}
                     />
                     <FormField
-                      control={form.control}
+                      // control={form.control}
                       name="jobResourceType"
                       render={({ field }) => (
                         <FormItem>
@@ -590,7 +592,7 @@ const ScenarioEditor: React.FC<ScenarioEditorProps> = ({ onSave, onCancel }) => 
                       )}
                     />
                     <FormField
-                      control={form.control}
+                      // control={form.control}
                       name="jobEmissionBoost"
                       render={({ field }) => (
                         <FormItem>
