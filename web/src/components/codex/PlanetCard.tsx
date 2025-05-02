@@ -1,17 +1,12 @@
 "use client";
 
 import React from 'react';
-import { useGameStore } from '@/lib/gameState';
-import { cn } from '@/lib/utils';
-import { ArrowUpCircle, LockIcon, CheckCircle2 } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/card';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { useDeployment } from '@/hooks/useDeployment';
 import {  useReadPlanetStatsEntityGetStatSet, useReadPlanetStatsEntityGetStatSetNames, useReadScenarioGetEntity } from '@/generated';
 import MintPreview from '../mint/MintPreview';
 import PlanetStats from './PlanetStats';
 import { RarityBadge } from './RarityBadge';
-import { NFT } from '@/domain/types';
 import { useScenarios } from '../ScenarioContext';
 import { bigIntReplacer } from '@/domain/utils';
 

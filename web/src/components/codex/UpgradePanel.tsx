@@ -1,7 +1,6 @@
 "use client";
 
 import React from 'react';
-import { useGameStore } from '@/lib/gameState';
 import { cn } from '@/lib/utils';
 import { ArrowUpCircle, LockIcon, CheckCircle2 } from 'lucide-react';
 import { Card, CardHeader } from '../ui/card';

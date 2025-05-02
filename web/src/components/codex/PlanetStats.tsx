@@ -1,15 +1,12 @@
 
 import React from 'react';
-import { useGameStore } from '@/lib/gameState';
 import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
 import { useDeployment } from '@/hooks/useDeployment';
 import { Address } from 'viem';
 import { useReadPlanetStatsEntityGetStatSet, useReadPlanetStatsEntityGetStatSetMaxValues, useReadPlanetStatsEntityGetStatSetPointNames } from '@/generated';
 import { bigIntReplacer } from '@/domain/utils';
-// import { useReadPlanetStatsSystemGetStats } from "@/generated";
 
 interface PlanetStatsProps {
-  // selectedTokenId: bigint;
   stats?: readonly [number, number, number, number, number, number, number, number, number, number] | undefined;
   statSetName: string;
   selectedTokenId: bigint;
