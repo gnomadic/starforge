@@ -69,7 +69,7 @@ module.exports = async (hre) => {
   const PlanetStats = await deploy("PlanetStatsSystem", {
     from: deployer,
     log: true,
-    args: [Planet.address]
+    // args: [Planet.address]
   });
 
   const UpgradesSystem = await deploy("UpgradesSystem", {

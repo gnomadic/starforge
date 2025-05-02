@@ -1,28 +1,10 @@
+// SPDX-License-Identifier: MIT
 pragma solidity ^0.8.24;
 
-import {Test, console} from 'forge-std/Test.sol';
+import {Test, console} from "forge-std/Test.sol";
 import "../src/systems/PlanetStatsSystem.sol";
 import "../src/entities/PlanetStatsEntity.sol";
-import "../src/Scenario.sol";
-
-// A minimal mock for IScenario.
-contract MockScenario is IScenario {
-    address public admin;
-    mapping(address => address) private entities;
-    
-    constructor(address _admin) {
-        admin = _admin;
-    }
-    function getEntity(address system) external view override returns (address) {
-        return entities[system];
-    }
-    function setEntity(address system, address entity) external {
-        entities[system] = entity;
-    }
-    function getAdmin() external view override returns (address) {
-        return admin;
-    }
-}
+import {MockScenario} from "./mocks/MockScenario.sol";
 
 contract TestPlanetStatsSystem is Test {
     PlanetStatsSystem system;
@@ -34,7 +16,7 @@ contract TestPlanetStatsSystem is Test {
 
     function setUp() public {
         scenario = new MockScenario(owner);
-        system = new PlanetStatsSystem(address(0)); // using dummy planetAddress
+        system = new PlanetStatsSystem(); // using dummy planetAddress
         // Activate entity via the system – positive path.
         address entAddr = system.activateEntity(IScenario(address(scenario)));
         entity = PlanetStatsEntity(entAddr);
@@ -64,26 +46,51 @@ contract TestPlanetStatsSystem is Test {
         names[1] = "GATCHA";
         // Setup starting values – gatcha indicated by 65535 in first element.
         uint16[] memory defStart = new uint16[](3);
-        defStart[0] = 10; defStart[1] = 20; defStart[2] = 30;
+        defStart[0] = 10;
+        defStart[1] = 20;
+        defStart[2] = 30;
         uint16[] memory gachStart = new uint16[](3);
-        gachStart[0] = 65535; gachStart[1] = 0; gachStart[2] = 0;
+        gachStart[0] = 65535;
+        gachStart[1] = 0;
+        gachStart[2] = 0;
         // For gatcha, set available points.
         uint8[] memory gachAvail = new uint8[](5);
-        gachAvail[0] = 5; gachAvail[1] = 4; gachAvail[2] = 3; gachAvail[3] = 2; gachAvail[4] = 1;        
+        gachAvail[0] = 5;
+        gachAvail[1] = 4;
+        gachAvail[2] = 3;
+        gachAvail[3] = 2;
+        gachAvail[4] = 1;
         // Assume we have functions in entity to create stat sets.
 
         // We simulate by calling createStatSet and createGatchaStatSet.
         // Also set rarity odds.
         uint8[] memory odds = new uint8[](5);
-        odds[0] = 1; odds[1] = 5; odds[2] = 13; odds[3] = 25; odds[4] = 75;
+        odds[0] = 1;
+        odds[1] = 5;
+        odds[2] = 13;
+        odds[3] = 25;
+        odds[4] = 75;
         entity.setStatSetRarityOdds(odds);
 
+        entity.createStatSet(
+            "DEFAULT",
+            defStart,
+            new uint16[](3),
+            new string[](3)
+        );
+        entity.createGatchaStatSet(
+            "GATCHA",
+            gachStart,
+            gachAvail,
+            new uint16[](3),
+            new string[](3)
+        );
 
-        entity.createStatSet("DEFAULT", defStart, new uint16[](3), new string[](3));
-        entity.createGatchaStatSet("GATCHA", gachStart, gachAvail, new uint16[](3), new string[](3));
-
-
-        system.init(ISystemController(address(0)), IScenario(address(scenario)), testTokenId);
+        system.init(
+            ISystemController(address(0)),
+            IScenario(address(scenario)),
+            testTokenId
+        );
         // Check that "RARITY" stat set has been set (positive).
         uint16[] memory raritySet = entity.getStatSet(testTokenId, "RARITY");
         assertGt(raritySet.length, 0);
@@ -105,13 +112,27 @@ contract TestPlanetStatsSystem is Test {
     function test_checkSkill() public {
         // First, set a stat set with a value.
         uint16[] memory stats = new uint16[](3);
-        stats[0] = 10; stats[1] = 15; stats[2] = 20;
+        stats[0] = 10;
+        stats[1] = 15;
+        stats[2] = 20;
         entity.setStatSet(testTokenId, "SKILL", stats);
         // Positive: meets requirement 15 at index 1.
-        bool checkOk = system.checkSkill(IScenario(address(scenario)), testTokenId, "SKILL", 1, 15);
+        bool checkOk = system.checkSkill(
+            IScenario(address(scenario)),
+            testTokenId,
+            "SKILL",
+            1,
+            15
+        );
         assertTrue(checkOk);
         // Negative: requirement higher than current value.
-        bool checkFail = system.checkSkill(IScenario(address(scenario)), testTokenId, "SKILL", 1, 16);
+        bool checkFail = system.checkSkill(
+            IScenario(address(scenario)),
+            testTokenId,
+            "SKILL",
+            1,
+            16
+        );
         assertTrue(!checkFail);
     }
 
@@ -119,10 +140,18 @@ contract TestPlanetStatsSystem is Test {
     function test_boostSkill_Positive() public {
         // Set initial stat value.
         uint16[] memory stats = new uint16[](3);
-        stats[0] = 5; stats[1] = 5; stats[2] = 5;
+        stats[0] = 5;
+        stats[1] = 5;
+        stats[2] = 5;
         entity.setStatSet(testTokenId, "SKILL", stats);
         // Boost skill index 1 by 10.
-        system.boostSkill(IScenario(address(scenario)), testTokenId, "SKILL", 1, 10);
+        system.boostSkill(
+            IScenario(address(scenario)),
+            testTokenId,
+            "SKILL",
+            1,
+            10
+        );
         uint16[] memory newStats = entity.getStatSet(testTokenId, "SKILL");
         assertEq(newStats[1], 15);
     }
@@ -132,10 +161,18 @@ contract TestPlanetStatsSystem is Test {
         // Try calling boostSkill via a non-admin address.
         // We simulate this by using vm.prank.
         uint16[] memory stats = new uint16[](3);
-        stats[0] = 5; stats[1] = 5; stats[2] = 5;
+        stats[0] = 5;
+        stats[1] = 5;
+        stats[2] = 5;
         entity.setStatSet(testTokenId, "SKILL", stats);
         vm.prank(address(0xBEEF));
         vm.expectRevert();
-        system.boostSkill(IScenario(address(scenario)), testTokenId, "SKILL", 1, 10);
+        system.boostSkill(
+            IScenario(address(scenario)),
+            testTokenId,
+            "SKILL",
+            1,
+            10
+        );
     }
 }
