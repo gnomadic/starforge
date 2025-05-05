@@ -24,9 +24,7 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 
 
-const signika = Signika({
-  subsets: ['latin'], weight: "400", variable: '--font-signika',
-});
+
 
 const outfit = Outfit({
   subsets: ['latin'], weight: "500", variable: '--font-outfit',
@@ -64,7 +62,7 @@ export default function RootLayout({
       </Head> */}
       {/* <div className="flex flex-col min-h-screen"> */}
 
-      <body className={`${signika.variable} ${outfit.variable} font-sans bg-black text-white`}>
+      <body className={`${outfit.variable} font-outfit bg-black text-white`}>
         <Providers>
           {/* <Header /> */}
           <Navbar />

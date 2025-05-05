@@ -62,10 +62,10 @@ export default function MobileNav(props: MobileNavProps) {
             <a
               target="_blank"
               rel="noopener noreferrer"
-              href="https://docs.playtavern.com"
+              href="https://t.me/+Js2_GaKRbkBkZGE5"
             >
               <div className="relative text-lightgrey">
-                docs
+              telegram
                 <ArrowUpRightIcon
                   className="w-4 h-4 mb-1 -ml-1"
                   style={{ display: "inline" }}
