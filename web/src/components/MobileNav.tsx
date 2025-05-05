@@ -62,10 +62,11 @@ export default function MobileNav(props: MobileNavProps) {
             <a
               target="_blank"
               rel="noopener noreferrer"
-              href="https://play-starforge.gitbook.io/starforge"
+              // href="https://play-starforge.gitbook.io/starforge"
+              href="https://t.me/+Js2_GaKRbkBkZGE5"
             >
               <div className="relative pb-8 cursor-pointer">
-                DOCS
+                TELEGRAM
                 <ArrowUpRightIcon
                   className="w-4 h-4 mb-2"
                   style={{ display: "inline" }}
