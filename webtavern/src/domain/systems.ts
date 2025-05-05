@@ -74,7 +74,7 @@ const systems: GameSystem[] = [
         "name": "canPlayerPerformJob",
         "description": "Perform a Skill Check for the player to see if they can perform a job.",
         // "parameters": ["id: string", "name: string", "description: string", "resource: string", "skill: string", "ratePerHour: number"]
-      },      
+      },
       {
         "name": "finishJob",
         "description": "Finish a job and collect the resources.",
