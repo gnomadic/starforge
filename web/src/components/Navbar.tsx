@@ -65,10 +65,11 @@ export default function Navbar() {
                 <a
                   target="_blank"
                   rel="noopener noreferrer"
-                  href="https://play-starforge.gitbook.io/starforge"
+                  // href="https://play-starforge.gitbook.io/starforge"
+                  href="https://t.me/+Js2_GaKRbkBkZGE5"
                 >
                   <div className="relative cursor-pointer">
-                    DOCS
+                  TELEGRAM
                     <ArrowUpRightIcon
                       className="h-3 mb-2 "
                       style={{ display: "inline" }}
