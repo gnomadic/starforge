@@ -60,7 +60,7 @@ module.exports = async (hre) => {
 
 
 
-  const Planet = await deploy("Planet", {
+  const Planet = await deploy("PlanetVAlpha", {
     from: deployer,
     log: true,
     args: [PlanetRenderer.address, SystemController.address],
@@ -160,8 +160,8 @@ module.exports = async (hre) => {
   const SysControllerDeployment = await deployments.get("SystemController");
   const deployedSysController = await ethers.getContractAt("SystemController", SysControllerDeployment.address);
 
-  const PlanetDeployment = await deployments.get("Planet");
-  const deployedPlanet = await ethers.getContractAt("Planet", PlanetDeployment.address);
+  const PlanetDeployment = await deployments.get("PlanetVAlpha");
+  const deployedPlanet = await ethers.getContractAt("PlanetVAlpha", PlanetDeployment.address);
 
   const upgradesSystemDeployment = await deployments.get("UpgradesSystem");
   const deployedUpgradesSystem = await ethers.getContractAt("UpgradesSystem", upgradesSystemDeployment.address);
@@ -250,16 +250,16 @@ module.exports = async (hre) => {
   if (chainId !== "31337" && hre.network.name !== "localhost" && hre.network.name !== "1337") {
     console.log("verifing");
 
-    await verify(hre, Planet.address, "Planet", "", [Planet.address]);
+    await verify(hre, Planet.address, "PlanetVAlpha", "", [Planet.address]);
 
   }
 
   console.log('mint because metamask is annoying on localhost');
 
-  tx = await deployedPlanet.mint("0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266")
+  tx = await deployedPlanet.mint("0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266")//, {value: hre.ethers.parseEther("0.05")})
   await tx.wait();
 
-  tx = await deployedPlanet.mint("0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266")
+  tx = await deployedPlanet.mint("0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266")//, {value: hre.ethers.parseEther("0.05")})
   await tx.wait();
 
 

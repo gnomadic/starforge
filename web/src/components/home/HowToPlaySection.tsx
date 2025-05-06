@@ -13,34 +13,35 @@ const HowToPlaySection: React.FC = () => {
   const features: FeaturePoint[] = [
     {
       title: "Scan and discover planets",
-      description: "discover your planet",
+      description: "Each planet is a unique NFT, completely generated onchain",
       position: "top-left"
     },
     {
-      title: "Terraform and establish life",
-      description: "discover your planet",
+      title: "Check your planet stats",
+      description: "Each planet has unique stats and traits, generated randomly during minting",
+      position: "left"
+    },
+    {
+      title: "Perform Jobs to collect resources",
+      description: "Jobs give resources to help rebuild your planet and will level up your skills",
       position: "top-right"
     },
     {
-      title: "Special Operations for the council",
+      title: "Quests are coming soon",
       description: "discover your planet",
       position: "right"
     },
     {
-      title: "Go on Ventures into the unknown",
+      title: "Artifacts are coming soon",
       description: "discover your planet",
       position: "bottom-right"
     },
     {
-      title: "Send Probes to clear up the unknown",
+      title: "Combat is coming soon",
       description: "discover your planet",
       position: "bottom-left"
     },
-    {
-      title: "Collect artifacts in your museum, and trade them on the market",
-      description: "discover your planet",
-      position: "left"
-    }
+
   ];
 
   return (
