@@ -3,20 +3,19 @@ pragma solidity ^0.8.24;
 
 import "../../lib/ERC721A/contracts/extensions/ERC721AQueryable.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import {Renderable721} from "./interfaces/Renderable721.sol";
 import {Base64} from "@openzeppelin/contracts/utils/Base64.sol";
 import {Strings} from "@openzeppelin/contracts/utils/Strings.sol";
 import {ISystemController} from "../systems/interfaces/ISystem.sol";
 
-contract Planet is ERC721AQueryable, Renderable721, Ownable {
+contract PlanetVAlpha is ERC721AQueryable, Renderable721, Ownable {
     using Strings for uint256;
 
     uint256 public nextTokenId;
 
-    uint256 public mintCost = 0;
-    uint256 public customizeCost = 0; // 5 * 10 ** 15;
+    uint256 public mintCost = 0; //5 * 10 ** 16;
 
-    // address[] public systems;
     ISystemController public systemController;
 
     constructor(
@@ -24,14 +23,18 @@ contract Planet is ERC721AQueryable, Renderable721, Ownable {
         address systems
     )
         Renderable721(renderer)
-        ERC721A("ENTROPICAL | PLANET", "Planet")
+        ERC721A("STARFORGE | ALPHA TEST PLANET", "ALPHA Planet")
         Ownable(_msgSender())
     {
         systemController = ISystemController(systems);
     }
 
     function mint(address to) external payable {
-        if (msg.value < mintCost) revert("Not enough ETH sent");
+        if (msg.value != mintCost) revert MintFee();
+        _mint(to);
+    }
+
+    function ownerMint(address to) external onlyOwner {
         _mint(to);
     }
 
@@ -56,10 +59,10 @@ contract Planet is ERC721AQueryable, Renderable721, Ownable {
 
         bytes memory dataURI = abi.encodePacked(
             "{",
-            '"name": "ENTROPICAL | PLANET #',
+            '"name": "STARFORGE | ALPHA PLANET #',
             tokenId.toString(),
             '",',
-            '"description": "Forge the future",',
+            '"description": "Forge the future.",',
             '"image": "',
             generateCharacter(tokenId),
             '"',
@@ -77,9 +80,9 @@ contract Planet is ERC721AQueryable, Renderable721, Ownable {
     function contractURI() public view returns (string memory) {
         bytes memory dataURI = abi.encodePacked(
             "{",
-            '"name": "ENTROPICAL | PLANETS",',
-            '"description": "play ENTROPICAL.  Forge your planet in this incremental onchain game.",',
-            '"external_url": "nope",',
+            '"name": "STARFORGE | ALPHA PLANET #',
+            '"description": "play STARFORGE.  Forge your planet in this onchain RPG built using the Tavern Protocol.  This collection is for Alpha Testing of the protocols.abi",',
+            '"external_url": "https://www.playstarforge.com/",',
             '"image": "',
             generateCharacter(0),
             '"',
@@ -102,5 +105,20 @@ contract Planet is ERC721AQueryable, Renderable721, Ownable {
         mintCost = newPrice;
     }
 
+    function withdraw() external onlyOwner {
+        uint256 balance = address(this).balance;
+        (bool success, ) = payable(owner()).call{value: balance}("");
+        require(success, "Transfer failed.");
+    }
+
+    function withdrawToken(address token, uint256 amount) external onlyOwner {
+        require(token != address(0), "Invalid token address");
+        require(amount > 0, "Amount must be greater than 0");
+
+        IERC20(token).transfer(owner(), amount);
+    }
+
     error NotMinted();
+    error MintFee();
+    error TooMany();
 }

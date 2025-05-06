@@ -10,7 +10,7 @@ const deployments = hre.deployments;
 async function main() {
   await deployments.fixture(["engine"]);
 
-  let contract = await getDeployedContract("Planet");
+  let contract = await getDeployedContract("PlanetVAlpha");
   console.log("connected");
 
   const amount_to_generate = 20;

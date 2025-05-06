@@ -94,13 +94,21 @@ const MintSection: React.FC<MintSectionProps> = ({ className }) => {
 
       <div className="w-full max-w-5xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          <div className="reveal-on-scroll">
+          <div className="reveal-on-scroll glass rounded-lg p-6">
             <span className="px-3 py-1 text-xs font-medium tracking-wider uppercase bg-primary/30 text-primary rounded-full">Unlimited Collection</span>
             <h2 className="mt-6 text-4xl md:text-5xl font-mono font-bold leading-tight">
               Scan for a new planet
             </h2>
             <p className="mt-6 text-lg text-white/70 leading-relaxed font-signika">
               Each Planet is generated completely onchain.
+            </p>
+
+            <p className="mt-6 text-lg text-white/70 leading-relaxed font-signika">
+              During the beta:
+              <ul className="list-disc list-inside">
+                <li>Minting is free</li>
+                <li>Each wallet can only hold one planet</li>
+                </ul>
             </p>
 
             <div className="mt-8 grid grid-cols-1 gap-4">
@@ -117,7 +125,10 @@ const MintSection: React.FC<MintSectionProps> = ({ className }) => {
               ))} */}
 
               {/* <div className="bg-white/5 border border-white/10 rounded-lg px-4 py-2 font-signika"> */}
-              <div className="glass rounded-lg px-4 py-2 font-signika">
+
+
+              {/* this one is real */}
+              {/* <div className="glass rounded-lg px-4 py-2 font-signika">
 
                 <HueControl
                   reset={() => {
@@ -131,7 +142,12 @@ const MintSection: React.FC<MintSectionProps> = ({ className }) => {
                     planetColorChange(h, planetTwo, planetThree);
                   }}
                 />
-              </div>
+              </div> */}
+
+              {/* end real one */}
+
+
+
               {/* <div className="bg-white/5 border border-white/10 rounded-lg px-4 py-2 font-signika">
               
                 <HueControl
@@ -193,7 +209,8 @@ const MintSection: React.FC<MintSectionProps> = ({ className }) => {
 
               <div className="flex items-center justify-between mb-6 bg-black/20 rounded-lg p-3 border border-white/5">
                 <span className="text-white/70">Price per NFT</span>
-                <span className="font-medium">{price} ETH</span>
+                <span className="font-medium"> FREE </span>
+                {/* <span className="font-medium">{price} ETH</span> */}
               </div>
 
 
