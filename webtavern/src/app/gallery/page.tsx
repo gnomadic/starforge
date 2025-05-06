@@ -10,8 +10,8 @@ const galleryItems = [
         id: 1,
         title: "S T A R F O R G E",
         creator: "gn0madic",
-        image: "https://starforge-git-main-gnomadics-projects.vercel.app/blackhole.svg",
-        link: "https://starforge-git-main-gnomadics-projects.vercel.app/"
+        image: "https://www.playstarforge.com/blackhole.svg",
+        link: "https://www.playstarforge.com",
     },
 
 ];
