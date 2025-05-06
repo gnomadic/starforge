@@ -123,7 +123,7 @@ const systems: GameSystem[] = [
   {
     "id": "combat",
     "name": "Combat System",
-    "description": "Handles PvE and PvP combat between planets. Outcomes depend on stats, equipment, and randomness. Combat may yield loot and experience.",
+    "description": "Handles PvE combat. Outcomes depend on stats, equipment, and randomness. Combat may yield loot and experience.",
     "icon": "⚔️",
     "color": "#c0392b",
     "functions": [
@@ -141,6 +141,34 @@ const systems: GameSystem[] = [
     "icon": "🗿",
     "color": "#8e44ad",
     "functions": [
+      {
+        "name": "Coming Soon",
+        "description": "This System is coming soon. Stay tuned for updates!",
+        // "parameters": []
+      },
+        ]
+      },
+      {
+        "id": "pvp",
+        "name": "PVP Combat System",
+        "description": "Handles player-versus-player combat. Players can engage in battles, tournaments, or duels. Outcomes depend on stats, equipment, and randomness.",
+        "icon": "🥊",
+        "color": "#8e44ad",
+        "functions": [
+      {
+        "name": "Coming Soon",
+        "description": "This System is coming soon. Stay tuned for updates!",
+        // "parameters": []
+      },
+        ]
+      },
+      {
+        "id": "guild",
+        "name": "Guild System",
+        "description": "Manages player guilds or factions. Players can join or create guilds, participate in guild events, and earn rewards.",
+        "icon": "🏰",
+        "color": "#8e44ad",
+        "functions": [
       {
         "name": "Coming Soon",
         "description": "This System is coming soon. Stay tuned for updates!",
