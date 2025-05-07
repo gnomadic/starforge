@@ -11,6 +11,9 @@ importers:
       '@farcaster/frame-sdk':
         specifier: ^0.0.38
         version: 0.0.38(typescript@5.7.2)(zod@3.24.2)
+      '@farcaster/frame-wagmi-connector':
+        specifier: ^0.0.26
+        version: 0.0.26(@farcaster/frame-sdk@0.0.38(typescript@5.7.2)(zod@3.24.2))(@wagmi/core@2.15.2(@tanstack/query-core@5.62.2)(@types/react@18.3.12)(react@18.3.1)(typescript@5.7.2)(use-sync-external-store@1.2.2(react@18.3.1))(viem@2.21.53(bufferutil@4.0.8)(typescript@5.7.2)(utf-8-validate@5.0.10)(zod@3.24.2)))(viem@2.21.53(bufferutil@4.0.8)(typescript@5.7.2)(utf-8-validate@5.0.10)(zod@3.24.2))
       '@headlessui/react':
         specifier: ^1.7.18
         version: 1.7.19(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -1131,6 +1134,13 @@ packages:
 
   '@farcaster/frame-sdk@0.0.38':
     resolution: {integrity: sha512-CGrxO7Mv+Bs7QexEqkE5YbRw7eAiUwOefU1eqbHZ5JhjGlSHaCfIq3Lm8MMcWqBb7CyDVEYFDQkUWw0hjlrzTQ==}
+
+  '@farcaster/frame-wagmi-connector@0.0.26':
+    resolution: {integrity: sha512-tikJZS2U5OnyAzlmS9B185TdGl3q7dLc9nB7ms1hcFDFs7WB5e/0WY+IKQw/h4fZRf/56beBiBg5Abo8sNbchw==}
+    peerDependencies:
+      '@farcaster/frame-sdk': ^0.0.38
+      '@wagmi/core': ^2.14.1
+      viem: ^2.21.55
 
   '@fastify/busboy@2.1.1':
     resolution: {integrity: sha512-vBZP4NlzfOlerQTnba4aqZoMhE/a9HY7HRqoOPaETQcSQuWEIyZMHGfVu6w9wGtGK5fED5qRs2DteVCjOH60sA==}
@@ -8325,6 +8335,12 @@ snapshots:
     transitivePeerDependencies:
       - typescript
       - zod
+
+  '@farcaster/frame-wagmi-connector@0.0.26(@farcaster/frame-sdk@0.0.38(typescript@5.7.2)(zod@3.24.2))(@wagmi/core@2.15.2(@tanstack/query-core@5.62.2)(@types/react@18.3.12)(react@18.3.1)(typescript@5.7.2)(use-sync-external-store@1.2.2(react@18.3.1))(viem@2.21.53(bufferutil@4.0.8)(typescript@5.7.2)(utf-8-validate@5.0.10)(zod@3.24.2)))(viem@2.21.53(bufferutil@4.0.8)(typescript@5.7.2)(utf-8-validate@5.0.10)(zod@3.24.2))':
+    dependencies:
+      '@farcaster/frame-sdk': 0.0.38(typescript@5.7.2)(zod@3.24.2)
+      '@wagmi/core': 2.15.2(@tanstack/query-core@5.62.2)(@types/react@18.3.12)(react@18.3.1)(typescript@5.7.2)(use-sync-external-store@1.2.2(react@18.3.1))(viem@2.21.53(bufferutil@4.0.8)(typescript@5.7.2)(utf-8-validate@5.0.10)(zod@3.24.2))
+      viem: 2.21.53(bufferutil@4.0.8)(typescript@5.7.2)(utf-8-validate@5.0.10)(zod@3.24.2)
 
   '@fastify/busboy@2.1.1': {}
 
