@@ -3,7 +3,7 @@ pragma solidity ^0.8.24;
 
 import {Context} from "@openzeppelin/contracts/utils/Context.sol";
 import {ISystem, ISystemController} from "./systems/interfaces/ISystem.sol";
-// import { console } from "hardhat/console.sol";
+// import {console} from "hardhat/console.sol";
 
 import {IScenario, Scenario} from "./Scenario.sol";
 
@@ -41,8 +41,15 @@ contract ScenarioFactory is Context {
         );
         // console.log("entities %s", entities[0]);
         ISystem[] memory systems = systemController.getSystems();
+        // console.log("systems legnth %s", systems.length);
 
-        newScenario.initialize(_msgSender(), address(systemController), metadataURI, systems, entities);
+        newScenario.initialize(
+            _msgSender(),
+            address(systemController),
+            metadataURI,
+            systems,
+            entities
+        );
 
         emit ScenarioDeployed(msg.sender, address(newScenario));
 
@@ -54,7 +61,7 @@ contract ScenarioFactory is Context {
     function getActivePlayerScenarios(
         address player
     ) external view returns (IScenario[] memory) {
-                // console.log("getting active scenarios?");
+        // console.log("getting active scenarios?");
 
         PlayerScenario[] memory playerScenarios = players[player];
         uint256 activeCount = 1;
@@ -67,12 +74,10 @@ contract ScenarioFactory is Context {
         }
 
         // console.log("there are %s active scenarios", activeCount);
-        
 
         IScenario[] memory activeScenarios = new IScenario[](activeCount);
         activeScenarios[0] = scenarios[0]; //Every player always has the first scenario
         uint256 index = 1;
-
 
         for (uint256 i = 0; i < playerScenarios.length; i++) {
             if (playerScenarios[i].active) {
@@ -90,8 +95,12 @@ contract ScenarioFactory is Context {
         bool active;
     }
 
-    function getAllScenarioData(address player) external view returns (ScenarioData[] memory) {
-        ScenarioData[] memory scenarioDataArray = new ScenarioData[](scenarios.length);
+    function getAllScenarioData(
+        address player
+    ) external view returns (ScenarioData[] memory) {
+        ScenarioData[] memory scenarioDataArray = new ScenarioData[](
+            scenarios.length
+        );
 
         for (uint256 i = 0; i < scenarios.length; i++) {
             bool activated = (i == 0) || players[player][i].active;

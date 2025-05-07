@@ -4,6 +4,7 @@ import { Card, CardContent, CardTitle, CardDescription } from "../ui/card";
 import { Pagination, PaginationContent, PaginationItem, PaginationPrevious, PaginationLink, PaginationNext } from "../ui/pagination";
 import { cn } from "@/lib/utils";
 import MintPreview from "../mint/MintPreview";
+import { useEffect } from "react";
 
 
 
@@ -16,9 +17,17 @@ interface NFTGridProps {
 
 export function NFTGrid(props: NFTGridProps) {
 
+
+  useEffect(() => {
+    if (props.heldTokenIds && props.heldTokenIds.length > 0) {
+      props.setSelectedTokenId(props.heldTokenIds[0]);
+    }
+  }
+    , [props.heldTokenIds, props.setSelectedTokenId]);
+
   return match(props.heldTokenIds)
     .with([], () => <EmptyNFTs />)
-    .with([P.select()], (singleNFT) => <EmptyNFTs />)
+    // .with([P.select()], (singleNFT) => <EmptyNFTs />)
     .otherwise(() => (
       <ManyNFTs
         selectedTokenId={props.selectedTokenId}
@@ -47,6 +56,8 @@ export function EmptyNFTs() {
 }
 
 
+
+
 export function ManyNFTs({ selectedTokenId, setSelectedTokenId, heldTokenIds }: NFTGridProps) {
   return (
     <div className="backdrop-blur-sm">
@@ -57,7 +68,7 @@ export function ManyNFTs({ selectedTokenId, setSelectedTokenId, heldTokenIds }: 
             <CardTitle>Your NFTs</CardTitle>
             <CardDescription>Select an NFT to view details</CardDescription>
           </div>
-          <div>
+          {/* <div>
             <Pagination>
               <PaginationContent>
                 <PaginationItem>
@@ -74,7 +85,7 @@ export function ManyNFTs({ selectedTokenId, setSelectedTokenId, heldTokenIds }: 
                 </PaginationItem>
               </PaginationContent>
             </Pagination>
-          </div>
+          </div> */}
         </div>
         <CardContent>
           <div className="grid grid-cols-12 gap-3">

@@ -8,6 +8,9 @@ module.exports = async (hre) => {
   const chainId = await getChainId();
 
 
+  const redo = false;
+
+
   // ------------------------------------- deploy
 
   console.log("----- deploying")
@@ -168,6 +171,7 @@ module.exports = async (hre) => {
 
 // --- tokens
 
+if (!redo) {
 
   let tx = await deployedSysController.setTokenAddress(Planet.address);
   await tx.wait();
@@ -183,7 +187,7 @@ module.exports = async (hre) => {
 
   tx = await deployedSysController.registerSystem(JobSystem.address);
   await tx.wait();
-
+}
 
   console.log("----- done")
 
@@ -210,6 +214,8 @@ module.exports = async (hre) => {
 
   console.log("----- configuring renderer")
 
+  if (!redo){
+
   tx = await deployedRenderer.addStepRenderer(SkyRenderer.address);
   await tx.wait();
   tx = await deployedRenderer.addStepRenderer(FunkRenderer.address);
@@ -219,6 +225,7 @@ module.exports = async (hre) => {
   tx = await deployedRenderer.addStepRenderer(SilhouetteRenderer.address);
   await tx.wait();
   
+  }
 
   console.log("----- done")
 
@@ -250,17 +257,25 @@ module.exports = async (hre) => {
   if (chainId !== "31337" && hre.network.name !== "localhost" && hre.network.name !== "1337") {
     console.log("verifing");
 
-    await verify(hre, Planet.address, "PlanetVAlpha", "", [Planet.address]);
+    await verify(hre, Planet.address, "PlanetVAlpha", "tokens/", [PlanetRenderer.address, SystemController.address]);
+    await verify(hre, SystemController.address, "SystemController", "systems/", []);
+    await verify(hre, ScenarioFactory.address, "ScenarioFactory", "", [SystemController.address]);
+    await verify(hre, Scenario.address, "Scenario", "", []);
+    await verify(hre, PlanetStats.address, "PlanetStatsSystem", "systems/", []);
+    await verify(hre, SupplySystem.address, "SupplySystem", "systems/", [SupplyTokenFactory.address]);
+    await verify(hre, JobSystem.address, "JobSystem", "systems/", []);
+    await verify(hre, "0xeDb12e94f8D3b2C30CeAfCE938C6B1B2806DbDc9", "JobEntity", "entities/", []);
+
 
   }
 
-  console.log('mint because metamask is annoying on localhost');
+  // console.log('mint because metamask is annoying on localhost');
 
-  tx = await deployedPlanet.mint("0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266")//, {value: hre.ethers.parseEther("0.05")})
-  await tx.wait();
+  // tx = await deployedPlanet.mint("0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266")//, {value: hre.ethers.parseEther("0.05")})
+  // await tx.wait();
 
-  tx = await deployedPlanet.mint("0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266")//, {value: hre.ethers.parseEther("0.05")})
-  await tx.wait();
+  // tx = await deployedPlanet.mint("0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266")//, {value: hre.ethers.parseEther("0.05")})
+  // await tx.wait();
 
 
 };

@@ -19,7 +19,7 @@ contract TestJobSystem is StarForgeTest {
     }
 
     function testNoActiveJobFinishJob() public {
-        vm.expectRevert(JobSystem.NoTimePassed.selector);
+        vm.expectRevert(JobSystem.NoActiveJob.selector);
         jobSystem.finishJob(regenScenario, testTokenId);
     }
 

@@ -3,12 +3,13 @@ pragma solidity ^0.8.24;
 
 import {ScenarioFactory} from "../ScenarioFactory.sol";
 import {Scenario} from "../Scenario.sol";
-// import {console} from "hardhat/console.sol";
 import {PlanetStatsEntity} from "../entities/PlanetStatsEntity.sol";
 import {SupplyEntity} from "../entities/SupplyEntity.sol";
 import {SystemController} from "../systems/SystemController.sol";
 import {SupplySystem} from "../systems/SupplySystem.sol";
 import {JobEntity} from "../entities/JobEntity.sol";
+
+// import {console} from "hardhat/console.sol";
 
 contract RegenScenario {
     ScenarioFactory factory;
@@ -38,8 +39,11 @@ contract RegenScenario {
             scenario.systemController()
         );
 
+        // console.log("loading stats");
         loadStats(scenario, controller);
+        // console.log("loading supply");
         loadSupply(scenario, controller);
+        // console.log("loading jobs");
         loadJobs(scenario, controller);
     }
 
@@ -212,9 +216,8 @@ contract RegenScenario {
         statSetNames[4] = "Density";
         statSetNames[5] = "Anomaly";
 
-        // console.log("setting rarity");
         planetStatsEntity.setStatSetRarityOdds(rarityOdds);
-        // console.log("creating gatcha stats");
+
         planetStatsEntity.createGatchaStatSet(
             "Core Stats",
             startingValue,

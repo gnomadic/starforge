@@ -34,13 +34,13 @@ export const Deployments: { [key: string]: Deployment } = {
   },
 
   sepolia: {
-    Planet: "0x5b86FB4D69e54A9dA602cECC4Cb6748E022f2768",
-    SystemController: "0x749F0dB61d26F454539b8a94566e0d52B5044007",
-    ScenarioFactory: "0xcEEB99fe389d282aF29202cA9fA1c4e7Fa2099FD",
-    PlanetStats: "0x9510D9D1D5a7aef034D897507e792Bf0B09B0B6b",
-    SupplySystem: "0x51AA49eb61EdB5c2B037D417452152d0175B00F9",
-    JobSystem: "0x24f6FD5B0B679c959e8F624767d56B1b7947C104",
-    UpgradesSystem: "0xAd8b2Ec70175c84b4C6C519304487E7b7225bC1b",
+    Planet: "0x944078938b8Eb8Da09Ce02D8317d7BC0cC9DdcBC",
+    SystemController: "0x1F8e15DfDf09f51B49432EDEc0d4dAd5BF7b7b08",
+    ScenarioFactory: "0x49E9c56e2ED38Bab254cb86E6b156625fB3fBdDA",
+    PlanetStats: "0x0249888684F7B03D564D96673711FD1133015CCb",
+    SupplySystem: "0xB4db03b0Cd95D0fCE5A2Fb3f4C7ccF41A6f36FAB",
+    JobSystem: "0x6EAbAdD2e0f8212DdB46f59A3eB993F5513482F3",
+    UpgradesSystem: "0xeD6a0759Cc90237d2ae733F043b23fF399FEE4d9",
 
     displayName: 'Adventure Alchemist',
     currency: 'sep eth',
