@@ -14,17 +14,19 @@ import { sdk } from '@farcaster/frame-sdk'
 
 const queryClient = new QueryClient();
 
-React.useEffect(() => {
-  const initializeSdk = async () => {
-    await sdk.actions.ready();
-  };
-
-  if (queryClient) {
-    initializeSdk();
-  }
-}, [queryClient]);
-
 export function Providers({ children }: { children: React.ReactNode }) {
+
+  React.useEffect(() => {
+    const initializeSdk = async () => {
+      await sdk.actions.ready();
+    };
+  
+    if (queryClient) {
+      initializeSdk();
+    }
+  }, [queryClient]);
+
+
   return (
     <WagmiProvider config={config}>
       <QueryClientProvider client={queryClient} >
