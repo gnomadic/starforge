@@ -66,75 +66,64 @@ const HowToPlaySection: React.FC = () => {
           </p>
         </div>
 
-
-        <div className="relative h-[600px] md:h-[700px] reveal-on-scroll">
-          {/* Center Circle */}
-
-
-          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 rounded-full  flex items-center justify-center z-10 ">
-            <svg viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
-              <radialGradient id="dope" fy='0.5' fx='0.5'>
-                <stop stopColor="hsl(0deg, 0%, 0%)" offset="00%" />
-                <stop stopColor="hsl(219deg, 56%, 31%)" offset="70%" />
-                <stop stopColor="hsl(219deg, 56%, 53%)" offset="90%" />
-                <stop stopColor="hsl(219deg, 56%, 63%)" offset="95%" />
-                <stop stopColor="hsl(219deg, 56%, 83%)" offset="100%" />
-              </radialGradient>
-
-              <circle cx="128" cy="128" r="103" fill="url(#dope)" />
-
-
-            </svg>
-            {/* 
-            <div className="w-40 h-40 rounded-full bg-black/50 backdrop-blur-sm border border-white/10 flex items-center justify-center">
-     
-              <div className="text-center">
-                <div className="w-16 h-16 mx-auto rounded-full bg-gradient-to-br from-primary/80 to-accent/80 flex items-center justify-center mb-2">
-                  <div className="w-8 h-8 rounded-full bg-white/20"></div>
-                </div>
-                
+        <div className="reveal-on-scroll">
+          {/* Mobile Grid View */}
+          <div className="lg:hidden grid grid-cols-2 gap-4">
+            {features.map((feature, index) => (
+              <div key={index} className="bg-gray-800 p-4 rounded-lg border border-gray-700">
+                <h3 className="text-lg font-mono font-bold mb-2">{feature.title}</h3>
+                <p className="text-white/70 text-sm font-signika">{feature.description}</p>
               </div>
-            </div> */}
+            ))}
           </div>
-
-          {/* Connection Lines and Feature Points */}
-          {features.map((feature, index) => {
-            // Calculate positions based on feature.position
-            let positionClasses = "";
-            let lineStyle = {};
-
-            switch (feature.position) {
-              case "top-left":
-                positionClasses = "left-[10%] top-[15%]";
-                break;
-              case "top-right":
-                positionClasses = "right-[10%] top-[15%]";
-                break;
-              case "right":
-                positionClasses = "right-[5%] top-1/2 -translate-y-1/2";
-                break;
-              case "bottom-right":
-                positionClasses = "right-[10%] bottom-[15%]";
-                break;
-              case "bottom-left":
-                positionClasses = "left-[10%] bottom-[15%]";
-                break;
-              case "left":
-                positionClasses = "left-[5%] top-1/2 -translate-y-1/2";
-                break;
-            }
-
-            return (
-              <div key={index} className={cn("absolute max-w-[250px] z-20", positionClasses)}>
-                {/* Feature Box */}
-                <div className="glass rounded-xl p-5 border border-white/10 backdrop-blur-sm"
-                  style={{ animationDelay: `${index * 100 + 500}ms` }}>
-                  <h3 className="text-xl font-medium mb-2 font-mono">{feature.title}</h3>
-                  <p className="text-white/70 text-sm font-signika">{feature.description}</p>
+          {/* Large Screen Cool Circle View */}
+          <div className="hidden lg:block relative h-[600px] md:h-[700px]">
+            {/* Center Circle */}
+            <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 rounded-full flex items-center justify-center z-10">
+              <svg viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
+                <radialGradient id="dope" fy="0.5" fx="0.5">
+                  <stop stopColor="hsl(0deg, 0%, 0%)" offset="00%" />
+                  <stop stopColor="hsl(219deg, 56%, 31%)" offset="70%" />
+                  <stop stopColor="hsl(219deg, 56%, 53%)" offset="90%" />
+                  <stop stopColor="hsl(219deg, 56%, 63%)" offset="95%" />
+                  <stop stopColor="hsl(219deg, 56%, 83%)" offset="100%" />
+                </radialGradient>
+                <circle cx="128" cy="128" r="103" fill="url(#dope)" />
+              </svg>
+            </div>
+            {/* Connection Lines and Feature Points */}
+            {features.map((feature, index) => {
+              let positionClasses = "";
+              switch (feature.position) {
+                case "top-left":
+                  positionClasses = "lg:left-[10%] lg:top-[15%]";
+                  break;
+                case "top-right":
+                  positionClasses = "lg:right-[10%] lg:top-[15%]";
+                  break;
+                case "right":
+                  positionClasses = "lg:right-[5%] lg:top-1/2 lg:-translate-y-1/2";
+                  break;
+                case "bottom-right":
+                  positionClasses = "lg:right-[10%] lg:bottom-[15%]";
+                  break;
+                case "bottom-left":
+                  positionClasses = "lg:left-[10%] lg:bottom-[15%]";
+                  break;
+                case "left":
+                  positionClasses = "lg:left-[5%] lg:top-1/2 lg:-translate-y-1/2";
+                  break;
+              }
+              return (
+                <div key={index} className={cn("absolute max-w-[250px] z-20", positionClasses)}>
+                  <div className="glass rounded-xl p-5 border border-white/10 backdrop-blur-sm">
+                    <h3 className="text-xl font-medium mb-2 font-mono">{feature.title}</h3>
+                    <p className="text-white/70 text-sm font-signika">{feature.description}</p>
+                  </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })}
+          </div>
         </div>
       </div>
     </section>
