@@ -2,6 +2,8 @@
 
 import React from 'react';
 import { cn } from '@/lib/utils';
+import { Button } from '../ui/button';
+import Link from 'next/link';
 
 interface FeaturePoint {
   title: string;
@@ -46,7 +48,7 @@ const HowToPlaySection: React.FC = () => {
 
   return (
     <section id="how-to-play" className="py-24 px-6 overflow-hidden relative">
-      <div className="max-w-6xl mx-auto">
+      <div className="max-w-6xl mx-auto font-mono">
         <div className="text-center mb-20 reveal-on-scroll">
           <span className="px-3 py-1 text-xs font-medium tracking-wider uppercase bg-primary/30 text-primary rounded-full font-signika">The Plan</span>
           <h2 className="mt-6 text-4xl font-mono font-bold">
@@ -55,7 +57,15 @@ const HowToPlaySection: React.FC = () => {
           <p className="mt-6 text-lg text-white/70 max-w-3xl mx-auto font-mono">
             We can&apos;t do it without you.
           </p>
+          <p className='pt-6'>
+            <Link href="https://t.me/+Js2_GaKRbkBkZGE5" target="_blank" rel="noopener noreferrer">
+              <Button>
+                Join our Telegram
+              </Button>
+            </Link>
+          </p>
         </div>
+
 
         <div className="relative h-[600px] md:h-[700px] reveal-on-scroll">
           {/* Center Circle */}

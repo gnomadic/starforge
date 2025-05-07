@@ -10,6 +10,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import SpaceAnimation from '@/components/SpaceAnimation';
+import InDev from '@/components/InDev';
 
 
 const signika = Signika({
@@ -63,6 +64,7 @@ export default function RootLayout({
           <Navbar />
 
           {children}
+          <InDev/>
           <ToastContainer position='bottom-right' />
 
           <Footer />

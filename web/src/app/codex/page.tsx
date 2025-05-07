@@ -3,6 +3,7 @@ import React from 'react';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import PlanetTab from '@/components/codex/PlanetTab';
 import ArtifactTab from '@/components/codex/ArtifactTab';
+import ComingSoon from '@/components/ComingSoon';
 
 const Gallery: React.FC = () => {
 
@@ -24,7 +25,21 @@ const Gallery: React.FC = () => {
             <PlanetTab />
           </TabsContent>
           <TabsContent value="artifacts" className="mt-6">
+
+
+    {!process.env.NEXT_PUBLIC_ENABLE_TESTNETS ? (
+      <div className="min-h-screen text-foreground overflow-x-hidden md:pt-24">
+        <main className="pt-28 pb-20 px-6 max-w-7xl mx-auto">
+          <ComingSoon />
+        </main>
+      </div>
+    ) : (
+
             <ArtifactTab />
+    )}
+
+
+
           </TabsContent>
         </Tabs>
       </main>

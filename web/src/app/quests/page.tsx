@@ -11,6 +11,7 @@ import { Clock, Gem, AlertTriangle, Award } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Quest } from '@/domain/types';
 import { toast } from 'react-toastify';
+import ComingSoon from '@/components/ComingSoon';
 
 // Mock quests data
 const mockQuests: Quest[] = [
@@ -22,7 +23,7 @@ const mockQuests: Quest[] = [
     riskLevel: 'medium',
     supplies: [
       { id: '1', type: 'Bioflux', amount: 40, icon: '⚡', color: 'bg-yellow-500/20', emissionRate: 0.5 },
-      { id: '1', type: 'Hydrocite', amount: 25, icon: '✨', color: 'bg-blue-500/20' , emissionRate: 0.5 },
+      { id: '1', type: 'Hydrocite', amount: 25, icon: '✨', color: 'bg-blue-500/20', emissionRate: 0.5 },
     ],
     rewards: [
       { type: 'xp', amount: 150, name: 'Experience', icon: '📊' },
@@ -38,7 +39,7 @@ const mockQuests: Quest[] = [
     timeRequired: 120, // 2 minutes
     riskLevel: 'high',
     supplies: [
-      { id: '1', type: 'Bioflux', amount: 60, icon: '⚡', color: 'bg-red-500/20' , emissionRate: 0.5 },
+      { id: '1', type: 'Bioflux', amount: 60, icon: '⚡', color: 'bg-red-500/20', emissionRate: 0.5 },
       { id: '1', type: 'Solaris Dust', amount: 35, icon: '💫', color: 'bg-yellow-500/20', emissionRate: 0.5 },
     ],
     rewards: [
@@ -55,7 +56,7 @@ const mockQuests: Quest[] = [
     timeRequired: 90, // 1.5 minutes
     riskLevel: 'low',
     supplies: [
-      { id: '1', type: 'Hydrocite', amount: 25, icon: '⚡', color: 'bg-green-500/20' , emissionRate: 0.5 },
+      { id: '1', type: 'Hydrocite', amount: 25, icon: '⚡', color: 'bg-green-500/20', emissionRate: 0.5 },
       { id: '1', type: 'Solaris Dust', amount: 30, icon: '💰', color: 'bg-yellow-500/20', emissionRate: 0.5 },
     ],
     rewards: [
@@ -72,8 +73,8 @@ const mockQuests: Quest[] = [
     timeRequired: 300, // 5 minutes
     riskLevel: 'extreme',
     supplies: [
-      { id: '1', type: 'Bioflux', amount: 85, icon: '⚡', color: 'bg-purple-500/20' , emissionRate: 0.5 },
-      { id: '1', type: 'Hydrocite', amount: 60, icon: '✨', color: 'bg-red-500/20' , emissionRate: 0.5 },
+      { id: '1', type: 'Bioflux', amount: 85, icon: '⚡', color: 'bg-purple-500/20', emissionRate: 0.5 },
+      { id: '1', type: 'Hydrocite', amount: 60, icon: '✨', color: 'bg-red-500/20', emissionRate: 0.5 },
       { id: '1', type: 'Solaris Dust', amount: 50, icon: '💫', color: 'bg-blue-500/20', emissionRate: 0.5 },
     ],
     rewards: [
@@ -85,11 +86,11 @@ const mockQuests: Quest[] = [
   },
 ];
 
-const QuestCard: React.FC<{ 
-  quest: Quest; 
-  onStart: (quest: Quest) => void; 
-  inProgress: boolean; 
-  progress: number; 
+const QuestCard: React.FC<{
+  quest: Quest;
+  onStart: (quest: Quest) => void;
+  inProgress: boolean;
+  progress: number;
 }> = ({ quest, onStart, inProgress, progress }) => {
   const formatTime = (seconds: number): string => {
     const minutes = Math.floor(seconds / 60);
@@ -126,7 +127,7 @@ const QuestCard: React.FC<{
           <Clock className="w-4 h-4" />
           <span>{formatTime(quest.timeRequired)}</span>
         </div>
-        
+
         <div className="space-y-2">
           <h4 className="text-sm font-medium text-white/80">Required Resources:</h4>
           <div className="flex flex-wrap gap-2">
@@ -137,7 +138,7 @@ const QuestCard: React.FC<{
             ))}
           </div>
         </div>
-        
+
         <div className="space-y-2">
           <h4 className="text-sm font-medium text-white/80">Rewards:</h4>
           <div className="flex flex-wrap gap-2">
@@ -156,8 +157,8 @@ const QuestCard: React.FC<{
             <p className="text-xs text-center text-white/70">Quest in progress: {Math.round(progress)}%</p>
           </div>
         ) : (
-          <Button 
-            onClick={() => onStart(quest)} 
+          <Button
+            onClick={() => onStart(quest)}
             className="w-full"
             variant="outline"
           >
@@ -172,35 +173,35 @@ const QuestCard: React.FC<{
 
 const Quests: React.FC = () => {
   const [activeQuests, setActiveQuests] = useState<Record<string, { progress: number; timer: number }>>({});
-  
+
   const startQuest = (quest: Quest) => {
     // Check if player has enough resources (mock implementation)
     const hasEnoughResources = true; // In a real app, check against player's inventory
-    
+
     if (!hasEnoughResources) {
       toast.error("Not enough resources to start this quest!");
       return;
     }
-    
+
     // Set up quest progress tracking
     setActiveQuests(prev => ({
       ...prev,
       [quest.id]: { progress: 0, timer: quest.timeRequired }
     }));
-    
+
     // Start quest timer
     const intervalId = setInterval(() => {
       setActiveQuests(prev => {
         const current = prev[quest.id];
         if (!current) return prev;
-        
+
         const newProgress = current.progress + (100 / quest.timeRequired);
         const newTimer = current.timer - 1;
-        
+
         // Quest completed
         if (newProgress >= 100) {
           clearInterval(intervalId);
-          
+
           // Determine success based on risk level (mock implementation)
           const successRates: Record<string, number> = {
             'low': 0.9,
@@ -208,59 +209,69 @@ const Quests: React.FC = () => {
             'high': 0.5,
             'extreme': 0.3
           };
-          
+
           const isSuccessful = Math.random() < (successRates[quest.riskLevel] || 0.5);
-          
+
           if (isSuccessful) {
             toast.success(`Quest completed! You earned rewards`, {
-            //   description: quest.rewards.map(r => `${r.icon} ${r.amount} ${r.name}`).join(', ')
+              //   description: quest.rewards.map(r => `${r.icon} ${r.amount} ${r.name}`).join(', ')
             });
           } else {
             toast.error(`Quest failed! The risks were too great`, {
-            //   description: "You lost some resources but gained experience"
+              //   description: "You lost some resources but gained experience"
             });
           }
-          
+
           // Remove from active quests
           const { [quest.id]: _, ...restQuests } = prev;
           return restQuests;
         }
-        
+
         return {
           ...prev,
           [quest.id]: { progress: newProgress, timer: newTimer }
         };
       });
     }, 1000);
-    
+
     toast.info(`Started quest: ${quest.title}`, {
-    //   description: `Time remaining: ${Math.floor(quest.timeRequired / 60)}:${(quest.timeRequired % 60).toString().padStart(2, '0')}`
+      //   description: `Time remaining: ${Math.floor(quest.timeRequired / 60)}:${(quest.timeRequired % 60).toString().padStart(2, '0')}`
     });
   };
-  
+
   return (
-    <div className="min-h-screen text-foreground overflow-x-hidden">
-      
-      <main className="pt-28 pb-20 px-6 max-w-7xl mx-auto">
-        <div className="mb-8">
-          <h1 className="text-4xl font-display font-bold mb-2">Cosmic Quests</h1>
-          <p className="text-white/70">Embark on dangerous missions throughout the cosmos to earn rewards and rare artifacts.</p>
-        </div>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {mockQuests.map(quest => (
-            <QuestCard 
-              key={quest.id} 
-              quest={quest} 
-              onStart={startQuest}
-              inProgress={quest.id in activeQuests}
-              progress={activeQuests[quest.id]?.progress || 0}
-            />
-          ))}
-        </div>
-      </main>
-    </div>
-  );
-};
+    !process.env.NEXT_PUBLIC_ENABLE_TESTNETS ? (
+      <div className="min-h-screen text-foreground overflow-x-hidden md:pt-24">
+        <main className="pt-28 pb-20 px-6 max-w-7xl mx-auto">
+          <ComingSoon />
+        </main>
+      </div>
+    ) : (
+
+      <div className="min-h-screen text-foreground overflow-x-hidden">
+
+        <main className="pt-28 pb-20 px-6 max-w-7xl mx-auto">
+          <div className="mb-8">
+            <h1 className="text-4xl font-display font-bold mb-2">Cosmic Quests</h1>
+            <p className="text-white/70">Embark on dangerous missions throughout the cosmos to earn rewards and rare artifacts.</p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {mockQuests.map(quest => (
+              <QuestCard
+                key={quest.id}
+                quest={quest}
+                onStart={startQuest}
+                inProgress={quest.id in activeQuests}
+                progress={activeQuests[quest.id]?.progress || 0}
+              />
+            ))}
+          </div>
+        </main>
+      </div>
+
+    )
+  )
+}
 
 export default Quests;
