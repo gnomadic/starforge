@@ -5,6 +5,7 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 import {ISystem, ISystemController} from "./interfaces/ISystem.sol";
 import {ScenarioFactory} from "../ScenarioFactory.sol";
 import {IScenario} from "../Scenario.sol";
+
 // import {console} from "hardhat/console.sol";
 
 contract SystemController is Ownable, ISystemController {
@@ -27,10 +28,7 @@ contract SystemController is Ownable, ISystemController {
         systems.push(system);
         systemMap[system.getId()] = system;
         system.registerSystem(address(this));
-        // console.log(
-        //     "system controller: register system %s",
-        //     address(system)
-        // );
+        // console.log("system controller: register system %s", address(system));
     }
 
     function initAll(uint256 tokenId) external onlyToken {

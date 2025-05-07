@@ -102,8 +102,7 @@ contract JobSystem is ISystem {
         );
 
         if (bytes(activeJobId).length == 0) {
-            // TODO better error message
-            revert NoTimePassed();
+            revert NoActiveJob();
         }
 
         Job memory job = entity.getJob(activeJobId);
@@ -114,13 +113,13 @@ contract JobSystem is ISystem {
 
         uint256 secondsLive = block.timestamp - startedAt;
 
-        uint256 hoursLive = secondsLive / 3600;
-        if (hoursLive == 0) {
-            revert NoTimePassed();
+        // uint256 hoursLive = secondsLive / 3600;
+
+        if (secondsLive > job.timeLimit) {
+            secondsLive = job.timeLimit;
         }
-        if (hoursLive > job.timeLimit) {
-            hoursLive = job.timeLimit;
-        }
+
+        uint256 amount = secondsLive * (job.amountPerHour / 3600);
 
         PlanetStatsSystem(address(_systemController.getSystem("STAT")))
             .boostSkill(
@@ -130,8 +129,6 @@ contract JobSystem is ISystem {
                 job.skillSetIndex,
                 job.skillSetBoost
             );
-
-        uint256 amount = hoursLive * job.amountPerHour;
 
         supply.mint(scenario, msg.sender, job.tokenName, amount);
         entity.endJob(tokenId);
@@ -158,4 +155,5 @@ contract JobSystem is ISystem {
     }
 
     error NoTimePassed();
+    error NoActiveJob();
 }

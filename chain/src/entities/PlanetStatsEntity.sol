@@ -2,8 +2,10 @@
 pragma solidity ^0.8.24;
 
 import {IScenario} from "../Scenario.sol";
+
 // import {console} from "hardhat/console.sol";
-import {console} from "forge-std/console.sol";
+
+// import {console} from "forge-std/console.sol";
 
 contract PlanetStatsEntity {
     //let's sketch it out
@@ -162,22 +164,6 @@ contract PlanetStatsEntity {
         //     skillSetIndex,
         //     amount
         // );
-
-        console.log(
-            "boosting skill -%s- %s %s",
-            skillSetName,
-            skillSetIndex,
-            amount
-        );
-
-        console.log("current stats %s", _statSetNames.length);
-        console.log("current 1 -%s-", _statSetNames[0]);
-        console.log("current 2 -%s-", _statSetNames[1]);
-
-        console.log(
-            "current stat %s",
-            _statSets[tokenId][_statSetNames[1]].length
-        );
 
         _statSets[tokenId][skillSetName][skillSetIndex] += amount;
     }
