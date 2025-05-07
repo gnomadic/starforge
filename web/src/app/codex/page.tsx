@@ -27,16 +27,16 @@ const Gallery: React.FC = () => {
           <TabsContent value="artifacts" className="mt-6">
 
 
-    {!process.env.NEXT_PUBLIC_ENABLE_TESTNETS ? (
-      <div className="min-h-screen text-foreground overflow-x-hidden md:pt-24">
-        <main className="pt-28 pb-20 px-6 max-w-7xl mx-auto">
-          <ComingSoon />
-        </main>
-      </div>
-    ) : (
+            {!process.env.NEXT_PUBLIC_ENABLE_TESTNETS ? (
+              <div className="min-h-screen text-foreground overflow-x-hidden md:pt-24">
+                <main className="pt-28 pb-20 px-6 max-w-7xl mx-auto">
+                  <ComingSoon />
+                </main>
+              </div>
+            ) : (
 
-            <ArtifactTab />
-    )}
+              <ArtifactTab />
+            )}
 
 
 

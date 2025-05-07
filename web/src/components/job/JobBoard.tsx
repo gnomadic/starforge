@@ -76,10 +76,10 @@ export default function JobBoard({ }: JobBoardProps) {
     const { data: whichEntity, isLoading, error } = useReadScenarioGetEntity({ args: [deploy.JobSystem], address: scenarios ? scenarios[0] : "0x0" })
 
 
-      const { data: activateJobHash, error: writeError, writeContract: activateJob } = useWriteJobSystemActivateJob();
-      const {data: deactivateJobHash, error: deactivateError, writeContract: finishJob} = useWriteJobSystemFinishJob();
-      const { isLoading: activateJobLoading, isSuccess: activateJobSucesss, data: activateJobData } = useWaitForTransactionReceipt({ hash: activateJobHash })
-    
+    const { data: activateJobHash, error: writeError, writeContract: activateJob } = useWriteJobSystemActivateJob();
+    const { data: deactivateJobHash, error: deactivateError, writeContract: finishJob } = useWriteJobSystemFinishJob();
+    const { isLoading: activateJobLoading, isSuccess: activateJobSucesss, data: activateJobData } = useWaitForTransactionReceipt({ hash: activateJobHash })
+
 
     const { data: allJobs } = useReadJobEntityGetAvailableJobs({
         args: [],
@@ -91,11 +91,11 @@ export default function JobBoard({ }: JobBoardProps) {
         address: deploy.JobSystem
     })
 
-    const {data: activeJob, refetch: refetchActiveJob} = useReadJobEntityGetActiveJob({
+    const { data: activeJob, refetch: refetchActiveJob } = useReadJobEntityGetActiveJob({
         args: [selectedTokenId],
         address: whichEntity
     })
-    
+
 
     const [enabled, setEnabled] = React.useState<boolean[]>([]);
 
@@ -124,61 +124,69 @@ export default function JobBoard({ }: JobBoardProps) {
                 setSelectedTokenId={setSelectedTokenId}
                 selectedTokenId={selectedTokenId}
             />
-            <div>active: {activeJob}</div>
-            <Accordion type="multiple" className="space-y-4">
-                {supplies.map((supply, index) => {
-                    return <AccordionItem
-                        key={index}
-                        value={supply.type}
-                        className="border border-white/10 rounded-lg overflow-hidden glass"
-                    >
-                        <div className="flex flex-row items-center justify-between p-3"
-                            onClick={() => {
-                                const updatedEnabled = [...enabled];
-                                updatedEnabled[index] = !updatedEnabled[index];
-                                setEnabled(updatedEnabled);
-                            }}>
-                            <div className="space-y-0.5">
-                                <div className="flex items-center">
-                                    {supply.icon}
-                                    <p className='pl-2 text-lg font-semibold text-white'>
-                                        {supply.type}
+
+            {held && held.length > 0 ? (
+                <Accordion type="multiple" className="space-y-4">
+                    {supplies.map((supply, index) => {
+                        return <AccordionItem
+                            key={index}
+                            value={supply.type}
+                            className="border border-white/10 rounded-lg overflow-hidden glass"
+                        >
+                            <div className="flex flex-row items-center justify-between p-3"
+                                onClick={() => {
+                                    const updatedEnabled = [...enabled];
+                                    updatedEnabled[index] = !updatedEnabled[index];
+                                    setEnabled(updatedEnabled);
+                                }}>
+                                <div className="space-y-0.5">
+                                    <div className="flex items-center">
+                                        {supply.icon}
+                                        <p className='pl-2 text-lg font-semibold text-white'>
+                                            {supply.type}
+                                        </p>
+                                    </div>
+                                    <p className="text-sm">
+                                        {supply.description}
                                     </p>
                                 </div>
-                                <p className="text-sm">
-                                    {supply.description}
-                                </p>
+                                <ArrowDown
+                                    className="w-5 h-5 text-blue-400 mr-5"
+                                />
                             </div>
-                            <ArrowDown
-                                className="w-5 h-5 text-blue-400 mr-5"
-                            />
-                        </div>
 
-                        <Collapsible open={enabled[index]}>
-                            <CollapsibleContent className="p-4 pt-0 bg-black/20 space-y-4">
-                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 p-6">
-                                    {allJobs?.filter((job) => (job.tokenName === supply.type)).map((job, index) => {
-                                        const isActive = false;
-                                        return (
-                                            <JobCard
-                                                key={job.id}
-                                                job={job}
-                                                activeJobId={activeJob}
-                                                getDecoByResourceType={getDecoByResourceType}
-                                                activate={activateNewJob}
-                                                deactivate={deactivateJob}
-                                            />
-                                        );
-                                    })}
-                                </div>
-                            </CollapsibleContent>
-                        </Collapsible>
-                    </AccordionItem>
+                            <Collapsible open={enabled[index]}>
+                                <CollapsibleContent className="p-4 pt-0 bg-black/20 space-y-4">
+                                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 p-6">
+                                        {allJobs?.filter((job) => (job.tokenName === supply.type)).map((job, index) => {
+                                            const isActive = false;
+                                            return (
+                                                <JobCard
+                                                    key={job.id}
+                                                    job={job}
+                                                    activeJobId={activeJob}
+                                                    getDecoByResourceType={getDecoByResourceType}
+                                                    activate={activateNewJob}
+                                                    deactivate={deactivateJob}
+                                                />
+                                            );
+                                        })}
+                                    </div>
+                                </CollapsibleContent>
+                            </Collapsible>
+                        </AccordionItem>
 
-                })}
+                    })}
 
 
-            </Accordion>
+                </Accordion>
+            ) : (
+                <div className="text-muted-foreground">
+                    Mint your first planet to see available jobs here.
+                </div>
+            )}
+
+
         </section>
     );
 

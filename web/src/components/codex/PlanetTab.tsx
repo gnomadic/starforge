@@ -22,12 +22,7 @@ const PlanetTab: React.FC<PlanetTabProps> = ({ }) => {
   const { data: held } = useReadPlanetTokensOfOwner({ args: [address ? address : zeroAddress], address: deploy.Planet })
 
   return (
-
-
     <div>
-      {/* <div>
-        what: {JSON.stringify(held, bigIntReplacer)}
-      </div> */}
       <NFTGrid
         heldTokenIds={held || []}
         setSelectedTokenId={setSelectedTokenId}
@@ -37,14 +32,12 @@ const PlanetTab: React.FC<PlanetTabProps> = ({ }) => {
         <div>
           {held && held.length > 0 ? (
            <PlanetCard
-           selectedTokenId={BigInt(held[0])} />
+           selectedTokenId={BigInt(selectedTokenId)} />
           ) : (
             <div className="text-muted-foreground">
               Mint your first planet to see its details here.
             </div>
           )}
-          {/* <PlanetCard
-            selectedTokenId={BigInt(selectedTokenId)} /> */}
         </div>
       </div>
     </div>

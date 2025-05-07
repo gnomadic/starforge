@@ -11,6 +11,7 @@ export default function InDev() {
 
     useEffect(() => {
         toast.info('STARFORGE and the Tavern Protocol are in active development!  Everything will change and you will lose progress.')
+        toast.info('Join our telegram and share your wallet address along with your feedback and any bugs you find!')
         }, []);
 
         return (
