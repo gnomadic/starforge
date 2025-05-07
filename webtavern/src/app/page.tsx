@@ -144,7 +144,7 @@ export default function Home() {
               </p>
             </div>
             <Link
-              href='https://5gz89tb0qad.typeform.com/to/s9xvdSP3'>
+              href='https://5gz89tb0qad.typeform.com/to/s9xvdSP3' target="_blank" rel="noopener noreferrer">
               <button
                 className='px-4 py-2 mx-auto mt-8 text-black bg-white rounded-lg'
               >

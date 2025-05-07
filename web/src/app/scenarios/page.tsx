@@ -44,7 +44,7 @@ const Scenarios = () => {
 
           <div>
 
-            <ScenarioSearchBar />
+            {/* <ScenarioSearchBar /> */}
             
             {/* Active Scenario
             {activeScenarioId && (
