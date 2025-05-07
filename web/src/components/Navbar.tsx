@@ -39,7 +39,7 @@ export default function Navbar() {
           : "py-6"
       )}
     >
-      <div className='flex px-2 lg:px-4 min-h-[18] items-center flex-shrink-0 flex-col justify-center'>
+    <div className='flex px-2 lg:px-4 min-h-[18] items-center flex-shrink-0 flex-col justify-center'>
         <div className='flex items-center self-stretch justify-between'>
           <div className='flex items-start'>
             <Link href='/'>

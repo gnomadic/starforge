@@ -74,6 +74,13 @@ export default function MobileNav(props: MobileNavProps) {
               </div>
             </a>
           </li>
+          <li>
+                          <ConnectButton
+                            chainStatus='icon'
+                            accountStatus='avatar'
+                            showBalance={false}
+                          />
+          </li>
         </ul>
       </nav>
     </div>
