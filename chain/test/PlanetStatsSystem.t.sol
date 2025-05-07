@@ -1,40 +1,19 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.24;
 
-import {Test, console} from "forge-std/Test.sol";
-import "../src/systems/PlanetStatsSystem.sol";
-import "../src/entities/PlanetStatsEntity.sol";
-import {MockScenario} from "./mocks/MockScenario.sol";
+import {StarForgeTest} from "./StarForgeTest.sol";
 
-contract TestPlanetStatsSystem is Test {
-    PlanetStatsSystem system;
-    PlanetStatsEntity entity;
-    MockScenario scenario;
-
+contract TestPlanetStatsSystem is StarForgeTest {
     address owner = address(this);
-    uint256 testTokenId = 1;
 
     function setUp() public {
-        scenario = new MockScenario(owner);
-        system = new PlanetStatsSystem(); // using dummy planetAddress
-        // Activate entity via the system – positive path.
-        address entAddr = system.activateEntity(IScenario(address(scenario)));
-        entity = PlanetStatsEntity(entAddr);
-        // Set entity in scenario
-        // Note: we assume scenario.getEntity(systemAddress) returns the entity
-        scenario.setEntity(address(system), entAddr);
-    }
-
-    // registerSystem: Positive test.
-    function test_registerSystem_Positive() public {
-        system.registerSystem(owner);
+        deployment(address(this));
     }
 
     // registerSystem: Negative test (already registered).
     function test_registerSystem_Negative() public {
-        system.registerSystem(owner);
         vm.expectRevert(abi.encodeWithSignature("AlreadyRegistered()"));
-        system.registerSystem(owner);
+        statsSystem.registerSystem(owner);
     }
 
     // init (which calls calculateStatsForMint): Positive test.
@@ -70,15 +49,15 @@ contract TestPlanetStatsSystem is Test {
         odds[2] = 13;
         odds[3] = 25;
         odds[4] = 75;
-        entity.setStatSetRarityOdds(odds);
+        statsEntity.setStatSetRarityOdds(odds);
 
-        entity.createStatSet(
+        statsEntity.createStatSet(
             "DEFAULT",
             defStart,
             new uint16[](3),
             new string[](3)
         );
-        entity.createGatchaStatSet(
+        statsEntity.createGatchaStatSet(
             "GATCHA",
             gachStart,
             gachAvail,
@@ -86,25 +65,23 @@ contract TestPlanetStatsSystem is Test {
             new string[](3)
         );
 
-        system.init(
-            ISystemController(address(0)),
-            IScenario(address(scenario)),
-            testTokenId
-        );
         // Check that "RARITY" stat set has been set (positive).
-        uint16[] memory raritySet = entity.getStatSet(testTokenId, "RARITY");
+        uint16[] memory raritySet = statsEntity.getStatSet(
+            testTokenId,
+            "RARITY"
+        );
         assertGt(raritySet.length, 0);
     }
 
     // sync: trivial positive test.
     function test_sync_Positive() public {
-        system.sync(testTokenId);
+        statsSystem.sync(testTokenId);
         // No state change expected.
     }
 
     // getId: Positive test
     function test_getId_Positive() public view {
-        string memory id = system.getId();
+        string memory id = statsSystem.getId();
         assertEq(id, "STAT");
     }
 
@@ -115,10 +92,10 @@ contract TestPlanetStatsSystem is Test {
         stats[0] = 10;
         stats[1] = 15;
         stats[2] = 20;
-        entity.setStatSet(testTokenId, "SKILL", stats);
+        statsEntity.setStatSet(testTokenId, "SKILL", stats);
         // Positive: meets requirement 15 at index 1.
-        bool checkOk = system.checkSkill(
-            IScenario(address(scenario)),
+        bool checkOk = statsSystem.checkSkill(
+            regenScenario,
             testTokenId,
             "SKILL",
             1,
@@ -126,8 +103,8 @@ contract TestPlanetStatsSystem is Test {
         );
         assertTrue(checkOk);
         // Negative: requirement higher than current value.
-        bool checkFail = system.checkSkill(
-            IScenario(address(scenario)),
+        bool checkFail = statsSystem.checkSkill(
+            regenScenario,
             testTokenId,
             "SKILL",
             1,
@@ -143,16 +120,10 @@ contract TestPlanetStatsSystem is Test {
         stats[0] = 5;
         stats[1] = 5;
         stats[2] = 5;
-        entity.setStatSet(testTokenId, "SKILL", stats);
+        statsEntity.setStatSet(testTokenId, "SKILL", stats);
         // Boost skill index 1 by 10.
-        system.boostSkill(
-            IScenario(address(scenario)),
-            testTokenId,
-            "SKILL",
-            1,
-            10
-        );
-        uint16[] memory newStats = entity.getStatSet(testTokenId, "SKILL");
+        statsSystem.boostSkill(regenScenario, testTokenId, "SKILL", 1, 10);
+        uint16[] memory newStats = statsEntity.getStatSet(testTokenId, "SKILL");
         assertEq(newStats[1], 15);
     }
 
@@ -164,15 +135,9 @@ contract TestPlanetStatsSystem is Test {
         stats[0] = 5;
         stats[1] = 5;
         stats[2] = 5;
-        entity.setStatSet(testTokenId, "SKILL", stats);
+        statsEntity.setStatSet(testTokenId, "SKILL", stats);
         vm.prank(address(0xBEEF));
         vm.expectRevert();
-        system.boostSkill(
-            IScenario(address(scenario)),
-            testTokenId,
-            "SKILL",
-            1,
-            10
-        );
+        statsSystem.boostSkill(regenScenario, testTokenId, "SKILL", 1, 10);
     }
 }

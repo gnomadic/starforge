@@ -5,6 +5,8 @@ import {ISystem, ISystemController} from "./interfaces/ISystem.sol";
 import {IScenario} from "../Scenario.sol";
 import {PlanetStatsEntity} from "../entities/PlanetStatsEntity.sol";
 
+// import {console} from "forge-std/console.sol";
+
 // import {console} from "hardhat/console.sol";
 
 contract PlanetStatsSystem is ISystem {
@@ -199,26 +201,26 @@ contract PlanetStatsSystem is ISystem {
         string memory skillSetName,
         uint8 skillSetIndex,
         uint16 amount
-    ) external {
-        if (
-            msg.sender != scenario.getAdmin() && msg.sender != _systemController
-        ) {
-            revert NotScenario();
-        }
-
+    ) external onlySystemAndAdmin(scenario) {
         PlanetStatsEntity entity = PlanetStatsEntity(
             scenario.getEntity(address(this))
         );
-        // if (msg.sender != scenario.getAdmin() && msg.sender != _systemController) {
-        //     revert NotScenarioAdmin();
-        // }
-        // console.log(
-        //     "PlanetStatsSystem: boostSkill: entityAddress: %s and tokenId: %s",
-        //     address(entity),
-        //     tokenId
-        // );
+
         entity.boostSkill(tokenId, skillSetName, skillSetIndex, amount);
     }
 
     error NotScenario();
+
+    modifier onlySystemAndAdmin(IScenario _scenario) {
+        if (
+            ISystemController(_systemController).isSystem(msg.sender) ==
+            false &&
+            msg.sender != _scenario.getAdmin()
+        ) {
+            revert NotSystem();
+        }
+        _;
+    }
+
+    error NotSystem();
 }

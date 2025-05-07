@@ -7,6 +7,7 @@ import { useAccount } from "wagmi";
 import { useDeployment } from "@/hooks/useDeployment";
 import { zeroAddress } from 'viem';
 import PlanetCard from '@/components/codex/PlanetCard';
+import { bigIntReplacer } from '@/domain/utils';
 
 interface PlanetTabProps {
 
@@ -21,7 +22,12 @@ const PlanetTab: React.FC<PlanetTabProps> = ({ }) => {
   const { data: held } = useReadPlanetTokensOfOwner({ args: [address ? address : zeroAddress], address: deploy.Planet })
 
   return (
-    <>
+
+
+    <div>
+      {/* <div>
+        what: {JSON.stringify(held, bigIntReplacer)}
+      </div> */}
       <NFTGrid
         heldTokenIds={held || []}
         setSelectedTokenId={setSelectedTokenId}
@@ -29,11 +35,20 @@ const PlanetTab: React.FC<PlanetTabProps> = ({ }) => {
       />
       <div className="grid grid-cols-1  gap-8 pt-8">
         <div>
-          <PlanetCard
-            selectedTokenId={BigInt(selectedTokenId)} />
+          {held && held.length > 0 ? (
+           <PlanetCard
+           selectedTokenId={BigInt(held[0])} />
+          ) : (
+            <div className="text-muted-foreground">
+              Mint your first planet to see its details here.
+            </div>
+          )}
+          {/* <PlanetCard
+            selectedTokenId={BigInt(selectedTokenId)} /> */}
         </div>
       </div>
-    </>
+    </div>
+
   );
 };
 

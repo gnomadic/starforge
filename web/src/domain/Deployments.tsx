@@ -33,6 +33,24 @@ export const Deployments: { [key: string]: Deployment } = {
     viemTransport: http(`https://base-sepolia.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_ALCHEMY_API_KEY}`),
   },
 
+  sepolia: {
+    Planet: "0x5b86FB4D69e54A9dA602cECC4Cb6748E022f2768",
+    SystemController: "0x749F0dB61d26F454539b8a94566e0d52B5044007",
+    ScenarioFactory: "0xcEEB99fe389d282aF29202cA9fA1c4e7Fa2099FD",
+    PlanetStats: "0x9510D9D1D5a7aef034D897507e792Bf0B09B0B6b",
+    SupplySystem: "0x51AA49eb61EdB5c2B037D417452152d0175B00F9",
+    JobSystem: "0x24f6FD5B0B679c959e8F624767d56B1b7947C104",
+    UpgradesSystem: "0xAd8b2Ec70175c84b4C6C519304487E7b7225bC1b",
+
+    displayName: 'Adventure Alchemist',
+    currency: 'sep eth',
+    chain: 'sepolia',
+    chainId: "84532",
+    scan: "https://sepolia.basescan.org/address/",
+    viemChain: baseSepolia,
+    viemTransport: http(`https://base-sepolia.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_ALCHEMY_API_KEY}`),
+  },
+
   localhost: {
     Planet: "0x2279B7A0a67DB372996a5FaB50D91eAA73d2eBe6",
     SystemController: "0x5FbDB2315678afecb367f032d93F642f64180aa3",
