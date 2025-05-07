@@ -103,13 +103,13 @@ const MintSection: React.FC<MintSectionProps> = ({ className }) => {
               Each Planet is generated completely onchain.
             </p>
 
-            <p className="mt-6 text-lg text-white/70 leading-relaxed font-signika">
-              During the beta:
+            <div className="mt-6 text-lg text-white/70 leading-relaxed font-signika">
+              During the alpha test:
               <ul className="list-disc list-inside">
                 <li>Minting is free</li>
-                <li>Each wallet can only hold one planet</li>
-                </ul>
-            </p>
+                <li>Nothing is permanent</li>
+              </ul>
+            </div>
 
             <div className="mt-8 grid grid-cols-1 gap-4">
               {/* {[
@@ -182,7 +182,7 @@ const MintSection: React.FC<MintSectionProps> = ({ className }) => {
 
             </div>
           </div>
-  
+
 
           <div className="reveal-on-scroll delay-200">
             <div className="glass rounded-2xl p-6 border border-white/10">

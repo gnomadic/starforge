@@ -46,6 +46,10 @@ export default function Navbar() {
               <div className='text-xl text-white font-mono text-center tracking-wider'>
                 S T A R F O R G E
               </div>
+              <div className='text-sm text-white font-mono text-center tracking-wider'>
+                ALPHA
+              </div>
+
             </Link>
           </div>
           <div className='flex items-center justify-center gap-8'>
