@@ -51,14 +51,14 @@ const PlanetStats: React.FC<PlanetStatsProps> = ({ stats, statSetName, selectedT
 
   return (
     <div>
-      <h3 className="text-lg font-medium my-2">{statSetName}</h3>
+      <h3 className="text-lg font-medium">{statSetName}</h3>
       <Table>
         <TableBody>
           {statSetData && statSetNames && statMaxs && statSetData.map((statSet, index) => (
             <TableRow key={index}>
               <TableCell className="text-white/70">{statSetNames[index]}</TableCell>
               <TableCell>
-                <div className="w-full bg-white/10 h-2 rounded-full">
+                <div className="w-full bg-white/10 rounded-full">
                   <div
                     className="bg-orange-300 h-2 rounded-full"
                     style={{ width: `${(statSetData[index] / statMaxs[index]) * 100}%` }}

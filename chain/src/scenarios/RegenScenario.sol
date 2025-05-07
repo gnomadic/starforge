@@ -15,11 +15,18 @@ contract RegenScenario {
     string metadataURI;
 
     // Constructor
-    constructor(ScenarioFactory _factory, string memory _metadataURI) {
+    constructor(
+        ScenarioFactory _factory,
+        string memory _metadataURI,
+        address newAdmin
+    ) {
         factory = _factory;
         metadataURI = _metadataURI;
 
         createScenario(_metadataURI);
+
+        Scenario scenario = factory.scenarios(0);
+        scenario.setAdmin(newAdmin);
     }
 
     function createScenario(string memory _metadataURI) internal {
@@ -287,18 +294,18 @@ contract RegenScenario {
         // );
 
         // console.log("life is at: %s", life);
-        Mintable(bioflux).mint(
-            0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266,
-            10000000000000000000
-        );
-        Mintable(hydrocite).mint(
-            0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266,
-            20000000000000000000
-        );
-        Mintable(dust).mint(
-            0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266,
-            30000000000000000000
-        );
+        // Mintable(bioflux).mint(
+        //     0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266,
+        //     10000000000000000000
+        // );
+        // Mintable(hydrocite).mint(
+        //     0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266,
+        //     20000000000000000000
+        // );
+        // Mintable(dust).mint(
+        //     0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266,
+        //     30000000000000000000
+        // );
         // Mintable(tech).mint(
         //     0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266,
         //     40000000000000000000
