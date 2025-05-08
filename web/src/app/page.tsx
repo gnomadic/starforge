@@ -6,15 +6,15 @@ import HowToPlaySection from "@/components/home/HowToPlaySection";
 
 const frame = {
   version: "next",
-  imageUrl: "https://yoink.party/framesV2/opengraph-image",
+  imageUrl: "https://starforge-git-moremini-gnomadics-projects.vercel.app/api/images",
   button: {
     title: "🪐 EXPLORE",
     action: {
       type: "launch_frame",
-      url: "https://yoink.party/framesV2",
-      name:"Yoink!",
-      splashImageUrl: "https://yoink.party/logo.png",
-      splashBackgroundColor:"#f5f0ec"
+      url: "https://playstarforge.com",
+      name:"S T A R F O R G E",
+      splashImageUrl: "https://starforge-git-moremini-gnomadics-projects.vercel.app/.assets/icon.png",
+      splashBackgroundColor:"#060816"
     }
   }
 }
