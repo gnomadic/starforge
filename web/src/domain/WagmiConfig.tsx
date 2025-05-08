@@ -32,7 +32,6 @@ declare module 'wagmi' {
 export const config = createConfig({
     // appName: 'STAR FORGE',
     // projectId: 'YOUR_PROJECT_ID',
-    wallets: [],
     // wallets: [
       // ...wallets,
       // {

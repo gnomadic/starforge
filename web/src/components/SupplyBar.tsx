@@ -34,14 +34,14 @@ const { supplies, updateSupply, sync, syncReady  } = resourcesContext;
                 </div>
                 <div className="flex flex-col">
                   <span className="font-mono text-xs font-medium text-white/90">
-                    {resource.amount.toFixed(1)}
+                    {resource.amount.toFixed(2)}
                   </span>
                 </div>
               </div>
             </TooltipTrigger>
             <TooltipContent>
               <p className="capitalize">
-                {resource.type}: {resource.amount.toFixed(1)}
+                {resource.type}: {resource.amount.toFixed(5)}
               </p>
             </TooltipContent>
           </Tooltip>
