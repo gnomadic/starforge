@@ -22,6 +22,9 @@ const frame = {
 export const metadata: Metadata = {
   title: 'S T A R F O R G E',
   description: 'Weave the stars.  Forge Empires.  Uncover the truth.',
+  openGraph: {
+    images: '/api/images',
+  },
   other: {
     "fc:frame": JSON.stringify(frame),
   },

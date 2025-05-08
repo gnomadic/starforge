@@ -11,7 +11,6 @@ export async function GET(request: NextRequest) {
 //   }
 
 
-    return new ImageResponse((
-      <GenericOG />), { width: 1200, height: 630 });
+    return new ImageResponse((<GenericOG />), { width: 1200, height: 630 });
 
 }
