@@ -83,13 +83,13 @@ export type Deployment = {
 
   // InvestmentSystem: Address;
   // GlobalProgress: Address;
-  displayName: string;
+  // displayName: string;
   currency: string;
   chain: string;
   chainId: string;
   scan: string;
-  viemChain: Chain;
-  viemTransport: Transport;
+  // viemChain: Chain;
+  // viemTransport: Transport;
 }
 
 export type HSL = {

@@ -1,6 +1,6 @@
 import { getDefaultConfig, getDefaultWallets } from "@rainbow-me/rainbowkit";
 import { defineChain, http } from "viem";
-import { base, baseSepolia, mainnet, sepolia } from "viem/chains";
+import { base, baseSepolia, mainnet, sepolia  } from "viem/chains";
 // import { defineChain } from '../../utils/chain/defineChain.js'
 import { farcasterFrame as miniAppConnector } from '@farcaster/frame-wagmi-connector'
 import { createConfig } from "wagmi";
@@ -47,6 +47,7 @@ export const config = createConfig({
       // base,
       
       // baseSepolia,
+      
       sepolia,
       // mainnet,
       

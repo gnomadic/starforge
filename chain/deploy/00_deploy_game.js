@@ -8,7 +8,7 @@ module.exports = async (hre) => {
   const chainId = await getChainId();
 
 
-  const redo = false;
+  const redo = true;
 
 
   // ------------------------------------- deploy
@@ -117,7 +117,7 @@ module.exports = async (hre) => {
   //   from: deployer,
   //   log: true,
   // });
-    
+
 
   // const DungeonMaster = await deploy("DungeonMaster", {
   //   from: deployer,
@@ -169,32 +169,32 @@ module.exports = async (hre) => {
   const upgradesSystemDeployment = await deployments.get("UpgradesSystem");
   const deployedUpgradesSystem = await ethers.getContractAt("UpgradesSystem", upgradesSystemDeployment.address);
 
-// --- tokens
+  // --- tokens
 
-if (!redo) {
+  if (!redo) {
 
-  let tx = await deployedSysController.setTokenAddress(Planet.address);
-  await tx.wait();
+    let tx = await deployedSysController.setTokenAddress(Planet.address);
+    await tx.wait();
 
-  tx = await deployedSysController.setScenarioFactory(ScenarioFactory.address);
-  await tx.wait();
+    tx = await deployedSysController.setScenarioFactory(ScenarioFactory.address);
+    await tx.wait();
 
-  tx = await deployedSysController.registerSystem(PlanetStats.address);
-  await tx.wait();
+    tx = await deployedSysController.registerSystem(PlanetStats.address);
+    await tx.wait();
 
-  tx = await deployedSysController.registerSystem(SupplySystem.address);
-  await tx.wait();
+    tx = await deployedSysController.registerSystem(SupplySystem.address);
+    await tx.wait();
 
-  tx = await deployedSysController.registerSystem(JobSystem.address);
-  await tx.wait();
-}
+    tx = await deployedSysController.registerSystem(JobSystem.address);
+    await tx.wait();
+  }
 
   console.log("----- done")
 
   console.log("----- loading prefabs")
 
 
-  const RegenScenario  = await deploy("RegenScenario", {
+  const RegenScenario = await deploy("RegenScenario", {
     from: deployer,
     log: true,
     args: [ScenarioFactory.address, "bafkreia6ms7spfoyvkk7yrfes7laca62uwwougi56arlonj75ysbznuwci", deployer],
@@ -214,17 +214,17 @@ if (!redo) {
 
   console.log("----- configuring renderer")
 
-  if (!redo){
+  if (!redo) {
 
-  tx = await deployedRenderer.addStepRenderer(SkyRenderer.address);
-  await tx.wait();
-  tx = await deployedRenderer.addStepRenderer(FunkRenderer.address);
-  await tx.wait();
-  tx = await deployedRenderer.addStepRenderer(SpaceOrbStepRenderer.address);
-  await tx.wait();
-  tx = await deployedRenderer.addStepRenderer(SilhouetteRenderer.address);
-  await tx.wait();
-  
+    tx = await deployedRenderer.addStepRenderer(SkyRenderer.address);
+    await tx.wait();
+    tx = await deployedRenderer.addStepRenderer(FunkRenderer.address);
+    await tx.wait();
+    tx = await deployedRenderer.addStepRenderer(SpaceOrbStepRenderer.address);
+    await tx.wait();
+    tx = await deployedRenderer.addStepRenderer(SilhouetteRenderer.address);
+    await tx.wait();
+
   }
 
   console.log("----- done")
@@ -254,17 +254,22 @@ if (!redo) {
   // ------------------------------------- verify
 
   console.log("done deploying");
-  if (chainId !== "31337" && hre.network.name !== "localhost" && hre.network.name !== "1337") {
-    console.log("verifing");
+  if (chainId !== "31337"
+    && hre.network.name !== "localhost"
+    && hre.network.name !== "1337"
+    && hre.network.name !== "10143"
+    && hre.network.name !== "143") {
 
-    await verify(hre, Planet.address, "PlanetVAlpha", "tokens/", [PlanetRenderer.address, SystemController.address]);
-    await verify(hre, SystemController.address, "SystemController", "systems/", []);
-    await verify(hre, ScenarioFactory.address, "ScenarioFactory", "", [SystemController.address]);
-    await verify(hre, Scenario.address, "Scenario", "", []);
-    await verify(hre, PlanetStats.address, "PlanetStatsSystem", "systems/", []);
-    await verify(hre, SupplySystem.address, "SupplySystem", "systems/", [SupplyTokenFactory.address]);
-    await verify(hre, JobSystem.address, "JobSystem", "systems/", []);
-    await verify(hre, "0xeDb12e94f8D3b2C30CeAfCE938C6B1B2806DbDc9", "JobEntity", "entities/", []);
+      console.log("verifing");
+
+      await verify(hre, Planet.address, "PlanetVAlpha", "tokens/", [PlanetRenderer.address, SystemController.address]);
+      await verify(hre, SystemController.address, "SystemController", "systems/", []);
+      await verify(hre, ScenarioFactory.address, "ScenarioFactory", "", [SystemController.address]);
+      await verify(hre, Scenario.address, "Scenario", "", []);
+      await verify(hre, PlanetStats.address, "PlanetStatsSystem", "systems/", []);
+      await verify(hre, SupplySystem.address, "SupplySystem", "systems/", [SupplyTokenFactory.address]);
+      await verify(hre, JobSystem.address, "JobSystem", "systems/", []);
+      await verify(hre, "0xeDb12e94f8D3b2C30CeAfCE938C6B1B2806DbDc9", "JobEntity", "entities/", []);
 
 
   }
