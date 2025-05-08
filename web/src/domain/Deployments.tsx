@@ -51,13 +51,13 @@ export const Deployments: { [key: string]: Deployment } = {
 
 
   monadtestnet: {
-    "Planet": "0x8c8864443eACc2059C80B9B82Ffb63E8689Dd5a9",
-    "SystemController": "0xBF481723A0f54e87B7c544439661ee5DaD98C3AB",
-    "ScenarioFactory": "0x73988B412E83467450Ceafda54F41d99d10c0869",
-    "PlanetStats": "0x5b41ee1065894b4B74eFacf71aa89B5E22087cFD",
-    "SupplySystem": "0xFE013E6184872Cf96D3356E351aaFEd58217a737",
-    "JobSystem": "0x193019873d03B80E75f79d0798f82ad4a7D95897",
-    "UpgradesSystem": "0x34B6231Ff016e5e05f11A7f8DF75C64d7F585aB1",
+    Planet: "0x8c8864443eACc2059C80B9B82Ffb63E8689Dd5a9",
+    SystemController: "0xBF481723A0f54e87B7c544439661ee5DaD98C3AB",
+    ScenarioFactory: "0x73988B412E83467450Ceafda54F41d99d10c0869",
+    PlanetStats: "0x5b41ee1065894b4B74eFacf71aa89B5E22087cFD",
+    SupplySystem: "0xFE013E6184872Cf96D3356E351aaFEd58217a737",
+    JobSystem: "0x193019873d03B80E75f79d0798f82ad4a7D95897",
+    UpgradesSystem: "0x34B6231Ff016e5e05f11A7f8DF75C64d7F585aB1",
 
     currency: 'monad test eth',
     chain: 'Monad Testnet',
