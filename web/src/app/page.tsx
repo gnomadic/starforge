@@ -2,9 +2,35 @@ import type { Metadata } from 'next'
 import MintSection from "@/components/home/MintSection";
 import HowToPlaySection from "@/components/home/HowToPlaySection";
 
+
+
+const frame = {
+  version: "next",
+  imageUrl: "https://starforge-git-moremini-gnomadics-projects.vercel.app/api/images",
+  button: {
+    title: "🪐 EXPLORE",
+    action: {
+      type: "launch_frame",
+      url: "https://playstarforge.com",
+      name:"S T A R F O R G E",
+      splashImageUrl: "https://starforge-git-moremini-gnomadics-projects.vercel.app/.assets/icon.png",
+      splashBackgroundColor:"#060816"
+    }
+  }
+}
+
 export const metadata: Metadata = {
   title: 'S T A R F O R G E',
   description: 'Weave the stars.  Forge Empires.  Uncover the truth.',
+  openGraph: {
+    images: '/api/images',
+    url: "https://playstarforge.com",
+    title: 'S T A R F O R G E',
+    description: 'Weave the stars.  Forge Empires.  Uncover the truth.',
+  },
+  other: {
+    "fc:frame": JSON.stringify(frame),
+  },
 }
 
 export default function Home() {
