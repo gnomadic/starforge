@@ -8,6 +8,7 @@ import { NavItems } from '@/domain/Nav';
 import { usePathname } from 'next/navigation'
 import { cn } from '@/lib/utils';
 import { ArrowUpRightIcon } from 'lucide-react';
+import WalletButton from './WalletButton';
 
 
 export default function Navbar() {
@@ -86,11 +87,12 @@ export default function Navbar() {
          
           </div>
           <div className='flex items-start justify-center gap-8 hidden lg:block'  >
-              <ConnectButton
+              {/* <ConnectButton
                 chainStatus='icon'
                 accountStatus='avatar'
                 showBalance={false}
-              />
+              /> */}
+              <WalletButton />
             </div>
             <div className='self-center lg:hidden'>
               <button

@@ -5,6 +5,7 @@ import { ConnectButton } from '@rainbow-me/rainbowkit';
 import { ArrowUpRightIcon } from '@heroicons/react/20/solid';
 import { NavItems } from '../domain/Nav';
 import { Fragment } from 'react';
+import WalletButton from './WalletButton';
 
 type MobileNavProps = {
   onClick: () => void;
@@ -20,7 +21,7 @@ export default function MobileNav(props: MobileNavProps) {
       <nav className='relative flex flex-col w-full h-full px-10 py-8 overflow-y-auto border-r bg-slate-900'>
         <Link href='/' onClick={props.onClick}>
           <div className='text-3xl text-white font-mono text-center'>
-          S T A R F O R G E
+            S T A R F O R G E
           </div>
         </Link>
         <ul className='gap-8 pt-12 tracking-wider b-32 font-anon text-lightgrey'>
@@ -75,11 +76,12 @@ export default function MobileNav(props: MobileNavProps) {
             </a>
           </li>
           <li>
-                          <ConnectButton
-                            chainStatus='icon'
-                            accountStatus='avatar'
-                            showBalance={false}
-                          />
+            <WalletButton />
+            {/* <ConnectButton
+              chainStatus='icon'
+              accountStatus='avatar'
+              showBalance={false}
+            /> */}
           </li>
         </ul>
       </nav>
