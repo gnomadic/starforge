@@ -2,9 +2,9 @@
     "frame": {
       "version": "1",
       "name": "Starforge",
-      "homeUrl": "https://playstarforge.com/play",
-      "iconUrl": "https://playstarforge.com/icon.png",
-      "splashImageUrl": "https://playstarforge.com/splash.png",
+      "homeUrl": "https://playstarforge.com",
+      "iconUrl": "https://playstarforge.com/.assets/logo.png",
+      "splashImageUrl": "https://playstarforge.com/.assets/splash.png",
       "splashBackgroundColor": "#060816",
       "subtitle": "Forge the stars",
       "description": "Forge the stars in an onchain RPG.",
@@ -16,6 +16,10 @@
         "multiplayer",
         "tavern"
       ]
+ 
     }
   }
   
+
+
+

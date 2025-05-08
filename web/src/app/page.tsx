@@ -2,9 +2,29 @@ import type { Metadata } from 'next'
 import MintSection from "@/components/home/MintSection";
 import HowToPlaySection from "@/components/home/HowToPlaySection";
 
+
+
+const frame = {
+  version: "next",
+  imageUrl: "https://yoink.party/framesV2/opengraph-image",
+  button: {
+    title: "🪐 EXPLORE",
+    action: {
+      type: "launch_frame",
+      url: "https://yoink.party/framesV2",
+      name:"Yoink!",
+      splashImageUrl: "https://yoink.party/logo.png",
+      splashBackgroundColor:"#f5f0ec"
+    }
+  }
+}
+
 export const metadata: Metadata = {
   title: 'S T A R F O R G E',
   description: 'Weave the stars.  Forge Empires.  Uncover the truth.',
+  other: {
+    "fc:frame": JSON.stringify(frame),
+  },
 }
 
 export default function Home() {
