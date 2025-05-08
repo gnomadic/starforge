@@ -32,18 +32,19 @@ export default function WalletButton() {
             {isMiniApp ? (
                 isConnected ? (
                     <div>
-                        {/* Content for connected state */}
-                        <Button
-                            onClick={() => connect({ connector: connectors[0] })}
-                        >
-                            Connect
-                        </Button>
-                    </div>
+                    {/* Content for disconnected state */}
+                    connected: {address}
+                </div>
+                    // <div>
+                        
+                 
+                    // </div>
                 ) : (
-                    <div>
-                        {/* Content for disconnected state */}
-                        {address}
-                    </div>
+                    <Button
+                    onClick={() => connect({ connector: connectors[0] })}
+                >
+                    Connect
+                </Button>
                 )
             ) : (
                 <ConnectButton

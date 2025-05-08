@@ -24,7 +24,7 @@ export default function MobileNav(props: MobileNavProps) {
             S T A R F O R G E
           </div>
         </Link>
-        <ul className='gap-8 pt-12 tracking-wider b-32 font-anon text-lightgrey'>
+        <ul className='gap-4 pt-12 tracking-wider b-32 font-anon text-lightgrey'>
           {NavItems.map((element, i) => {
             return (
               <Fragment key={i}>
