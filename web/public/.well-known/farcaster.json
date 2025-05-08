@@ -1,25 +1,25 @@
 {
-    "frame": {
-      "version": "1",
-      "name": "Starforge",
-      "homeUrl": "https://playstarforge.com",
-      "iconUrl": "https://playstarforge.com/.assets/logo.png",
-      "splashImageUrl": "https://playstarforge.com/.assets/splash.png",
-      "splashBackgroundColor": "#060816",
-      "subtitle": "Forge the stars",
-      "description": "Forge the stars in an onchain RPG.",
-      "primaryCategory": "games",
-      "tags": [
-        "rpg",
-        "gaming",
-        "scifi",
-        "multiplayer",
-        "tavern"
-      ]
- 
-    }
+  "accountAssociation": {
+    "header": "eyJmaWQiOjI0MTA2MCwidHlwZSI6ImN1c3RvZHkiLCJrZXkiOiIweDdjMWNFNzc1RWZjMTM4NWE5ODVjYTAzMzZkOThkMzkxMTJiNERmOTEifQ",
+    "payload": "eyJkb21haW4iOiJwbGF5c3RhcmZvcmdlLmNvbSJ9",
+    "signature": "MHhhM2U0MDMzY2QyMjY4NTQ3ZWUwYjJiM2IxYzg2ZmE2ZGNkZWJlMzhiMGExMmMxOGZlNjNiYjI1M2FhZTY0N2UwMWRiN2M1MGM1NzQxM2YyOTIyZjYxMjFmYjI2YWVkNmRiZmVjNzNlYzc1MzIyN2NjYmJlNzg3NzQ1N2Y3NGYyYjFi"
+  },
+  "frame": {
+    "version": "1",
+    "name": "Starforge",
+    "homeUrl": "https://playstarforge.com",
+    "iconUrl": "https://playstarforge.com/.assets/logo.png",
+    "splashImageUrl": "https://playstarforge.com/.assets/splash.png",
+    "splashBackgroundColor": "#060816",
+    "subtitle": "Forge the stars",
+    "description": "Forge the stars in an onchain RPG.",
+    "primaryCategory": "games",
+    "tags": [
+      "rpg",
+      "gaming",
+      "scifi",
+      "multiplayer",
+      "tavern"
+    ]
   }
-  
-
-
-
+}
