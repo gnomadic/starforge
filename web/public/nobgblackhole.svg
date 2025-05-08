@@ -1,0 +1,41 @@
+<svg width="500" height="500" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background gradient -->
+  <defs>
+    <radialGradient id="blackholeGradient" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+      <stop offset="0%" stop-color="#000000" />
+      <stop offset="45%" stop-color="#050816" />
+      <stop offset="65%" stop-color="#1e1b4b" />
+      <stop offset="85%" stop-color="#4c1d95" />
+      <stop offset="100%" stop-color="#6366f1" />
+    </radialGradient>
+    
+    <!-- Accretion disk glow -->
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="8" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+  
+  <!-- Space background -->
+  
+  <!-- Stars -->
+
+  
+  <!-- Accretion disk (outer glow) -->
+  <ellipse cx="250" cy="250" rx="130" ry="40" fill="#6366f1" opacity="0.2" filter="url(#glow)" transform="rotate(35, 250, 250)" />
+  
+  <!-- Accretion disk (inner ring) -->
+  <ellipse cx="250" cy="250" rx="110" ry="30" fill="#4c1d95" opacity="0.4" transform="rotate(35, 250, 250)" />
+  
+  <!-- Black hole event horizon -->
+  <circle cx="250" cy="250" r="70" fill="url(#blackholeGradient)" />
+  
+  <!-- Inner black hole (darkest part) -->
+  <circle cx="250" cy="250" r="45" fill="#000000" />
+  
+  <!-- Light distortion effect -->
+  <g opacity="0.6">
+    <path d="M250,180 C290,200 310,230 320,250 C310,270 290,300 250,320" stroke="#6366f1" stroke-width="1.5" fill="none" opacity="0.5" />
+    <path d="M250,180 C210,200 190,230 180,250 C190,270 210,300 250,320" stroke="#6366f1" stroke-width="1.5" fill="none" opacity="0.5" />
+  </g>
+</svg>
