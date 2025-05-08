@@ -6,14 +6,14 @@ import HowToPlaySection from "@/components/home/HowToPlaySection";
 
 const frame = {
   version: "next",
-  imageUrl: "https://starforge-git-moremini-gnomadics-projects.vercel.app/api/images",
+  imageUrl: "https://playstarforge.com/api/images",
   button: {
     title: "🪐 EXPLORE",
     action: {
       type: "launch_frame",
       url: "https://playstarforge.com",
       name:"S T A R F O R G E",
-      splashImageUrl: "https://starforge-git-moremini-gnomadics-projects.vercel.app/.assets/icon.png",
+      splashImageUrl: "https://playstarforge.com/.assets/icon.png",
       splashBackgroundColor:"#060816"
     }
   }
