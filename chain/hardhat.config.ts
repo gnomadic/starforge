@@ -28,6 +28,10 @@ module.exports = {
     base:{
       url:  "https://base-mainnet.g.alchemy.com/v2/" + process.env.ALCHEMY_API_KEY,
       accounts: [`${process.env.MAINNET_PRIVATE_KEY}`],
+    },
+    monadtestnet: {
+      url:"https://monad-testnet.g.alchemy.com/v2/" + process.env.ALCHEMY_API_KEY,
+      accounts: [`${process.env.MAINNET_PRIVATE_KEY}`],
     }
 
   },
