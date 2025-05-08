@@ -32,9 +32,9 @@ export default function WalletButton() {
             {isMiniApp ? (
                 isConnected ? (
                     <div>
-                    {/* Content for disconnected state */}
-                    connected: {address}
-                </div>
+                        {/* Content for connected state */}
+                        connected: {address ? `${address.slice(0, 4)}...${address.slice(-4)}` : ''}
+                    </div>
                     // <div>
                         
                  
