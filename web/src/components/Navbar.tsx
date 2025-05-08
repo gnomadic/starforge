@@ -8,6 +8,7 @@ import { NavItems } from '@/domain/Nav';
 import { usePathname } from 'next/navigation'
 import { cn } from '@/lib/utils';
 import { ArrowUpRightIcon } from 'lucide-react';
+import WalletButton from './WalletButton';
 
 
 export default function Navbar() {
@@ -39,11 +40,11 @@ export default function Navbar() {
           : "py-6"
       )}
     >
-      <div className='flex px-6 lg:px-16 min-h-[18] items-center flex-shrink-0 flex-col justify-center'>
+    <div className='flex px-2 lg:px-4 min-h-[18] items-center flex-shrink-0 flex-col justify-center'>
         <div className='flex items-center self-stretch justify-between'>
           <div className='flex items-start'>
             <Link href='/'>
-              <div className='text-xl text-white font-mono text-center tracking-wider'>
+              <div className='lg:text-xl text-white font-mono text-center tracking-wider'>
                 S T A R F O R G E
               </div>
               <div className='text-sm text-white font-mono text-center tracking-wider'>
@@ -53,7 +54,7 @@ export default function Navbar() {
             </Link>
           </div>
           <div className='flex items-center justify-center gap-8'>
-            <div className='items-start hidden gap-8 md:flex' >
+            <div className='items-start hidden gap-8 lg:flex' >
               {NavItems.map((element, i) => {
                 return (
                   <div className='text-sm text-lightgrey' key={i}>
@@ -85,14 +86,15 @@ export default function Navbar() {
 
          
           </div>
-          <div className='flex items-start justify-center gap-8 hidden md:block'  >
-              <ConnectButton
+          <div className='flex items-start justify-center gap-8 hidden lg:block'  >
+              {/* <ConnectButton
                 chainStatus='icon'
                 accountStatus='avatar'
                 showBalance={false}
-              />
+              /> */}
+              <WalletButton />
             </div>
-            <div className='self-center md:hidden'>
+            <div className='self-center lg:hidden'>
               <button
                 onClick={() => {
                   handleMobileNavClick();

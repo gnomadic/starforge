@@ -9,12 +9,24 @@ import { WagmiProvider } from 'wagmi';
 import { config } from '@/domain/WagmiConfig';
 import { SupplyProvider } from '@/components/SupplyContext';
 import { ScenarioProvider } from '@/components/ScenarioContext';
-// import { SupplyProvider } from '@/components/SupplyProvider';
+import { sdk } from '@farcaster/frame-sdk'
 
 
 const queryClient = new QueryClient();
 
 export function Providers({ children }: { children: React.ReactNode }) {
+
+  React.useEffect(() => {
+    const initializeSdk = async () => {
+      await sdk.actions.ready();
+    };
+  
+    if (queryClient) {
+      initializeSdk();
+    }
+  }, [queryClient]);
+
+
   return (
     <WagmiProvider config={config}>
       <QueryClientProvider client={queryClient} >

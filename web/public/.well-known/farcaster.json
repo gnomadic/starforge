@@ -1,0 +1,21 @@
+{
+    "frame": {
+      "version": "1",
+      "name": "Starforge",
+      "homeUrl": "https://playstarforge.com/play",
+      "iconUrl": "https://playstarforge.com/icon.png",
+      "splashImageUrl": "https://playstarforge.com/splash.png",
+      "splashBackgroundColor": "#060816",
+      "subtitle": "Forge the stars",
+      "description": "Explore distant planets, spark life, and shape the cosmos in Starforge — an onchain RPG.",
+      "primaryCategory": "games",
+      "tags": [
+        "rpg",
+        "gaming",
+        "scifi",
+        "multiplayer",
+        "tavern"
+      ]
+    }
+  }
+  

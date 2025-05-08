@@ -5,6 +5,7 @@ import { ConnectButton } from '@rainbow-me/rainbowkit';
 import { ArrowUpRightIcon } from '@heroicons/react/20/solid';
 import { NavItems } from '../domain/Nav';
 import { Fragment } from 'react';
+import WalletButton from './WalletButton';
 
 type MobileNavProps = {
   onClick: () => void;
@@ -19,17 +20,17 @@ export default function MobileNav(props: MobileNavProps) {
       ></div>
       <nav className='relative flex flex-col w-full h-full px-10 py-8 overflow-y-auto border-r bg-slate-900'>
         <Link href='/' onClick={props.onClick}>
-          <div className='text-3xl text-white font-mono text-center'>
-          S T A R F O R G E
+          <div className='text-xl text-white font-mono text-center'>
+            S T A R F O R G E
           </div>
         </Link>
-        <ul className='gap-8 pt-12 tracking-wider b-32 font-anon text-lightgrey'>
+        <ul className='pt-12 tracking-wider b-32 font-anon text-lightgrey'>
           {NavItems.map((element, i) => {
             return (
               <Fragment key={i}>
                 <li key={i} onClick={props.onClick}>
-                  <Link href={element.href}>
-                    <div className='relative pb-8 cursor-pointer'>
+                  <Link href={element.href} >
+                    <div className='relative cursor-pointer py-4'>
                       {element.label}
                     </div>
                   </Link>
@@ -65,7 +66,7 @@ export default function MobileNav(props: MobileNavProps) {
               // href="https://play-starforge.gitbook.io/starforge"
               href="https://t.me/+Js2_GaKRbkBkZGE5"
             >
-              <div className="relative pb-8 cursor-pointer">
+              <div className="relative py-4 cursor-pointer">
                 TELEGRAM
                 <ArrowUpRightIcon
                   className="w-4 h-4 mb-2"
@@ -73,6 +74,14 @@ export default function MobileNav(props: MobileNavProps) {
                 />
               </div>
             </a>
+          </li>
+          <li className='py-4'>
+            <WalletButton />
+            {/* <ConnectButton
+              chainStatus='icon'
+              accountStatus='avatar'
+              showBalance={false}
+            /> */}
           </li>
         </ul>
       </nav>

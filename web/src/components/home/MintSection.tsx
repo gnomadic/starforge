@@ -94,7 +94,7 @@ const MintSection: React.FC<MintSectionProps> = ({ className }) => {
 
       <div className="w-full max-w-5xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          <div className="reveal-on-scroll glass rounded-lg p-6">
+          <div className="reveal-on-scroll glass rounded-lg p-6 order-2 lg:order-1">
             <span className="px-3 py-1 text-xs font-medium tracking-wider uppercase bg-primary/30 text-primary rounded-full">Unlimited Collection</span>
             <h2 className="mt-6 text-4xl md:text-5xl font-mono font-bold leading-tight">
               Scan for a new planet
@@ -184,7 +184,7 @@ const MintSection: React.FC<MintSectionProps> = ({ className }) => {
           </div>
 
 
-          <div className="reveal-on-scroll delay-200">
+          <div className="reveal-on-scroll delay-200 order-1 lg:order-2">
             <div className="glass rounded-2xl p-6 border border-white/10">
               <MintPreview
                 preview={preview}

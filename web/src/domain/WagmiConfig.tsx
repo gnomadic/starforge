@@ -2,6 +2,9 @@ import { getDefaultConfig, getDefaultWallets } from "@rainbow-me/rainbowkit";
 import { defineChain, http } from "viem";
 import { base, baseSepolia, mainnet, sepolia } from "viem/chains";
 // import { defineChain } from '../../utils/chain/defineChain.js'
+import { farcasterFrame as miniAppConnector } from '@farcaster/frame-wagmi-connector'
+import { createConfig } from "wagmi";
+
 
 export const localhost = defineChain({
   id: 31337,
@@ -26,16 +29,16 @@ declare module 'wagmi' {
 }
 
 
-export const config = getDefaultConfig({
-    appName: 'STAR FORGE',
-    projectId: 'YOUR_PROJECT_ID',
-    wallets: [
-      ...wallets,
+export const config = createConfig({
+    // appName: 'STAR FORGE',
+    // projectId: 'YOUR_PROJECT_ID',
+    // wallets: [
+      // ...wallets,
       // {
       //   groupName: 'Other',
       //   wallets: [argentWallet, trustWallet, ledgerWallet],
       // },
-    ],
+    // ],
     chains: [
       // mainnet,
       // polygon,
@@ -57,5 +60,8 @@ export const config = getDefaultConfig({
       [mainnet.id]: http(`https://eth-mainnet.alchemyapi.io/v2/${process.env.NEXT_PUBLIC_ALCHEMY_API_KEY}`),
       [localhost.id]: http(),
     },
+    connectors: [
+      miniAppConnector()
+    ],
     ssr: true,
   });
