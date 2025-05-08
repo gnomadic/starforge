@@ -24,13 +24,12 @@ export const Deployments: { [key: string]: Deployment } = {
     JobSystem: "0x0",
     UpgradesSystem: "0x0",
 
-    displayName: 'Adventure Alchemist',
     currency: 'base sep eth',
     chain: 'base sepolia',
     chainId: "84532",
     scan: "https://sepolia.basescan.org/address/",
-    viemChain: baseSepolia,
-    viemTransport: http(`https://base-sepolia.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_ALCHEMY_API_KEY}`),
+    // viemChain: baseSepolia,
+    // viemTransport: http(`https://base-sepolia.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_ALCHEMY_API_KEY}`),
   },
 
   sepolia: {
@@ -42,13 +41,31 @@ export const Deployments: { [key: string]: Deployment } = {
     JobSystem: "0x6EAbAdD2e0f8212DdB46f59A3eB993F5513482F3",
     UpgradesSystem: "0xeD6a0759Cc90237d2ae733F043b23fF399FEE4d9",
 
-    displayName: 'Adventure Alchemist',
     currency: 'sep eth',
     chain: 'sepolia',
     chainId: "84532",
     scan: "https://sepolia.basescan.org/address/",
-    viemChain: baseSepolia,
-    viemTransport: http(`https://base-sepolia.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_ALCHEMY_API_KEY}`),
+    // viemChain: baseSepolia,
+    // viemTransport: http(`https://base-sepolia.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_ALCHEMY_API_KEY}`),
+  },
+
+
+  monadtestnet: {
+    Planet: "0x8c8864443eACc2059C80B9B82Ffb63E8689Dd5a9",
+    SystemController: "0xBF481723A0f54e87B7c544439661ee5DaD98C3AB",
+    ScenarioFactory: "0x73988B412E83467450Ceafda54F41d99d10c0869",
+    PlanetStats: "0x5b41ee1065894b4B74eFacf71aa89B5E22087cFD",
+    SupplySystem: "0xFE013E6184872Cf96D3356E351aaFEd58217a737",
+    JobSystem: "0x193019873d03B80E75f79d0798f82ad4a7D95897",
+    UpgradesSystem: "0x34B6231Ff016e5e05f11A7f8DF75C64d7F585aB1",
+
+    currency: 'monad test eth',
+    chain: 'Monad Testnet',
+    chainId: "10143",
+    scan: "",
+    // viemChain: localhost,
+    // viemTransport: http()
+
   },
 
   localhost: {
@@ -60,13 +77,12 @@ export const Deployments: { [key: string]: Deployment } = {
     JobSystem: "0x9A676e781A523b5d0C0e43731313A708CB607508",
     UpgradesSystem: "0x610178dA211FEF7D417bC0e6FeD39F05609AD788",
 
-    displayName: 'Adventure Alchemist',
     currency: 'eth',
     chain: 'localhost',
     chainId: "1337",
     scan: "",
-    viemChain: localhost,
-    viemTransport: http()
+    // viemChain: localhost,
+    // viemTransport: http()
 
   },
   default: {
@@ -78,13 +94,12 @@ export const Deployments: { [key: string]: Deployment } = {
     JobSystem: "0x0",
     UpgradesSystem: "0x0",
 
-    displayName: 'Adventure Alchemist',
     currency: 'eth',
     chain: 'unknown',
     chainId: "0",
     scan: "",
-    viemChain: baseSepolia,
-    viemTransport: http()
+    // viemChain: baseSepolia,
+    // viemTransport: http()
   },
 };
 

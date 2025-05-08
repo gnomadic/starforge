@@ -49,12 +49,12 @@ const MintSection: React.FC<MintSectionProps> = ({ className }) => {
     // console.log("image: " + image);
     // console.log("wat: ", window.btoa(String(image)));
 
-    const startColor = extractDope(image);
+    // const startColor = extractDope(image);
 
 
 
-    setPlanetColorOne(Number(startColor));
-    setOriginalColorOne(Number(startColor));
+    // setPlanetColorOne(Number(startColor));
+    // setOriginalColorOne(Number(startColor));
 
 
     // const planetColors = extractPlanetColors(image);
@@ -74,18 +74,18 @@ const MintSection: React.FC<MintSectionProps> = ({ className }) => {
   }, [image]);
 
 
-  function planetColorChange(colorOne: number, two: number, three: number) {
+  // function planetColorChange(colorOne: number, two: number, three: number) {
 
 
-    let newSVG = replaceDope(preview, colorOne);
+  //   let newSVG = replaceDope(preview, colorOne);
 
 
-    console.log("wat: ", newSVG);
+  //   console.log("wat: ", newSVG);
 
-    setPreview(window.btoa(String(newSVG)));
+  //   setPreview(window.btoa(String(newSVG)));
 
 
-  }
+  // }
 
   return (
     <section id="mint" className={cn("relative min-h-screen flex flex-col items-center justify-center py-24 px-6", className)}>

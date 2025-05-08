@@ -1,6 +1,6 @@
 import { getDefaultConfig, getDefaultWallets } from "@rainbow-me/rainbowkit";
 import { defineChain, http } from "viem";
-import { base, baseSepolia, mainnet, sepolia } from "viem/chains";
+import { base, baseSepolia, mainnet, sepolia, monadTestnet  } from "viem/chains";
 // import { defineChain } from '../../utils/chain/defineChain.js'
 import { farcasterFrame as miniAppConnector } from '@farcaster/frame-wagmi-connector'
 import { createConfig } from "wagmi";
@@ -47,18 +47,27 @@ export const config = createConfig({
       // base,
       
       // baseSepolia,
+      
       sepolia,
+      monadTestnet,
+      
       // mainnet,
       
       ...(process.env.NEXT_PUBLIC_ENABLE_TESTNETS === 'true' ? [localhost] : []),
     ],
     transports: {
-      
-      [sepolia.id]: http(`https://eth-sepolia.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_ALCHEMY_API_KEY}`),
-      [baseSepolia.id]: http(`https://base-sepolia.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_ALCHEMY_API_KEY}`),
-      [base.id]: http(`https://eth-sepolia.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_ALCHEMY_API_KEY}`),
-      [mainnet.id]: http(`https://eth-mainnet.alchemyapi.io/v2/${process.env.NEXT_PUBLIC_ALCHEMY_API_KEY}`),
+      [sepolia.id]: http(),
+      // [baseSepolia.id]: http(),
+      // [base.id]: http(),
+      // [mainnet.id]: http(),
+      [monadTestnet.id]: http(),
       [localhost.id]: http(),
+      
+      // [sepolia.id]: http(`https://eth-sepolia.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_ALCHEMY_API_KEY}`),
+      // [baseSepolia.id]: http(`https://base-sepolia.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_ALCHEMY_API_KEY}`),
+      // [base.id]: http(`https://eth-sepolia.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_ALCHEMY_API_KEY}`),
+      // [mainnet.id]: http(`https://eth-mainnet.alchemyapi.io/v2/${process.env.NEXT_PUBLIC_ALCHEMY_API_KEY}`),
+      // [localhost.id]: http(),
     },
     connectors: [
       miniAppConnector()

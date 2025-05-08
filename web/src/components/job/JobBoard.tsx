@@ -93,7 +93,8 @@ export default function JobBoard({ }: JobBoardProps) {
 
     const { data: activeJob, refetch: refetchActiveJob } = useReadJobEntityGetActiveJob({
         args: [selectedTokenId],
-        address: whichEntity
+        address: whichEntity,
+        
     })
 
 
