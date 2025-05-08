@@ -47,9 +47,9 @@ export const config = createConfig({
       // base,
       
       // baseSepolia,
-      
-      sepolia,
       monadTestnet,
+      sepolia,
+      
       
       // mainnet,
       
