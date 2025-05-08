@@ -24,6 +24,9 @@ export const metadata: Metadata = {
   description: 'Weave the stars.  Forge Empires.  Uncover the truth.',
   openGraph: {
     images: '/api/images',
+    url: "https://playstarforge.com",
+    title: 'S T A R F O R G E',
+    description: 'Weave the stars.  Forge Empires.  Uncover the truth.',
   },
   other: {
     "fc:frame": JSON.stringify(frame),
