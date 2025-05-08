@@ -1,69 +1,13 @@
-import { Address, Chain, Transport } from "viem";
+import { Address } from "viem";
 
 
-export enum ItemType {
-  Potion = "potion",
-  Scroll = "scroll",
-  Gem = "gem",
-}
-
-export enum StationModifier {
-  None = "None",
-  Fire = "Fire",
-  Water = "Water",
-  Earth = "Earth",
-  Air = "Air",
-}
 
 
-export interface Station {
-  id: number;
-  modifier: StationModifier;
-  valueMultiplier: number;
-  valueAddition: number;
-}
 
-export interface StationSlot {
-  x: number;
-  y: number;
-  distance: number;
-}
 
-export interface Belt {
-  stationSlots: StationSlot[];
-  segments: number[];
-}
 
-export interface Item {
-  id: string;
-  type: ItemType;
-  enhancements: StationModifier[];
-  timestamp: number; // When the item was added
-  value: number;
-  distanceTraveled: number;
-  x: number;
-  y: number;
-  appliedStations: number;
-}
 
-export interface GameState {
-  gold: number;
-  pendingGold: number;
-  selectedItem: Item;
-  lastItemSpawned: number;
-  items: Item[];
-  stations: Station[];
-  time: number;
-}
 
-export interface CraftingSystemGameState {
-
-  lastTick: bigint;
-  newItemRate: bigint;
-  beltDuration: bigint;
-  activeItem: bigint;
-
-}
 
 export type Deployment = {
   Planet: Address;
@@ -72,7 +16,7 @@ export type Deployment = {
   PlanetStats: Address;
   SupplySystem: Address;
   JobSystem: Address
-  UpgradesSystem: Address;
+  // UpgradesSystem: Address;
   // DungeonMaster: Address;
   // EnergyToken: Address;
   // LifeToken: Address;
@@ -99,35 +43,12 @@ export type HSL = {
   a: number;
 }
 
-export interface NFT {
-  id: number;
-  name: string;
-  image: string;
-  rarity: number;
-  entropy: number;
-  stats: number[];
-  energy: number;
-  power: number;
-  speed: number;
-  temperature: number;
-  water: number;
-  biomass: number;
-  atmosphere: number;
-  density: number;
-  category: string;
-  description: string;
-}
 
-
-
-export type ResourceType = 'energy' | 'matter' | 'life' | 'technology';
 
 export interface Supply {
-  // type: 'gold' | 'energy' | 'cosmic-dust' | 'stardust';
   type: 'Bioflux' | 'Hydrocite' | 'Solaris Dust' | 'TECHNOLOGY';
   amount: number;
   emissionRate: number;
-  // icon: string;
   icon: React.ReactNode;
   color: string;
   id: string;
@@ -192,23 +113,6 @@ export interface CombatLogData {
   timestamp: number;
 }
 
-// New types for voting system
-export interface VoteOption {
-  id: string;
-  title: string;
-  description: string;
-  image?: string;
-  voteCount: number;
-  category: 'quest' | 'artifact' | 'enemy';
-}
-
-export interface VoteCategory {
-  id: string;
-  title: string;
-  description: string;
-  options: VoteOption[];
-  endsAt: Date;
-}
 
 export interface Scenario {
   id: string;
@@ -243,7 +147,7 @@ export interface ScenarioForm {
   enemies: boolean;
   resources: boolean;
   jobs: boolean;
-  
+
   // Content type details could be added here in the future
   questDetails?: any[];
   artifactDetails?: any[];
@@ -252,7 +156,7 @@ export interface ScenarioForm {
   jobDetails?: any[];
 }
 
-export interface ScenarioMetadata  {
+export interface ScenarioMetadata {
   name: string;
   description: string;
 }

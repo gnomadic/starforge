@@ -1,12 +1,5 @@
-import { http } from 'viem';
-
-import { baseSepolia, localhost } from 'viem/chains';
 import { Deployment } from '@/domain/types';
 
-
-
-// export const RPS_GAME_ADDRESS: Address  = '0xa36F4B4C02D5f583C2747B468730B54D27F7a469';
-// export const RPS_GAME_ADDRESS: Address = '0xc19Bc969cfc40DfF49605AedefC69a74c5Aef69E'
 
 export const IPFS_GATEWAY = 'https://ipfs.io/ipfs/';
 
@@ -22,7 +15,6 @@ export const Deployments: { [key: string]: Deployment } = {
     PlanetStats: "0x0",
     SupplySystem: "0x0",
     JobSystem: "0x0",
-    UpgradesSystem: "0x0",
 
     currency: 'base sep eth',
     chain: 'base sepolia',
@@ -39,7 +31,7 @@ export const Deployments: { [key: string]: Deployment } = {
     PlanetStats: "0x0249888684F7B03D564D96673711FD1133015CCb",
     SupplySystem: "0xB4db03b0Cd95D0fCE5A2Fb3f4C7ccF41A6f36FAB",
     JobSystem: "0x6EAbAdD2e0f8212DdB46f59A3eB993F5513482F3",
-    UpgradesSystem: "0xeD6a0759Cc90237d2ae733F043b23fF399FEE4d9",
+    
 
     currency: 'sep eth',
     chain: 'sepolia',
@@ -57,7 +49,6 @@ export const Deployments: { [key: string]: Deployment } = {
     PlanetStats: "0x5b41ee1065894b4B74eFacf71aa89B5E22087cFD",
     SupplySystem: "0xFE013E6184872Cf96D3356E351aaFEd58217a737",
     JobSystem: "0x193019873d03B80E75f79d0798f82ad4a7D95897",
-    UpgradesSystem: "0x34B6231Ff016e5e05f11A7f8DF75C64d7F585aB1",
 
     currency: 'monad test eth',
     chain: 'Monad Testnet',
@@ -75,7 +66,6 @@ export const Deployments: { [key: string]: Deployment } = {
     PlanetStats: "0x8A791620dd6260079BF849Dc5567aDC3F2FdC318",
     SupplySystem: "0x0DCd1Bf9A1b36cE34237eEaFef220932846BCD82",
     JobSystem: "0x9A676e781A523b5d0C0e43731313A708CB607508",
-    UpgradesSystem: "0x610178dA211FEF7D417bC0e6FeD39F05609AD788",
 
     currency: 'eth',
     chain: 'localhost',
@@ -92,7 +82,6 @@ export const Deployments: { [key: string]: Deployment } = {
     PlanetStats: "0x0",
     SupplySystem: "0x0",
     JobSystem: "0x0",
-    UpgradesSystem: "0x0",
 
     currency: 'eth',
     chain: 'unknown',

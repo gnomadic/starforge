@@ -5,7 +5,7 @@ import PlanetTab from '@/components/codex/PlanetTab';
 import ArtifactTab from '@/components/codex/ArtifactTab';
 import ComingSoon from '@/components/ComingSoon';
 
-const Gallery: React.FC = () => {
+const Codex: React.FC = () => {
 
   return (
     <div className="min-h-screen text-foreground overflow-x-hidden md:pt-24">
@@ -38,8 +38,6 @@ const Gallery: React.FC = () => {
               <ArtifactTab />
             )}
 
-
-
           </TabsContent>
         </Tabs>
       </main>
@@ -47,4 +45,4 @@ const Gallery: React.FC = () => {
   );
 };
 
-export default Gallery;
+export default Codex;

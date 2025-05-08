@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
-import { Outfit, PT_Serif, Signika, Ultra } from 'next/font/google';
-import { Nunito, PT_Sans } from 'next/font/google';
+import { Signika, Ultra } from 'next/font/google';
 import './globals.css';
 import { Analytics } from '@vercel/analytics/react';
 import '@rainbow-me/rainbowkit/styles.css';
@@ -18,26 +17,10 @@ const signika = Signika({
   subsets: ['latin'], weight: "400", variable: '--font-signika',
 });
 
-const outfit = Outfit({
-  subsets: ['latin'], weight: "500", variable: '--font-outfit',
-
-})
-
-const nunito = Nunito({
-  subsets: ['latin'], weight: "400", variable: '--font-nunito',
-});
-
-const ptsans = PT_Sans({
-  subsets: ['latin'], weight: "400", variable: '--font-ptsans',
-});
-
 const ultra = Ultra({
   subsets: ['latin'], weight: "400", variable: '--font-ultra',
 });
 
-const ptser = PT_Serif({
-  subsets: ['latin'], weight: "400", variable: '--font-ptserif',
-});
 
 
 
@@ -59,7 +42,7 @@ export default function RootLayout({
 
   return (
     <html lang='en'>
-      <body className={`${signika.variable} ${outfit.variable} ${nunito.variable} ${ptsans.variable} ${ultra.variable} ${ptser.variable} font-sans bg-black text-white`}>
+      <body className={`${signika.variable} ${ultra.variable}  font-sans bg-black text-white`}>
         <Providers>
           <SpaceAnimation />
           <Navbar />

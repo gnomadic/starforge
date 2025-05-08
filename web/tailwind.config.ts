@@ -97,21 +97,13 @@ const config: Config = {
   		signika: [
   			'var(--font-signika)'
   		],
-  		outfit: [
-  			'var(--font-outfit)'
-  		],
-  		nunito: [
-  			'var(--font-nunito)'
-  		],
   		ptsans: [
   			'var(--font-ptsans)'
   		],
   		ultra: [
   			'var(--font-ultra)'
   		],
-  		ptser: [
-  			'var(--font-ptserif)'
-  		]
+ 
   	}
   },
   plugins: [require("tailwindcss-animate")],

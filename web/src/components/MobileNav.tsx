@@ -13,18 +13,25 @@ type MobileNavProps = {
 
 export default function MobileNav(props: MobileNavProps) {
   return (
-    <div className='fixed top-0 left-0 z-40 w-screen navbar-menu font-signika'>
+    <div className='fixed top-0 left-0 z-40 navbar-menu font-mono'>
       <div
-        className='fixed inset-0 bg-black navbar-backdrop'
+        className='fixed inset-0 bg-black/50 navbar-backdrop'
         onClick={props.onClick}
       ></div>
-      <nav className='relative flex flex-col w-full h-full px-10 py-8 overflow-y-auto border-r bg-slate-900'>
+      <nav className='relative py-8 px-10 border-r bg-slate-900'>
         <Link href='/' onClick={props.onClick}>
           <div className='text-xl text-white font-mono text-center'>
             S T A R F O R G E
           </div>
         </Link>
         <ul className='pt-12 tracking-wider b-32 font-anon text-lightgrey'>
+        <li onClick={props.onClick}>
+                  <Link href='/'>
+                    <div className='relative cursor-pointer py-4'>
+                      HOME
+                    </div>
+                  </Link>
+                </li>
           {NavItems.map((element, i) => {
             return (
               <Fragment key={i}>
@@ -38,32 +45,10 @@ export default function MobileNav(props: MobileNavProps) {
               </Fragment>
             );
           })}
-
-          {/* <li className='pb-8 '>
-            <a
-              href='https://warpcast.com/gn0madic'
-              rel='noopener noreferrer'
-              target='_blank'
-            >
-              <div className='relative cursor-pointer'>warpcast</div>
-            </a>
-          </li> */}
-          {/* 
-          <li className='pb-8'>
-            <a
-              href='https://discord.gg/pP2G7sY7GY'
-              rel='noopener noreferrer'
-              target='_blank'
-            >
-              <div className='relative cursor-pointer'>discord</div>
-            </a>
-          </li> */}
-
           <li className=''>
             <a
               target="_blank"
               rel="noopener noreferrer"
-              // href="https://play-starforge.gitbook.io/starforge"
               href="https://t.me/+Js2_GaKRbkBkZGE5"
             >
               <div className="relative py-4 cursor-pointer">
@@ -77,11 +62,6 @@ export default function MobileNav(props: MobileNavProps) {
           </li>
           <li className='py-4'>
             <WalletButton />
-            {/* <ConnectButton
-              chainStatus='icon'
-              accountStatus='avatar'
-              showBalance={false}
-            /> */}
           </li>
         </ul>
       </nav>

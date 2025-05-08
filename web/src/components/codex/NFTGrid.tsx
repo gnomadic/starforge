@@ -1,4 +1,3 @@
-import { Item, Station } from "@/domain/types";
 import { match, P } from "ts-pattern";
 import { Card, CardContent, CardTitle, CardDescription } from "../ui/card";
 import { Pagination, PaginationContent, PaginationItem, PaginationPrevious, PaginationLink, PaginationNext } from "../ui/pagination";
@@ -27,7 +26,6 @@ export function NFTGrid(props: NFTGridProps) {
 
   return match(props.heldTokenIds)
     .with([], () => <EmptyNFTs />)
-    // .with([P.select()], (singleNFT) => <EmptyNFTs />)
     .otherwise(() => (
       <ManyNFTs
         selectedTokenId={props.selectedTokenId}
@@ -37,17 +35,6 @@ export function NFTGrid(props: NFTGridProps) {
     ));
 }
 
-interface ItemCardProps {
-  item: Item | undefined;
-  onStationClick: (station: Station) => void;
-}
-
-export function ItemCard(props: ItemCardProps) {
-  return match(props)
-    .with({ item: P.nullish }, (item) => <EmptyNFTs></EmptyNFTs>)
-    //   .with({ item: P.nonNullable}, (item) => <PresentItemCard item={item}/>)
-    .otherwise(() => <EmptyNFTs></EmptyNFTs>);
-}
 
 export function EmptyNFTs() {
   return (

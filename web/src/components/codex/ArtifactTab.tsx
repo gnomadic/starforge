@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Artifact, NFT } from '@/domain/types';
+import { Artifact } from '@/domain/types';
 import { ArtifactCard } from '@/components/ArtifactCard';
 import { useAccount } from "wagmi";
 import { useDeployment } from "@/hooks/useDeployment";

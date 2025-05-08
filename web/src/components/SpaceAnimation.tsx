@@ -172,13 +172,6 @@ const SpaceAnimation: React.FC = () => {
   return (
     <div className="fixed inset-0 -z-10 overflow-hidden">
 
-      {/* <Image
-            src="/bigsky.svg"
-            className="fixed  object-cover w-full h-full"
-            alt="night sky"
-            width="4160"
-            height="6240"
-          /> */}
 
       <svg
         // ref={svgRef} 
