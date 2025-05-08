@@ -35,14 +35,14 @@ export const metadata: Metadata = {
 
 export default function Home() {
   return (
-    <main className='items-center font-ptser'>
+    <main className='items-center'>
 
       <section className="relative min-h-screen flex flex-col items-center justify-center px-6 overflow-hidden">
         <div className="text-center max-w-4xl mx-auto animate-fade-up" style={{ animationDelay: '0.3s' }}>
           <h1 className="text-5xl md:text-7xl font-mono font-bold leading-tight">
             It&apos;s the end of the universe.
           </h1>
-          <p className="mt-6 text-xl md:text-2xl text-white/70">
+          <p className="mt-6 text-xl md:text-2xl text-white/70 font-mono">
             Don&apos;t worry, we have a plan
           </p>
         </div>

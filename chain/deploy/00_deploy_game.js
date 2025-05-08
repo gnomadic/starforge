@@ -8,7 +8,7 @@ module.exports = async (hre) => {
   const chainId = await getChainId();
 
 
-  const redo = true;
+  const redo = false;
 
 
   // ------------------------------------- deploy
@@ -75,10 +75,10 @@ module.exports = async (hre) => {
     // args: [Planet.address]
   });
 
-  const UpgradesSystem = await deploy("UpgradesSystem", {
-    from: deployer,
-    log: true,
-  });
+  // const UpgradesSystem = await deploy("UpgradesSystem", {
+  //   from: deployer,
+  //   log: true,
+  // });
 
   const SupplyToken = await deploy("SupplyToken", {
     from: deployer,
@@ -166,8 +166,8 @@ module.exports = async (hre) => {
   const PlanetDeployment = await deployments.get("PlanetVAlpha");
   const deployedPlanet = await ethers.getContractAt("PlanetVAlpha", PlanetDeployment.address);
 
-  const upgradesSystemDeployment = await deployments.get("UpgradesSystem");
-  const deployedUpgradesSystem = await ethers.getContractAt("UpgradesSystem", upgradesSystemDeployment.address);
+  // const upgradesSystemDeployment = await deployments.get("UpgradesSystem");
+  // const deployedUpgradesSystem = await ethers.getContractAt("UpgradesSystem", upgradesSystemDeployment.address);
 
   // --- tokens
 
@@ -242,7 +242,7 @@ module.exports = async (hre) => {
   object.PlanetStats = PlanetStats.address;
   object.SupplySystem = SupplySystem.address;
   object.JobSystem = JobSystem.address;
-  object.UpgradesSystem = UpgradesSystem.address;
+  // object.UpgradesSystem = UpgradesSystem.address;
 
 
   const filename = "../deployments/" + networkName + "/entropical-deployment.json";

@@ -1,36 +1,40 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# S T A R F O R G E
 
-## Getting Started
+What a twist. This is actually the Tavern Protocol.
 
-First, run the development server:
+Ya see, Tavern doesn't exist yet. And it's hard to build a complex system from scratch. It's much more reasonable to build a complex system on top of an existing one. So, we’re building STARFORGE first — and from that, we’ll extract the Tavern Protocol.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## What is this?
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+STARFORGE is a showcase of a gaming protocol, an onchain engine for building decentralized, open source, and community-driven games. It’s modular and extensible by design, making it easy for anyone to plug in, contribute, or build their own games on top of it.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## But wait, is this a game?
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+Yeah, it's a game.
 
-## Learn More
+But over time, as each System (combat, quests, resources, etc.) gets finalized, it can be extracted and reused in other games via a Factory pattern. That’s the protocol part.
 
-To learn more about Next.js, take a look at the following resources:
+## So how does it work?
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+The protocol draws heavily from entity-component architecture. The core idea: clean separation between game logic and game data.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+Entities: the data
 
-## Deploy on Vercel
+Systems: the logic
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Game logic is expressed through stateless Systems. Game data lives in Entities. These Entities are grouped into Scenarios — curated experiences in the game world. Then a Game is just a collection of Scenarios + a hero NFT.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+All games can share the same System deployments while expressing unique lore and flavor through their own Scenarios. This ensures a common rule set with room for creativity.
+
+## How do I play?
+
+Every game starts with a hero. In STARFORGE, your hero is a planet.
+
+ * Mint a planet.
+ * Check the Codex to see your planet’s unique stats.
+ * Start a Job to earn resources and level up your skills.
+
+Right now, that’s the loop — three Systems (stats, resources, jobs) working together in a Scenario.
+
+## We need your help!
+We’re still building, so if you want to follow along, share your ideas, or contribute, [join our Telegram](https://t.me/playtavern).
