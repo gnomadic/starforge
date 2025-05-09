@@ -31,21 +31,27 @@ interface JobDeco {
     icon: React.ReactNode;
     color: string;
     resourceType: string;
+    displayName: string;
 }
 
 const DECOS: JobDeco[] = [
     {
         icon: <Shell className="h-5 w-5 text-red-400" />,
         resourceType: 'Bioflux',
-        color: 'bg-red-950/60 hover:bg-red-900/60'
+        color: 'bg-red-950/60 hover:bg-red-900/60',
+        displayName: 'Organic'
     }, {
         icon: <Droplet className="h-5 w-5 text-blue-400" />,
         resourceType: 'Hydrocite',
-        color: 'bg-blue-950/60 hover:bg-blue-900/60'
+        color: 'bg-blue-950/60 hover:bg-blue-900/60',
+        displayName: 'Lithic'
+
     }, {
         icon: <Sun className="h-5 w-5 text-yellow-400" />,
         resourceType: 'Solaris Dust',
-        color: 'bg-yellow-950/60 hover:bg-yellow-900/60'
+        color: 'bg-yellow-950/60 hover:bg-yellow-900/60',
+        displayName: 'Solaric'
+
     }
 ]
 

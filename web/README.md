@@ -28,7 +28,9 @@ All games can share the same System deployments while expressing unique lore and
 
 ## How do I play?
 
-Every game starts with a hero. In STARFORGE, your hero is a planet.
+Every game starts with a hero. In STARFORGE, your hero is a planet.  With Tavern, you can create a game with any hero you want.  
+
+you can visit playstarforge.com and:
 
  * Mint a planet.
  * Check the Codex to see your planet’s unique stats.
@@ -37,4 +39,5 @@ Every game starts with a hero. In STARFORGE, your hero is a planet.
 Right now, that’s the loop — three Systems (stats, resources, jobs) working together in a Scenario.
 
 ## We need your help!
+
 We’re still building, so if you want to follow along, share your ideas, or contribute, [join our Telegram](https://t.me/playtavern).

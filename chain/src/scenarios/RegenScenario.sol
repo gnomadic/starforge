@@ -237,9 +237,9 @@ contract RegenScenario {
         maxJobSkillValues[2] = 99;
 
         string[] memory jobSkillNames = new string[](3);
-        jobSkillNames[0] = "Bioflux";
-        jobSkillNames[1] = "Hydrocite";
-        jobSkillNames[2] = "Solaris Dust";
+        jobSkillNames[0] = "Organic";
+        jobSkillNames[1] = "Lithic";
+        jobSkillNames[2] = "Solaric";
 
         planetStatsEntity.createStatSet(
             "Job Skills",
@@ -290,29 +290,6 @@ contract RegenScenario {
         // Description: Hyper-reactive nanodust that absorbs and stores solar energy, originally used to power ancient tech.
         // Use: Powers terraforming engines, energizes drones, and unlocks dormant alien structures.
         // Why it’s fun: It’s glowing, dangerous, and maybe a little too smart—opens the door for Eldritch crossover.
-        // address tech = supplySystem.deployToken(
-        //     scenario,
-        //     "TECHNOLOGY",
-        //     "TECHNOLOGY"
-        // );
-
-        // console.log("life is at: %s", life);
-        // Mintable(bioflux).mint(
-        //     0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266,
-        //     10000000000000000000
-        // );
-        // Mintable(hydrocite).mint(
-        //     0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266,
-        //     20000000000000000000
-        // );
-        // Mintable(dust).mint(
-        //     0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266,
-        //     30000000000000000000
-        // );
-        // Mintable(tech).mint(
-        //     0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266,
-        //     40000000000000000000
-        // );
     }
 }
 
