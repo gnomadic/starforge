@@ -42,5 +42,8 @@ Over time, your planet gets stronger, more capable, and more valuable.  Not just
 
 This is just the beginning. As the protocol evolves, new Scenarios, Systems, and gameplay loops will unlock — and your early efforts will shape the world to come.
 
-So jump in now. Claim your planet. Start working. And help us build a universe worth saving.
+So jump in now. Claim your planet. Start working. And help us build a universe worth saving:
+
+* Chat and share your ideas on [**Warpcast**](https://warpcast.com/~/channel/playtavern)
+* Hang out in the [**Telegram**](https://t.me/starforge) to get updates and meet fellow players and creators
 
