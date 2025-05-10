@@ -35,7 +35,7 @@ Once launched, a Game can evolve through additional Scenarios, updates, and comm
 We’re building in public, and there are lots of ways to join in:
 
 * Chat and share your ideas on [**Warpcast**](https://warpcast.com/~/channel/playtavern)
-* Hang out in the [**Telegram**](https://t.me/starforge) to get updates and meet fellow creators
+* Hang out in the [**Telegram**](https://t.me/playtavern) to get updates and meet fellow creators
 * Want to peek under the hood? Look at how STARFORGE [defines it's first scenario](https://github.com/gnomadic/starforge/blob/main/chain/src/scenarios/RegenScenario.sol)&#x20;
 
 

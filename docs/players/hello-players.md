@@ -41,4 +41,4 @@ This is just the beginning. As the protocol evolves, new Scenarios, Systems, and
 So jump in now. Claim your planet. Start working. And help us build a universe worth saving:
 
 * Chat and share your ideas on [**Warpcast**](https://warpcast.com/~/channel/playtavern)
-* Hang out in the [**Telegram**](https://t.me/starforge) to get updates and meet fellow players and creators
+* Hang out in the [**Telegram**](https://t.me/playtavern) to get updates and meet fellow players and creators
