@@ -4,13 +4,13 @@ description: STARFORGE
 
 # Hello Players
 
-Welcome to **STARFORGE**, the first game built on top of the emerging Tavern Protocol.&#x20;
+Welcome to **STARFORGE**, the first game built on top of the emerging Tavern Protocol.
 
-You are entering a living world at the edge of entropy, where every action moves the universe forward towards it's inevitable collapse. &#x20;
+You are entering a living world at the edge of entropy, where every action moves the universe forward towards it's inevitable collapse.
 
 ### We need you
 
-The universe is dying. Energy is scarce. Planets are rare. You play as the caretaker of  a barely living world drifting through the remnants of a forgotten age. Rumors speak of ancient machines that can reverse entropy, but no one knows where they are... or if they’re even real.
+The universe is dying. Energy is scarce. Planets are rare. You play as the caretaker of a barely living world drifting through the remnants of a forgotten age. Rumors speak of ancient machines that can reverse entropy, but no one knows where they are... or if they’re even real.
 
 What we do know? Life persists. And where life persists, stories unfold.
 
@@ -20,11 +20,7 @@ Your journey begins with a single action: **mint a planet**.
 
 Each planet is unique — procedurally generated onchain with its own stats, potential, and mysteries. This planet becomes your hero, and acts as your anchor in the STARFORGE universe.
 
-
-
-> During the ALPHA playtest, minting is completely free and you can mint as many planets as you would like.&#x20;
-
-
+> During the ALPHA playtest, minting is completely free and you can mint as many planets as you would like.
 
 ### Get to work
 
@@ -36,7 +32,7 @@ Each Job you complete:
 * **Earns you resources** (the raw materials of progress)
 * **Moves the story forward** (Not yet, but that's the idea)
 
-Over time, your planet gets stronger, more capable, and more valuable.  Not just to you, but to the whole&#x20;
+Over time, your planet gets stronger, more capable, and more valuable. Not just to you, but to the whole universe
 
 ### What's Next?
 
@@ -46,4 +42,3 @@ So jump in now. Claim your planet. Start working. And help us build a universe w
 
 * Chat and share your ideas on [**Warpcast**](https://warpcast.com/~/channel/playtavern)
 * Hang out in the [**Telegram**](https://t.me/starforge) to get updates and meet fellow players and creators
-

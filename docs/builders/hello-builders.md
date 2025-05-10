@@ -23,9 +23,11 @@ This lets devs focus on building rich, reusable mechanics — while content crea
 \
 When players interact with your game, they use the Systems directly, and pass in a reference to the active Scenario.  The System knows how to extract the Entity data it needs out of the Scenario. &#x20;
 
-***
 
-**🔍 Want to dive in?**
+
+<figure><img src="../.gitbook/assets/Screenshot 2025-05-09 at 8.28.07 AM.png" alt=""><figcaption><p>ECS Architecture</p></figcaption></figure>
+
+### **Want to dive in?**
 
 Start here:
 
