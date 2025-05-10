@@ -23,13 +23,15 @@ This lets devs focus on building rich, reusable mechanics — while content crea
 \
 When players interact with your game, they use the Systems directly, and pass in a reference to the active Scenario.  The System knows how to extract the Entity data it needs out of the Scenario. &#x20;
 
-***
 
-**🔍 Want to dive in?**
+
+<figure><img src="../.gitbook/assets/Screenshot 2025-05-09 at 8.28.07 AM.png" alt=""><figcaption><p>ECS Architecture</p></figcaption></figure>
+
+### **Want to dive in?**
 
 Start here:
 
-* [RegenScenario.sol](https://github.com/gnomadic/starforge/blob/main/chain/src/scenarios/RegenScenario.sol) – a minimal, working Scenario using three core Systems
+* [RegenScenario.sol](../../chain/src/scenarios/RegenScenario.sol) – a minimal, working Scenario using three core Systems
 * Explore [deployed Systems](https://github.com/gnomadic/starforge/tree/main/chain/src/Systems): `STAT`, `SUPPLY`, and `JOB`
 * Explore [deployed Entities](https://github.com/gnomadic/starforge/tree/main/chain/src/entities) for those systems: `STAT`, `SUPPLY`, and `JOB`
 
@@ -43,4 +45,4 @@ This isn’t just about one game.   This is about building the engine for _all_ 
 
 * Chat and share your ideas on [**Warpcast**](https://warpcast.com/~/channel/playtavern)
 * Hang out in the [**Telegram**](https://t.me/starforge) to get updates and meet fellow creators
-* Want to peek under the hood? Look at how STARFORGE [defines it's first scenario](https://github.com/gnomadic/starforge/blob/main/chain/src/scenarios/RegenScenario.sol)&#x20;
+* Want to peek under the hood? Look at how STARFORGE [defines it's first scenario](../../chain/src/scenarios/RegenScenario.sol)&#x20;
