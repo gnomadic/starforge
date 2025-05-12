@@ -13,6 +13,11 @@ import {PlanetStatsSystem} from "./PlanetStatsSystem.sol";
 contract JobSystem is ISystem {
     bool registered = false;
     ISystemController private _systemController;
+    address public entityAddress;
+
+    constructor(address _entity) {
+        entityAddress = _entity;
+    }
 
     function registerSystem(address systemController) external {
         if (registered) {
@@ -152,6 +157,11 @@ contract JobSystem is ISystem {
 
     function getId() external view returns (string memory) {
         return "JOB";
+    }
+
+    function updateEntityAddress(address newEntityAddress) external onlyAdmin {
+        JobEntity entity = JobEntity(scenario.getEntity(address(this)));
+        entity.updateEntityAddress(newEntityAddress);
     }
 
     error NoTimePassed();

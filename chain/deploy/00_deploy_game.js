@@ -103,10 +103,17 @@ module.exports = async (hre) => {
   //   log: true,
   // });
 
+  const JobEntity = await deploy("JobEntity", {
+    from: deployer,
+    log: true,
+  });
+
   const JobSystem = await deploy("JobSystem", {
     from: deployer,
     log: true,
   });
+
+  
 
   // const QuestSystem = await deploy("QuestSystem", {
   //   from: deployer,
