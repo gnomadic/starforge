@@ -2,25 +2,21 @@
 pragma solidity ^0.8.24;
 
 import {IScenario} from "../../Scenario.sol";
-import "@openzeppelin/contracts/access/Ownable.sol";
 
-abstract contract ISystem is Ownable {
-    function registerSystem(address systemController) external view virtual;
+interface ISystem {
+    function registerSystem(address systemController) external;
 
     function init(
         ISystemController controller,
         IScenario scenario,
         uint256 tokenId
-    ) external view virtual;
+    ) external;
 
-    function sync(uint256 tokenId) external view virtual;
+    function sync(uint256 tokenId) external;
 
-    function activateEntity(
-        IScenario scenario
-    ) external view virtual 
-    returns (address);
+    function activateEntity(IScenario scenario) external returns (address);
 
-    function getId() external view virtual returns (string memory);
+    function getId() external pure returns (string memory);
 }
 
 interface ISystemController {

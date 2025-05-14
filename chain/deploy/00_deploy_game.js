@@ -111,6 +111,7 @@ module.exports = async (hre) => {
   const JobSystem = await deploy("JobSystem", {
     from: deployer,
     log: true,
+    args: [JobEntity.address]
   });
 
   
@@ -167,11 +168,13 @@ module.exports = async (hre) => {
 
   console.log("----- configuring systems");
 
-  const SysControllerDeployment = await deployments.get("SystemController");
-  const deployedSysController = await ethers.getContractAt("SystemController", SysControllerDeployment.address);
-
-  const PlanetDeployment = await deployments.get("PlanetVAlpha");
-  const deployedPlanet = await ethers.getContractAt("PlanetVAlpha", PlanetDeployment.address);
+  console.log("getting sys controler ")
+  // const SysControllerDeployment = await deployments.get("SystemController");
+  const deployedSysController = await ethers.getContractAt("SystemController", SystemController.address);
+  // return await ethers.getContractAt(name, "0x2279B7A0a67DB372996a5FaB50D91eAA73d2eBe6");
+  console.log("got sys controler ")
+  // const PlanetDeployment = await deployments.get("PlanetVAlpha");
+  // const deployedPlanet = await ethers.getContractAt("PlanetVAlpha", PlanetDeployment.address);
 
   // const upgradesSystemDeployment = await deployments.get("UpgradesSystem");
   // const deployedUpgradesSystem = await ethers.getContractAt("UpgradesSystem", upgradesSystemDeployment.address);
@@ -180,18 +183,23 @@ module.exports = async (hre) => {
 
   if (!redo) {
 
+    console.log('one ');
     let tx = await deployedSysController.setTokenAddress(Planet.address);
     await tx.wait();
 
+    console.log('two');
     tx = await deployedSysController.setScenarioFactory(ScenarioFactory.address);
     await tx.wait();
 
+    console.log('three');
     tx = await deployedSysController.registerSystem(PlanetStats.address);
     await tx.wait();
 
+    console.log('four');
     tx = await deployedSysController.registerSystem(SupplySystem.address);
     await tx.wait();
 
+    console.log('five');
     tx = await deployedSysController.registerSystem(JobSystem.address);
     await tx.wait();
   }

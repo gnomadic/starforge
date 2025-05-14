@@ -6,16 +6,20 @@ import {IScenario} from "../Scenario.sol";
 import {JobEntity, Job} from "../entities/JobEntity.sol";
 import {SupplySystem} from "./SupplySystem.sol";
 import {PlanetStatsSystem} from "./PlanetStatsSystem.sol";
+import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
+import {LibClone} from "solady/utils/LibClone.sol";
 
 // import {console} from "hardhat/console.sol";
 // import {console} from "forge-std/console.sol";
 
-contract JobSystem is ISystem {
+contract JobSystem is ISystem, Ownable {
+    using LibClone for address;
+
     bool registered = false;
     ISystemController private _systemController;
     address public entityAddress;
 
-    constructor(address _entity) {
+    constructor(address _entity) Ownable(msg.sender) {
         entityAddress = _entity;
     }
 
@@ -155,13 +159,12 @@ contract JobSystem is ISystem {
         return address(entity);
     }
 
-    function getId() external view returns (string memory) {
+    function getId() external pure returns (string memory) {
         return "JOB";
     }
 
-    function updateEntityAddress(address newEntityAddress) external onlyAdmin {
-        JobEntity entity = JobEntity(scenario.getEntity(address(this)));
-        entity.updateEntityAddress(newEntityAddress);
+    function updateEntityAddress(address newEntityAddress) external onlyOwner {
+        entityAddress = newEntityAddress;
     }
 
     error NoTimePassed();

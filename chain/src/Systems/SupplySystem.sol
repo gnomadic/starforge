@@ -120,7 +120,7 @@ contract SupplySystem is ISystem {
         return newToken;
     }
 
-    function getId() external view returns (string memory) {
+    function getId() external pure returns (string memory) {
         return "SUPPLY";
     }
 
