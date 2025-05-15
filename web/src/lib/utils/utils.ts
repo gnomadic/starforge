@@ -11,5 +11,5 @@ export function safeb32(input: string){
 
 export function str(input: Hex | undefined){
     if (!input) return "";
-    return hexToString(input);
+    return hexToString(input, { size: 32 });
 }

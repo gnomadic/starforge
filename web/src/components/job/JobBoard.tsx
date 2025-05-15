@@ -5,7 +5,7 @@ import { NFTGrid } from '@/components/codex/NFTGrid';
 import { useReadJobEntityGetActiveJob, useReadPlanetVAlphaTokensOfOwner, useWriteJobSystemActivateJob, useWriteJobSystemFinishJob } from "@/generated";
 import { useAccount, useWaitForTransactionReceipt } from "wagmi";
 import { useDeployment } from "@/hooks/useDeployment";
-import { zeroAddress } from 'viem';
+import { Hex, zeroAddress } from 'viem';
 // import PlanetCard from '@/components/codex/PlanetCard';
 
 import { Shell, Droplet, Sun, ArrowDown } from 'lucide-react';
@@ -25,31 +25,31 @@ import {
 } from "@/components/ui/collapsible";
 import JobCard from '@/components/job/JobCard';
 import { bigIntReplacer } from '@/domain/utils';
-import { b32 } from '@/lib/utils/utils';
+import { b32, str, safeb32 } from '@/lib/utils/utils';
 
 
 interface JobDeco {
     icon: React.ReactNode;
     color: string;
-    resourceType: string;
+    resourceType: Hex;
     displayName: string;
 }
 
 const DECOS: JobDeco[] = [
     {
         icon: <Shell className="h-5 w-5 text-red-400" />,
-        resourceType: 'Bioflux',
+        resourceType: safeb32('Bioflux'),
         color: 'bg-red-950/60 hover:bg-red-900/60',
         displayName: 'Organic'
     }, {
         icon: <Droplet className="h-5 w-5 text-blue-400" />,
-        resourceType: 'Hydrocite',
+        resourceType: safeb32('Hydrocite'),
         color: 'bg-blue-950/60 hover:bg-blue-900/60',
         displayName: 'Lithic'
 
     }, {
         icon: <Sun className="h-5 w-5 text-yellow-400" />,
-        resourceType: 'Solaris Dust',
+        resourceType: safeb32('Solaris Dust'),
         color: 'bg-yellow-950/60 hover:bg-yellow-900/60',
         displayName: 'Solaric'
 
@@ -101,7 +101,7 @@ export default function JobBoard({ }: JobBoardProps) {
     const { data: activeJob, refetch: refetchActiveJob } = useReadJobEntityGetActiveJob({
         args: [selectedTokenId],
         address: whichEntity,
-        
+
     })
 
 
@@ -151,7 +151,7 @@ export default function JobBoard({ }: JobBoardProps) {
                                     <div className="flex items-center">
                                         {supply.icon}
                                         <p className='pl-2 text-lg font-semibold text-white'>
-                                            {supply.type}
+                                            {str(supply.type)}
                                         </p>
                                     </div>
                                     <p className="text-sm">
