@@ -9,7 +9,7 @@ import {SystemController} from "../src/systems/SystemController.sol";
 import {SupplySystem} from "../src/systems/SupplySystem.sol";
 import {SupplyTokenFactory} from "../src/tokens/SupplyTokenFactory.sol";
 import {SupplyToken} from "../src/tokens/SupplyToken.sol";
-import {PlanetStatsSystem} from "../src/systems/PlanetStatsSystem.sol";
+import {StatsSystem} from "../src/systems/StatsSystem.sol";
 import {PlanetStatsEntity} from "../src/entities/PlanetStatsEntity.sol";
 import {SupplyEntity} from "../src/entities/SupplyEntity.sol";
 import {ScenarioFactory} from "../src/ScenarioFactory.sol";
@@ -20,7 +20,7 @@ contract StarForgeTest is Test {
     IScenario regenScenario;
 
     SupplySystem supplySystem;
-    PlanetStatsSystem statsSystem;
+    StatsSystem statsSystem;
     JobSystem jobSystem;
 
     SupplyEntity supplyEntity;
@@ -44,7 +44,7 @@ contract StarForgeTest is Test {
         );
 
         supplySystem = new SupplySystem(address(tokenFactory));
-        statsSystem = new PlanetStatsSystem();
+        statsSystem = new StatsSystem();
         jobSystem = new JobSystem();
 
         systemController.registerSystem(ISystem(supplySystem));

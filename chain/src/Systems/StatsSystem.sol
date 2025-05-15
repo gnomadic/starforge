@@ -3,17 +3,43 @@ pragma solidity ^0.8.24;
 
 import {ISystem, ISystemController} from "./interfaces/ISystem.sol";
 import {IScenario} from "../Scenario.sol";
-import {PlanetStatsEntity} from "../entities/PlanetStatsEntity.sol";
+import {IStatsEntity} from "../entities/StatsEntity.sol";
+import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
+import {LibClone} from "solady/utils/LibClone.sol";
 
 // import {console} from "forge-std/console.sol";
-
 // import {console} from "hardhat/console.sol";
 
-contract PlanetStatsSystem is ISystem {
+interface IStatsSystem {
+    function checkSkill(
+        IScenario scenario,
+        uint256 tokenId,
+        bytes32 skillSetName,
+        uint8 skillSetIndex,
+        uint16 skillSetRequirement
+    ) external view returns (bool);
+
+    function boostSkill(
+        IScenario scenario,
+        uint256 tokenId,
+        bytes32 skillSetName,
+        uint8 skillSetIndex,
+        uint16 amount
+    ) external;
+}
+
+contract StatsSystem is ISystem, IStatsSystem, Ownable {
+    using LibClone for address;
+
     uint256 _nonce;
 
     bool registered = false;
     address private _systemController;
+    address public entityAddress;
+
+    constructor(address _entity) Ownable(msg.sender) {
+        entityAddress = _entity;
+    }
 
     function registerSystem(address systemController) external {
         if (registered) {
@@ -31,18 +57,18 @@ contract PlanetStatsSystem is ISystem {
     ) internal {
         uint8 randomNumber = getRandom(100, tokenId);
 
-        address entityAddress = scenario.getEntity(address(this));
-        PlanetStatsEntity entity = PlanetStatsEntity(entityAddress);
+        address ent = scenario.getEntity(address(this));
+        IStatsEntity entity = IStatsEntity(ent);
         // console.log(
         //     "PlanetStatsSystem: calculateStatsForMint: entityAddress: %s and tokenId: %s",
         //     entityAddress,
         //     tokenId
         // );
 
-        string[] memory statSetNames = entity.getStatSetNames();
+        bytes32[] memory statSetNames = entity.getStatSetNames();
 
         // uint8 randomNumber;
-        uint8[] memory odds = entity.getStatSetRarityOdds();
+        uint8[10] memory odds = entity.getStatSetRarityOdds();
         uint8 rarity = uint8(odds.length);
         uint8 rateCount = 0;
 
@@ -55,16 +81,16 @@ contract PlanetStatsSystem is ISystem {
             }
         }
 
-        uint16[] memory raritySet = new uint16[](1);
+        uint16[10] memory raritySet;
         raritySet[0] = uint16(rarity);
 
         // console.log("setting rarity %s", rarity);
         entity.setStatSet(tokenId, "RARITY", raritySet);
 
         for (uint256 i = 0; i < statSetNames.length; i++) {
-            string memory statSetName = statSetNames[i];
+            bytes32 statSetName = statSetNames[i];
             uint16 firstTest = entity.getStartingPoints(statSetName)[0];
-            uint16[] memory stats;
+            uint16[10] memory stats;
 
             if (firstTest == 65535) {
                 // gatcha set
@@ -86,15 +112,15 @@ contract PlanetStatsSystem is ISystem {
     }
 
     function getStartingStatsForGatchaSet(
-        PlanetStatsEntity entity,
+        IStatsEntity entity,
         uint256 tokenId,
-        string memory statSetName,
+        bytes32 statSetName,
         uint8 rarity
-    ) internal returns (uint16[] memory) {
+    ) internal returns (uint16[10] memory) {
         uint8 randomNumber;
 
         uint8 points = entity.getAvailablePoints(statSetName)[rarity - 1];
-        uint16[] memory stats = entity.getStartingPoints(statSetName);
+        uint16[10] memory stats = entity.getStartingPoints(statSetName);
         for (uint256 i = 0; i < stats.length; i++) {
             stats[i] = 0;
         }
@@ -110,9 +136,9 @@ contract PlanetStatsSystem is ISystem {
     }
 
     function getStartingStatsForDefaultSet(
-        PlanetStatsEntity entity,
-        string memory statSetName
-    ) internal view returns (uint16[] memory) {
+        IStatsEntity entity,
+        bytes32 statSetName
+    ) internal view returns (uint16[10] memory) {
         return entity.getStartingPoints(statSetName);
     }
 
@@ -156,15 +182,14 @@ contract PlanetStatsSystem is ISystem {
             return current;
         }
 
-        // TODO replace this with proxy clone.
-        PlanetStatsEntity entityAddress = new PlanetStatsEntity();
+        address clone = entityAddress.clone();
 
-        entityAddress.initialize(scenario, address(this));
+        IStatsEntity(clone).initialize(scenario, address(this));
         // console.log(
         //     "PlanetStatsSystem: activateEntity: entityAddress: %s",
         //     address(entityAddress)
         // );
-        return address(entityAddress);
+        return clone;
     }
 
     function getId() external pure returns (string memory) {
@@ -174,14 +199,12 @@ contract PlanetStatsSystem is ISystem {
     function checkSkill(
         IScenario scenario,
         uint256 tokenId,
-        string memory skillSetName,
+        bytes32 skillSetName,
         uint8 skillSetIndex,
         uint16 skillSetRequirement
     ) external view returns (bool) {
-        PlanetStatsEntity entity = PlanetStatsEntity(
-            scenario.getEntity(address(this))
-        );
-        if (bytes(skillSetName).length == 0) {
+        IStatsEntity entity = IStatsEntity(scenario.getEntity(address(this)));
+        if (skillSetName.length == 0) {
             return true;
         }
 
@@ -198,13 +221,11 @@ contract PlanetStatsSystem is ISystem {
     function boostSkill(
         IScenario scenario,
         uint256 tokenId,
-        string memory skillSetName,
+        bytes32 skillSetName,
         uint8 skillSetIndex,
         uint16 amount
     ) external onlySystemAndAdmin(scenario) {
-        PlanetStatsEntity entity = PlanetStatsEntity(
-            scenario.getEntity(address(this))
-        );
+        IStatsEntity entity = IStatsEntity(scenario.getEntity(address(this)));
 
         entity.boostSkill(tokenId, skillSetName, skillSetIndex, amount);
     }

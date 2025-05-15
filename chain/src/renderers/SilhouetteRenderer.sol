@@ -8,8 +8,6 @@ import {LibString} from "../../lib/solady/src/utils/LibString.sol";
 // import "hardhat/console.sol";
 
 contract SilhouetteRenderer is IStepRenderer {
-    constructor() {}
-
     function generateDefs(
         uint256 tokenId
     ) external view override returns (string memory) {

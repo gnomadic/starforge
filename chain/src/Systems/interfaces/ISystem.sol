@@ -32,8 +32,3 @@ interface ISystemController {
 
     function isSystem(address systemAddress) external view returns (bool);
 }
-
-struct TokenRate {
-    uint256 rate;
-    address token;
-}

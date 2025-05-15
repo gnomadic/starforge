@@ -3,7 +3,7 @@ pragma solidity ^0.8.24;
 
 import {ScenarioFactory} from "../ScenarioFactory.sol";
 import {Scenario} from "../Scenario.sol";
-import {PlanetStatsEntity} from "../entities/PlanetStatsEntity.sol";
+import {StatsEntity} from "../entities/StatsEntity.sol";
 import {SupplyEntity} from "../entities/SupplyEntity.sol";
 import {SystemController} from "../systems/SystemController.sol";
 import {SupplySystem} from "../systems/SupplySystem.sol";
@@ -55,7 +55,7 @@ contract RegenScenario {
         jobsEntity.addJob(
             "Bioflux_one",
             "Spore Harvester",
-            "Collect dormant spores from decayed biomes. Risk of minor fungal infection.",
+            // "Collect dormant spores from decayed biomes. Risk of minor fungal infection.",
             "Bioflux",
             2 * 10 ** 18,
             12 hours,
@@ -68,7 +68,7 @@ contract RegenScenario {
         jobsEntity.addJob(
             "Bioflux_two",
             "Bloom Engineer",
-            "Cultivate and harvest synthetic algae blooms in controlled lakes.",
+            // "Cultivate and harvest synthetic algae blooms in controlled lakes.",
             "Bioflux",
             5 * 10 ** 18,
             12 hours,
@@ -81,7 +81,7 @@ contract RegenScenario {
         jobsEntity.addJob(
             "Bioflux_three",
             "Mycoformer",
-            "Manage a vast underground mycelial nexus. Requires drone control and biohazard gear.",
+            // "Manage a vast underground mycelial nexus. Requires drone control and biohazard gear.",
             "Bioflux",
             12 * 10 ** 18,
             12 hours,
@@ -94,7 +94,7 @@ contract RegenScenario {
         jobsEntity.addJob(
             "Hydrocite_one",
             "Ice Miner",
-            "Drill into surface frost veins to extract raw water crystals.",
+            // "Drill into surface frost veins to extract raw water crystals.",
             "Hydrocite",
             1 * 10 ** 18,
             12 hours,
@@ -107,7 +107,7 @@ contract RegenScenario {
         jobsEntity.addJob(
             "Hydrocite_two",
             "Comet Splitter",
-            "Harvest from captured micro-comets in low orbit. Precision required.",
+            // "Harvest from captured micro-comets in low orbit. Precision required.",
             "Hydrocite",
             3 * 10 ** 18,
             12 hours,
@@ -120,7 +120,7 @@ contract RegenScenario {
         jobsEntity.addJob(
             "Hydrocite_three",
             "Glacier Diver",
-            "Dive into unstable ancient glaciers for deep-core Hydrocite. Extremely cold.",
+            // "Dive into unstable ancient glaciers for deep-core Hydrocite. Extremely cold.",
             "Hydrocite",
             9 * 10 ** 18,
             12 hours,
@@ -133,7 +133,7 @@ contract RegenScenario {
         jobsEntity.addJob(
             "Solaris_one",
             "Dust Sweeper",
-            "Clean solar panel fields coated in Solaris residue. Easy but tedious.",
+            // "Clean solar panel fields coated in Solaris residue. Easy but tedious.",
             "Solaris Dust",
             5 * 10 ** 17,
             12 hours,
@@ -146,7 +146,7 @@ contract RegenScenario {
         jobsEntity.addJob(
             "Solaris_two",
             "Reflector Technician",
-            "Tune ancient solar arrays to beam-storm hotspots and collect Dust.",
+            // "Tune ancient solar arrays to beam-storm hotspots and collect Dust.",
             "Solaris Dust",
             2 * 10 ** 18,
             12 hours,
@@ -159,7 +159,7 @@ contract RegenScenario {
         jobsEntity.addJob(
             "Solaris_three",
             "Flare Diver",
-            "Ride solar storms in magnetic suits to capture high-density Dust clouds. High risk, high reward.",
+            // "Ride solar storms in magnetic suits to capture high-density Dust clouds. High risk, high reward.",
             "Solaris Dust",
             6 * 10 ** 18,
             12 hours,
@@ -174,25 +174,25 @@ contract RegenScenario {
         Scenario scenario,
         SystemController controller
     ) internal {
-        PlanetStatsEntity planetStatsEntity = PlanetStatsEntity(
+        StatsEntity planetStatsEntity = StatsEntity(
             scenario.getEntity(address(controller.getSystem("STAT")))
         );
 
-        uint8[] memory gatchaPoints = new uint8[](5);
+        uint8[10] memory gatchaPoints;
         gatchaPoints[0] = 80;
         gatchaPoints[1] = 78;
         gatchaPoints[2] = 76;
         gatchaPoints[3] = 74;
         gatchaPoints[4] = 72;
 
-        uint8[] memory rarityOdds = new uint8[](5);
+        uint8[10] memory rarityOdds;
         rarityOdds[0] = 1;
         rarityOdds[1] = 5;
         rarityOdds[2] = 13;
         rarityOdds[3] = 25;
         rarityOdds[4] = 75;
 
-        uint16[] memory startingValue = new uint16[](6);
+        uint16[10] memory startingValue;
         startingValue[0] = 65535;
         startingValue[1] = 65535;
         startingValue[2] = 65535;
@@ -200,7 +200,7 @@ contract RegenScenario {
         startingValue[4] = 65535;
         startingValue[5] = 65535;
 
-        uint16[] memory maxValues = new uint16[](6);
+        uint16[10] memory maxValues;
         maxValues[0] = 20;
         maxValues[1] = 20;
         maxValues[2] = 20;
@@ -208,7 +208,7 @@ contract RegenScenario {
         maxValues[4] = 20;
         maxValues[5] = 20;
 
-        string[] memory statSetNames = new string[](6);
+        bytes32[10] memory statSetNames;
         statSetNames[0] = "Temperature";
         statSetNames[1] = "Water";
         statSetNames[2] = "Biomass";
@@ -226,17 +226,17 @@ contract RegenScenario {
             statSetNames
         );
 
-        uint16[] memory jobSkillValues = new uint16[](3);
+        uint16[10] memory jobSkillValues;
         jobSkillValues[0] = 0;
         jobSkillValues[1] = 0;
         jobSkillValues[2] = 0;
 
-        uint16[] memory maxJobSkillValues = new uint16[](3);
+        uint16[10] memory maxJobSkillValues;
         maxJobSkillValues[0] = 99;
         maxJobSkillValues[1] = 99;
         maxJobSkillValues[2] = 99;
 
-        string[] memory jobSkillNames = new string[](3);
+        bytes32[10] memory jobSkillNames;
         jobSkillNames[0] = "Organic";
         jobSkillNames[1] = "Lithic";
         jobSkillNames[2] = "Solaric";

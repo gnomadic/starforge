@@ -68,18 +68,20 @@ module.exports = async (hre) => {
     log: true,
     args: [PlanetRenderer.address, SystemController.address],
   });
+  
 
-  const PlanetStats = await deploy("PlanetStatsSystem", {
+  const StatsEntity = await deploy("StatsEntity", {
     from: deployer,
     log: true,
-    // args: [Planet.address]
   });
 
-  // const UpgradesSystem = await deploy("UpgradesSystem", {
-  //   from: deployer,
-  //   log: true,
-  // });
+  const PlanetStats = await deploy("StatsSystem", {
+    from: deployer,
+    log: true,
+    args: [StatsEntity.address],
+  });
 
+  
   const SupplyToken = await deploy("SupplyToken", {
     from: deployer,
     log: true,
@@ -98,11 +100,6 @@ module.exports = async (hre) => {
     args: [SupplyTokenFactory.address]
   });
 
-  // const ComabtSystem = await deploy("CombatSystem", {
-  //   from: deployer,
-  //   log: true,
-  // });
-
   const JobEntity = await deploy("JobEntity", {
     from: deployer,
     log: true,
@@ -114,53 +111,7 @@ module.exports = async (hre) => {
     args: [JobEntity.address]
   });
 
-  
 
-  // const QuestSystem = await deploy("QuestSystem", {
-  //   from: deployer,
-  //   log: true,
-  // });
-
-  // const SupplySystem = await deploy("SupplySystem", {
-  //   from: deployer,
-  //   log: true,
-  // });
-
-
-  // const DungeonMaster = await deploy("DungeonMaster", {
-  //   from: deployer,
-  //   log: true,
-  // });
-
-  // const InvestmentSystem = await deploy("InvestmentSystem", {
-  //   from: deployer,
-  //   log: true,
-  //   args: [Planet.address]
-  // });
-
-  // const GlobalProgress = await deploy("GlobalProgress", {
-  //   from: deployer,
-  //   log: true,
-  // });
-
-
-
-
-
-
-
-
-
-
-  // const craft = await deploy("CraftSystem", {
-  //   from: deployer,
-  //   log: true
-  // });
-
-  // const craftLoader = await deploy("CraftSystemLoader", {
-  //   from: deployer,
-  //   log: true,
-  // });
 
   console.log("----- done")
 
@@ -281,7 +232,7 @@ module.exports = async (hre) => {
       await verify(hre, SystemController.address, "SystemController", "systems/", []);
       await verify(hre, ScenarioFactory.address, "ScenarioFactory", "", [SystemController.address]);
       await verify(hre, Scenario.address, "Scenario", "", []);
-      await verify(hre, PlanetStats.address, "PlanetStatsSystem", "systems/", []);
+      await verify(hre, PlanetStats.address, "StatsSystem", "systems/", []);
       await verify(hre, SupplySystem.address, "SupplySystem", "systems/", [SupplyTokenFactory.address]);
       await verify(hre, JobSystem.address, "JobSystem", "systems/", []);
       await verify(hre, "0xeDb12e94f8D3b2C30CeAfCE938C6B1B2806DbDc9", "JobEntity", "entities/", []);

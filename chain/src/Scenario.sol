@@ -2,18 +2,17 @@
 pragma solidity ^0.8.24;
 
 import {ISystem} from "./systems/interfaces/ISystem.sol";
-// import { console } from "hardhat/console.sol";
 
+// import { console } from "hardhat/console.sol";
 
 interface IScenario {
     // function setMetadataURI(string memory _metadataURI) external;
     function getEntity(address _system) external view returns (address);
+
     function getAdmin() external view returns (address);
 }
 
-
 contract Scenario is IScenario {
-    
     address public systemController;
     address public admin;
     string public metadataURI;
@@ -21,18 +20,23 @@ contract Scenario is IScenario {
     // map system address to it's entity
     mapping(address => address) private dataEntities;
 
-    constructor(){}
+    constructor() {}
 
-    bool initialized = false;
+    bool initialized;
 
-    
-    function initialize(address _admin, address _systemController, string memory _metadataURI, ISystem[] memory systems, address[] memory entities) external {
+    function initialize(
+        address _admin,
+        address _systemController,
+        string memory _metadataURI,
+        ISystem[] memory systems,
+        address[] memory entities
+    ) external {
         require(!initialized, "Already initialized");
         initialized = true;
         metadataURI = _metadataURI;
         systemController = _systemController;
         admin = _admin;
-        
+
         for (uint i = 0; i < systems.length; i++) {
             dataEntities[address(systems[i])] = entities[i];
         }
@@ -40,7 +44,6 @@ contract Scenario is IScenario {
         // console.log("initialized with: %s", systems.length);
         // console.log("initialized with system: %s", address(systems[0]));
         // console.log("initialized with entities: %s", dataEntities[address(systems[0])]);
-    
     }
 
     function setAdmin(address _admin) external onlyAdmin {
@@ -69,13 +72,8 @@ contract Scenario is IScenario {
     function getAdmin() external view returns (address) {
         return admin;
     }
-    
-
-
-   
 }
 
 // interface DataEntity {
-
 
 // }

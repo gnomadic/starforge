@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.24;
 
-import {ISystem, ISystemController, TokenRate} from "./interfaces/ISystem.sol";
+import {ISystem, ISystemController} from "./interfaces/ISystem.sol";
 import {IScenario} from "../Scenario.sol";
-import {JobEntity, Job} from "../entities/JobEntity.sol";
-import {SupplySystem} from "./SupplySystem.sol";
-import {PlanetStatsSystem} from "./PlanetStatsSystem.sol";
+import {IJobEntity, Job} from "../entities/JobEntity.sol";
+import {ISupplySystem} from "./SupplySystem.sol";
+import {IStatsSystem} from "./StatsSystem.sol";
 import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
 import {LibClone} from "solady/utils/LibClone.sol";
 
@@ -43,16 +43,14 @@ contract JobSystem is ISystem, Ownable {
 
     function activateJob(
         IScenario scenario,
-        string memory jobId,
+        bytes32 jobId,
         uint256 tokenId
     ) public {
-        JobEntity entity = JobEntity(scenario.getEntity(address(this)));
+        IJobEntity entity = IJobEntity(scenario.getEntity(address(this)));
 
-        (string memory activeJobId, uint256 startedAt) = entity.getActiveJob(
-            tokenId
-        );
+        (bytes32 activeJobId, uint256 startedAt) = entity.getActiveJob(tokenId);
 
-        if (bytes(activeJobId).length > 0) {
+        if (activeJobId.length > 0) {
             // console.log("well finishing job?");
             finishJob(scenario, tokenId);
         }
@@ -63,7 +61,7 @@ contract JobSystem is ISystem, Ownable {
         IScenario scenario,
         uint256 tokenId
     ) external view returns (Job[] memory) {
-        JobEntity entity = JobEntity(scenario.getEntity(address(this)));
+        IJobEntity entity = IJobEntity(scenario.getEntity(address(this)));
         Job[] memory allJobs = entity.getAvailableJobs();
         uint256 count = 0;
 
@@ -92,7 +90,7 @@ contract JobSystem is ISystem, Ownable {
         Job memory job
     ) internal view returns (bool) {
         return
-            PlanetStatsSystem(address(_systemController.getSystem("STAT")))
+            IStatsSystem(address(_systemController.getSystem("STAT")))
                 .checkSkill(
                     scenario,
                     tokenId,
@@ -105,18 +103,16 @@ contract JobSystem is ISystem, Ownable {
     function finishJob(IScenario scenario, uint256 tokenId) public {
         // if the player has an already active job, end it and mint rewards
 
-        JobEntity entity = JobEntity(scenario.getEntity(address(this)));
-        (string memory activeJobId, uint256 startedAt) = entity.getActiveJob(
-            tokenId
-        );
+        IJobEntity entity = IJobEntity(scenario.getEntity(address(this)));
+        (bytes32 activeJobId, uint256 startedAt) = entity.getActiveJob(tokenId);
 
-        if (bytes(activeJobId).length == 0) {
+        if (activeJobId.length == 0) {
             revert NoActiveJob();
         }
 
         Job memory job = entity.getJob(activeJobId);
 
-        SupplySystem supply = SupplySystem(
+        ISupplySystem supply = ISupplySystem(
             address(_systemController.getSystem("SUPPLY"))
         );
 
@@ -130,14 +126,13 @@ contract JobSystem is ISystem, Ownable {
 
         uint256 amount = secondsLive * (job.amountPerHour / 3600);
 
-        PlanetStatsSystem(address(_systemController.getSystem("STAT")))
-            .boostSkill(
-                scenario,
-                tokenId,
-                job.skillSetName,
-                job.skillSetIndex,
-                job.skillSetBoost
-            );
+        IStatsSystem(address(_systemController.getSystem("STAT"))).boostSkill(
+            scenario,
+            tokenId,
+            job.skillSetName,
+            job.skillSetIndex,
+            job.skillSetBoost
+        );
 
         supply.mint(scenario, msg.sender, job.tokenName, amount);
         entity.endJob(tokenId);
@@ -151,12 +146,11 @@ contract JobSystem is ISystem, Ownable {
             return current;
         }
 
-        // TODO replace this with proxy clone.
-        JobEntity entity = new JobEntity();
+        address clone = entityAddress.clone();
 
-        entity.initialize(scenario, address(this));
+        IJobEntity(clone).initialize(scenario, address(this));
 
-        return address(entity);
+        return clone;
     }
 
     function getId() external pure returns (string memory) {

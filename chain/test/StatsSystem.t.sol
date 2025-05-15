@@ -3,7 +3,7 @@ pragma solidity ^0.8.24;
 
 import {StarForgeTest} from "./StarForgeTest.sol";
 
-contract TestPlanetStatsSystem is StarForgeTest {
+contract TestStatsSystem is StarForgeTest {
     address owner = address(this);
 
     function setUp() public {

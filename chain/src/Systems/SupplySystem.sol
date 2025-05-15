@@ -1,14 +1,23 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.24;
 
-import {ISystem, ISystemController, TokenRate} from "./interfaces/ISystem.sol";
+import {ISystem, ISystemController} from "./interfaces/ISystem.sol";
 import {IScenario} from "../Scenario.sol";
 import {SupplyEntity, IERC20} from "../entities/SupplyEntity.sol";
 import {SupplyTokenFactory} from "../tokens/SupplyTokenFactory.sol";
 
 // import {console} from "hardhat/console.sol";
 
-contract SupplySystem is ISystem {
+interface ISupplySystem {
+    function mint(
+        IScenario scenario,
+        address player,
+        bytes32 tokenName,
+        uint256 amount
+    ) external;
+}
+
+contract SupplySystem is ISystem, ISupplySystem {
     struct Resource {
         address tokenAddress;
         string tokenName;
@@ -64,7 +73,7 @@ contract SupplySystem is ISystem {
     function mint(
         IScenario scenario,
         address player,
-        string memory tokenName,
+        bytes32 tokenName,
         uint256 amount
     ) external {
         SupplyEntity entity = SupplyEntity(scenario.getEntity(address(this)));
@@ -79,7 +88,7 @@ contract SupplySystem is ISystem {
     function burn(
         IScenario scenario,
         address player,
-        string memory tokenName,
+        bytes32 tokenName,
         uint256 amount
     ) external {
         SupplyEntity entity = SupplyEntity(scenario.getEntity(address(this)));
@@ -93,7 +102,7 @@ contract SupplySystem is ISystem {
 
     function deployToken(
         IScenario scenario,
-        string memory tokenName,
+        bytes32 tokenName,
         string memory tokenSymbol
     ) external returns (address) {
         if (scenario.getAdmin() != msg.sender) {
@@ -111,7 +120,8 @@ contract SupplySystem is ISystem {
         address newToken = _supplyTokenFactory.createSupplyToken(
             _systemController,
             address(scenario),
-            tokenName,
+            // (tokenName),
+            bytes32ToString(tokenName),
             tokenSymbol
         );
 
@@ -122,6 +132,20 @@ contract SupplySystem is ISystem {
 
     function getId() external pure returns (string memory) {
         return "SUPPLY";
+    }
+
+    function bytes32ToString(
+        bytes32 _bytes32
+    ) internal pure returns (string memory) {
+        uint8 i = 0;
+        while (i < 32 && _bytes32[i] != 0) {
+            i++;
+        }
+        bytes memory bytesArray = new bytes(i);
+        for (uint8 j = 0; j < i; j++) {
+            bytesArray[j] = _bytes32[j];
+        }
+        return string(bytesArray);
     }
 
     error NotAdmin();
