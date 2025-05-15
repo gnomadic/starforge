@@ -230,6 +230,10 @@ contract StatsSystem is ISystem, IStatsSystem, Ownable {
         entity.boostSkill(tokenId, skillSetName, skillSetIndex, amount);
     }
 
+    function updateEntityAddress(address newEntityAddress) external onlyOwner {
+        entityAddress = newEntityAddress;
+    }
+
     error NotScenario();
 
     modifier onlySystemAndAdmin(IScenario _scenario) {

@@ -26,7 +26,7 @@ export default defineConfig({
         'DungeonMaster.sol/**',
         'ScenarioFactory.sol/**',
         'Scenario.sol/**',
-        'PlanetStatsSystem.sol/**',
+        'StatsSystem.sol/**',
         'PlanetStatsEntity.sol/**',
         'SupplySystem.sol/**',
         'SupplyEntity.sol/**',

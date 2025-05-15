@@ -53,6 +53,23 @@ interface IStatsEntity {
         uint8 skillSetIndex,
         uint16 amount
     ) external;
+
+    function setStatSetRarityOdds(uint8[10] calldata odds) external;
+
+    function createGatchaStatSet(
+        bytes32 statSetName,
+        uint16[10] calldata startingPoints,
+        uint8[10] calldata points,
+        uint16[10] calldata maxValues,
+        bytes32[10] memory pointNames
+    ) external;
+
+    function createStatSet(
+        bytes32 statSetName,
+        uint16[10] calldata startingPoints,
+        uint16[10] calldata maxValues,
+        bytes32[10] memory pointNames
+    ) external;
 }
 
 contract StatsEntity is IStatsEntity {

@@ -5,7 +5,17 @@ import {IScenario} from "../Scenario.sol";
 
 // import {console} from "hardhat/console.sol";
 
-contract SupplyEntity {
+interface ISupplyEntity {
+    function initialize(IScenario scenario, address system) external;
+
+    function getTokenAddresses() external view returns (address[] memory);
+
+    function getTokenAddress(bytes32 name) external view returns (address);
+
+    function addToken(bytes32 name, address tokenAddress) external;
+}
+
+contract SupplyEntity is ISupplyEntity {
     bytes32[] private tokenNames;
     address[] private tokenAddresses;
 

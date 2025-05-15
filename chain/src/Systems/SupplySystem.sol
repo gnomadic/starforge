@@ -3,8 +3,10 @@ pragma solidity ^0.8.24;
 
 import {ISystem, ISystemController} from "./interfaces/ISystem.sol";
 import {IScenario} from "../Scenario.sol";
-import {SupplyEntity, IERC20} from "../entities/SupplyEntity.sol";
+import {ISupplyEntity, IERC20} from "../entities/SupplyEntity.sol";
 import {SupplyTokenFactory} from "../tokens/SupplyTokenFactory.sol";
+import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
+import {LibClone} from "solady/utils/LibClone.sol";
 
 // import {console} from "hardhat/console.sol";
 
@@ -15,17 +17,30 @@ interface ISupplySystem {
         bytes32 tokenName,
         uint256 amount
     ) external;
+
+    function deployToken(
+        IScenario scenario,
+        bytes32 tokenName,
+        string memory tokenSymbol
+    ) external returns (address);
 }
 
-contract SupplySystem is ISystem, ISupplySystem {
+contract SupplySystem is ISystem, ISupplySystem, Ownable {
+    using LibClone for address;
+
     struct Resource {
         address tokenAddress;
         string tokenName;
     }
 
     SupplyTokenFactory private _supplyTokenFactory;
+    address public entityAddress;
 
-    constructor(address supplyTokenFactory) {
+    constructor(
+        address supplyTokenFactory,
+        address _entity
+    ) Ownable(msg.sender) {
+        entityAddress = _entity;
         _supplyTokenFactory = SupplyTokenFactory(supplyTokenFactory);
     }
 
@@ -61,13 +76,11 @@ contract SupplySystem is ISystem, ISupplySystem {
         if (current != address(0)) {
             return current;
         }
+        address clone = entityAddress.clone();
 
-        // TODO replace this with proxy clone.
-        SupplyEntity supplyAddress = new SupplyEntity();
+        ISupplyEntity(clone).initialize(scenario, address(this));
 
-        supplyAddress.initialize(scenario, address(this));
-
-        return address(supplyAddress);
+        return clone;
     }
 
     function mint(
@@ -76,7 +89,7 @@ contract SupplySystem is ISystem, ISupplySystem {
         bytes32 tokenName,
         uint256 amount
     ) external {
-        SupplyEntity entity = SupplyEntity(scenario.getEntity(address(this)));
+        ISupplyEntity entity = ISupplyEntity(scenario.getEntity(address(this)));
 
         // console.log("SupplySystem: mint: entityAddress: %s", address(entity));
 
@@ -91,7 +104,7 @@ contract SupplySystem is ISystem, ISupplySystem {
         bytes32 tokenName,
         uint256 amount
     ) external {
-        SupplyEntity entity = SupplyEntity(scenario.getEntity(address(this)));
+        ISupplyEntity entity = ISupplyEntity(scenario.getEntity(address(this)));
 
         // console.log("SupplySystem: burn: entityAddress: %s", address(entity));
 
@@ -109,7 +122,7 @@ contract SupplySystem is ISystem, ISupplySystem {
             revert NotAdmin();
         }
 
-        SupplyEntity entity = SupplyEntity(scenario.getEntity(address(this)));
+        ISupplyEntity entity = ISupplyEntity(scenario.getEntity(address(this)));
 
         // console.log(
         //     "SupplySystem: deployToken: tokenName: %s and entityAddress: %s",
@@ -146,6 +159,10 @@ contract SupplySystem is ISystem, ISupplySystem {
             bytesArray[j] = _bytes32[j];
         }
         return string(bytesArray);
+    }
+
+    function updateEntityAddress(address newEntityAddress) external onlyOwner {
+        entityAddress = newEntityAddress;
     }
 
     error NotAdmin();

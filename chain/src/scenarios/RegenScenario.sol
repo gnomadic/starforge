@@ -3,16 +3,16 @@ pragma solidity ^0.8.24;
 
 import {ScenarioFactory} from "../ScenarioFactory.sol";
 import {Scenario} from "../Scenario.sol";
-import {StatsEntity} from "../entities/StatsEntity.sol";
-import {SupplyEntity} from "../entities/SupplyEntity.sol";
+import {IStatsEntity} from "../entities/StatsEntity.sol";
+import {ISupplyEntity} from "../entities/SupplyEntity.sol";
 import {SystemController} from "../systems/SystemController.sol";
-import {SupplySystem} from "../systems/SupplySystem.sol";
-import {JobEntity} from "../entities/JobEntity.sol";
+import {ISupplySystem} from "../systems/SupplySystem.sol";
+import {IJobEntity} from "../entities/JobEntity.sol";
 
 // import {console} from "hardhat/console.sol";
 
 contract RegenScenario {
-    ScenarioFactory factory;
+    ScenarioFactory immutable factory;
     string metadataURI;
 
     // Constructor
@@ -48,7 +48,7 @@ contract RegenScenario {
     }
 
     function loadJobs(Scenario scenario, SystemController controller) internal {
-        JobEntity jobsEntity = JobEntity(
+        IJobEntity jobsEntity = IJobEntity(
             scenario.getEntity(address(controller.getSystem("JOB")))
         );
 
@@ -174,7 +174,7 @@ contract RegenScenario {
         Scenario scenario,
         SystemController controller
     ) internal {
-        StatsEntity planetStatsEntity = StatsEntity(
+        IStatsEntity planetStatsEntity = IStatsEntity(
             scenario.getEntity(address(controller.getSystem("STAT")))
         );
 
@@ -256,7 +256,7 @@ contract RegenScenario {
         Scenario scenario,
         SystemController controller
     ) internal {
-        SupplySystem supplySystem = SupplySystem(
+        ISupplySystem supplySystem = ISupplySystem(
             address(controller.getSystem("SUPPLY"))
         );
 

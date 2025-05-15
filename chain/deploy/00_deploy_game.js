@@ -93,11 +93,16 @@ module.exports = async (hre) => {
     args: [SupplyToken.address]
   });
 
+  const SupplyEntity = await deploy("SupplyEntity", {
+    from: deployer,
+    log: true,
+  });
+
 
   const SupplySystem = await deploy("SupplySystem", {
     from: deployer,
     log: true,
-    args: [SupplyTokenFactory.address]
+    args: [SupplyTokenFactory.address, SupplyEntity.address]
   });
 
   const JobEntity = await deploy("JobEntity", {
