@@ -118,6 +118,7 @@ contract StatsSystem is ISystem, IStatsSystem, Ownable {
         uint8 rarity
     ) internal returns (uint16[10] memory) {
         uint8 randomNumber;
+        uint8 actualLength = entity.getActualLength(statSetName);
 
         uint8 points = entity.getAvailablePoints(statSetName)[rarity - 1];
         uint16[10] memory stats = entity.getStartingPoints(statSetName);
@@ -126,7 +127,7 @@ contract StatsSystem is ISystem, IStatsSystem, Ownable {
         }
 
         while (points > 0) {
-            randomNumber = getRandom(uint8(stats.length), tokenId + points);
+            randomNumber = getRandom(actualLength, tokenId + points);
             if (stats[randomNumber] < 20) {
                 stats[randomNumber] = stats[randomNumber] + 1;
                 points = points - 1;

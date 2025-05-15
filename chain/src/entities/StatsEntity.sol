@@ -70,6 +70,8 @@ interface IStatsEntity {
         uint16[10] calldata maxValues,
         bytes32[10] memory pointNames
     ) external;
+
+    function getActualLength(bytes32 statSetName) external view returns (uint8);
 }
 
 contract StatsEntity is IStatsEntity {
@@ -159,6 +161,19 @@ contract StatsEntity is IStatsEntity {
 
     function getStatSetNames() external view returns (bytes32[] memory) {
         return _statSetNames;
+    }
+
+    function getActualLength(
+        bytes32 statSetName
+    ) external view returns (uint8) {
+        uint8 length = 0;
+        bytes32[10] memory statNames = _statSetsData[statSetName].statNames;
+        for (uint8 i = 0; i < statNames.length; i++) {
+            if (statNames[i] != bytes32(0)) {
+                length++;
+            }
+        }
+        return length;
     }
 
     function getAvailablePoints(
