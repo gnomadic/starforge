@@ -23,8 +23,8 @@ interface JobCardProps {
         tokenName: Hex;
         amountPerHour: bigint;
     };
-    activate: (jobId: string) => void;
-    deactivate: (jobId: string) => void;
+    activate: (jobId: Hex) => void;
+    deactivate: (jobId: Hex) => void;
 }
 
 

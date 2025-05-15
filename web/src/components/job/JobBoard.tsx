@@ -26,6 +26,7 @@ import {
 import JobCard from '@/components/job/JobCard';
 import { bigIntReplacer } from '@/domain/utils';
 import { b32, str, safeb32 } from '@/lib/utils/utils';
+import { toast } from 'react-toastify';
 
 
 interface JobDeco {
@@ -83,9 +84,10 @@ export default function JobBoard({ }: JobBoardProps) {
     const { data: whichEntity, isLoading, error } = useReadScenarioGetEntity({ args: [deploy.JobSystem], address: scenarios ? scenarios[0] : "0x0" })
 
 
-    const { data: activateJobHash, error: writeError, writeContract: activateJob } = useWriteJobSystemActivateJob();
-    const { data: deactivateJobHash, error: deactivateError, writeContract: finishJob } = useWriteJobSystemFinishJob();
+    const { data: activateJobHash, error: activateError, writeContract: activateJob } = useWriteJobSystemActivateJob();
     const { isLoading: activateJobLoading, isSuccess: activateJobSucesss, data: activateJobData } = useWaitForTransactionReceipt({ hash: activateJobHash })
+    const { data: deactivateJobHash, error: deactivateError, writeContract: finishJob } = useWriteJobSystemFinishJob();
+    const { isLoading: deactivateJobLoading, isSuccess: deactivateJobSucesss, data: deactivateJobData } = useWaitForTransactionReceipt({ hash: deactivateJobHash })
 
 
     const { data: allJobs } = useReadJobEntityGetAvailableJobs({
@@ -113,6 +115,34 @@ export default function JobBoard({ }: JobBoardProps) {
             setEnabled(enabledJobs);
         }
     }, [allJobs]);
+
+    useEffect(() => {
+        if (activateError) {
+            toast.error(activateError.message)
+        }
+        if (activateJobLoading) {
+            toast.info("Transaction is pending");
+
+        }
+        if (activateJobSucesss) {
+            toast.success("Transaction is successful");
+        }
+    }
+        , [activateError, activateJobLoading, activateJobSucesss,])
+
+    useEffect(() => {
+        if (deactivateError) {
+            toast.error(deactivateError.message)
+        }
+        if (deactivateJobLoading) {
+            toast.info("Transaction is pending");
+
+        }
+        if (deactivateJobSucesss) {
+            toast.success("Transaction is successful");
+        }
+    }
+        , [deactivateError, deactivateJobLoading, deactivateJobSucesss])
 
 
     const activateNewJob = async (jobId: Hex) => {

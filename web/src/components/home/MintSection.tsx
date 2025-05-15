@@ -9,6 +9,7 @@ import { useAccount, useWaitForTransactionReceipt } from 'wagmi';
 import { useDeployment } from '@/hooks/useDeployment';
 import MintPreview from '../mint/MintPreview';
 import { extractDope, replaceDope } from '@/services/SVGCombiner';
+import { toast } from 'react-toastify';
 
 interface MintSectionProps {
   className?: string;
@@ -72,6 +73,21 @@ const MintSection: React.FC<MintSectionProps> = ({ className }) => {
 
 
   }, [image]);
+
+
+  useEffect(() => {
+    if (writeError) {
+      toast.error(writeError.message)
+    }
+    if (isLoading) {
+      toast.info("Transaction is pending");
+
+    }
+    if (isSuccess) {
+      toast.success("Transaction is successful");
+    }
+  }
+    , [writeError, isLoading, isSuccess])
 
 
   // function planetColorChange(colorOne: number, two: number, three: number) {
