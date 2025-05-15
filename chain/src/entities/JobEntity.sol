@@ -2,38 +2,65 @@
 pragma solidity ^0.8.24;
 
 import {IScenario} from "../Scenario.sol";
-// import {console} from "hardhat/console.sol";
+import {console} from "hardhat/console.sol";
 
 struct Job {
-    string id;
-    string title;
-    string description;
-    string tokenName;
+    bytes32 id;
+    bytes32 title;
+    bytes description;
+    bytes32 tokenName;
     uint256 amountPerHour;
     uint256 timeLimit;
-    string skillSetName;
+    bytes32 skillSetName;
     uint8 skillSetIndex;
     uint16 skillSetRequirement;
     uint16 skillSetBoost;
 }
 
-contract JobEntity {
-    struct LiveJob {
-        string id;
-        uint256 startedAt;
-    }
+struct LiveJob {
+    bytes32 id;
+    uint256 startedAt;
+}
 
+interface IJobEntity {
+    function getAvailableJobs() external view returns (Job[] memory);
+
+    function getActiveJob(
+        uint256 tokenId
+    ) external view returns (bytes32, uint256);
+
+    function activateJob(bytes32 jobId, uint256 tokenId) external;
+
+    function endJob(uint256 tokenId) external;
+
+    function addJob(
+        bytes32 id,
+        bytes32 title,
+        bytes calldata description,
+        bytes32 tokenName,
+        uint256 amountPerHour,
+        uint256 timeLimit,
+        bytes32 skillSetName,
+        uint8 skillSetIndex,
+        uint16 skillSetRequirement,
+        uint16 skillSetBoost
+    ) external;
+
+    function getJob(bytes32 jobId) external view returns (Job memory);
+
+    function initialize(IScenario scenario, address _system) external;
+}
+
+contract JobEntity is IJobEntity {
     Job[] public availableJobs;
-    mapping(string => uint256) public jobById;
+    mapping(bytes32 => uint256) public jobById;
 
     mapping(uint256 => LiveJob) public activeJobs;
 
     IScenario private _scenario;
     address private system;
 
-    constructor() {}
-
-    bool initialized = false;
+    bool initialized;
 
     function initialize(IScenario scenario, address _system) external {
         require(!initialized, "Already initialized");
@@ -48,26 +75,27 @@ contract JobEntity {
 
     function getActiveJob(
         uint256 tokenId
-    ) external view returns (string memory, uint256) {
+    ) external view returns (bytes32, uint256) {
         return (activeJobs[tokenId].id, activeJobs[tokenId].startedAt);
     }
 
-    function activateJob(string memory jobId, uint256 tokenId) external {
+    function activateJob(bytes32 jobId, uint256 tokenId) external {
         // console.log("activating job from entity");
         if (msg.sender != _scenario.getAdmin() && msg.sender != system) {
-            // console.log("Not scenario admin");
+            console.log("Not scenario admin");
             revert NotScenarioAdmin();
         }
-        if (bytes(activeJobs[tokenId].id).length != 0) {
-            // console.log("Already active job");
+
+        if (activeJobs[tokenId].id != bytes32(0)) {
+            console.log("Already active job");
             revert AlreadyActiveJob();
         }
 
         activeJobs[tokenId] = LiveJob(jobId, block.timestamp);
-        // console.log("done activating job from entity");
+        console.log("done activating job from entity");
     }
 
-    function getJob(string memory jobId) external view returns (Job memory) {
+    function getJob(bytes32 jobId) external view returns (Job memory) {
         return availableJobs[jobById[jobId]];
     }
 
@@ -76,7 +104,7 @@ contract JobEntity {
             revert NotScenarioAdmin();
         }
         LiveJob memory job = activeJobs[tokenId];
-        if (bytes(job.id).length == 0) {
+        if (job.id == bytes32(0)) {
             revert NoActiveJob();
         }
 
@@ -84,13 +112,13 @@ contract JobEntity {
     }
 
     function addJob(
-        string memory id,
-        string memory title,
-        string memory description,
-        string memory tokenName,
+        bytes32 id,
+        bytes32 title,
+        bytes calldata description,
+        bytes32 tokenName,
         uint256 amountPerHour,
         uint256 timeLimit,
-        string memory skillSetName,
+        bytes32 skillSetName,
         uint8 skillSetIndex,
         uint16 skillSetRequirement,
         uint16 skillSetBoost

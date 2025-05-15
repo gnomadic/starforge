@@ -4,7 +4,6 @@ pragma solidity ^0.8.24;
 import {IScenario} from "../../Scenario.sol";
 
 interface ISystem {
-
     function registerSystem(address systemController) external;
 
     function init(
@@ -17,7 +16,7 @@ interface ISystem {
 
     function activateEntity(IScenario scenario) external returns (address);
 
-    function getId() external view returns (string memory);
+    function getId() external pure returns (string memory);
 }
 
 interface ISystemController {
@@ -32,9 +31,4 @@ interface ISystemController {
     ) external returns (address[] memory);
 
     function isSystem(address systemAddress) external view returns (bool);
-}
-
-struct TokenRate {
-    uint256 rate;
-    address token;
 }

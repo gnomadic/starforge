@@ -6,8 +6,6 @@ import "./interfaces/IStepRenderer.sol";
 import {LibString} from "../../lib/solady/src/utils/LibString.sol";
 
 contract SkyRenderer is IStepRenderer {
-    constructor() {}
-
     function generateDefs(
         uint256 tokenId
     ) external pure override returns (string memory) {

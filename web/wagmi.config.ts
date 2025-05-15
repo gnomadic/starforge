@@ -20,14 +20,14 @@ export default defineConfig({
     hardhat({
       project: '../chain',
       include: [
-        'Planet.sol/**',
+        'PlanetVAlpha.sol/**',
         'SystemController.sol/**',
         'UpgradesSystem.sol/**',
         'DungeonMaster.sol/**',
         'ScenarioFactory.sol/**',
         'Scenario.sol/**',
-        'PlanetStatsSystem.sol/**',
-        'PlanetStatsEntity.sol/**',
+        'StatsSystem.sol/**',
+        'StatsEntity.sol/**',
         'SupplySystem.sol/**',
         'SupplyEntity.sol/**',
         'JobSystem.sol/**',

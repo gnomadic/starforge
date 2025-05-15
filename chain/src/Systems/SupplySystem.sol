@@ -1,22 +1,46 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.24;
 
-import {ISystem, ISystemController, TokenRate} from "./interfaces/ISystem.sol";
+import {ISystem, ISystemController} from "./interfaces/ISystem.sol";
 import {IScenario} from "../Scenario.sol";
-import {SupplyEntity, IERC20} from "../entities/SupplyEntity.sol";
+import {ISupplyEntity, IERC20} from "../entities/SupplyEntity.sol";
 import {SupplyTokenFactory} from "../tokens/SupplyTokenFactory.sol";
+import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
+import {LibClone} from "solady/utils/LibClone.sol";
 
-// import {console} from "hardhat/console.sol";
+import {console} from "hardhat/console.sol";
 
-contract SupplySystem is ISystem {
+interface ISupplySystem {
+    function mint(
+        IScenario scenario,
+        address player,
+        bytes32 tokenName,
+        uint256 amount
+    ) external;
+
+    function deployToken(
+        IScenario scenario,
+        bytes32 tokenName,
+        string memory tokenSymbol
+    ) external returns (address);
+}
+
+contract SupplySystem is ISystem, ISupplySystem, Ownable {
+    using LibClone for address;
+
     struct Resource {
         address tokenAddress;
         string tokenName;
     }
 
     SupplyTokenFactory private _supplyTokenFactory;
+    address public entityAddress;
 
-    constructor(address supplyTokenFactory) {
+    constructor(
+        address supplyTokenFactory,
+        address _entity
+    ) Ownable(msg.sender) {
+        entityAddress = _entity;
         _supplyTokenFactory = SupplyTokenFactory(supplyTokenFactory);
     }
 
@@ -52,37 +76,37 @@ contract SupplySystem is ISystem {
         if (current != address(0)) {
             return current;
         }
+        address clone = entityAddress.clone();
 
-        // TODO replace this with proxy clone.
-        SupplyEntity supplyAddress = new SupplyEntity();
+        ISupplyEntity(clone).initialize(scenario, address(this));
 
-        supplyAddress.initialize(scenario, address(this));
-
-        return address(supplyAddress);
+        return clone;
     }
 
     function mint(
         IScenario scenario,
         address player,
-        string memory tokenName,
+        bytes32 tokenName,
         uint256 amount
     ) external {
-        SupplyEntity entity = SupplyEntity(scenario.getEntity(address(this)));
+        console.log("minting");
+        ISupplyEntity entity = ISupplyEntity(scenario.getEntity(address(this)));
 
         // console.log("SupplySystem: mint: entityAddress: %s", address(entity));
 
         address token = entity.getTokenAddress(tokenName);
         // console.log("minting %s", tokenName);
         IERC20(token).mint(player, amount);
+        console.log("done minting");
     }
 
     function burn(
         IScenario scenario,
         address player,
-        string memory tokenName,
+        bytes32 tokenName,
         uint256 amount
     ) external {
-        SupplyEntity entity = SupplyEntity(scenario.getEntity(address(this)));
+        ISupplyEntity entity = ISupplyEntity(scenario.getEntity(address(this)));
 
         // console.log("SupplySystem: burn: entityAddress: %s", address(entity));
 
@@ -93,14 +117,14 @@ contract SupplySystem is ISystem {
 
     function deployToken(
         IScenario scenario,
-        string memory tokenName,
+        bytes32 tokenName,
         string memory tokenSymbol
     ) external returns (address) {
         if (scenario.getAdmin() != msg.sender) {
             revert NotAdmin();
         }
 
-        SupplyEntity entity = SupplyEntity(scenario.getEntity(address(this)));
+        ISupplyEntity entity = ISupplyEntity(scenario.getEntity(address(this)));
 
         // console.log(
         //     "SupplySystem: deployToken: tokenName: %s and entityAddress: %s",
@@ -111,7 +135,8 @@ contract SupplySystem is ISystem {
         address newToken = _supplyTokenFactory.createSupplyToken(
             _systemController,
             address(scenario),
-            tokenName,
+            // (tokenName),
+            bytes32ToString(tokenName),
             tokenSymbol
         );
 
@@ -120,8 +145,26 @@ contract SupplySystem is ISystem {
         return newToken;
     }
 
-    function getId() external view returns (string memory) {
+    function getId() external pure returns (string memory) {
         return "SUPPLY";
+    }
+
+    function bytes32ToString(
+        bytes32 _bytes32
+    ) internal pure returns (string memory) {
+        uint8 i = 0;
+        while (i < 32 && _bytes32[i] != 0) {
+            i++;
+        }
+        bytes memory bytesArray = new bytes(i);
+        for (uint8 j = 0; j < i; j++) {
+            bytesArray[j] = _bytes32[j];
+        }
+        return string(bytesArray);
+    }
+
+    function updateEntityAddress(address newEntityAddress) external onlyOwner {
+        entityAddress = newEntityAddress;
     }
 
     error NotAdmin();

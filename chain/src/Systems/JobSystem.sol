@@ -1,18 +1,28 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.24;
 
-import {ISystem, ISystemController, TokenRate} from "./interfaces/ISystem.sol";
+import {ISystem, ISystemController} from "./interfaces/ISystem.sol";
 import {IScenario} from "../Scenario.sol";
-import {JobEntity, Job} from "../entities/JobEntity.sol";
-import {SupplySystem} from "./SupplySystem.sol";
-import {PlanetStatsSystem} from "./PlanetStatsSystem.sol";
+import {IJobEntity, Job} from "../entities/JobEntity.sol";
+import {ISupplySystem} from "./SupplySystem.sol";
+import {IStatsSystem} from "./StatsSystem.sol";
+import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
+import {LibClone} from "solady/utils/LibClone.sol";
 
-// import {console} from "hardhat/console.sol";
+import {console} from "hardhat/console.sol";
+
 // import {console} from "forge-std/console.sol";
 
-contract JobSystem is ISystem {
+contract JobSystem is ISystem, Ownable {
+    using LibClone for address;
+
     bool registered = false;
     ISystemController private _systemController;
+    address public entityAddress;
+
+    constructor(address _entity) Ownable(msg.sender) {
+        entityAddress = _entity;
+    }
 
     function registerSystem(address systemController) external {
         if (registered) {
@@ -34,19 +44,25 @@ contract JobSystem is ISystem {
 
     function activateJob(
         IScenario scenario,
-        string memory jobId,
+        bytes32 jobId,
         uint256 tokenId
     ) public {
-        JobEntity entity = JobEntity(scenario.getEntity(address(this)));
+        console.log("activating job");
+        console.logBytes(abi.encodePacked(jobId));
+        IJobEntity entity = IJobEntity(scenario.getEntity(address(this)));
+        console.log("entity");
+        console.log(address(entity));
 
-        (string memory activeJobId, uint256 startedAt) = entity.getActiveJob(
-            tokenId
-        );
+        (bytes32 activeJobId, uint256 startedAt) = entity.getActiveJob(tokenId);
+        console.log("active job");
+        console.logBytes(abi.encodePacked(activeJobId));
 
-        if (bytes(activeJobId).length > 0) {
-            // console.log("well finishing job?");
+        if (activeJobId != bytes32(0)) {
+            console.log("well finishing job?");
             finishJob(scenario, tokenId);
         }
+        console.log("activing job");
+
         entity.activateJob(jobId, tokenId);
     }
 
@@ -54,7 +70,7 @@ contract JobSystem is ISystem {
         IScenario scenario,
         uint256 tokenId
     ) external view returns (Job[] memory) {
-        JobEntity entity = JobEntity(scenario.getEntity(address(this)));
+        IJobEntity entity = IJobEntity(scenario.getEntity(address(this)));
         Job[] memory allJobs = entity.getAvailableJobs();
         uint256 count = 0;
 
@@ -83,7 +99,7 @@ contract JobSystem is ISystem {
         Job memory job
     ) internal view returns (bool) {
         return
-            PlanetStatsSystem(address(_systemController.getSystem("STAT")))
+            IStatsSystem(address(_systemController.getSystem("STAT")))
                 .checkSkill(
                     scenario,
                     tokenId,
@@ -96,20 +112,16 @@ contract JobSystem is ISystem {
     function finishJob(IScenario scenario, uint256 tokenId) public {
         // if the player has an already active job, end it and mint rewards
 
-        JobEntity entity = JobEntity(scenario.getEntity(address(this)));
-        (string memory activeJobId, uint256 startedAt) = entity.getActiveJob(
-            tokenId
-        );
+        IJobEntity entity = IJobEntity(scenario.getEntity(address(this)));
+        (bytes32 activeJobId, uint256 startedAt) = entity.getActiveJob(tokenId);
 
-        if (bytes(activeJobId).length == 0) {
+        if (activeJobId == bytes32(0)) {
+            console.log("no active job!");
+
             revert NoActiveJob();
         }
 
         Job memory job = entity.getJob(activeJobId);
-
-        SupplySystem supply = SupplySystem(
-            address(_systemController.getSystem("SUPPLY"))
-        );
 
         uint256 secondsLive = block.timestamp - startedAt;
 
@@ -121,17 +133,24 @@ contract JobSystem is ISystem {
 
         uint256 amount = secondsLive * (job.amountPerHour / 3600);
 
-        PlanetStatsSystem(address(_systemController.getSystem("STAT")))
-            .boostSkill(
-                scenario,
-                tokenId,
-                job.skillSetName,
-                job.skillSetIndex,
-                job.skillSetBoost
-            );
-
-        supply.mint(scenario, msg.sender, job.tokenName, amount);
+        console.log("step one");
+        IStatsSystem(address(_systemController.getSystem("STAT"))).boostSkill(
+            scenario,
+            tokenId,
+            job.skillSetName,
+            job.skillSetIndex,
+            job.skillSetBoost
+        );
+        console.log("step two");
+        ISupplySystem(address(_systemController.getSystem("SUPPLY"))).mint(
+            scenario,
+            msg.sender,
+            job.tokenName,
+            amount
+        );
+        console.log("step three");
         entity.endJob(tokenId);
+        console.log("step four");
     }
 
     function activateEntity(
@@ -142,16 +161,19 @@ contract JobSystem is ISystem {
             return current;
         }
 
-        // TODO replace this with proxy clone.
-        JobEntity entity = new JobEntity();
+        address clone = entityAddress.clone();
 
-        entity.initialize(scenario, address(this));
+        IJobEntity(clone).initialize(scenario, address(this));
 
-        return address(entity);
+        return clone;
     }
 
-    function getId() external view returns (string memory) {
+    function getId() external pure returns (string memory) {
         return "JOB";
+    }
+
+    function updateEntityAddress(address newEntityAddress) external onlyOwner {
+        entityAddress = newEntityAddress;
     }
 
     error NoTimePassed();

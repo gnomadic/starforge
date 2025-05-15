@@ -2,18 +2,27 @@
 pragma solidity ^0.8.24;
 
 import {IScenario} from "../Scenario.sol";
-// import {console} from "hardhat/console.sol";
 
-contract SupplyEntity {
-    string[] private tokenNames;
+import {console} from "hardhat/console.sol";
+
+interface ISupplyEntity {
+    function initialize(IScenario scenario, address system) external;
+
+    function getTokenAddresses() external view returns (address[] memory);
+
+    function getTokenAddress(bytes32 name) external view returns (address);
+
+    function addToken(bytes32 name, address tokenAddress) external;
+}
+
+contract SupplyEntity is ISupplyEntity {
+    bytes32[] private tokenNames;
     address[] private tokenAddresses;
 
     IScenario private _scenario;
     address private system;
 
-    constructor() {}
-
-    bool initialized = false;
+    bool initialized;
 
     function initialize(IScenario scenario, address _system) external {
         require(!initialized, "Already initialized");
@@ -22,7 +31,7 @@ contract SupplyEntity {
         system = _system;
     }
 
-    function getTokenNames() external view returns (string[] memory) {
+    function getTokenNames() external view returns (bytes32[] memory) {
         return tokenNames;
     }
 
@@ -30,17 +39,13 @@ contract SupplyEntity {
         return tokenAddresses;
     }
 
-    function getTokenAddress(
-        string memory name
-    ) external view returns (address) {
+    function getTokenAddress(bytes32 name) external view returns (address) {
         for (uint256 i = 0; i < tokenNames.length; i++) {
-            if (
-                keccak256(abi.encodePacked(tokenNames[i])) ==
-                keccak256(abi.encodePacked(name))
-            ) {
+            if (tokenNames[i] == name) {
                 return tokenAddresses[i];
             }
         }
+        console.log("Token not found: ");
         revert("Token not found");
     }
 
@@ -54,24 +59,7 @@ contract SupplyEntity {
         return balances;
     }
 
-    // function setTokens(
-    //     string[] memory name,
-    //     address[] memory addresses
-    // ) external {
-    //     if (msg.sender != _scenario.getAdmin()) {
-    //         revert NotScenarioAdmin();
-    //     }
-    //     require(
-    //         name.length == addresses.length,
-    //         "Name and address arrays must be the same length"
-    //     );
-    //     for (uint256 i = 0; i < name.length; i++) {
-    //         tokenNames.push(name[i]);
-    //         tokenAddresses.push(addresses[i]);
-    //     }
-    // }
-
-    function addToken(string memory name, address tokenAddress) external {
+    function addToken(bytes32 name, address tokenAddress) external {
         // console.log("entity adding token %s", name);
         if (msg.sender != system) {
             revert NotScenarioAdmin();

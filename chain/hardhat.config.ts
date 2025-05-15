@@ -4,7 +4,7 @@ import 'dotenv/config'
 import "@nomicfoundation/hardhat-toolbox";
 import "@nomicfoundation/hardhat-foundry";
 import "hardhat-deploy";
-import "hardhat-gas-reporter";
+// import "hardhat-gas-reporter";
 // import "./scripts/updateDeploy";
 
 

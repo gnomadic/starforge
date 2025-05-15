@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import placeholder from "@/images/cardback.png";
 import { useDeployment } from '@/hooks/useDeployment';
-import { useReadPlanetGenerateSvg } from '@/generated';
+import { useReadPlanetVAlphaGenerateSvg } from '@/generated';
 import { useEffect, useState } from 'react';
 
 
@@ -17,7 +17,7 @@ export default function MintPreview({ preview, size, tokenId }: MintPreviewProps
 
     const [rendered, setRendered] = useState<string>("");
     const { deploy } = useDeployment();
-    const { data: image, isLoading: loadingImage } = useReadPlanetGenerateSvg({ address: deploy.Planet, args: [tokenId] });
+    const { data: image, isLoading: loadingImage } = useReadPlanetVAlphaGenerateSvg({ address: deploy.Planet, args: [tokenId] });
 
     useEffect(() => {
         if (preview != undefined && preview != "") {

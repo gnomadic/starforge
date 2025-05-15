@@ -68,18 +68,20 @@ module.exports = async (hre) => {
     log: true,
     args: [PlanetRenderer.address, SystemController.address],
   });
+  
 
-  const PlanetStats = await deploy("PlanetStatsSystem", {
+  const StatsEntity = await deploy("StatsEntity", {
     from: deployer,
     log: true,
-    // args: [Planet.address]
   });
 
-  // const UpgradesSystem = await deploy("UpgradesSystem", {
-  //   from: deployer,
-  //   log: true,
-  // });
+  const PlanetStats = await deploy("StatsSystem", {
+    from: deployer,
+    log: true,
+    args: [StatsEntity.address],
+  });
 
+  
   const SupplyToken = await deploy("SupplyToken", {
     from: deployer,
     log: true,
@@ -91,68 +93,30 @@ module.exports = async (hre) => {
     args: [SupplyToken.address]
   });
 
+  const SupplyEntity = await deploy("SupplyEntity", {
+    from: deployer,
+    log: true,
+  });
+
 
   const SupplySystem = await deploy("SupplySystem", {
     from: deployer,
     log: true,
-    args: [SupplyTokenFactory.address]
+    args: [SupplyTokenFactory.address, SupplyEntity.address]
   });
 
-  // const ComabtSystem = await deploy("CombatSystem", {
-  //   from: deployer,
-  //   log: true,
-  // });
-
-  const JobSystem = await deploy("JobSystem", {
+  const JobEntity = await deploy("JobEntity", {
     from: deployer,
     log: true,
   });
 
-  // const QuestSystem = await deploy("QuestSystem", {
-  //   from: deployer,
-  //   log: true,
-  // });
-
-  // const SupplySystem = await deploy("SupplySystem", {
-  //   from: deployer,
-  //   log: true,
-  // });
+  const JobSystem = await deploy("JobSystem", {
+    from: deployer,
+    log: true,
+    args: [JobEntity.address]
+  });
 
 
-  // const DungeonMaster = await deploy("DungeonMaster", {
-  //   from: deployer,
-  //   log: true,
-  // });
-
-  // const InvestmentSystem = await deploy("InvestmentSystem", {
-  //   from: deployer,
-  //   log: true,
-  //   args: [Planet.address]
-  // });
-
-  // const GlobalProgress = await deploy("GlobalProgress", {
-  //   from: deployer,
-  //   log: true,
-  // });
-
-
-
-
-
-
-
-
-
-
-  // const craft = await deploy("CraftSystem", {
-  //   from: deployer,
-  //   log: true
-  // });
-
-  // const craftLoader = await deploy("CraftSystemLoader", {
-  //   from: deployer,
-  //   log: true,
-  // });
 
   console.log("----- done")
 
@@ -160,11 +124,13 @@ module.exports = async (hre) => {
 
   console.log("----- configuring systems");
 
-  const SysControllerDeployment = await deployments.get("SystemController");
-  const deployedSysController = await ethers.getContractAt("SystemController", SysControllerDeployment.address);
-
-  const PlanetDeployment = await deployments.get("PlanetVAlpha");
-  const deployedPlanet = await ethers.getContractAt("PlanetVAlpha", PlanetDeployment.address);
+  console.log("getting sys controler ")
+  // const SysControllerDeployment = await deployments.get("SystemController");
+  const deployedSysController = await ethers.getContractAt("SystemController", SystemController.address);
+  // return await ethers.getContractAt(name, "0x2279B7A0a67DB372996a5FaB50D91eAA73d2eBe6");
+  console.log("got sys controler ")
+  // const PlanetDeployment = await deployments.get("PlanetVAlpha");
+  // const deployedPlanet = await ethers.getContractAt("PlanetVAlpha", PlanetDeployment.address);
 
   // const upgradesSystemDeployment = await deployments.get("UpgradesSystem");
   // const deployedUpgradesSystem = await ethers.getContractAt("UpgradesSystem", upgradesSystemDeployment.address);
@@ -173,18 +139,23 @@ module.exports = async (hre) => {
 
   if (!redo) {
 
+    console.log('one ');
     let tx = await deployedSysController.setTokenAddress(Planet.address);
     await tx.wait();
 
+    console.log('two');
     tx = await deployedSysController.setScenarioFactory(ScenarioFactory.address);
     await tx.wait();
 
+    console.log('three');
     tx = await deployedSysController.registerSystem(PlanetStats.address);
     await tx.wait();
 
+    console.log('four');
     tx = await deployedSysController.registerSystem(SupplySystem.address);
     await tx.wait();
 
+    console.log('five');
     tx = await deployedSysController.registerSystem(JobSystem.address);
     await tx.wait();
   }
@@ -266,7 +237,7 @@ module.exports = async (hre) => {
       await verify(hre, SystemController.address, "SystemController", "systems/", []);
       await verify(hre, ScenarioFactory.address, "ScenarioFactory", "", [SystemController.address]);
       await verify(hre, Scenario.address, "Scenario", "", []);
-      await verify(hre, PlanetStats.address, "PlanetStatsSystem", "systems/", []);
+      await verify(hre, PlanetStats.address, "StatsSystem", "systems/", []);
       await verify(hre, SupplySystem.address, "SupplySystem", "systems/", [SupplyTokenFactory.address]);
       await verify(hre, JobSystem.address, "JobSystem", "systems/", []);
       await verify(hre, "0xeDb12e94f8D3b2C30CeAfCE938C6B1B2806DbDc9", "JobEntity", "entities/", []);

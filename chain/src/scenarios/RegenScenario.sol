@@ -3,16 +3,16 @@ pragma solidity ^0.8.24;
 
 import {ScenarioFactory} from "../ScenarioFactory.sol";
 import {Scenario} from "../Scenario.sol";
-import {PlanetStatsEntity} from "../entities/PlanetStatsEntity.sol";
-import {SupplyEntity} from "../entities/SupplyEntity.sol";
+import {IStatsEntity} from "../entities/StatsEntity.sol";
+import {ISupplyEntity} from "../entities/SupplyEntity.sol";
 import {SystemController} from "../systems/SystemController.sol";
-import {SupplySystem} from "../systems/SupplySystem.sol";
-import {JobEntity} from "../entities/JobEntity.sol";
+import {ISupplySystem} from "../systems/SupplySystem.sol";
+import {IJobEntity} from "../entities/JobEntity.sol";
 
 // import {console} from "hardhat/console.sol";
 
 contract RegenScenario {
-    ScenarioFactory factory;
+    ScenarioFactory immutable factory;
     string metadataURI;
 
     // Constructor
@@ -48,7 +48,7 @@ contract RegenScenario {
     }
 
     function loadJobs(Scenario scenario, SystemController controller) internal {
-        JobEntity jobsEntity = JobEntity(
+        IJobEntity jobsEntity = IJobEntity(
             scenario.getEntity(address(controller.getSystem("JOB")))
         );
 
@@ -174,25 +174,25 @@ contract RegenScenario {
         Scenario scenario,
         SystemController controller
     ) internal {
-        PlanetStatsEntity planetStatsEntity = PlanetStatsEntity(
+        IStatsEntity planetStatsEntity = IStatsEntity(
             scenario.getEntity(address(controller.getSystem("STAT")))
         );
 
-        uint8[] memory gatchaPoints = new uint8[](5);
+        uint8[10] memory gatchaPoints;
         gatchaPoints[0] = 80;
         gatchaPoints[1] = 78;
         gatchaPoints[2] = 76;
         gatchaPoints[3] = 74;
         gatchaPoints[4] = 72;
 
-        uint8[] memory rarityOdds = new uint8[](5);
+        uint8[10] memory rarityOdds;
         rarityOdds[0] = 1;
         rarityOdds[1] = 5;
         rarityOdds[2] = 13;
         rarityOdds[3] = 25;
         rarityOdds[4] = 75;
 
-        uint16[] memory startingValue = new uint16[](6);
+        uint16[10] memory startingValue;
         startingValue[0] = 65535;
         startingValue[1] = 65535;
         startingValue[2] = 65535;
@@ -200,7 +200,7 @@ contract RegenScenario {
         startingValue[4] = 65535;
         startingValue[5] = 65535;
 
-        uint16[] memory maxValues = new uint16[](6);
+        uint16[10] memory maxValues;
         maxValues[0] = 20;
         maxValues[1] = 20;
         maxValues[2] = 20;
@@ -208,7 +208,7 @@ contract RegenScenario {
         maxValues[4] = 20;
         maxValues[5] = 20;
 
-        string[] memory statSetNames = new string[](6);
+        bytes32[10] memory statSetNames;
         statSetNames[0] = "Temperature";
         statSetNames[1] = "Water";
         statSetNames[2] = "Biomass";
@@ -226,17 +226,17 @@ contract RegenScenario {
             statSetNames
         );
 
-        uint16[] memory jobSkillValues = new uint16[](3);
+        uint16[10] memory jobSkillValues;
         jobSkillValues[0] = 0;
         jobSkillValues[1] = 0;
         jobSkillValues[2] = 0;
 
-        uint16[] memory maxJobSkillValues = new uint16[](3);
+        uint16[10] memory maxJobSkillValues;
         maxJobSkillValues[0] = 99;
         maxJobSkillValues[1] = 99;
         maxJobSkillValues[2] = 99;
 
-        string[] memory jobSkillNames = new string[](3);
+        bytes32[10] memory jobSkillNames;
         jobSkillNames[0] = "Organic";
         jobSkillNames[1] = "Lithic";
         jobSkillNames[2] = "Solaric";
@@ -256,7 +256,7 @@ contract RegenScenario {
         Scenario scenario,
         SystemController controller
     ) internal {
-        SupplySystem supplySystem = SupplySystem(
+        ISupplySystem supplySystem = ISupplySystem(
             address(controller.getSystem("SUPPLY"))
         );
 

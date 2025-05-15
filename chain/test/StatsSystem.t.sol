@@ -3,7 +3,7 @@ pragma solidity ^0.8.24;
 
 import {StarForgeTest} from "./StarForgeTest.sol";
 
-contract TestPlanetStatsSystem is StarForgeTest {
+contract TestStatsSystem is StarForgeTest {
     address owner = address(this);
 
     function setUp() public {
@@ -20,20 +20,20 @@ contract TestPlanetStatsSystem is StarForgeTest {
     function test_init_Positive() public {
         // We call init; inside it, stats for each stat set and a special "RARITY" set will be set.
         // First, create a default stat set and a gatcha set.
-        string[] memory names = new string[](2);
+        string[10] memory names;
         names[0] = "DEFAULT";
         names[1] = "GATCHA";
         // Setup starting values – gatcha indicated by 65535 in first element.
-        uint16[] memory defStart = new uint16[](3);
+        uint16[10] memory defStart;
         defStart[0] = 10;
         defStart[1] = 20;
         defStart[2] = 30;
-        uint16[] memory gachStart = new uint16[](3);
+        uint16[10] memory gachStart;
         gachStart[0] = 65535;
         gachStart[1] = 0;
         gachStart[2] = 0;
         // For gatcha, set available points.
-        uint8[] memory gachAvail = new uint8[](5);
+        uint8[10] memory gachAvail;
         gachAvail[0] = 5;
         gachAvail[1] = 4;
         gachAvail[2] = 3;
@@ -43,7 +43,7 @@ contract TestPlanetStatsSystem is StarForgeTest {
 
         // We simulate by calling createStatSet and createGatchaStatSet.
         // Also set rarity odds.
-        uint8[] memory odds = new uint8[](5);
+        uint8[10] memory odds;
         odds[0] = 1;
         odds[1] = 5;
         odds[2] = 13;
@@ -54,15 +54,15 @@ contract TestPlanetStatsSystem is StarForgeTest {
         statsEntity.createStatSet(
             "DEFAULT",
             defStart,
-            new uint16[](3),
-            new string[](3)
+            [uint16(0), 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [bytes32(0), 0, 0, 0, 0, 0, 0, 0, 0, 0]
         );
         statsEntity.createGatchaStatSet(
             "GATCHA",
             gachStart,
             gachAvail,
-            new uint16[](3),
-            new string[](3)
+            [uint16(0), 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [bytes32(0), 0, 0, 0, 0, 0, 0, 0, 0, 0]
         );
 
         // Check that "RARITY" stat set has been set (positive).
@@ -88,7 +88,7 @@ contract TestPlanetStatsSystem is StarForgeTest {
     // checkSkill: Positive and negative
     function test_checkSkill() public {
         // First, set a stat set with a value.
-        uint16[] memory stats = new uint16[](3);
+        uint16[10] memory stats;
         stats[0] = 10;
         stats[1] = 15;
         stats[2] = 20;
@@ -116,7 +116,7 @@ contract TestPlanetStatsSystem is StarForgeTest {
     // boostSkill: Positive test.
     function test_boostSkill_Positive() public {
         // Set initial stat value.
-        uint16[] memory stats = new uint16[](3);
+        uint16[10] memory stats;
         stats[0] = 5;
         stats[1] = 5;
         stats[2] = 5;
@@ -131,7 +131,7 @@ contract TestPlanetStatsSystem is StarForgeTest {
     function test_boostSkill_Negative() public {
         // Try calling boostSkill via a non-admin address.
         // We simulate this by using vm.prank.
-        uint16[] memory stats = new uint16[](3);
+        uint16[10] memory stats;
         stats[0] = 5;
         stats[1] = 5;
         stats[2] = 5;

@@ -2,13 +2,14 @@
 import React from 'react';
 import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
 import { useDeployment } from '@/hooks/useDeployment';
-import { Address } from 'viem';
-import { useReadPlanetStatsEntityGetStatSet, useReadPlanetStatsEntityGetStatSetMaxValues, useReadPlanetStatsEntityGetStatSetPointNames } from '@/generated';
+import { Address, Hex } from 'viem';
+import { useReadStatsEntityGetStatSet, useReadStatsEntityGetStatSetMaxValues, useReadStatsEntityGetStatSetPointNames } from '@/generated';
 import { bigIntReplacer } from '@/domain/utils';
+import { b32, str } from '@/lib/utils/utils';
 
 interface PlanetStatsProps {
   stats?: readonly [number, number, number, number, number, number, number, number, number, number] | undefined;
-  statSetName: string;
+  statSetName: Hex;
   selectedTokenId: bigint;
   whichEntity: Address;
 }
@@ -16,9 +17,9 @@ interface PlanetStatsProps {
 const PlanetStats: React.FC<PlanetStatsProps> = ({ stats, statSetName, selectedTokenId, whichEntity }) => {
 
   const { deploy } = useDeployment()
-  const { data: statSetData } = useReadPlanetStatsEntityGetStatSet({ args: [selectedTokenId, statSetName], address: whichEntity })//whichEntity })// scenarios ? scenarios[0] : "0x0" });
-  const { data: statSetNames } = useReadPlanetStatsEntityGetStatSetPointNames({ args: [statSetName], address: whichEntity })//whichEntity })// scenarios ? scenarios[0] : "0x0" });
-  const {data: statMaxs} = useReadPlanetStatsEntityGetStatSetMaxValues({ args: [statSetName], address: whichEntity })//whichEntity })// scenarios ? scenarios[0] : "0x0" });
+  const { data: statSetData } = useReadStatsEntityGetStatSet({ args: [selectedTokenId, statSetName], address: whichEntity })//whichEntity })// scenarios ? scenarios[0] : "0x0" });
+  const { data: statSetNames } = useReadStatsEntityGetStatSetPointNames({ args: [statSetName], address: whichEntity })//whichEntity })// scenarios ? scenarios[0] : "0x0" });
+  const { data: statMaxs } = useReadStatsEntityGetStatSetMaxValues({ args: [statSetName], address: whichEntity })//whichEntity })// scenarios ? scenarios[0] : "0x0" });
 
   // const { data: stats } = useReadPlanetStatsSystemGetStats({ args: [selectedTokenId], address: deploy.PlanetStatsSystem })
 
@@ -51,23 +52,27 @@ const PlanetStats: React.FC<PlanetStatsProps> = ({ stats, statSetName, selectedT
 
   return (
     <div>
-      <h3 className="text-lg font-medium">{statSetName}</h3>
+      <h3 className="text-lg font-medium">{str(statSetName)}</h3>
       <Table>
         <TableBody>
           {statSetData && statSetNames && statMaxs && statSetData.map((statSet, index) => (
-            <TableRow key={index}>
-              <TableCell className="text-white/70">{statSetNames[index]}</TableCell>
-              <TableCell>
-                <div className="w-full bg-white/10 rounded-full">
-                  <div
-                    className="bg-orange-300 h-2 rounded-full"
-                    style={{ width: `${(statSetData[index] / statMaxs[index]) * 100}%` }}
-                  />
-                </div>
+            <>
+              {(statMaxs[index]) > 0  && (
+                <TableRow key={index}>
+                  <TableCell className="text-white/70">{str(statSetNames[index])}</TableCell>
+                  <TableCell>
+                    <div className="w-full bg-white/10 rounded-full">
+                      <div
+                        className="bg-orange-300 h-2 rounded-full"
+                        style={{ width: `${(statSetData[index] / statMaxs[index]) * 100}%` }}
+                      />
+                    </div>
 
-                <span className="text-xs text-white/70">{statSetData[index]} / {statMaxs[index]}</span>
-              </TableCell>
-            </TableRow>
+                    <span className="text-xs text-white/70">{statSetData[index]} / {statMaxs[index]}</span>
+                  </TableCell>
+                </TableRow>
+                )}
+            </>
           ))}
         </TableBody>
       </Table>
