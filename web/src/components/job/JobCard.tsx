@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { useSupplies } from '@/components/SupplyContext';
 import { bigIntReplacer } from '@/domain/utils';
 import { Hex } from 'viem';
+import { longStr, str } from '@/lib/utils/utils';
 
 
 interface JobCardProps {
@@ -18,8 +19,8 @@ interface JobCardProps {
     job: {
         id: Hex;
         title: Hex;
-        // description: string;
-        tokenName: string;
+        description: Hex;
+        tokenName: Hex;
         amountPerHour: bigint;
     };
     activate: (jobId: string) => void;
@@ -41,8 +42,8 @@ export default function JobCard({ activeJobId, getDecoByResourceType, job, activ
             <CardHeader className={`${getDecoByResourceType(job.tokenName).color} rounded-t-lg`}>
                 <div className="flex justify-between items-center">
                     <div>
-                        <CardTitle className="text-lg font-semibold text-white">{job.title}</CardTitle>
-                        <CardDescription className="text-white/80">{job.tokenName}</CardDescription>
+                        <CardTitle className="text-lg font-semibold text-white">{str(job.title)}</CardTitle>
+                        <CardDescription className="text-white/80">{str(job.tokenName)}</CardDescription>
                     </div>
                     <div className="p-2 rounded-full bg-black/20">
                         {getDecoByResourceType(job.tokenName).icon}
@@ -50,8 +51,7 @@ export default function JobCard({ activeJobId, getDecoByResourceType, job, activ
                 </div>
             </CardHeader>
             <CardContent className="pt-6 flex flex-col gap-4">
-                {/* <p className="text-sm text-muted-foreground">{job.description}</p> */}
-                <p className="text-sm text-muted-foreground">-------</p>
+                <p className="text-sm text-muted-foreground">{longStr(job.description)}</p>
 
                 <div className="flex justify-between items-center border-t border-border/40 pt-4">
                     <div className="text-sm">

@@ -66,6 +66,7 @@ export const iJobEntityAbi = [
     inputs: [
       { name: 'id', internalType: 'bytes32', type: 'bytes32' },
       { name: 'title', internalType: 'bytes32', type: 'bytes32' },
+      { name: 'description', internalType: 'bytes', type: 'bytes' },
       { name: 'tokenName', internalType: 'bytes32', type: 'bytes32' },
       { name: 'amountPerHour', internalType: 'uint256', type: 'uint256' },
       { name: 'timeLimit', internalType: 'uint256', type: 'uint256' },
@@ -107,6 +108,7 @@ export const iJobEntityAbi = [
         components: [
           { name: 'id', internalType: 'bytes32', type: 'bytes32' },
           { name: 'title', internalType: 'bytes32', type: 'bytes32' },
+          { name: 'description', internalType: 'bytes', type: 'bytes' },
           { name: 'tokenName', internalType: 'bytes32', type: 'bytes32' },
           { name: 'amountPerHour', internalType: 'uint256', type: 'uint256' },
           { name: 'timeLimit', internalType: 'uint256', type: 'uint256' },
@@ -135,6 +137,7 @@ export const iJobEntityAbi = [
         components: [
           { name: 'id', internalType: 'bytes32', type: 'bytes32' },
           { name: 'title', internalType: 'bytes32', type: 'bytes32' },
+          { name: 'description', internalType: 'bytes', type: 'bytes' },
           { name: 'tokenName', internalType: 'bytes32', type: 'bytes32' },
           { name: 'amountPerHour', internalType: 'uint256', type: 'uint256' },
           { name: 'timeLimit', internalType: 'uint256', type: 'uint256' },
@@ -245,6 +248,13 @@ export const iStatsEntityAbi = [
     name: 'createStatSet',
     outputs: [],
     stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: 'statSetName', internalType: 'bytes32', type: 'bytes32' }],
+    name: 'getActualLength',
+    outputs: [{ name: '', internalType: 'uint8', type: 'uint8' }],
+    stateMutability: 'view',
   },
   {
     type: 'function',
@@ -451,6 +461,7 @@ export const jobEntityAbi = [
     inputs: [
       { name: 'id', internalType: 'bytes32', type: 'bytes32' },
       { name: 'title', internalType: 'bytes32', type: 'bytes32' },
+      { name: 'description', internalType: 'bytes', type: 'bytes' },
       { name: 'tokenName', internalType: 'bytes32', type: 'bytes32' },
       { name: 'amountPerHour', internalType: 'uint256', type: 'uint256' },
       { name: 'timeLimit', internalType: 'uint256', type: 'uint256' },
@@ -470,6 +481,7 @@ export const jobEntityAbi = [
     outputs: [
       { name: 'id', internalType: 'bytes32', type: 'bytes32' },
       { name: 'title', internalType: 'bytes32', type: 'bytes32' },
+      { name: 'description', internalType: 'bytes', type: 'bytes' },
       { name: 'tokenName', internalType: 'bytes32', type: 'bytes32' },
       { name: 'amountPerHour', internalType: 'uint256', type: 'uint256' },
       { name: 'timeLimit', internalType: 'uint256', type: 'uint256' },
@@ -509,6 +521,7 @@ export const jobEntityAbi = [
         components: [
           { name: 'id', internalType: 'bytes32', type: 'bytes32' },
           { name: 'title', internalType: 'bytes32', type: 'bytes32' },
+          { name: 'description', internalType: 'bytes', type: 'bytes' },
           { name: 'tokenName', internalType: 'bytes32', type: 'bytes32' },
           { name: 'amountPerHour', internalType: 'uint256', type: 'uint256' },
           { name: 'timeLimit', internalType: 'uint256', type: 'uint256' },
@@ -537,6 +550,7 @@ export const jobEntityAbi = [
         components: [
           { name: 'id', internalType: 'bytes32', type: 'bytes32' },
           { name: 'title', internalType: 'bytes32', type: 'bytes32' },
+          { name: 'description', internalType: 'bytes', type: 'bytes' },
           { name: 'tokenName', internalType: 'bytes32', type: 'bytes32' },
           { name: 'amountPerHour', internalType: 'uint256', type: 'uint256' },
           { name: 'timeLimit', internalType: 'uint256', type: 'uint256' },
@@ -666,6 +680,7 @@ export const jobSystemAbi = [
         components: [
           { name: 'id', internalType: 'bytes32', type: 'bytes32' },
           { name: 'title', internalType: 'bytes32', type: 'bytes32' },
+          { name: 'description', internalType: 'bytes', type: 'bytes' },
           { name: 'tokenName', internalType: 'bytes32', type: 'bytes32' },
           { name: 'amountPerHour', internalType: 'uint256', type: 'uint256' },
           { name: 'timeLimit', internalType: 'uint256', type: 'uint256' },
@@ -1449,6 +1464,13 @@ export const statsEntityAbi = [
     name: 'createStatSet',
     outputs: [],
     stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: 'statSetName', internalType: 'bytes32', type: 'bytes32' }],
+    name: 'getActualLength',
+    outputs: [{ name: '', internalType: 'uint8', type: 'uint8' }],
+    stateMutability: 'view',
   },
   {
     type: 'function',
@@ -2392,6 +2414,15 @@ export const useReadIStatsEntityCheckSkill =
   /*#__PURE__*/ createUseReadContract({
     abi: iStatsEntityAbi,
     functionName: 'checkSkill',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link iStatsEntityAbi}__ and `functionName` set to `"getActualLength"`
+ */
+export const useReadIStatsEntityGetActualLength =
+  /*#__PURE__*/ createUseReadContract({
+    abi: iStatsEntityAbi,
+    functionName: 'getActualLength',
   })
 
 /**
@@ -3815,6 +3846,15 @@ export const useReadStatsEntityCheckSkill = /*#__PURE__*/ createUseReadContract(
 )
 
 /**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link statsEntityAbi}__ and `functionName` set to `"getActualLength"`
+ */
+export const useReadStatsEntityGetActualLength =
+  /*#__PURE__*/ createUseReadContract({
+    abi: statsEntityAbi,
+    functionName: 'getActualLength',
+  })
+
+/**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link statsEntityAbi}__ and `functionName` set to `"getAvailablePoints"`
  */
 export const useReadStatsEntityGetAvailablePoints =
@@ -5137,6 +5177,13 @@ export const readIStatsEntityCheckSkill = /*#__PURE__*/ createReadContract({
   abi: iStatsEntityAbi,
   functionName: 'checkSkill',
 })
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link iStatsEntityAbi}__ and `functionName` set to `"getActualLength"`
+ */
+export const readIStatsEntityGetActualLength = /*#__PURE__*/ createReadContract(
+  { abi: iStatsEntityAbi, functionName: 'getActualLength' },
+)
 
 /**
  * Wraps __{@link readContract}__ with `abi` set to __{@link iStatsEntityAbi}__ and `functionName` set to `"getAvailablePoints"`
@@ -6515,6 +6562,14 @@ export const readStatsEntity = /*#__PURE__*/ createReadContract({
 export const readStatsEntityCheckSkill = /*#__PURE__*/ createReadContract({
   abi: statsEntityAbi,
   functionName: 'checkSkill',
+})
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link statsEntityAbi}__ and `functionName` set to `"getActualLength"`
+ */
+export const readStatsEntityGetActualLength = /*#__PURE__*/ createReadContract({
+  abi: statsEntityAbi,
+  functionName: 'getActualLength',
 })
 
 /**

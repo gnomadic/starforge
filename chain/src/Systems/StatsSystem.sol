@@ -8,7 +8,7 @@ import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
 import {LibClone} from "solady/utils/LibClone.sol";
 
 // import {console} from "forge-std/console.sol";
-// import {console} from "hardhat/console.sol";
+import {console} from "hardhat/console.sol";
 
 interface IStatsSystem {
     function checkSkill(
@@ -226,9 +226,11 @@ contract StatsSystem is ISystem, IStatsSystem, Ownable {
         uint8 skillSetIndex,
         uint16 amount
     ) external onlySystemAndAdmin(scenario) {
+        console.log("Boosting skill ");
         IStatsEntity entity = IStatsEntity(scenario.getEntity(address(this)));
 
         entity.boostSkill(tokenId, skillSetName, skillSetIndex, amount);
+        console.log("done Boosting skill ");
     }
 
     function updateEntityAddress(address newEntityAddress) external onlyOwner {

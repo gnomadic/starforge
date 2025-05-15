@@ -13,3 +13,8 @@ export function str(input: Hex | undefined){
     if (!input) return "";
     return hexToString(input, { size: 32 });
 }
+
+export function longStr(input: Hex | undefined){
+    if (!input) return "";
+    return hexToString(input);
+}

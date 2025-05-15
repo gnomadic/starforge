@@ -9,7 +9,8 @@ import {IStatsSystem} from "./StatsSystem.sol";
 import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
 import {LibClone} from "solady/utils/LibClone.sol";
 
-// import {console} from "hardhat/console.sol";
+import {console} from "hardhat/console.sol";
+
 // import {console} from "forge-std/console.sol";
 
 contract JobSystem is ISystem, Ownable {
@@ -46,14 +47,22 @@ contract JobSystem is ISystem, Ownable {
         bytes32 jobId,
         uint256 tokenId
     ) public {
+        console.log("activating job");
+        console.logBytes(abi.encodePacked(jobId));
         IJobEntity entity = IJobEntity(scenario.getEntity(address(this)));
+        console.log("entity");
+        console.log(address(entity));
 
         (bytes32 activeJobId, uint256 startedAt) = entity.getActiveJob(tokenId);
+        console.log("active job");
+        console.logBytes(abi.encodePacked(activeJobId));
 
-        if (activeJobId.length > 0) {
-            // console.log("well finishing job?");
+        if (activeJobId != bytes32(0)) {
+            console.log("well finishing job?");
             finishJob(scenario, tokenId);
         }
+        console.log("activing job");
+
         entity.activateJob(jobId, tokenId);
     }
 
@@ -106,15 +115,13 @@ contract JobSystem is ISystem, Ownable {
         IJobEntity entity = IJobEntity(scenario.getEntity(address(this)));
         (bytes32 activeJobId, uint256 startedAt) = entity.getActiveJob(tokenId);
 
-        if (activeJobId.length == 0) {
+        if (activeJobId == bytes32(0)) {
+            console.log("no active job!");
+
             revert NoActiveJob();
         }
 
         Job memory job = entity.getJob(activeJobId);
-
-        ISupplySystem supply = ISupplySystem(
-            address(_systemController.getSystem("SUPPLY"))
-        );
 
         uint256 secondsLive = block.timestamp - startedAt;
 
@@ -126,6 +133,7 @@ contract JobSystem is ISystem, Ownable {
 
         uint256 amount = secondsLive * (job.amountPerHour / 3600);
 
+        console.log("step one");
         IStatsSystem(address(_systemController.getSystem("STAT"))).boostSkill(
             scenario,
             tokenId,
@@ -133,9 +141,16 @@ contract JobSystem is ISystem, Ownable {
             job.skillSetIndex,
             job.skillSetBoost
         );
-
-        supply.mint(scenario, msg.sender, job.tokenName, amount);
+        console.log("step two");
+        ISupplySystem(address(_systemController.getSystem("SUPPLY"))).mint(
+            scenario,
+            msg.sender,
+            job.tokenName,
+            amount
+        );
+        console.log("step three");
         entity.endJob(tokenId);
+        console.log("step four");
     }
 
     function activateEntity(

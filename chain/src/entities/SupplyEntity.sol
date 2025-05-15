@@ -3,7 +3,7 @@ pragma solidity ^0.8.24;
 
 import {IScenario} from "../Scenario.sol";
 
-// import {console} from "hardhat/console.sol";
+import {console} from "hardhat/console.sol";
 
 interface ISupplyEntity {
     function initialize(IScenario scenario, address system) external;
@@ -45,6 +45,7 @@ contract SupplyEntity is ISupplyEntity {
                 return tokenAddresses[i];
             }
         }
+        console.log("Token not found: ");
         revert("Token not found");
     }
 

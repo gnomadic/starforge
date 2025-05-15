@@ -8,7 +8,7 @@ import {SupplyTokenFactory} from "../tokens/SupplyTokenFactory.sol";
 import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
 import {LibClone} from "solady/utils/LibClone.sol";
 
-// import {console} from "hardhat/console.sol";
+import {console} from "hardhat/console.sol";
 
 interface ISupplySystem {
     function mint(
@@ -89,6 +89,7 @@ contract SupplySystem is ISystem, ISupplySystem, Ownable {
         bytes32 tokenName,
         uint256 amount
     ) external {
+        console.log("minting");
         ISupplyEntity entity = ISupplyEntity(scenario.getEntity(address(this)));
 
         // console.log("SupplySystem: mint: entityAddress: %s", address(entity));
@@ -96,6 +97,7 @@ contract SupplySystem is ISystem, ISupplySystem, Ownable {
         address token = entity.getTokenAddress(tokenName);
         // console.log("minting %s", tokenName);
         IERC20(token).mint(player, amount);
+        console.log("done minting");
     }
 
     function burn(

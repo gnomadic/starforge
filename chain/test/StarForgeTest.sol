@@ -10,7 +10,7 @@ import {SupplySystem} from "../src/systems/SupplySystem.sol";
 import {SupplyTokenFactory} from "../src/tokens/SupplyTokenFactory.sol";
 import {SupplyToken} from "../src/tokens/SupplyToken.sol";
 import {StatsSystem} from "../src/systems/StatsSystem.sol";
-import {PlanetStatsEntity} from "../src/entities/PlanetStatsEntity.sol";
+import {StatsEntity} from "../src/entities/StatsEntity.sol";
 import {SupplyEntity} from "../src/entities/SupplyEntity.sol";
 import {ScenarioFactory} from "../src/ScenarioFactory.sol";
 import {IScenario, Scenario} from "../src/Scenario.sol";
@@ -24,7 +24,7 @@ contract StarForgeTest is Test {
     JobSystem jobSystem;
 
     SupplyEntity supplyEntity;
-    PlanetStatsEntity statsEntity;
+    StatsEntity statsEntity;
     JobEntity jobEntity;
 
     // address owner = address(this);
@@ -74,7 +74,7 @@ contract StarForgeTest is Test {
         supplyEntity = SupplyEntity(
             IScenario(regenScenario).getEntity(address(supplySystem))
         );
-        statsEntity = PlanetStatsEntity(
+        statsEntity = StatsEntity(
             IScenario(regenScenario).getEntity(address(statsSystem))
         );
         jobEntity = JobEntity(

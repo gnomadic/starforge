@@ -26,11 +26,11 @@ contract TestJobSystem is StarForgeTest {
     function testFinishJob() public {
         jobSystem.activateJob(regenScenario, "Bioflux_one", testTokenId);
 
-        (string memory activeJobId, uint256 startedAt) = jobEntity.getActiveJob(
+        (bytes32 activeJobId, uint256 startedAt) = jobEntity.getActiveJob(
             testTokenId
         );
 
-        require(bytes(activeJobId).length > 0, "No active job found");
+        require((activeJobId).length > 0, "No active job found");
 
         vm.warp(startedAt + 3601);
         jobSystem.finishJob(regenScenario, testTokenId);
