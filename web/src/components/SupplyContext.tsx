@@ -8,12 +8,13 @@ import { useReadErc20BalanceOf, useReadScenarioGetEntity, useReadSupplyEntityGet
 import { useDeployment } from '@/hooks/useDeployment';
 import { useAccount } from 'wagmi';
 import { useScenarios } from './ScenarioContext';
+import { b32 } from '@/lib/utils/utils';
 
 // Define the initial Supply values
 const initialSupplies: Supply[] = [
   {
     id: '1',
-    type: 'Bioflux',
+    type: b32('Bioflux'),
     amount: 0,
     emissionRate: 0.1,
     icon: <Shell className="h-4 w-4 text-red-400" />,
@@ -22,7 +23,7 @@ const initialSupplies: Supply[] = [
   },
   {
     id: '2',
-    type: 'Hydrocite',
+    type: b32('Hydrocite'),
     amount: 0,
     emissionRate: 0.2,
     icon: <Droplet className="h-4 w-4 text-blue-400" />,
@@ -31,7 +32,7 @@ const initialSupplies: Supply[] = [
   },
   {
     id: '3',
-    type: 'Solaris Dust',
+    type: b32('Solaris Dust'),
     amount: 0,
     emissionRate: 0.15,
     icon: <Sun className="h-4 w-4 text-yellow-400" />,

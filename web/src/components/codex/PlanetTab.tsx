@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { NFTGrid } from '@/components/codex/NFTGrid';
-import { useReadPlanetTokensOfOwner } from "@/generated";
+import { useReadPlanetVAlphaTokensOfOwner } from "@/generated";
 import { useAccount } from "wagmi";
 import { useDeployment } from "@/hooks/useDeployment";
 import { zeroAddress } from 'viem';
@@ -19,7 +19,7 @@ const PlanetTab: React.FC<PlanetTabProps> = ({ }) => {
   const { address } = useAccount()
 
   const [selectedTokenId, setSelectedTokenId] = useState<bigint>(BigInt(0));
-  const { data: held } = useReadPlanetTokensOfOwner({ args: [address ? address : zeroAddress], address: deploy.Planet })
+  const { data: held } = useReadPlanetVAlphaTokensOfOwner({ args: [address ? address : zeroAddress], address: deploy.Planet })
 
   return (
     <div>

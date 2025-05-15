@@ -6,6 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button';
 import { useSupplies } from '@/components/SupplyContext';
 import { bigIntReplacer } from '@/domain/utils';
+import { Hex } from 'viem';
 
 
 interface JobCardProps {
@@ -15,9 +16,9 @@ interface JobCardProps {
         color: string;
     }
     job: {
-        id: string;
-        title: string;
-        description: string;
+        id: Hex;
+        title: Hex;
+        // description: string;
         tokenName: string;
         amountPerHour: bigint;
     };
@@ -49,7 +50,8 @@ export default function JobCard({ activeJobId, getDecoByResourceType, job, activ
                 </div>
             </CardHeader>
             <CardContent className="pt-6 flex flex-col gap-4">
-                <p className="text-sm text-muted-foreground">{job.description}</p>
+                {/* <p className="text-sm text-muted-foreground">{job.description}</p> */}
+                <p className="text-sm text-muted-foreground">-------</p>
 
                 <div className="flex justify-between items-center border-t border-border/40 pt-4">
                     <div className="text-sm">

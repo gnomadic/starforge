@@ -1,4 +1,4 @@
-import { Address } from "viem";
+import { Address, Hex } from "viem";
 
 
 
@@ -46,7 +46,7 @@ export type HSL = {
 
 
 export interface Supply {
-  type: 'Bioflux' | 'Hydrocite' | 'Solaris Dust' | 'TECHNOLOGY';
+  type: Hex;  // b32('Bioflux') | 'Hydrocite' | 'Solaris Dust' | 'TECHNOLOGY';
   amount: number;
   emissionRate: number;
   icon: React.ReactNode;

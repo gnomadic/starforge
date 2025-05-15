@@ -3,8 +3,9 @@ import React from 'react';
 import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
 import { useDeployment } from '@/hooks/useDeployment';
 import { Address } from 'viem';
-import { useReadPlanetStatsEntityGetStatSet, useReadPlanetStatsEntityGetStatSetMaxValues, useReadPlanetStatsEntityGetStatSetPointNames } from '@/generated';
+import { useReadStatsEntityGetStatSet, useReadStatsEntityGetStatSetMaxValues, useReadStatsEntityGetStatSetPointNames } from '@/generated';
 import { bigIntReplacer } from '@/domain/utils';
+import { b32 } from '@/lib/utils/utils';
 
 interface PlanetStatsProps {
   stats?: readonly [number, number, number, number, number, number, number, number, number, number] | undefined;
@@ -16,9 +17,9 @@ interface PlanetStatsProps {
 const PlanetStats: React.FC<PlanetStatsProps> = ({ stats, statSetName, selectedTokenId, whichEntity }) => {
 
   const { deploy } = useDeployment()
-  const { data: statSetData } = useReadPlanetStatsEntityGetStatSet({ args: [selectedTokenId, statSetName], address: whichEntity })//whichEntity })// scenarios ? scenarios[0] : "0x0" });
-  const { data: statSetNames } = useReadPlanetStatsEntityGetStatSetPointNames({ args: [statSetName], address: whichEntity })//whichEntity })// scenarios ? scenarios[0] : "0x0" });
-  const {data: statMaxs} = useReadPlanetStatsEntityGetStatSetMaxValues({ args: [statSetName], address: whichEntity })//whichEntity })// scenarios ? scenarios[0] : "0x0" });
+  const { data: statSetData } = useReadStatsEntityGetStatSet({ args: [selectedTokenId, b32(statSetName)], address: whichEntity })//whichEntity })// scenarios ? scenarios[0] : "0x0" });
+  const { data: statSetNames } = useReadStatsEntityGetStatSetPointNames({ args: [b32(statSetName)], address: whichEntity })//whichEntity })// scenarios ? scenarios[0] : "0x0" });
+  const {data: statMaxs} = useReadStatsEntityGetStatSetMaxValues({ args: [b32(statSetName)], address: whichEntity })//whichEntity })// scenarios ? scenarios[0] : "0x0" });
 
   // const { data: stats } = useReadPlanetStatsSystemGetStats({ args: [selectedTokenId], address: deploy.PlanetStatsSystem })
 

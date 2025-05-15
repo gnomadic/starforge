@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { NFTGrid } from '@/components/codex/NFTGrid';
-import { useReadJobEntityGetActiveJob, useReadPlanetTokensOfOwner, useWriteJobSystemActivateJob, useWriteJobSystemFinishJob } from "@/generated";
+import { useReadJobEntityGetActiveJob, useReadPlanetVAlphaTokensOfOwner, useWriteJobSystemActivateJob, useWriteJobSystemFinishJob } from "@/generated";
 import { useAccount, useWaitForTransactionReceipt } from "wagmi";
 import { useDeployment } from "@/hooks/useDeployment";
 import { zeroAddress } from 'viem';
@@ -25,6 +25,7 @@ import {
 } from "@/components/ui/collapsible";
 import JobCard from '@/components/job/JobCard';
 import { bigIntReplacer } from '@/domain/utils';
+import { b32 } from '@/lib/utils/utils';
 
 
 interface JobDeco {
@@ -77,7 +78,7 @@ export default function JobBoard({ }: JobBoardProps) {
     const { address } = useAccount();
 
     const [selectedTokenId, setSelectedTokenId] = useState<bigint>(BigInt(0));
-    const { data: held } = useReadPlanetTokensOfOwner({ args: [address ? address : zeroAddress], address: deploy.Planet })
+    const { data: held } = useReadPlanetVAlphaTokensOfOwner({ args: [address ? address : zeroAddress], address: deploy.Planet })
 
     const { data: whichEntity, isLoading, error } = useReadScenarioGetEntity({ args: [deploy.JobSystem], address: scenarios ? scenarios[0] : "0x0" })
 
@@ -115,7 +116,7 @@ export default function JobBoard({ }: JobBoardProps) {
 
 
     const activateNewJob = async (jobId: string) => {
-        activateJob({ address: deploy.JobSystem, args: [scenarios[0], jobId, selectedTokenId] });
+        activateJob({ address: deploy.JobSystem, args: [scenarios[0], b32(jobId), selectedTokenId] });
     }
 
     const deactivateJob = async (jobId: string) => {

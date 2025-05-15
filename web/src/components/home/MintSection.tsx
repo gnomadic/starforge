@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import HueControl from '../mint/HueControl';
-import { useReadPlanetGenerateSvg, useWritePlanetMint } from '@/generated';
+import { useReadPlanetVAlphaGenerateSvg, useWritePlanetVAlphaMint } from '@/generated';
 import { useAccount, useWaitForTransactionReceipt } from 'wagmi';
 import { useDeployment } from '@/hooks/useDeployment';
 import MintPreview from '../mint/MintPreview';
@@ -34,10 +34,10 @@ const MintSection: React.FC<MintSectionProps> = ({ className }) => {
 
   const { address } = useAccount();
   const { deploy } = useDeployment();
-  const { data: image, isLoading: loadingImage } = useReadPlanetGenerateSvg({ address: deploy.Planet, args: [BigInt(0)] });
+  const { data: image, isLoading: loadingImage } = useReadPlanetVAlphaGenerateSvg({ address: deploy.Planet, args: [BigInt(0)] });
   const [preview, setPreview] = useState<string>("");
 
-  const { data: hash, error: writeError, writeContract } = useWritePlanetMint();
+  const { data: hash, error: writeError, writeContract } = useWritePlanetVAlphaMint();
 
   const { isLoading, isSuccess, data } = useWaitForTransactionReceipt({ hash })
 
