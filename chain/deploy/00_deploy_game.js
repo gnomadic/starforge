@@ -186,13 +186,16 @@ module.exports = async (hre) => {
   console.log("----- configuring renderer")
 
   if (!redo) {
-
+console.log('one ');
     tx = await deployedRenderer.addStepRenderer(SkyRenderer.address);
     await tx.wait();
+    console.log('two ');
     tx = await deployedRenderer.addStepRenderer(FunkRenderer.address);
     await tx.wait();
+    console.log('three ');
     tx = await deployedRenderer.addStepRenderer(SpaceOrbStepRenderer.address);
     await tx.wait();
+    console.log('four ');
     tx = await deployedRenderer.addStepRenderer(SilhouetteRenderer.address);
     await tx.wait();
 
@@ -237,10 +240,10 @@ module.exports = async (hre) => {
       await verify(hre, SystemController.address, "SystemController", "systems/", []);
       await verify(hre, ScenarioFactory.address, "ScenarioFactory", "", [SystemController.address]);
       await verify(hre, Scenario.address, "Scenario", "", []);
-      await verify(hre, PlanetStats.address, "StatsSystem", "systems/", []);
-      await verify(hre, SupplySystem.address, "SupplySystem", "systems/", [SupplyTokenFactory.address]);
-      await verify(hre, JobSystem.address, "JobSystem", "systems/", []);
-      await verify(hre, "0xeDb12e94f8D3b2C30CeAfCE938C6B1B2806DbDc9", "JobEntity", "entities/", []);
+      await verify(hre, PlanetStats.address, "StatsSystem", "systems/", [StatsEntity.address]);
+      await verify(hre, SupplySystem.address, "SupplySystem", "systems/", [SupplyTokenFactory.address, SupplyEntity.address]);
+      await verify(hre, JobSystem.address, "JobSystem", "systems/", [JobEntity.address]);
+      // await verify(hre, "0xeDb12e94f8D3b2C30CeAfCE938C6B1B2806DbDc9", "JobEntity", "entities/", []);
 
 
   }

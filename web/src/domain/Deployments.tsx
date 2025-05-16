@@ -25,12 +25,12 @@ export const Deployments: { [key: string]: Deployment } = {
   },
 
   sepolia: {
-    Planet: "0x944078938b8Eb8Da09Ce02D8317d7BC0cC9DdcBC",
-    SystemController: "0x1F8e15DfDf09f51B49432EDEc0d4dAd5BF7b7b08",
-    ScenarioFactory: "0x49E9c56e2ED38Bab254cb86E6b156625fB3fBdDA",
-    PlanetStats: "0x0249888684F7B03D564D96673711FD1133015CCb",
-    SupplySystem: "0xB4db03b0Cd95D0fCE5A2Fb3f4C7ccF41A6f36FAB",
-    JobSystem: "0x6EAbAdD2e0f8212DdB46f59A3eB993F5513482F3",
+    "Planet": "0x9dDc2C46eE1957a90749D835409A2EC709a49668",
+    "SystemController": "0x06D64DEb86ec161E617950a59b8576564E4f5Ea2",
+    "ScenarioFactory": "0x6ed83B2D9A6B02D39a3A1D7798F6f4e80Eea2cD5",
+    "PlanetStats": "0x5B1580124915184122e25BFfB4DCDbb5552fe3F6",
+    "SupplySystem": "0xD2b8397C4897A06E668aae469249277b17466a87",
+    "JobSystem": "0x19d35Ff38805669A8af512054651636cF30C5C8E",
     
 
     currency: 'sep eth',
