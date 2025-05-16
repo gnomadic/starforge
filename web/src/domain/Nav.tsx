@@ -18,6 +18,13 @@ export const PlayNavItems = [
   { href: '/play/marketplace', label: 'Marketplace' },
 ];
 
+export const socials = [
+  { href: 'https://t.me/playtavern', label: 'Telegram' },
+  { href: 'https://warpcast.com/~/channel/playtavern', label: 'Warpcast' },
+  { href: 'https://starforge.gitbook.io/starforge/', label: 'Docs' },
+  { href: 'https://github.com/gnomadic/starforge', label: 'Github' },
+]
+
 
 // 'Discover',  
 // 'Manage',    
