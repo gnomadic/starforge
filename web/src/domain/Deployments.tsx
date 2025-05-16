@@ -8,18 +8,18 @@ export const IPFS_GATEWAY = 'https://ipfs.io/ipfs/';
 export const Deployments: { [key: string]: Deployment } = {
 
 
-  basesep: {
-    Planet: "0x0",
-    SystemController: "0x0",
-    ScenarioFactory: "0x0",
-    PlanetStats: "0x0",
-    SupplySystem: "0x0",
-    JobSystem: "0x0",
+  base: {
+    "Planet": "0x3aEB7033c3974CE0D241c91058322D82f4fc5f85",
+    "SystemController": "0xf1031FA368a11572b5B5B33B377eeA52979d390C",
+    "ScenarioFactory": "0x8103b059f6aF03c29e3639FEDAd5b4d57eC1a6b9",
+    "PlanetStats": "0xFE013E6184872Cf96D3356E351aaFEd58217a737",
+    "SupplySystem": "0x8B8d5318Bc87587938aBbE92ac4abb71CcDD4451",
+    "JobSystem": "0x4803b165381796276C7C211cCa649174BA2df81f",
 
-    currency: 'base sep eth',
-    chain: 'base sepolia',
+    currency: 'base eth',
+    chain: 'base',
     chainId: "84532",
-    scan: "https://sepolia.basescan.org/address/",
+    scan: "https://basescan.org/address/",
     // viemChain: baseSepolia,
     // viemTransport: http(`https://base-sepolia.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_ALCHEMY_API_KEY}`),
   },

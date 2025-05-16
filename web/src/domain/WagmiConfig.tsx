@@ -44,7 +44,7 @@ export const config = createConfig({
       // polygon,
       // optimism,
       // arbitrum,
-      // base,
+      base,
       
       // baseSepolia,
       monadTestnet,
@@ -56,11 +56,13 @@ export const config = createConfig({
       ...(process.env.NEXT_PUBLIC_ENABLE_TESTNETS === 'true' ? [localhost] : []),
     ],
     transports: {
+      [base.id]: http(),
+      [monadTestnet.id]: http(),
       [sepolia.id]: http(),
       // [baseSepolia.id]: http(),
-      // [base.id]: http(),
+      
       // [mainnet.id]: http(),
-      [monadTestnet.id]: http(),
+      
       [localhost.id]: http(),
       
       // [sepolia.id]: http(`https://eth-sepolia.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_ALCHEMY_API_KEY}`),
