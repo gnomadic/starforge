@@ -19,7 +19,7 @@ export const useDeployment = () => {
       updateTokens(deploy);
   }, [chain, deploy?.Planet]);
 
-  console.log("returning deployment: ", deploy.chain)
+  // console.log("returning deployment: ", deploy.chain)
   return { deploy };
 };
 

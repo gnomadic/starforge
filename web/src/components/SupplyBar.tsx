@@ -5,6 +5,7 @@ import { RefreshCw } from 'lucide-react';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { useSupplies } from './SupplyContext';
 import { Button } from '@/components/ui/button';
+import { str } from '@/lib/utils/utils';
 
 interface SupplyBarProps {
   className?: string;
@@ -41,7 +42,7 @@ const { supplies, updateSupply, sync, syncReady  } = resourcesContext;
             </TooltipTrigger>
             <TooltipContent>
               <p className="capitalize">
-                {resource.type}: {resource.amount.toFixed(5)}
+                {str(resource.type)}: {resource.amount.toFixed(5)}
               </p>
             </TooltipContent>
           </Tooltip>
