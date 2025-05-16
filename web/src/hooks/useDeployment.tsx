@@ -7,19 +7,19 @@ import { Address } from 'viem';
 
 export const useDeployment = () => {
   const { chain } = useAccount();
-  const [deploy, setDeploy] = useState<Deployment>(Deployments['basesep']);
+  const [deploy, setDeploy] = useState<Deployment>(Deployments['base']);
 
   useEffect(() => {
-    const chainName = chain?.name.toLowerCase().replaceAll(' ', '') ?? 'basesep';
+    const chainName = chain?.name.toLowerCase().replaceAll(' ', '') ?? 'base';
     console.log('Network Change detected to: ' + chainName);
     chain?.name && Deployments.hasOwnProperty(chainName)
       ? setDeploy(Deployments[chainName])
-      : setDeploy(Deployments['basesep']);
+      : setDeploy(Deployments['base']);
 
       updateTokens(deploy);
   }, [chain, deploy?.Planet]);
 
-  // console.log("returning deployment: ", deploy.chain)
+  console.log("returning deployment: ", deploy.chain)
   return { deploy };
 };
 
