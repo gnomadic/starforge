@@ -9,7 +9,7 @@ import { Hex, zeroAddress } from 'viem';
 // import PlanetCard from '@/components/codex/PlanetCard';
 
 import { Shell, Droplet, Sun, ArrowDown } from 'lucide-react';
-import { useSupplies } from '@/components/SupplyContext';
+import { useSupplies } from '@/components/supplies/SupplyContext';
 import { useReadJobEntityGetAvailableJobs, useReadJobSystemGetAvailableJobs, useReadScenarioGetEntity } from '@/generated';
 import { useScenarios } from '@/components/ScenarioContext';
 import {

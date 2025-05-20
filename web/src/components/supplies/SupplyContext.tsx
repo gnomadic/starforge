@@ -7,7 +7,7 @@ import SupplyBar from './SupplyBar';
 import { useReadErc20BalanceOf, useReadScenarioGetEntity, useReadSupplyEntityGetTokenAddresses, useReadSupplyEntityGetTokenBalances, useReadSupplyEntityGetTokenNames } from '@/generated';
 import { useDeployment } from '@/hooks/useDeployment';
 import { useAccount } from 'wagmi';
-import { useScenarios } from './ScenarioContext';
+import { useScenarios } from '@/components/ScenarioContext';
 import { safeb32 } from '@/lib/utils/utils';
 
 // Define the initial Supply values
