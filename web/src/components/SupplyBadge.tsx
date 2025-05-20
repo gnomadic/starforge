@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils";
 import { match, P } from "ts-pattern";
 import { Address, formatEther } from "viem";
-import { useSupplies } from "./SupplyContext";
+import { useSupplies } from "@/components/supplies/SupplyContext";
 import { Circle } from "lucide-react";
 import { getTokenDisplayName } from "@/hooks/useDeployment";
 

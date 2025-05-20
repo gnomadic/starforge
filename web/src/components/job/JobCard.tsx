@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { useSupplies } from '@/components/SupplyContext';
+import { useSupplies } from '@/components/supplies/SupplyContext';
 import { bigIntReplacer } from '@/domain/utils';
 import { Hex } from 'viem';
 import { longStr, str } from '@/lib/utils/utils';
