@@ -3,14 +3,9 @@ import { Signika, Ultra } from 'next/font/google';
 import './globals.css';
 import { Analytics } from '@vercel/analytics/react';
 import '@rainbow-me/rainbowkit/styles.css';
-import { Providers } from './providers';
+import { Providers } from '@/components/global/providers';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
-import SpaceAnimation from '@/components/SpaceAnimation';
-import InDev from '@/components/InDev';
- 
 
 
 const signika = Signika({
@@ -20,9 +15,6 @@ const signika = Signika({
 const ultra = Ultra({
   subsets: ['latin'], weight: "400", variable: '--font-ultra',
 });
-
-
-
 
 export const metadata: Metadata = {
   title: 'Starforge',
@@ -44,14 +36,13 @@ export default function RootLayout({
     <html lang='en'>
       <body className={`${signika.variable} ${ultra.variable}  font-sans bg-black text-white`}>
         <Providers>
-          <SpaceAnimation />
-          <Navbar />
+          
 
           {children}
-          <InDev/>
+          
           <ToastContainer position='bottom-right' />
 
-          <Footer />
+          
           <Analytics />
         </Providers>
       </body>

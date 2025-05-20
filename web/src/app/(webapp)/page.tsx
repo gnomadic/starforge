@@ -48,6 +48,7 @@ export default function Home() {
         </div>
 
         <div className="scroll-indicator" />
+   
       </section>
       
       <HowToPlaySection />

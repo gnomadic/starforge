@@ -231,11 +231,14 @@ const MintSection: React.FC<MintSectionProps> = ({ className }) => {
 
 
 
+
+
               <Button className="w-full"
                 onClick={() => {
                   console.log("Accept Assignment button clicked");
                   writeContract({ address: deploy.Planet, args: [address!] });
                 }}
+                
               >Mint Now</Button>
 
               {/* <p className="mt-4 text-center text-xs text-white/50">

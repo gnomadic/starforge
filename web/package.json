@@ -54,6 +54,7 @@
     "frames.js": "^0.15.2",
     "jotai": "^2.7.2",
     "lucide-react": "^0.462.0",
+    "motion": "^12.12.1",
     "next": "14.1.4",
     "obscenity": "^0.2.1",
     "pino-pretty": "^11.0.0",

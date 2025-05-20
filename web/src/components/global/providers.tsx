@@ -7,7 +7,7 @@ import {
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { WagmiProvider } from 'wagmi';
 import { config } from '@/domain/WagmiConfig';
-import { SupplyProvider } from '@/components/SupplyContext';
+import { SupplyProvider } from '@/components/supplies/SupplyContext';
 import { ScenarioProvider } from '@/components/ScenarioContext';
 import { sdk } from '@farcaster/frame-sdk'
 
