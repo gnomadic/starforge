@@ -94,7 +94,7 @@ export default function Navbar() {
       </motion.div>
 
 
-      <div className="md:hidden ">
+      <div className="lg:hidden">
         <AnimatePresence>
           {show && (
             <motion.div
