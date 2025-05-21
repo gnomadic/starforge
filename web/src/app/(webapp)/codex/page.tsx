@@ -4,6 +4,7 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import PlanetTab from '@/components/codex/PlanetTab';
 import ArtifactTab from '@/components/codex/ArtifactTab';
 import ComingSoon from '@/components/ComingSoon';
+import MintSection from '@/components/home/MintSection';
 
 const Codex: React.FC = () => {
 
@@ -15,11 +16,17 @@ const Codex: React.FC = () => {
           <p className="text-white/70">View and interact with your collected cosmic entities and artifacts.</p>
         </div>
 
-        <Tabs defaultValue="nfts" className="mb-8">
+        <Tabs defaultValue="scan" className="mb-8">
           <TabsList className="w-full md:w-auto">
+            <TabsTrigger value="scan">Scan for New System</TabsTrigger>
             <TabsTrigger value="nfts">Star Systems</TabsTrigger>
             <TabsTrigger value="artifacts">Artifacts</TabsTrigger>
           </TabsList>
+
+
+          <TabsContent value="scan" className="mt-6">
+            <MintSection />
+          </TabsContent>
 
           <TabsContent value="nfts" className="mt-6">
             <PlanetTab />

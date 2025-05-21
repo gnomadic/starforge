@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import MintSection from "@/components/home/MintSection";
 import HowToPlaySection from "@/components/home/HowToPlaySection";
+import { ChevronDoubleDownIcon } from '@heroicons/react/20/solid';
 
 
 
@@ -12,9 +13,9 @@ const frame = {
     action: {
       type: "launch_frame",
       url: "https://playstarforge.com",
-      name:"S T A R F O R G E",
+      name: "S T A R F O R G E",
       splashImageUrl: "https://playstarforge.com/.assets/icon.png",
-      splashBackgroundColor:"#060816"
+      splashBackgroundColor: "#060816"
     }
   }
 }
@@ -47,10 +48,11 @@ export default function Home() {
           </p>
         </div>
 
-        <div className="scroll-indicator" />
-   
+        <ChevronDoubleDownIcon className="absolute animate-bounce text-white/70 w-10 h-10 bottom-16 md:bottom-10" />
+        {/* <div className="scroll-indicator" /> */}
+
       </section>
-      
+
       <HowToPlaySection />
 
       <MintSection />

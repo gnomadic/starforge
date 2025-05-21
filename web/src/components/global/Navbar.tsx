@@ -56,17 +56,22 @@ export default function Navbar() {
         )}
       >
 
-        {/* Logo */}
         <Link href="/" className="font-mono text-white text-center tracking-wider">
           <div className="lg:text-xl">S T A R F O R G E</div>
           <div className="text-sm text-white/50">ALPHA</div>
         </Link>
 
-        {/* Nav Links */}
         <nav className="hidden lg:flex gap-8 items-center">
           {NavItems.map((item, i) => (
             <Link key={i} href={item.href}>
-              <div className="text-sm text-white/70 hover:text-white transition-colors duration-300 relative after:absolute after:left-0 after:bottom-0 after:h-0.5 after:w-0 after:bg-primary hover:after:w-full after:transition-all after:duration-300">
+              <div
+                className={cn(
+                  "text-sm text-white/70 transition-colors duration-300 relative after:absolute after:left-0 after:bottom-0 after:h-0.5 after:bg-primary after:transition-all after:duration-300",
+                  pathname === item.href
+                    ? "text-white after:w-full"
+                    : "hover:text-white after:w-0 hover:after:w-full"
+                )}
+              >
                 {item.label}
               </div>
             </Link>
@@ -83,13 +88,9 @@ export default function Navbar() {
             </div>
           </a>
         </nav>
-
-        {/* Wallet */}
         <div className="hidden lg:block">
           <WalletButton />
         </div>
-
-        {/* </div> */}
       </motion.div>
 
 
@@ -112,19 +113,12 @@ export default function Navbar() {
           )}
         </AnimatePresence>
 
-        {/* Nav Links */}
+
         <div className="fixed top-6 right-6 z-50">
-          {/* <MobileMenuButton/> */}
-          {/* <button
-            onClick={() => {
-              handleMobileNavClick();
-            }}
-          > */}
-            <MobileMenuButton 
+          <MobileMenuButton
             isOpen={isMobileNavOpen}
             setIsOpen={setIsMobileNavOpen}
-            />
-          {/* </button> */}
+          />
         </div>
 
         {isMobileNavOpen && (

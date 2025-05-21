@@ -153,18 +153,29 @@ const SpaceAnimation: React.FC = () => {
     const svg = svgRef.current;
     const stars = svg.querySelectorAll('circle');
 
-    stars.forEach((star) => {
+    stars.forEach((star, index) => {
       const speed = parseFloat(star.dataset.speed || '0');
       const initialY = parseFloat(star.getAttribute('data-initial-y') || star.getAttribute('cy') || '0');
+      const initialX = parseFloat(star.getAttribute('data-initial-x') || star.getAttribute('cx') || '0');
 
       // Store initial position if not already stored
       if (!star.hasAttribute('data-initial-y')) {
         star.setAttribute('data-initial-y', star.getAttribute('cy') || '0');
       }
 
+      if (!star.hasAttribute('data-initial-x')) {
+        star.setAttribute('data-initial-x', star.getAttribute('cx') || '0');
+      }
+
       // Calculate new position based on scroll
       const yOffset = scrollY * speed;
       star.setAttribute('cy', (initialY - yOffset).toString());
+
+      if (index % 2 === 0) {
+        star.setAttribute('cx', (initialX + yOffset).toString());
+      } else {
+        star.setAttribute('cx', (initialX - yOffset).toString());
+      }
       // star.setAttribute('cy', (initialY - yOffset).toString());
     });
   }, [scrollY]);

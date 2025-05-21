@@ -10,6 +10,7 @@ import { useDeployment } from '@/hooks/useDeployment';
 import MintPreview from '../mint/MintPreview';
 import { extractDope, replaceDope } from '@/services/SVGCombiner';
 import { toast } from 'react-toastify';
+import { Badge } from '../ui/badge';
 
 interface MintSectionProps {
   className?: string;
@@ -104,14 +105,15 @@ const MintSection: React.FC<MintSectionProps> = ({ className }) => {
   // }
 
   return (
-    <section id="mint" className={cn("relative min-h-screen flex flex-col items-center justify-center py-24 px-6", className)}>
+    <section id="mint" className={cn("relative min-h-screen flex flex-col items-center justify-center px-6", className)}>
       {/* <div className="absolute inset-0 -z-10 bg-gradient-to-b from-background/0 via-background to-background/10" /> */}
       {/* <div className="absolute inset-0 -z-10 bg-gradient-to-b from-background/10 via-background to-background/0" /> */}
 
       <div className="w-full max-w-5xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div className="reveal-on-scroll glass rounded-lg p-6 order-2 lg:order-1">
-            <span className="px-3 py-1 text-xs font-medium tracking-wider uppercase bg-primary/30 text-primary rounded-full">Unlimited Collection</span>
+            {/* <span className="px-3 py-1 text-xs font-medium tracking-wider uppercase bg-primary/30 text-primary rounded-full">Unlimited Collection</span> */}
+            <Badge variant="info">Unlimited Collection</Badge>
             <h2 className="mt-6 text-4xl md:text-5xl font-mono font-bold leading-tight">
               Scan for a new planet
             </h2>
