@@ -87,6 +87,15 @@
   display: block;
 }
 
+
+/* 
+denim: hsl(204deg 92% 20%)
+deep turq: hsl(189deg 65% 26%)
+grey blue: hsl(190deg 17% 54%)
+orange: hsl(30deg 98% 54%)
+pure: hsl(36deg 99% 91%)
+*/
+
 @layer base {
   :root {
 
@@ -99,11 +108,13 @@
     --popover: 240 22% 5%;
     --popover-foreground: 210 40% 98%;
 
-    --primary: 220 98% 61%;
-    --primary-foreground: 210 40% 98%;
+    --primary: 30 98% 54%;
+    /* --primary: 220 98% 61%; */
+    --primary-foreground: 210 40% 18%;
 
-    --secondary: 240 17% 12%;
-    --secondary-foreground: 210 40% 98%;
+    --secondary: 190 17% 54%;
+    /* --secondary: 240 17% 12%; */
+    --secondary-foreground: 210 40% 18%;
 
     --muted: 240 17% 14%;
     --muted-foreground: 215 20% 65%;

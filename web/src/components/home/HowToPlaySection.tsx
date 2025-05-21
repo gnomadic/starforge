@@ -4,6 +4,7 @@ import React from 'react';
 import { cn } from '@/lib/utils';
 import { Button } from '../ui/button';
 import Link from 'next/link';
+import { Badge } from '../ui/badge';
 
 interface FeaturePoint {
   title: string;
@@ -14,43 +15,45 @@ interface FeaturePoint {
 const HowToPlaySection: React.FC = () => {
   const features: FeaturePoint[] = [
     {
-      title: "Scan and discover planets",
-      description: "Each planet is a unique NFT, completely generated onchain",
+      title: "Your Planet is Your Hero",
+      description: "Every game needs a hero. Yours is your planet. It grows, evolves, and remembers everything you do.",
       position: "top-left"
     },
     {
-      title: "Check your planet stats",
-      description: "Each planet has unique stats and traits, generated randomly during minting",
+      title: "Composable Gameplay",
+      description: "Craft your story through Scenarios.  These are modular adventures with custom stats, supplies, jobs, quests, and more.",
       position: "left"
     },
     {
-      title: "Perform Jobs to collect resources",
-      description: "Jobs give resources to help rebuild your planet and will level up your skills",
+      title: "Idle, Not Passive",
+      description: "Assign jobs, earn resources in real time, and shape your world — even when you're not online.",
       position: "top-right"
     },
     {
-      title: "Quests are coming soon",
-      description: "discover your planet",
+      title: "Fully Onchain, Forever",
+      description: "Everything is all onchain. Transparent, persistent, and open for anyone to extend.",
       position: "right"
     },
     {
-      title: "Artifacts are coming soon",
-      description: "discover your planet",
+      title: "Built for Roleplay & Community",
+      description: "Create immersive Scenarios and shape shared worlds together.",
       position: "bottom-right"
     },
     {
-      title: "Combat is coming soon",
-      description: "discover your planet",
+      title: "Explore Player-Created Worlds",
+      description: "Bring your planet on a journey. Discover new worlds — or make your own.",
       position: "bottom-left"
-    },
-
+    }
   ];
+
 
   return (
     <section id="how-to-play" className="py-24 px-6 overflow-hidden relative">
       <div className="max-w-6xl mx-auto font-mono">
         <div className="text-center mb-20 reveal-on-scroll">
-          <span className="px-3 py-1 text-xs font-medium tracking-wider uppercase bg-primary/30 text-primary rounded-full font-signika">The Plan</span>
+          <Badge variant="info" className="">
+            The Plan
+          </Badge>
           <h2 className="mt-6 text-4xl font-mono font-bold">
             We will <span className="text-gradient">build</span> the machine to stop this.
           </h2>
@@ -96,19 +99,19 @@ const HowToPlaySection: React.FC = () => {
               let positionClasses = "";
               switch (feature.position) {
                 case "top-left":
-                  positionClasses = "lg:left-[10%] lg:top-[15%]";
+                  positionClasses = "lg:left-[10%] lg:top-[10%]";
                   break;
                 case "top-right":
-                  positionClasses = "lg:right-[10%] lg:top-[15%]";
+                  positionClasses = "lg:right-[10%] lg:top-[10%]";
                   break;
                 case "right":
                   positionClasses = "lg:right-[5%] lg:top-1/2 lg:-translate-y-1/2";
                   break;
                 case "bottom-right":
-                  positionClasses = "lg:right-[10%] lg:bottom-[15%]";
+                  positionClasses = "lg:right-[10%] lg:bottom-[10%]";
                   break;
                 case "bottom-left":
-                  positionClasses = "lg:left-[10%] lg:bottom-[15%]";
+                  positionClasses = "lg:left-[10%] lg:bottom-[10%]";
                   break;
                 case "left":
                   positionClasses = "lg:left-[5%] lg:top-1/2 lg:-translate-y-1/2";

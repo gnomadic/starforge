@@ -137,9 +137,13 @@ export const SupplyProvider: React.FC<{ children: ReactNode }> = ({ children }) 
   return (
     <SupplyContext.Provider value={{ supplies, updateSupply, sync, syncReady }}>
       {children}
-      <div className={`fixed ${false ? 'bottom-4 right-4' : 'bottom-6 right-6'} z-50 glass rounded-lg shadow-md`}>
-        <SupplyBar />
-      </div>
+      {/* <div className={`fixed ${false ? 'bottom-4 right-4' : 'bottom-6 right-6'} z-50 glass rounded-lg shadow-md`}> */}
+        {/* <SupplyBar /> */}
+      {/* </div> */}
+
+      <div className="fixed bottom-4 right-4 md:right-6 md:bottom-6 z-50">
+  <SupplyBar />
+</div>
     </SupplyContext.Provider>
   );
 };

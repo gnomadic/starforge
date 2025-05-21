@@ -1,5 +1,5 @@
 export const NavItems = [
-  { href: '/#mint', label: 'COLLECT' },
+  // { href: '/#mint', label: 'COLLECT' },
   { href: '/codex', label: 'CODEX'}, //album, vault, gallery
   { href: '/jobs', label: 'JOBS'},
   { href: '/quests', label: 'QUESTS'},
