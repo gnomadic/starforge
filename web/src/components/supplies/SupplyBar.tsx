@@ -21,7 +21,7 @@ interface SupplyBarProps {
 
 const SupplyBar: React.FC<SupplyBarProps> = ({ className }) => {
   const isMobile = useMediaQuery('(max-width: 768px)');
-  const [collapsed, setCollapsed] = useState(!isMobile ? false : true);
+  const [collapsed, setCollapsed] = useState(true);
 
   const resourcesContext = useSupplies();
   if (!resourcesContext) throw new Error('useSupplies must be used within a ResourcesProvider');
@@ -45,7 +45,7 @@ const SupplyBar: React.FC<SupplyBarProps> = ({ className }) => {
         {collapsed ? <ChevronLeft size={16} /> : <ChevronRight size={16} />}
       </Button>
 
-      <AnimatePresence initial={false}>
+      <AnimatePresence initial={true}>
         {!collapsed && (
           <motion.div
             key="supply-content"
@@ -77,7 +77,7 @@ const SupplyBar: React.FC<SupplyBarProps> = ({ className }) => {
               </TooltipProvider>
             ))}
 
-            <Button
+            {/* <Button
               variant="ghost"
               size="icon"
               onClick={sync}
@@ -86,10 +86,10 @@ const SupplyBar: React.FC<SupplyBarProps> = ({ className }) => {
             >
               <RefreshCw
                 // className={cn('h-4 w-4', !syncReady && 'animate-spin opacity-30')}
-                className={cn('h-4 w-4', 
+                className={cn('h-4 w-4 opacity-50', 
                   !syncReady && 'opacity-30')}
               />
-            </Button>
+            </Button> */}
           </motion.div>
         )}
       </AnimatePresence>
