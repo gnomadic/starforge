@@ -54,7 +54,7 @@ export const iJobEntityAbi = [
   {
     type: 'function',
     inputs: [
-      { name: 'jobId', internalType: 'bytes32', type: 'bytes32' },
+      { name: 'jobId', internalType: 'uint16', type: 'uint16' },
       { name: 'tokenId', internalType: 'uint256', type: 'uint256' },
     ],
     name: 'activateJob',
@@ -64,12 +64,12 @@ export const iJobEntityAbi = [
   {
     type: 'function',
     inputs: [
-      { name: 'id', internalType: 'bytes32', type: 'bytes32' },
       { name: 'title', internalType: 'bytes32', type: 'bytes32' },
       { name: 'description', internalType: 'bytes', type: 'bytes' },
       { name: 'tokenName', internalType: 'bytes32', type: 'bytes32' },
-      { name: 'amountPerHour', internalType: 'uint256', type: 'uint256' },
-      { name: 'timeLimit', internalType: 'uint256', type: 'uint256' },
+      { name: 'amountPerCycle', internalType: 'uint256', type: 'uint256' },
+      { name: 'cycleDuration', internalType: 'uint16', type: 'uint16' },
+      { name: 'timeLimit', internalType: 'uint16', type: 'uint16' },
       { name: 'skillSetName', internalType: 'bytes32', type: 'bytes32' },
       { name: 'skillSetIndex', internalType: 'uint8', type: 'uint8' },
       { name: 'skillSetRequirement', internalType: 'uint16', type: 'uint16' },
@@ -91,7 +91,7 @@ export const iJobEntityAbi = [
     inputs: [{ name: 'tokenId', internalType: 'uint256', type: 'uint256' }],
     name: 'getActiveJob',
     outputs: [
-      { name: '', internalType: 'bytes32', type: 'bytes32' },
+      { name: '', internalType: 'uint16', type: 'uint16' },
       { name: '', internalType: 'uint256', type: 'uint256' },
     ],
     stateMutability: 'view',
@@ -106,12 +106,13 @@ export const iJobEntityAbi = [
         internalType: 'struct Job[]',
         type: 'tuple[]',
         components: [
-          { name: 'id', internalType: 'bytes32', type: 'bytes32' },
+          { name: 'id', internalType: 'uint16', type: 'uint16' },
           { name: 'title', internalType: 'bytes32', type: 'bytes32' },
           { name: 'description', internalType: 'bytes', type: 'bytes' },
           { name: 'tokenName', internalType: 'bytes32', type: 'bytes32' },
-          { name: 'amountPerHour', internalType: 'uint256', type: 'uint256' },
-          { name: 'timeLimit', internalType: 'uint256', type: 'uint256' },
+          { name: 'amountPerCycle', internalType: 'uint256', type: 'uint256' },
+          { name: 'cycleDuration', internalType: 'uint16', type: 'uint16' },
+          { name: 'timeLimit', internalType: 'uint16', type: 'uint16' },
           { name: 'skillSetName', internalType: 'bytes32', type: 'bytes32' },
           { name: 'skillSetIndex', internalType: 'uint8', type: 'uint8' },
           {
@@ -127,7 +128,7 @@ export const iJobEntityAbi = [
   },
   {
     type: 'function',
-    inputs: [{ name: 'jobId', internalType: 'bytes32', type: 'bytes32' }],
+    inputs: [{ name: 'jobId', internalType: 'uint16', type: 'uint16' }],
     name: 'getJob',
     outputs: [
       {
@@ -135,12 +136,13 @@ export const iJobEntityAbi = [
         internalType: 'struct Job',
         type: 'tuple',
         components: [
-          { name: 'id', internalType: 'bytes32', type: 'bytes32' },
+          { name: 'id', internalType: 'uint16', type: 'uint16' },
           { name: 'title', internalType: 'bytes32', type: 'bytes32' },
           { name: 'description', internalType: 'bytes', type: 'bytes' },
           { name: 'tokenName', internalType: 'bytes32', type: 'bytes32' },
-          { name: 'amountPerHour', internalType: 'uint256', type: 'uint256' },
-          { name: 'timeLimit', internalType: 'uint256', type: 'uint256' },
+          { name: 'amountPerCycle', internalType: 'uint256', type: 'uint256' },
+          { name: 'cycleDuration', internalType: 'uint16', type: 'uint16' },
+          { name: 'timeLimit', internalType: 'uint16', type: 'uint16' },
           { name: 'skillSetName', internalType: 'bytes32', type: 'bytes32' },
           { name: 'skillSetIndex', internalType: 'uint8', type: 'uint8' },
           {
@@ -439,7 +441,7 @@ export const jobEntityAbi = [
   {
     type: 'function',
     inputs: [
-      { name: 'jobId', internalType: 'bytes32', type: 'bytes32' },
+      { name: 'jobId', internalType: 'uint16', type: 'uint16' },
       { name: 'tokenId', internalType: 'uint256', type: 'uint256' },
     ],
     name: 'activateJob',
@@ -451,7 +453,7 @@ export const jobEntityAbi = [
     inputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
     name: 'activeJobs',
     outputs: [
-      { name: 'id', internalType: 'bytes32', type: 'bytes32' },
+      { name: 'id', internalType: 'uint16', type: 'uint16' },
       { name: 'startedAt', internalType: 'uint256', type: 'uint256' },
     ],
     stateMutability: 'view',
@@ -459,12 +461,12 @@ export const jobEntityAbi = [
   {
     type: 'function',
     inputs: [
-      { name: 'id', internalType: 'bytes32', type: 'bytes32' },
       { name: 'title', internalType: 'bytes32', type: 'bytes32' },
       { name: 'description', internalType: 'bytes', type: 'bytes' },
       { name: 'tokenName', internalType: 'bytes32', type: 'bytes32' },
-      { name: 'amountPerHour', internalType: 'uint256', type: 'uint256' },
-      { name: 'timeLimit', internalType: 'uint256', type: 'uint256' },
+      { name: 'amountPerCycle', internalType: 'uint256', type: 'uint256' },
+      { name: 'cycleDuration', internalType: 'uint16', type: 'uint16' },
+      { name: 'timeLimit', internalType: 'uint16', type: 'uint16' },
       { name: 'skillSetName', internalType: 'bytes32', type: 'bytes32' },
       { name: 'skillSetIndex', internalType: 'uint8', type: 'uint8' },
       { name: 'skillSetRequirement', internalType: 'uint16', type: 'uint16' },
@@ -479,12 +481,13 @@ export const jobEntityAbi = [
     inputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
     name: 'availableJobs',
     outputs: [
-      { name: 'id', internalType: 'bytes32', type: 'bytes32' },
+      { name: 'id', internalType: 'uint16', type: 'uint16' },
       { name: 'title', internalType: 'bytes32', type: 'bytes32' },
       { name: 'description', internalType: 'bytes', type: 'bytes' },
       { name: 'tokenName', internalType: 'bytes32', type: 'bytes32' },
-      { name: 'amountPerHour', internalType: 'uint256', type: 'uint256' },
-      { name: 'timeLimit', internalType: 'uint256', type: 'uint256' },
+      { name: 'amountPerCycle', internalType: 'uint256', type: 'uint256' },
+      { name: 'cycleDuration', internalType: 'uint16', type: 'uint16' },
+      { name: 'timeLimit', internalType: 'uint16', type: 'uint16' },
       { name: 'skillSetName', internalType: 'bytes32', type: 'bytes32' },
       { name: 'skillSetIndex', internalType: 'uint8', type: 'uint8' },
       { name: 'skillSetRequirement', internalType: 'uint16', type: 'uint16' },
@@ -504,7 +507,7 @@ export const jobEntityAbi = [
     inputs: [{ name: 'tokenId', internalType: 'uint256', type: 'uint256' }],
     name: 'getActiveJob',
     outputs: [
-      { name: '', internalType: 'bytes32', type: 'bytes32' },
+      { name: '', internalType: 'uint16', type: 'uint16' },
       { name: '', internalType: 'uint256', type: 'uint256' },
     ],
     stateMutability: 'view',
@@ -519,12 +522,13 @@ export const jobEntityAbi = [
         internalType: 'struct Job[]',
         type: 'tuple[]',
         components: [
-          { name: 'id', internalType: 'bytes32', type: 'bytes32' },
+          { name: 'id', internalType: 'uint16', type: 'uint16' },
           { name: 'title', internalType: 'bytes32', type: 'bytes32' },
           { name: 'description', internalType: 'bytes', type: 'bytes' },
           { name: 'tokenName', internalType: 'bytes32', type: 'bytes32' },
-          { name: 'amountPerHour', internalType: 'uint256', type: 'uint256' },
-          { name: 'timeLimit', internalType: 'uint256', type: 'uint256' },
+          { name: 'amountPerCycle', internalType: 'uint256', type: 'uint256' },
+          { name: 'cycleDuration', internalType: 'uint16', type: 'uint16' },
+          { name: 'timeLimit', internalType: 'uint16', type: 'uint16' },
           { name: 'skillSetName', internalType: 'bytes32', type: 'bytes32' },
           { name: 'skillSetIndex', internalType: 'uint8', type: 'uint8' },
           {
@@ -540,7 +544,7 @@ export const jobEntityAbi = [
   },
   {
     type: 'function',
-    inputs: [{ name: 'jobId', internalType: 'bytes32', type: 'bytes32' }],
+    inputs: [{ name: 'jobId', internalType: 'uint16', type: 'uint16' }],
     name: 'getJob',
     outputs: [
       {
@@ -548,12 +552,13 @@ export const jobEntityAbi = [
         internalType: 'struct Job',
         type: 'tuple',
         components: [
-          { name: 'id', internalType: 'bytes32', type: 'bytes32' },
+          { name: 'id', internalType: 'uint16', type: 'uint16' },
           { name: 'title', internalType: 'bytes32', type: 'bytes32' },
           { name: 'description', internalType: 'bytes', type: 'bytes' },
           { name: 'tokenName', internalType: 'bytes32', type: 'bytes32' },
-          { name: 'amountPerHour', internalType: 'uint256', type: 'uint256' },
-          { name: 'timeLimit', internalType: 'uint256', type: 'uint256' },
+          { name: 'amountPerCycle', internalType: 'uint256', type: 'uint256' },
+          { name: 'cycleDuration', internalType: 'uint16', type: 'uint16' },
+          { name: 'timeLimit', internalType: 'uint16', type: 'uint16' },
           { name: 'skillSetName', internalType: 'bytes32', type: 'bytes32' },
           { name: 'skillSetIndex', internalType: 'uint8', type: 'uint8' },
           {
@@ -579,7 +584,7 @@ export const jobEntityAbi = [
   },
   {
     type: 'function',
-    inputs: [{ name: '', internalType: 'bytes32', type: 'bytes32' }],
+    inputs: [{ name: '', internalType: 'uint16', type: 'uint16' }],
     name: 'jobById',
     outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
     stateMutability: 'view',
@@ -641,7 +646,7 @@ export const jobSystemAbi = [
     type: 'function',
     inputs: [
       { name: 'scenario', internalType: 'contract IScenario', type: 'address' },
-      { name: 'jobId', internalType: 'bytes32', type: 'bytes32' },
+      { name: 'jobId', internalType: 'uint16', type: 'uint16' },
       { name: 'tokenId', internalType: 'uint256', type: 'uint256' },
     ],
     name: 'activateJob',
@@ -678,12 +683,13 @@ export const jobSystemAbi = [
         internalType: 'struct Job[]',
         type: 'tuple[]',
         components: [
-          { name: 'id', internalType: 'bytes32', type: 'bytes32' },
+          { name: 'id', internalType: 'uint16', type: 'uint16' },
           { name: 'title', internalType: 'bytes32', type: 'bytes32' },
           { name: 'description', internalType: 'bytes', type: 'bytes' },
           { name: 'tokenName', internalType: 'bytes32', type: 'bytes32' },
-          { name: 'amountPerHour', internalType: 'uint256', type: 'uint256' },
-          { name: 'timeLimit', internalType: 'uint256', type: 'uint256' },
+          { name: 'amountPerCycle', internalType: 'uint256', type: 'uint256' },
+          { name: 'cycleDuration', internalType: 'uint16', type: 'uint16' },
+          { name: 'timeLimit', internalType: 'uint16', type: 'uint16' },
           { name: 'skillSetName', internalType: 'bytes32', type: 'bytes32' },
           { name: 'skillSetIndex', internalType: 'uint8', type: 'uint8' },
           {

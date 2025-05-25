@@ -5,7 +5,7 @@ import {IScenario} from "../Scenario.sol";
 import {console} from "hardhat/console.sol";
 
 struct Job {
-    bytes32 id;
+    uint16 id;
     bytes32 title;
     bytes description;
     //rewards
@@ -21,7 +21,7 @@ struct Job {
 }
 
 struct LiveJob {
-    bytes32 id;
+    uint16 id;
     uint256 startedAt;
 }
 
@@ -30,14 +30,13 @@ interface IJobEntity {
 
     function getActiveJob(
         uint256 tokenId
-    ) external view returns (bytes32, uint256);
+    ) external view returns (uint16, uint256);
 
-    function activateJob(bytes32 jobId, uint256 tokenId) external;
+    function activateJob(uint16 jobId, uint256 tokenId) external;
 
     function endJob(uint256 tokenId) external;
 
     function addJob(
-        bytes32 id,
         bytes32 title,
         bytes calldata description,
         bytes32 tokenName,
@@ -50,14 +49,14 @@ interface IJobEntity {
         uint16 skillSetBoost
     ) external;
 
-    function getJob(bytes32 jobId) external view returns (Job memory);
+    function getJob(uint16 jobId) external view returns (Job memory);
 
     function initialize(IScenario scenario, address _system) external;
 }
 
 contract JobEntity is IJobEntity {
     Job[] public availableJobs;
-    mapping(bytes32 => uint256) public jobById;
+    mapping(uint16 => uint256) public jobById;
 
     mapping(uint256 => LiveJob) public activeJobs;
 
@@ -65,12 +64,14 @@ contract JobEntity is IJobEntity {
     address private system;
 
     bool initialized;
+    uint16 currentJobId;
 
     function initialize(IScenario scenario, address _system) external {
         require(!initialized, "Already initialized");
         initialized = true;
         _scenario = scenario;
         system = _system;
+        currentJobId = 1;
     }
 
     function getAvailableJobs() external view returns (Job[] memory) {
@@ -79,18 +80,18 @@ contract JobEntity is IJobEntity {
 
     function getActiveJob(
         uint256 tokenId
-    ) external view returns (bytes32, uint256) {
+    ) external view returns (uint16, uint256) {
         return (activeJobs[tokenId].id, activeJobs[tokenId].startedAt);
     }
 
-    function activateJob(bytes32 jobId, uint256 tokenId) external {
+    function activateJob(uint16 jobId, uint256 tokenId) external {
         // console.log("activating job from entity");
         if (msg.sender != _scenario.getAdmin() && msg.sender != system) {
             console.log("Not scenario admin");
             revert NotScenarioAdmin();
         }
 
-        if (activeJobs[tokenId].id != bytes32(0)) {
+        if (activeJobs[tokenId].id != 0) {
             console.log("Already active job");
             revert AlreadyActiveJob();
         }
@@ -99,7 +100,7 @@ contract JobEntity is IJobEntity {
         console.log("done activating job from entity");
     }
 
-    function getJob(bytes32 jobId) external view returns (Job memory) {
+    function getJob(uint16 jobId) external view returns (Job memory) {
         return availableJobs[jobById[jobId]];
     }
 
@@ -108,7 +109,7 @@ contract JobEntity is IJobEntity {
             revert NotScenarioAdmin();
         }
         LiveJob memory job = activeJobs[tokenId];
-        if (job.id == bytes32(0)) {
+        if (job.id == 0) {
             revert NoActiveJob();
         }
 
@@ -116,7 +117,6 @@ contract JobEntity is IJobEntity {
     }
 
     function addJob(
-        bytes32 id,
         bytes32 title,
         bytes calldata description,
         bytes32 tokenName,
@@ -132,6 +132,8 @@ contract JobEntity is IJobEntity {
             revert NotScenarioAdmin();
         }
         // console.log("Adding job %s", id);
+        uint16 id = currentJobId++;
+        console.log("Adding job %s", id);
         Job memory newJob = Job(
             id,
             title,

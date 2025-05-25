@@ -44,7 +44,7 @@ contract JobSystem is ISystem, Ownable {
 
     function activateJob(
         IScenario scenario,
-        bytes32 jobId,
+        uint16 jobId,
         uint256 tokenId
     ) public {
         console.log("activating job");
@@ -53,11 +53,11 @@ contract JobSystem is ISystem, Ownable {
         console.log("entity");
         console.log(address(entity));
 
-        (bytes32 activeJobId, uint256 startedAt) = entity.getActiveJob(tokenId);
+        (uint16 activeJobId, uint256 startedAt) = entity.getActiveJob(tokenId);
         console.log("active job");
         console.logBytes(abi.encodePacked(activeJobId));
 
-        if (activeJobId != bytes32(0)) {
+        if (activeJobId != 0) {
             console.log("well finishing job?");
             finishJob(scenario, tokenId);
         }
@@ -113,9 +113,9 @@ contract JobSystem is ISystem, Ownable {
         // if the player has an already active job, end it and mint rewards
 
         IJobEntity entity = IJobEntity(scenario.getEntity(address(this)));
-        (bytes32 activeJobId, uint256 startedAt) = entity.getActiveJob(tokenId);
+        (uint16 activeJobId, uint256 startedAt) = entity.getActiveJob(tokenId);
 
-        if (activeJobId == bytes32(0)) {
+        if (activeJobId == 0) {
             console.log("no active job!");
 
             revert NoActiveJob();

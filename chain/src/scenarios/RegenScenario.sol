@@ -53,7 +53,6 @@ contract RegenScenario {
         );
 
         jobsEntity.addJob(
-            "Bioflux_one",
             "Spore Harvester",
             "Collect dormant spores from decayed biomes. Risk of minor fungal infection.",
             "Bioflux",
@@ -67,7 +66,6 @@ contract RegenScenario {
         );
 
         jobsEntity.addJob(
-            "Bioflux_two",
             "Bloom Engineer",
             "Cultivate and harvest synthetic algae blooms in controlled lakes.",
             "Bioflux",
@@ -81,7 +79,6 @@ contract RegenScenario {
         );
 
         jobsEntity.addJob(
-            "Bioflux_three",
             "Mycoformer",
             "Manage a vast underground mycelial nexus. Requires drone control and biohazard gear.",
             "Bioflux",
@@ -95,7 +92,6 @@ contract RegenScenario {
         );
 
         jobsEntity.addJob(
-            "Hydrocite_one",
             "Ice Miner",
             "Drill into surface frost veins to extract raw water crystals.",
             "Hydrocite",
@@ -109,7 +105,6 @@ contract RegenScenario {
         );
 
         jobsEntity.addJob(
-            "Hydrocite_two",
             "Comet Splitter",
             "Harvest from captured micro-comets in low orbit. Precision required.",
             "Hydrocite",
@@ -123,7 +118,6 @@ contract RegenScenario {
         );
 
         jobsEntity.addJob(
-            "Hydrocite_three",
             "Glacier Diver",
             "Dive into unstable ancient glaciers for deep-core Hydrocite. Extremely cold.",
             "Hydrocite",
@@ -137,7 +131,6 @@ contract RegenScenario {
         );
 
         jobsEntity.addJob(
-            "Solaris_one",
             "Dust Sweeper",
             "Clean solar panel fields coated in Solaris residue. Easy but tedious.",
             "Solaris Dust",
@@ -151,7 +144,6 @@ contract RegenScenario {
         );
 
         jobsEntity.addJob(
-            "Solaris_two",
             "Reflector Technician",
             "Tune ancient solar arrays to beam-storm hotspots and collect Dust.",
             "Solaris Dust",
@@ -165,7 +157,6 @@ contract RegenScenario {
         );
 
         jobsEntity.addJob(
-            "Solaris_three",
             "Flare Diver",
             "Ride solar storms in magnetic suits to capture high-density Dust clouds. High risk, high reward.",
             "Solaris Dust",
