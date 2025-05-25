@@ -61,7 +61,7 @@ contract JobSystem is ISystem, Ownable {
             console.log("well finishing job?");
             finishJob(scenario, tokenId);
         }
-        console.log("activing job");
+        console.log("activating job");
 
         entity.activateJob(jobId, tokenId);
     }
@@ -131,7 +131,9 @@ contract JobSystem is ISystem, Ownable {
             secondsLive = job.timeLimit;
         }
 
-        uint256 amount = secondsLive * (job.amountPerHour / 3600);
+        uint16 cyclesCompleted = uint16(secondsLive / job.cycleDuration);
+
+        uint256 amount = cyclesCompleted * job.amountPerCycle;
 
         console.log("step one");
         IStatsSystem(address(_systemController.getSystem("STAT"))).boostSkill(

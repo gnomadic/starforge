@@ -8,9 +8,12 @@ struct Job {
     bytes32 id;
     bytes32 title;
     bytes description;
+    //rewards
     bytes32 tokenName;
-    uint256 amountPerHour;
-    uint256 timeLimit;
+    uint256 amountPerCycle;
+    uint16 cycleDuration;
+    uint16 timeLimit;
+    // leveling up
     bytes32 skillSetName;
     uint8 skillSetIndex;
     uint16 skillSetRequirement;
@@ -38,8 +41,9 @@ interface IJobEntity {
         bytes32 title,
         bytes calldata description,
         bytes32 tokenName,
-        uint256 amountPerHour,
-        uint256 timeLimit,
+        uint256 amountPerCycle,
+        uint16 cycleDuration,
+        uint16 timeLimit,
         bytes32 skillSetName,
         uint8 skillSetIndex,
         uint16 skillSetRequirement,
@@ -116,8 +120,9 @@ contract JobEntity is IJobEntity {
         bytes32 title,
         bytes calldata description,
         bytes32 tokenName,
-        uint256 amountPerHour,
-        uint256 timeLimit,
+        uint256 amountPerCycle,
+        uint16 cycleDuration,
+        uint16 timeLimit,
         bytes32 skillSetName,
         uint8 skillSetIndex,
         uint16 skillSetRequirement,
@@ -132,7 +137,8 @@ contract JobEntity is IJobEntity {
             title,
             description,
             tokenName,
-            amountPerHour,
+            amountPerCycle,
+            cycleDuration,
             timeLimit,
             skillSetName,
             skillSetIndex,
