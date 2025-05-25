@@ -145,12 +145,12 @@ export default function JobBoard({ }: JobBoardProps) {
         , [deactivateError, deactivateJobLoading, deactivateJobSucesss])
 
 
-    const activateNewJob = async (jobId: Hex) => {
+    const activateNewJob = async (jobId: number) => {
 
         activateJob({ address: deploy.JobSystem, args: [scenarios[0], jobId, selectedTokenId] });
     }
 
-    const deactivateJob = async (jobId: Hex) => {
+    const deactivateJob = async (jobId: number) => {
         finishJob({ address: deploy.JobSystem, args: [scenarios[0], selectedTokenId] });
 
     }

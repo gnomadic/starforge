@@ -11,20 +11,21 @@ import { longStr, str } from '@/lib/utils/utils';
 
 
 interface JobCardProps {
-    activeJobId: readonly [string, bigint] | undefined;
+    activeJobId: readonly [number, bigint] | undefined;
     getDecoByResourceType: (resourceType: string) => {
         icon: React.ReactNode;
         color: string;
     }
     job: {
-        id: Hex;
+        id: number;
         title: Hex;
         description: Hex;
         tokenName: Hex;
-        amountPerHour: bigint;
+        amountPerCycle: bigint;
+        cycleDuration: number;
     };
-    activate: (jobId: Hex) => void;
-    deactivate: (jobId: Hex) => void;
+    activate: (jobId: number) => void;
+    deactivate: (jobId: number) => void;
 }
 
 
@@ -56,7 +57,7 @@ export default function JobCard({ activeJobId, getDecoByResourceType, job, activ
                 <div className="flex justify-between items-center border-t border-border/40 pt-4">
                     <div className="text-sm">
                         <div className="text-muted-foreground">Earn</div>
-                        <div className="font-semibold">+{Number(job.amountPerHour) / 1e18} per hour</div>
+                        <div className="font-semibold">+{Number(job.amountPerCycle) / 1e18} per {job.cycleDuration}</div>
                     </div>
                     <Button
                         variant={isActive ? "default" : "outline"}
