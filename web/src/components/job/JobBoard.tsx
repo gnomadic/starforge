@@ -72,12 +72,15 @@ interface JobBoardProps {
 
 
 
+
+
 export default function JobBoard({ }: JobBoardProps) {
     const { deploy } = useDeployment();
     const { scenarios } = useScenarios();
     const { supplies } = useSupplies();
     const { address } = useAccount();
 
+    const [selectedJobId, setSelectedJobId] = useState<number>(0);
     const [selectedTokenId, setSelectedTokenId] = useState<bigint>(BigInt(0));
     const { data: held } = useReadPlanetVAlphaTokensOfOwner({ args: [address ? address : zeroAddress], address: deploy.Planet })
 
@@ -107,6 +110,7 @@ export default function JobBoard({ }: JobBoardProps) {
     })
 
 
+
     const [enabled, setEnabled] = React.useState<boolean[]>([]);
 
     useEffect(() => {
@@ -119,6 +123,8 @@ export default function JobBoard({ }: JobBoardProps) {
     useEffect(() => {
         if (activateError) {
             toast.error(activateError.message)
+            // setSelectedJobId(0);
+            refetchActiveJob();
         }
         if (activateJobLoading) {
             toast.info("Transaction is pending");
@@ -126,6 +132,7 @@ export default function JobBoard({ }: JobBoardProps) {
         }
         if (activateJobSucesss) {
             toast.success("Transaction is successful");
+            // setSelectedJobId(0);
             refetchActiveJob();
         }
     }
@@ -134,6 +141,9 @@ export default function JobBoard({ }: JobBoardProps) {
     useEffect(() => {
         if (deactivateError) {
             toast.error(deactivateError.message)
+            setSelectedJobId(0);
+            refetchActiveJob();
+
         }
         if (deactivateJobLoading) {
             toast.info("Transaction is pending");
@@ -141,6 +151,7 @@ export default function JobBoard({ }: JobBoardProps) {
         }
         if (deactivateJobSucesss) {
             toast.success("Transaction is successful");
+            setSelectedJobId(0);
             refetchActiveJob();
         }
     }
@@ -148,14 +159,36 @@ export default function JobBoard({ }: JobBoardProps) {
 
 
     const activateNewJob = async (jobId: number) => {
-
+        setSelectedJobId(jobId);
         activateJob({ address: deploy.JobSystem, args: [scenarios[0], jobId, selectedTokenId] });
     }
 
     const deactivateJob = async (jobId: number) => {
+        setSelectedJobId(jobId);
         finishJob({ address: deploy.JobSystem, args: [scenarios[0], selectedTokenId] });
 
     }
+
+    const getState = (jobId: number): "idle" | "loading" | "success" | "error" =>
+        selectedJobId !== jobId ? "idle"
+            : (deactivateJobLoading || activateJobLoading) ? "loading"
+                : (activateJobSucesss || deactivateJobSucesss) ? "success"
+                    : (activateError || deactivateError) ? "error"
+                        : "idle";
+
+
+    const onClick = async (jobId: number) => {
+        setSelectedJobId(jobId);
+        if (activeJob?.[0] === jobId) {
+            finishJob({ address: deploy.JobSystem, args: [scenarios[0], selectedTokenId] });
+        } else {
+            activateJob({ address: deploy.JobSystem, args: [scenarios[0], jobId, selectedTokenId] });
+
+        }
+
+    }
+
+
 
 
     return (
@@ -200,22 +233,30 @@ export default function JobBoard({ }: JobBoardProps) {
                                 <CollapsibleContent className="p-4 pt-0 bg-black/20 space-y-4">
                                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 p-6">
                                         {allJobs?.filter((job) => (job.tokenName === supply.type)).map((job, index) => {
-                                            const isActive = false;
                                             return (
+
                                                 <JobCard
                                                     key={job.id}
                                                     job={job}
                                                     activeJobId={activeJob}
                                                     getDecoByResourceType={getDecoByResourceType}
-                                                    activate={activateNewJob}
-                                                    deactivate={deactivateJob}
-                                                    state={ (deactivateJobLoading || activateJobLoading) ? "loading" 
-                                                        : (activateJobSucesss || deactivateJobSucesss) ? "success" 
-                                                        : (activateError || deactivateError) ? "error"
-                                                        : "idle" 
-                                                    }
+                                                    activate={() => { activateNewJob(job.id) }}
+                                                    deactivate={() => { deactivateJob(job.id) }}
+                                                    state={getState(job.id)}
+                                                    onClick={() => onClick(job.id)}
+                                                // state={(deactivateJobLoading || activateJobLoading) ? "loading"
+                                                //     : (activateJobSucesss || deactivateJobSucesss) ? "success"
+                                                //         : (activateError || deactivateError) ? "error"
+                                                //             : "idle"
+                                                // }
 
-                                                    
+                                                //                                         state={ selectedJobId != job.id ? "idle"
+                                                // : (deactivateJobLoading || activateJobLoading) ? "loading"
+                                                // : (activateJobSucesss || deactivateJobSucesss) ? "success"
+                                                // : (activateError || deactivateError) ? "error"
+                                                // : "idle" }
+
+
                                                 />
                                             );
                                         })}

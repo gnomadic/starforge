@@ -35,9 +35,7 @@ export default function TXButton({ callToAction, onClick, state }: TXButtonProps
 
     return (
         <div className="flex items-center justify-center ">
-            <div className="text-sm text-gray-500 mb-2">
-                current state: {state} and
-            </div>
+<div>state is: {state}</div>
             <motion.button
                 onClick={onClick}
                 className={`
@@ -46,15 +44,23 @@ export default function TXButton({ callToAction, onClick, state }: TXButtonProps
                         ? "bg-primary text-primary-foreground hover:bg-primary/90"
                         : state === "loading"
                             ? "bg-background text-white/50 border"
-                            : "bg-green-500 text-white"
+                            : state === "success"
+                            ? "bg-green-500 text-white"
+                             : "bg-red-500 text-white"
                     }
         `}
                 whileTap={{ scale: 0.95 }}
-                transition={{ type: "spring", stiffness: 400, damping: 17 }}
+                transition={{ type: "spring", stiffness: 400, damping: 17, duration: 0.1 }}
             >
                 <AnimatePresence mode="wait">
                     {state === "idle" && (
-                        <motion.span key="idle" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+                        <motion.span
+                            key="idle"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            transition={{ duration: 0.1, ease: "easeInOut" }}
+                        >
                             {callToAction}
                         </motion.span>
                     )}
@@ -66,6 +72,7 @@ export default function TXButton({ callToAction, onClick, state }: TXButtonProps
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             exit={{ opacity: 0 }}
+                            transition={{ duration: 0.1, ease: "easeInOut" }}
                         >
                             <motion.div
                                 animate={{ rotate: 360 }}
@@ -76,7 +83,6 @@ export default function TXButton({ callToAction, onClick, state }: TXButtonProps
                             <span>Loading</span>
                         </motion.div>
                     )}
-
                     {state === "success" && (
                         <motion.div
                             key="success"
@@ -84,15 +90,13 @@ export default function TXButton({ callToAction, onClick, state }: TXButtonProps
                             initial={{ opacity: 0, scale: 0.8 }}
                             animate={{ opacity: 1, scale: 1 }}
                             exit={{ opacity: 0 }}
-                            transition={{ type: "spring", stiffness: 500, damping: 20 }}
+                            transition={{ duration: 0.1, ease: "easeInOut" }}
 
                         >
                             <CheckCircle className="w-5 h-5" />
                             <span>Success!</span>
                         </motion.div>
                     )}
-
-
                     {state === "error" && (
                         <motion.div
                             key="error"
@@ -100,10 +104,10 @@ export default function TXButton({ callToAction, onClick, state }: TXButtonProps
                             initial={{ opacity: 0, scale: 0.8 }}
                             animate={{ opacity: 1, scale: 1 }}
                             exit={{ opacity: 0 }}
-                            transition={{ type: "spring", stiffness: 500, damping: 20 }}
+                            transition={{ duration: 0.1, ease: "easeInOut" }}
                         >
                             {/* <CheckCircle className="w-5 h-5" /> */}
-                            <XCircle className="w-5 h-5 text-red-500" />
+                            <XCircle className="w-5 h-5 text-white" />
                             <span>Error!</span>
                         </motion.div>
                     )}
@@ -111,4 +115,30 @@ export default function TXButton({ callToAction, onClick, state }: TXButtonProps
             </motion.button>
         </div>
     )
+}
+
+
+export function TestTXButton() {
+    const [State, setState] = useState<"idle" | "loading" | "success" | "error">("idle");
+
+    return (
+        <TXButton
+            callToAction={"click me"}
+            // onClick={() => isActive ? deactivate(job.id) : activate(job.id)}
+            onClick={() => {
+                if (State === "idle") {
+                    setState("loading");
+                } else if (State === "loading") {
+                    setState("success");
+                } else if (State === "success") {
+                    setState("error");
+                } else if (State === "error") {
+                    setState("idle");
+                }
+            }}
+            state={State}
+
+        />
+    )
+
 }

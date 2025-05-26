@@ -8,7 +8,7 @@ import { useSupplies } from '@/components/supplies/SupplyContext';
 import { bigIntReplacer } from '@/domain/utils';
 import { Hex } from 'viem';
 import { longStr, str } from '@/lib/utils/utils';
-import TXButton from '../global/TXButton';
+import TXButton, { TestTXButton } from '../global/TXButton';
 
 
 interface JobCardProps {
@@ -28,16 +28,17 @@ interface JobCardProps {
     activate: (jobId: number) => void;
     deactivate: (jobId: number) => void;
     state: "idle" | "loading" | "success" | "error";
+    onClick: () => void;
 }
 
 
 
 
-export default function JobCard({ activeJobId, getDecoByResourceType, job, activate, deactivate, state }: JobCardProps) {
+export default function JobCard({ activeJobId, getDecoByResourceType, job, activate, deactivate, state, onClick }: JobCardProps) {
 
     const isActive = activeJobId?.[0] === job.id;
 
-    const [xState, setXState] = useState<"idle" | "loading" | "success" | "error">("idle");
+    // const [xState, setXState] = useState<"idle" | "loading" | "success" | "error">("idle");
 
     return (
         <Card
@@ -49,6 +50,7 @@ export default function JobCard({ activeJobId, getDecoByResourceType, job, activ
                     <div>
                         <CardTitle className="text-lg font-semibold text-white">{str(job.title)}</CardTitle>
                         <CardDescription className="text-white/80">{str(job.tokenName)}</CardDescription>
+                        <CardDescription className="text-white/80">{state}</CardDescription>
                     </div>
                     <div className="p-2 rounded-full bg-black/20">
                         {getDecoByResourceType(job.tokenName).icon}
@@ -74,23 +76,17 @@ export default function JobCard({ activeJobId, getDecoByResourceType, job, activ
                         {isActive ? "Deactivate" : "Activate"}
                     </Button> */}
                 </div>
+                {/* <div className='py-4'> */}
                 <TXButton
                     callToAction={isActive ? "Deactivate" : "Activate"}
                     // onClick={() => isActive ? deactivate(job.id) : activate(job.id)}
-                    onClick={() => {
-                        if (xState === "idle") {
-                            setXState("loading");
-                        } else if (xState === "loading") {
-                            setXState("success");
-                        } else if (xState === "success") {
-                            setXState("error");
-                        } else if (xState === "error") {
-                            setXState("idle");
-                        }
-                    }}
-                    state={xState}
+
+                    onClick={onClick}
+                    state={state}
 
                 />
+                {/* </div> */}
+                {/* <TestTXButton  /> */}
                 {/* <Button
                     variant={isActive ? "default" : "outline"}
                     size="sm"
