@@ -8,6 +8,7 @@ import { useSupplies } from '@/components/supplies/SupplyContext';
 import { bigIntReplacer } from '@/domain/utils';
 import { Hex } from 'viem';
 import { longStr, str } from '@/lib/utils/utils';
+import TXButton from '../global/TXButton';
 
 
 interface JobCardProps {
@@ -26,14 +27,17 @@ interface JobCardProps {
     };
     activate: (jobId: number) => void;
     deactivate: (jobId: number) => void;
+    state: "idle" | "loading" | "success" | "error";
 }
 
 
 
 
-export default function JobCard({ activeJobId, getDecoByResourceType, job, activate, deactivate}: JobCardProps) {
+export default function JobCard({ activeJobId, getDecoByResourceType, job, activate, deactivate, state }: JobCardProps) {
 
     const isActive = activeJobId?.[0] === job.id;
+
+    const [xState, setXState] = useState<"idle" | "loading" | "success" | "error">("idle");
 
     return (
         <Card
@@ -59,14 +63,41 @@ export default function JobCard({ activeJobId, getDecoByResourceType, job, activ
                         <div className="text-muted-foreground">Earn</div>
                         <div className="font-semibold">+{Number(job.amountPerCycle) / 1e18} per {job.cycleDuration}</div>
                     </div>
+                    {/* <TXButton
+                        callToAction={isActive ? "Deactivate" : "Activate"}
+                    />
                     <Button
                         variant={isActive ? "default" : "outline"}
                         size="sm"
                         onClick={() => isActive ? deactivate(job.id) : activate(job.id)}
                     >
                         {isActive ? "Deactivate" : "Activate"}
-                    </Button>
+                    </Button> */}
                 </div>
+                <TXButton
+                    callToAction={isActive ? "Deactivate" : "Activate"}
+                    // onClick={() => isActive ? deactivate(job.id) : activate(job.id)}
+                    onClick={() => {
+                        if (xState === "idle") {
+                            setXState("loading");
+                        } else if (xState === "loading") {
+                            setXState("success");
+                        } else if (xState === "success") {
+                            setXState("error");
+                        } else if (xState === "error") {
+                            setXState("idle");
+                        }
+                    }}
+                    state={xState}
+
+                />
+                {/* <Button
+                    variant={isActive ? "default" : "outline"}
+                    size="sm"
+                    onClick={() => isActive ? deactivate(job.id) : activate(job.id)}
+                >
+                    {isActive ? "Deactivate" : "Activate"}
+                </Button> */}
             </CardContent>
         </Card>
 

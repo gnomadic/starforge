@@ -126,9 +126,10 @@ export default function JobBoard({ }: JobBoardProps) {
         }
         if (activateJobSucesss) {
             toast.success("Transaction is successful");
+            refetchActiveJob();
         }
     }
-        , [activateError, activateJobLoading, activateJobSucesss,])
+        , [activateError, activateJobLoading, activateJobSucesss])
 
     useEffect(() => {
         if (deactivateError) {
@@ -140,6 +141,7 @@ export default function JobBoard({ }: JobBoardProps) {
         }
         if (deactivateJobSucesss) {
             toast.success("Transaction is successful");
+            refetchActiveJob();
         }
     }
         , [deactivateError, deactivateJobLoading, deactivateJobSucesss])
@@ -207,6 +209,13 @@ export default function JobBoard({ }: JobBoardProps) {
                                                     getDecoByResourceType={getDecoByResourceType}
                                                     activate={activateNewJob}
                                                     deactivate={deactivateJob}
+                                                    state={ (deactivateJobLoading || activateJobLoading) ? "loading" 
+                                                        : (activateJobSucesss || deactivateJobSucesss) ? "success" 
+                                                        : (activateError || deactivateError) ? "error"
+                                                        : "idle" 
+                                                    }
+
+                                                    
                                                 />
                                             );
                                         })}
