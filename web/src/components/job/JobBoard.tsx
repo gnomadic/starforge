@@ -25,7 +25,7 @@ import {
 } from "@/components/ui/collapsible";
 import JobCard from '@/components/job/JobCard';
 import { bigIntReplacer } from '@/domain/utils';
-import { b32, str, safeb32 } from '@/lib/utils/utils';
+import { b32, str, safeb32, shortHandError } from '@/lib/utils/utils';
 import { toast } from 'react-toastify';
 
 
@@ -176,6 +176,11 @@ export default function JobBoard({ }: JobBoardProps) {
                     : (activateError || deactivateError) ? "error"
                         : "idle";
 
+    const getError = (jobId: number): string | null =>
+        selectedJobId !== jobId ? null
+            : activateError ? shortHandError(activateError)
+                : deactivateError ? shortHandError(deactivateError)
+                    : null;
 
     const onClick = async (jobId: number) => {
         setSelectedJobId(jobId);
@@ -232,6 +237,9 @@ export default function JobBoard({ }: JobBoardProps) {
                             <Collapsible open={enabled[index]}>
                                 <CollapsibleContent className="p-4 pt-0 bg-black/20 space-y-4">
                                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 p-6">
+                                        {/* <div>
+                                            error:{JSON.stringify(activateError, bigIntReplacer)}
+                                        </div> */}
                                         {allJobs?.filter((job) => (job.tokenName === supply.type)).map((job, index) => {
                                             return (
 
@@ -244,6 +252,8 @@ export default function JobBoard({ }: JobBoardProps) {
                                                     deactivate={() => { deactivateJob(job.id) }}
                                                     state={getState(job.id)}
                                                     onClick={() => onClick(job.id)}
+                                                    error={getError(job.id)}
+                                                    // error={activateError ? shortHandError(activateError) : deactivateError ? shortHandError(deactivateError) : null}
                                                 // state={(deactivateJobLoading || activateJobLoading) ? "loading"
                                                 //     : (activateJobSucesss || deactivateJobSucesss) ? "success"
                                                 //         : (activateError || deactivateError) ? "error"

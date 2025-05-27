@@ -8,9 +8,10 @@ interface TXButtonProps {
     callToAction: string;
     onClick: () => void;
     state: "idle" | "loading" | "success" | "error";
+    error?: string | null; 
 }
 
-export default function TXButton({ callToAction, onClick, state }: TXButtonProps) {
+export default function TXButton({ callToAction, onClick, state , error}: TXButtonProps) {
 
 
     //   const [state, setState] = useState<"idle" | "loading" | "success" | "error">("idle")
@@ -34,8 +35,8 @@ export default function TXButton({ callToAction, onClick, state }: TXButtonProps
     //   }
 
     return (
+    <div>
         <div className="flex items-center justify-center ">
-<div>state is: {state}</div>
             <motion.button
                 onClick={onClick}
                 className={`
@@ -45,8 +46,8 @@ export default function TXButton({ callToAction, onClick, state }: TXButtonProps
                         : state === "loading"
                             ? "bg-background text-white/50 border"
                             : state === "success"
-                            ? "bg-green-500 text-white"
-                             : "bg-red-500 text-white"
+                                ? "bg-green-500 text-white"
+                                : "bg-red-500 text-white"
                     }
         `}
                 whileTap={{ scale: 0.95 }}
@@ -108,12 +109,18 @@ export default function TXButton({ callToAction, onClick, state }: TXButtonProps
                         >
                             {/* <CheckCircle className="w-5 h-5" /> */}
                             <XCircle className="w-5 h-5 text-white" />
-                            <span>Error!</span>
+                            <span>Error, try again?</span>
                         </motion.div>
                     )}
                 </AnimatePresence>
             </motion.button>
         </div>
+        <div className="text-sm text-muted-foreground mt-2 text-center">
+            {/* state is: {state} and this can be long perhaps many lines who knows how long it can be, but it should still work and not break the layout, so we can test how it behaves with long text. */}
+            {error}
+
+        </div>
+    </div>
     )
 }
 
