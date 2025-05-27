@@ -53,11 +53,11 @@ contract RegenScenario {
         );
 
         jobsEntity.addJob(
-            "Bioflux_one",
             "Spore Harvester",
             "Collect dormant spores from decayed biomes. Risk of minor fungal infection.",
             "Bioflux",
-            2 * 10 ** 18,
+            2 * 10 ** 16,
+            10,
             12 hours,
             "Job Skills",
             0,
@@ -66,11 +66,11 @@ contract RegenScenario {
         );
 
         jobsEntity.addJob(
-            "Bioflux_two",
             "Bloom Engineer",
             "Cultivate and harvest synthetic algae blooms in controlled lakes.",
             "Bioflux",
-            5 * 10 ** 18,
+            5 * 10 ** 16,
+            10,
             12 hours,
             "Job Skills",
             0,
@@ -79,11 +79,11 @@ contract RegenScenario {
         );
 
         jobsEntity.addJob(
-            "Bioflux_three",
             "Mycoformer",
             "Manage a vast underground mycelial nexus. Requires drone control and biohazard gear.",
             "Bioflux",
-            12 * 10 ** 18,
+            12 * 10 ** 16,
+            10,
             12 hours,
             "Job Skills",
             0,
@@ -92,11 +92,11 @@ contract RegenScenario {
         );
 
         jobsEntity.addJob(
-            "Hydrocite_one",
             "Ice Miner",
             "Drill into surface frost veins to extract raw water crystals.",
             "Hydrocite",
-            1 * 10 ** 18,
+            1 * 10 ** 16,
+            10,
             12 hours,
             "Job Skills",
             1,
@@ -105,11 +105,11 @@ contract RegenScenario {
         );
 
         jobsEntity.addJob(
-            "Hydrocite_two",
             "Comet Splitter",
             "Harvest from captured micro-comets in low orbit. Precision required.",
             "Hydrocite",
-            3 * 10 ** 18,
+            3 * 10 ** 16,
+            10,
             12 hours,
             "Job Skills",
             1,
@@ -118,11 +118,11 @@ contract RegenScenario {
         );
 
         jobsEntity.addJob(
-            "Hydrocite_three",
             "Glacier Diver",
             "Dive into unstable ancient glaciers for deep-core Hydrocite. Extremely cold.",
             "Hydrocite",
-            9 * 10 ** 18,
+            9 * 10 ** 16,
+            10,
             12 hours,
             "Job Skills",
             1,
@@ -131,11 +131,11 @@ contract RegenScenario {
         );
 
         jobsEntity.addJob(
-            "Solaris_one",
             "Dust Sweeper",
             "Clean solar panel fields coated in Solaris residue. Easy but tedious.",
             "Solaris Dust",
-            5 * 10 ** 17,
+            5 * 10 ** 16,
+            10,
             12 hours,
             "Job Skills",
             2,
@@ -144,11 +144,11 @@ contract RegenScenario {
         );
 
         jobsEntity.addJob(
-            "Solaris_two",
             "Reflector Technician",
             "Tune ancient solar arrays to beam-storm hotspots and collect Dust.",
             "Solaris Dust",
-            2 * 10 ** 18,
+            2 * 10 ** 16,
+            10,
             12 hours,
             "Job Skills",
             2,
@@ -157,11 +157,11 @@ contract RegenScenario {
         );
 
         jobsEntity.addJob(
-            "Solaris_three",
             "Flare Diver",
             "Ride solar storms in magnetic suits to capture high-density Dust clouds. High risk, high reward.",
             "Solaris Dust",
-            6 * 10 ** 18,
+            6 * 10 ** 16,
+            10,
             12 hours,
             "Job Skills",
             2,

@@ -32,7 +32,7 @@ const SupplyBar: React.FC<SupplyBarProps> = ({ className }) => {
       layout
       transition={{ duration: 0.3 }}
       className={cn(
-        'flex items-center bg-black/70 backdrop-blur-md border border-white/10 rounded-lg shadow-md overflow-hidden',
+        'flex items-center bg-black/70 backdrop-blur-md border border-white/10 rounded-lg shadow-md ',
         className
       )}
     >
@@ -55,6 +55,7 @@ const SupplyBar: React.FC<SupplyBarProps> = ({ className }) => {
             transition={{ duration: 0.1 }}
             className="flex items-center gap-3 px-3"
           >
+
             {supplies.map((resource) => (
               <TooltipProvider key={resource.type}>
                 <Tooltip>

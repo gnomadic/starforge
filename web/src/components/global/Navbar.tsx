@@ -49,7 +49,7 @@ export default function Navbar() {
     <header>
       <motion.div
         className={cn(
-          "fixed top-0 left-0 right-0 z-50 px-6 md:px-12 transition-all duration-300 hidden md:flex items-center justify-between min-h-[18px]",
+          "fixed top-0 left-0 right-0 z-50 px-6 md:px-12 transition-all duration-300 hidden lg:flex items-center justify-between min-h-[18px]",
           scrolled
             ? "py-4 md:bg-black/80 md:backdrop-blur-md md:border-b md:border-white/20 "
             : "py-6"

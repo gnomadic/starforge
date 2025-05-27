@@ -83,7 +83,7 @@ export function ManyNFTs({ selectedTokenId, setSelectedTokenId, heldTokenIds }: 
                 className={cn(
                   "aspect-square rounded-lg overflow-hidden bg-black/30 border border-white/5 cursor-pointer hover:border-primary/50 transition-all relative flex items-center justify-center",
                   BigInt(selectedTokenId) === tokenId ? "border-primary" : "",
-                  "max-w-24"
+                  "max-w-24 min-w-24"
                 )}
               >
                 <MintPreview
