@@ -89,18 +89,19 @@ export default function JobCard({ activeJobId, getDecoByResourceType, job, activ
 
                 <div className=" justify-between items-center border-t border-border/40 pt-4">
                     {isActive && (
-                       <div className='pt-4'>
-                        <Progress value={progress} className="h-2" aria-label="Progress timer" />
-                    </div>
+                        <div className='pt-4'>
+                            <div className="text-muted-foreground pb-2">Earned: {(cycles * (Number(job.amountPerCycle) / 1e18)).toFixed(4)}</div>
+                            <Progress value={progress} className="h-2" aria-label="Progress timer" />
+                        </div>
                     )}
                     {!isActive && (
-                                    <div className="text-sm">
+                        <div className="text-sm">
                             <div className="text-muted-foreground">Earn</div>
                             <div className="font-semibold">+{Number(job.amountPerCycle) / 1e18} per {job.cycleDuration} seconds</div>
                         </div>
                     )}
 
-                 
+
 
 
                 </div>
