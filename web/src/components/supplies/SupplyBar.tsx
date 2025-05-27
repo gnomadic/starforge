@@ -21,7 +21,7 @@ interface SupplyBarProps {
 
 const SupplyBar: React.FC<SupplyBarProps> = ({ className }) => {
   const isMobile = useMediaQuery('(max-width: 768px)');
-  const [collapsed, setCollapsed] = useState(true);
+  const [collapsed, setCollapsed] = useState(false);
 
   const resourcesContext = useSupplies();
   if (!resourcesContext) throw new Error('useSupplies must be used within a ResourcesProvider');

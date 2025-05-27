@@ -73,10 +73,10 @@ export const SupplyProvider: React.FC<{ children: ReactNode }> = ({ children }) 
   const { address } = useAccount();
   const { scenarios } = useScenarios();
 
-  const { data: whichEntity } = useReadScenarioGetEntity({ args: [deploy.SupplySystem], address: scenarios ? scenarios[0] : "0x0" }) 
+  const { data: whichEntity } = useReadScenarioGetEntity({ args: [deploy.SupplySystem], address: scenarios ? scenarios[0] : "0x0" })
   const { data: tokenBalances } = useReadSupplyEntityGetTokenBalances({ args: [address ? address : "0x0"], address: whichEntity })
   const { data: tokenNames } = useReadSupplyEntityGetTokenNames({ args: [], address: whichEntity })
-  
+
 
 
 
@@ -112,7 +112,7 @@ export const SupplyProvider: React.FC<{ children: ReactNode }> = ({ children }) 
 
 
   }
-    , [ tokenBalances, tokenNames]);
+    , [tokenBalances, tokenNames]);
 
 
   const updateSupply = (type: Supply['type'], amount: number) => {
@@ -138,12 +138,12 @@ export const SupplyProvider: React.FC<{ children: ReactNode }> = ({ children }) 
     <SupplyContext.Provider value={{ supplies, updateSupply, sync, syncReady }}>
       {children}
       {/* <div className={`fixed ${false ? 'bottom-4 right-4' : 'bottom-6 right-6'} z-50 glass rounded-lg shadow-md`}> */}
-        {/* <SupplyBar /> */}
+      {/* <SupplyBar /> */}
       {/* </div> */}
 
-      <div className="fixed bottom-4 right-4 md:right-6 md:bottom-6 z-50">
-  <SupplyBar />
-</div>
+      {/* <div className="fixed bottom-4 right-4 md:right-6 md:bottom-6 z-50">
+        <SupplyBar />
+      </div> */}
     </SupplyContext.Provider>
   );
 };
