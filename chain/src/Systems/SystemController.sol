@@ -9,7 +9,7 @@ import {IScenario} from "../Scenario.sol";
 // import {console} from "hardhat/console.sol";
 
 contract SystemController is Ownable, ISystemController {
-    ISystem[] public systems;
+    string[] public systems;
     mapping(string => ISystem) public systemMap;
     // mapping(uint8 => address) public systemEntities;
 
@@ -25,7 +25,11 @@ contract SystemController is Ownable, ISystemController {
     }
 
     function registerSystem(ISystem system) external onlyOwner {
-        systems.push(system);
+        if (systemMap[system.getId()] == ISystem(address(0))) {
+            // updating system
+            systems.push(system.getId());
+        }
+
         systemMap[system.getId()] = system;
         system.registerSystem(address(this));
         // console.log("system controller: register system %s", address(system));
@@ -47,14 +51,15 @@ contract SystemController is Ownable, ISystemController {
                 //     address(systems[j])
                 // );
 
-                systems[j].init(this, scenario, tokenId);
+                systemMap[systems[j]].init(this, scenario, tokenId);
             }
         }
     }
 
     function syncAll(uint256 tokenId) external onlyToken {
         for (uint256 i = 0; i < systems.length; i++) {
-            systems[i].sync(tokenId);
+            // systems[i].sync(tokenId);
+            systemMap[systems[i]].sync(tokenId);
         }
     }
 
@@ -63,12 +68,16 @@ contract SystemController is Ownable, ISystemController {
     }
 
     function getSystems() external view returns (ISystem[] memory) {
-        return systems;
+        ISystem[] memory ret = new ISystem[](systems.length);
+        for (uint256 i = 0; i < systems.length; i++) {
+            ret[i] = systemMap[systems[i]];
+        }
+        return ret;
     }
 
     function isSystem(address systemAddress) external view returns (bool) {
         for (uint256 i = 0; i < systems.length; i++) {
-            if (address(systems[i]) == systemAddress) {
+            if (address(systemMap[systems[i]]) == systemAddress) {
                 return true;
             }
         }
@@ -84,7 +93,7 @@ contract SystemController is Ownable, ISystemController {
         //     systems.length
         // );
         for (uint256 i = 0; i < systems.length; i++) {
-            systemEntities[i] = systems[i].activateEntity(scenario);
+            systemEntities[i] = systemMap[systems[i]].activateEntity(scenario);
         }
         return systemEntities;
     }
