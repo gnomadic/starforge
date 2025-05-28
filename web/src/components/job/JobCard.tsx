@@ -4,13 +4,13 @@ import React, { useEffect, useState } from 'react';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Hex } from 'viem';
 import { longStr, shortHandError, str } from '@/lib/utils/utils';
-import TXButton from '../global/TXButton';
 import { useWriteJobSystemActivateJob, useWriteJobSystemFinishJob } from "@/generated";
 import { useWaitForTransactionReceipt } from "wagmi";
 import JobProgress from './JobProgress';
 import { useDeployment } from '@/hooks/useDeployment';
 import { useScenarios } from '../ScenarioContext';
 import { getDecoByResourceType } from '../supplies/SupplyContext';
+import { TransactionButton } from '../global/TransactionButton';
 
 interface JobCardProps {
     selectedTokenId: bigint;
@@ -47,7 +47,7 @@ export default function JobCard({ selectedTokenId, activeJobId, job, refetchActi
     const state = isActive ? "idle" : activateJobLoading ? "loading" : deactivateJobLoading ? "loading" : activateJobSucesss || deactivateJobSucesss ? "success" : activateError || deactivateError ? "error" : "idle";
 
 
-    const onClick = async (jobId: number) => {
+    const onClick = (jobId: number) => {
         // setSelectedJobId(jobId);
         if (activeJobId?.[0] === jobId) {
             finishJob({ address: deploy.JobSystem, args: [scenarios[0], selectedTokenId] });
@@ -107,11 +107,23 @@ export default function JobCard({ selectedTokenId, activeJobId, job, refetchActi
             </CardContent>
             <CardFooter className='pb-2'>
                 <div className=' w-full mx-4'>
-                    <TXButton
+                    {/* <TXButton
                         callToAction={isActive ? "Deactivate" : "Activate"}
                         onClick={() => { onClick(job.id) }}
                         state={state}
                         error={getError()}
+                    /> */}
+                    <TransactionButton
+                        onClick={() => { onClick(job.id) }}
+                        isLoading={activateJobLoading || deactivateJobLoading}
+                        isSuccess={activateJobSucesss || deactivateJobSucesss}
+                        // error={activateError || deactivateError}
+                        error={getError()}
+                        idleText={isActive ? "Deactivate" : "Activate"}
+                        loadingText="Processing Transaction..."
+                        successText="Success!"
+                        errorText="Something went wrong"
+                        className="w-full"
                     />
                 </div>
             </CardFooter>
