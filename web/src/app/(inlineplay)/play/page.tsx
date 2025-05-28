@@ -2,7 +2,7 @@
 
 
 import React, { useState } from 'react';
-// import MobileResourceBar from '@/components/mobile/MobileResourceBar';
+import MobileResourceBar from '@/components/play/MobileResourceBar';
 import MobileBottomNav from '@/components/play/MobileBottomNav';
 import PlanetView from '@/components/play/PlanetView';
 import JobModal from '@/components/play/JobModal';
@@ -12,7 +12,6 @@ import ShopModal from '@/components/play/ShopModal';
 import { useSupplies } from '@/components/supplies/SupplyContext';
 
 const Mobile: React.FC = () => {
-  const {supplies} = useSupplies();
   const [activeModal, setActiveModal] = useState<string | null>(null);
 
   const openModal = (modalType: string) => {
@@ -26,7 +25,7 @@ const Mobile: React.FC = () => {
   return (
     <div className="min-h-screen bg-gradient-to-b from-purple-900 via-blue-900 to-black text-white relative overflow-hidden">
       {/* Top Resource Bar */}
-      {/* <MobileResourceBar resources={resources} /> */}
+      <MobileResourceBar/>
       
       {/* Main Content Area */}
       <div className="pt-16 pb-20 px-4 h-screen">

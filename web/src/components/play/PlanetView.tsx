@@ -28,12 +28,12 @@ const {supplies} = useSupplies();
   return (
     <div className="flex flex-col items-center justify-center h-full relative">
       {/* Enemy System */}
-      <EnemySystem 
+      {/* <EnemySystem 
         planetX={planetX}
         planetY={planetY}
         planetRadius={planetRadius}
       />
-      
+       */}
       {/* Planet */}
       <div className="relative">
         <div className="w-64 h-64 rounded-full bg-gradient-to-br from-blue-500 via-purple-600 to-pink-500 animate-pulse-slow shadow-2xl shadow-purple-500/20">
@@ -93,10 +93,10 @@ const {supplies} = useSupplies();
       </div>
       
       {/* Planet info */}
-      <div className="mt-8 text-center">
+      {/* <div className="mt-8 text-center">
         <h2 className="text-2xl font-bold text-white mb-2">Your Cosmic World</h2>
         <p className="text-white/70 text-sm">Defend your planet! Tap enemies to shoot them</p>
-      </div>
+      </div> */}
       
       {/* Interactive resource buttons */}
       <div className="absolute top-4 left-4 right-4 flex justify-between">
