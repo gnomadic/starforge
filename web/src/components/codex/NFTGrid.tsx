@@ -16,7 +16,6 @@ interface NFTGridProps {
 
 export function NFTGrid(props: NFTGridProps) {
 
-
   useEffect(() => {
     if (props.heldTokenIds && props.heldTokenIds.length > 0) {
       props.setSelectedTokenId(props.heldTokenIds[0]);

@@ -53,6 +53,7 @@ export interface Supply {
   color: string;
   id: string;
   description?: string;
+  classification: string; // Optional display name for better readability
 }
 
 export interface Reward {
