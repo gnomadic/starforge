@@ -18,8 +18,9 @@ const initialSupplies: Supply[] = [
     amount: 0,
     emissionRate: 0.1,
     icon: <Shell className="h-4 w-4 text-red-400" />,
-    color: 'bg-red-950/60',
-    description: "A rare organic energy harvested from microbial blooms and ancient spores awakened during terraforming."
+    color: 'bg-red-950/60 hover:bg-red-900/60',
+    description: "A rare organic energy harvested from microbial blooms and ancient spores awakened during terraforming.",
+    classification: 'Organic',
   },
   {
     id: '2',
@@ -27,8 +28,9 @@ const initialSupplies: Supply[] = [
     amount: 0,
     emissionRate: 0.2,
     icon: <Droplet className="h-4 w-4 text-blue-400" />,
-    color: 'bg-blue-950/60',
-    description: "A crystalline form of frozen water laced with trace elements, found deep in glacial cores or comet strikes."
+    color: 'bg-blue-950/60 hover:bg-blue-900/60',
+    description: "A crystalline form of frozen water laced with trace elements, found deep in glacial cores or comet strikes.",
+    classification: 'Lithic',
   },
   {
     id: '3',
@@ -36,8 +38,9 @@ const initialSupplies: Supply[] = [
     amount: 0,
     emissionRate: 0.15,
     icon: <Sun className="h-4 w-4 text-yellow-400" />,
-    color: 'bg-yellow-950/60',
-    description: "Hyper-reactive nanodust that absorbs and stores solar energy, originally used to power ancient tech."
+    color: 'bg-yellow-950/60 hover:bg-yellow-900/60',
+    description: "Hyper-reactive nanodust that absorbs and stores solar energy, originally used to power ancient tech.",
+    classification: 'Solaric',
   }
   // {
   //   id: '4',
@@ -48,6 +51,14 @@ const initialSupplies: Supply[] = [
   //   color: 'bg-emerald-950/60'
   // }
 ];
+
+export function getDecoByResourceType(resourceType: string): Supply {
+    const deco = initialSupplies.find(deco => deco.type === resourceType);
+    if (!deco) {
+        throw new Error(`No deco found for resource type: ${resourceType}`);
+    }
+    return deco;
+}
 
 // Create context with default values
 interface SupplyContextProps {

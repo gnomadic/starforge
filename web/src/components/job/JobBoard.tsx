@@ -2,13 +2,13 @@
 
 import React, { useEffect, useState } from 'react';
 import { NFTGrid } from '@/components/codex/NFTGrid';
-import { useReadJobEntityGetActiveJob, useReadPlanetVAlphaTokensOfOwner, useWriteJobSystemActivateJob, useWriteJobSystemFinishJob } from "@/generated";
-import { useAccount, useWaitForTransactionReceipt } from "wagmi";
+import { useReadJobEntityGetActiveJob, useReadPlanetVAlphaTokensOfOwner } from "@/generated";
+import { useAccount } from "wagmi";
 import { useDeployment } from "@/hooks/useDeployment";
 import { Hex, zeroAddress } from 'viem';
 // import PlanetCard from '@/components/codex/PlanetCard';
 
-import { Shell, Droplet, Sun, ArrowDown } from 'lucide-react';
+import { ArrowDown, ArrowUp } from 'lucide-react';
 import { useSupplies } from '@/components/supplies/SupplyContext';
 import { useReadJobEntityGetAvailableJobs, useReadJobSystemGetAvailableJobs, useReadScenarioGetEntity } from '@/generated';
 import { useScenarios } from '@/components/ScenarioContext';
@@ -24,55 +24,12 @@ import {
     CollapsibleTrigger
 } from "@/components/ui/collapsible";
 import JobCard from '@/components/job/JobCard';
-import { bigIntReplacer } from '@/domain/utils';
-import { b32, str, safeb32, shortHandError } from '@/lib/utils/utils';
-import { toast } from 'react-toastify';
+import { str } from '@/lib/utils/utils';
 
-
-interface JobDeco {
-    icon: React.ReactNode;
-    color: string;
-    resourceType: Hex;
-    displayName: string;
-}
-
-const DECOS: JobDeco[] = [
-    {
-        icon: <Shell className="h-5 w-5 text-red-400" />,
-        resourceType: safeb32('Bioflux'),
-        color: 'bg-red-950/60 hover:bg-red-900/60',
-        displayName: 'Organic'
-    }, {
-        icon: <Droplet className="h-5 w-5 text-blue-400" />,
-        resourceType: safeb32('Hydrocite'),
-        color: 'bg-blue-950/60 hover:bg-blue-900/60',
-        displayName: 'Lithic'
-
-    }, {
-        icon: <Sun className="h-5 w-5 text-yellow-400" />,
-        resourceType: safeb32('Solaris Dust'),
-        color: 'bg-yellow-950/60 hover:bg-yellow-900/60',
-        displayName: 'Solaric'
-
-    }
-]
-
-function getDecoByResourceType(resourceType: string): JobDeco {
-    const deco = DECOS.find(deco => deco.resourceType === resourceType);
-    if (!deco) {
-        throw new Error(`No deco found for resource type: ${resourceType}`);
-    }
-    return deco;
-}
 
 interface JobBoardProps {
 
 }
-
-
-
-
-
 
 export default function JobBoard({ }: JobBoardProps) {
     const { deploy } = useDeployment();
@@ -80,18 +37,10 @@ export default function JobBoard({ }: JobBoardProps) {
     const { supplies } = useSupplies();
     const { address } = useAccount();
 
-    const [selectedJobId, setSelectedJobId] = useState<number>(0);
     const [selectedTokenId, setSelectedTokenId] = useState<bigint>(BigInt(0));
     const { data: held } = useReadPlanetVAlphaTokensOfOwner({ args: [address ? address : zeroAddress], address: deploy.Planet })
 
     const { data: whichEntity, isLoading, error } = useReadScenarioGetEntity({ args: [deploy.JobSystem], address: scenarios ? scenarios[0] : "0x0" })
-
-
-    const { data: activateJobHash, error: activateError, writeContract: activateJob } = useWriteJobSystemActivateJob();
-    const { isLoading: activateJobLoading, isSuccess: activateJobSucesss, data: activateJobData } = useWaitForTransactionReceipt({ hash: activateJobHash })
-    const { data: deactivateJobHash, error: deactivateError, writeContract: finishJob } = useWriteJobSystemFinishJob();
-    const { isLoading: deactivateJobLoading, isSuccess: deactivateJobSucesss, data: deactivateJobData } = useWaitForTransactionReceipt({ hash: deactivateJobHash })
-
 
     const { data: allJobs } = useReadJobEntityGetAvailableJobs({
         args: [],
@@ -109,8 +58,6 @@ export default function JobBoard({ }: JobBoardProps) {
 
     })
 
-
-
     const [enabled, setEnabled] = React.useState<boolean[]>([]);
 
     useEffect(() => {
@@ -120,81 +67,7 @@ export default function JobBoard({ }: JobBoardProps) {
         }
     }, [allJobs]);
 
-    useEffect(() => {
-        if (activateError) {
-            toast.error(activateError.message)
-            // setSelectedJobId(0);
-            refetchActiveJob();
-        }
-        if (activateJobLoading) {
-            toast.info("Transaction is pending");
-
-        }
-        if (activateJobSucesss) {
-            toast.success("Transaction is successful");
-            // setSelectedJobId(0);
-            refetchActiveJob();
-        }
-    }
-        , [activateError, activateJobLoading, activateJobSucesss])
-
-    useEffect(() => {
-        if (deactivateError) {
-            toast.error(deactivateError.message)
-            setSelectedJobId(0);
-            refetchActiveJob();
-
-        }
-        if (deactivateJobLoading) {
-            toast.info("Transaction is pending");
-
-        }
-        if (deactivateJobSucesss) {
-            toast.success("Transaction is successful");
-            setSelectedJobId(0);
-            refetchActiveJob();
-        }
-    }
-        , [deactivateError, deactivateJobLoading, deactivateJobSucesss])
-
-
-    const activateNewJob = async (jobId: number) => {
-        setSelectedJobId(jobId);
-        activateJob({ address: deploy.JobSystem, args: [scenarios[0], jobId, selectedTokenId] });
-    }
-
-    const deactivateJob = async (jobId: number) => {
-        setSelectedJobId(jobId);
-        finishJob({ address: deploy.JobSystem, args: [scenarios[0], selectedTokenId] });
-
-    }
-
-    const getState = (jobId: number): "idle" | "loading" | "success" | "error" =>
-        selectedJobId !== jobId ? "idle"
-            : (deactivateJobLoading || activateJobLoading) ? "loading"
-                : (activateJobSucesss || deactivateJobSucesss) ? "success"
-                    : (activateError || deactivateError) ? "error"
-                        : "idle";
-
-    const getError = (jobId: number): string | null =>
-        selectedJobId !== jobId ? null
-            : activateError ? shortHandError(activateError)
-                : deactivateError ? shortHandError(deactivateError)
-                    : null;
-
-    const onClick = async (jobId: number) => {
-        setSelectedJobId(jobId);
-        if (activeJob?.[0] === jobId) {
-            finishJob({ address: deploy.JobSystem, args: [scenarios[0], selectedTokenId] });
-        } else {
-            activateJob({ address: deploy.JobSystem, args: [scenarios[0], jobId, selectedTokenId] });
-
-        }
-
-    }
-
-
-
+    
 
     return (
         <section>
@@ -242,31 +115,12 @@ export default function JobBoard({ }: JobBoardProps) {
                                         </div> */}
                                         {allJobs?.filter((job) => (job.tokenName === supply.type)).map((job, index) => {
                                             return (
-
                                                 <JobCard
+                                                    selectedTokenId={selectedTokenId}
                                                     key={job.id}
                                                     job={job}
                                                     activeJobId={activeJob}
-                                                    getDecoByResourceType={getDecoByResourceType}
-                                                    activate={() => { activateNewJob(job.id) }}
-                                                    deactivate={() => { deactivateJob(job.id) }}
-                                                    state={getState(job.id)}
-                                                    onClick={() => onClick(job.id)}
-                                                    error={getError(job.id)}
-                                                    // error={activateError ? shortHandError(activateError) : deactivateError ? shortHandError(deactivateError) : null}
-                                                // state={(deactivateJobLoading || activateJobLoading) ? "loading"
-                                                //     : (activateJobSucesss || deactivateJobSucesss) ? "success"
-                                                //         : (activateError || deactivateError) ? "error"
-                                                //             : "idle"
-                                                // }
-
-                                                //                                         state={ selectedJobId != job.id ? "idle"
-                                                // : (deactivateJobLoading || activateJobLoading) ? "loading"
-                                                // : (activateJobSucesss || deactivateJobSucesss) ? "success"
-                                                // : (activateError || deactivateError) ? "error"
-                                                // : "idle" }
-
-
+                                                    refetchActiveJob={refetchActiveJob}
                                                 />
                                             );
                                         })}

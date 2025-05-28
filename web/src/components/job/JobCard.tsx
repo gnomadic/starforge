@@ -1,29 +1,20 @@
 "use client";
 
 import React, { useEffect, useState } from 'react';
-
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { useSupplies } from '@/components/supplies/SupplyContext';
-import { bigIntReplacer } from '@/domain/utils';
 import { Hex } from 'viem';
-import { longStr, str } from '@/lib/utils/utils';
-import TXButton, { TestTXButton } from '../global/TXButton';
-import {
-    Tooltip,
-    TooltipContent,
-    TooltipProvider,
-    TooltipTrigger,
-} from '@/components/ui/tooltip';
-import { cn } from '@/lib/utils';
-import { Progress } from '../ui/progress';
+import { longStr, shortHandError, str } from '@/lib/utils/utils';
+import { useWriteJobSystemActivateJob, useWriteJobSystemFinishJob } from "@/generated";
+import { useWaitForTransactionReceipt } from "wagmi";
+import JobProgress from './JobProgress';
+import { useDeployment } from '@/hooks/useDeployment';
+import { useScenarios } from '../ScenarioContext';
+import { getDecoByResourceType } from '../supplies/SupplyContext';
+import { TransactionButton } from '../global/TransactionButton';
 
 interface JobCardProps {
+    selectedTokenId: bigint;
     activeJobId: readonly [number, bigint] | undefined;
-    getDecoByResourceType: (resourceType: string) => {
-        icon: React.ReactNode;
-        color: string;
-    }
     job: {
         id: number;
         title: Hex;
@@ -32,39 +23,48 @@ interface JobCardProps {
         amountPerCycle: bigint;
         cycleDuration: number;
     };
-    activate: (jobId: number) => void;
-    deactivate: (jobId: number) => void;
-    state: "idle" | "loading" | "success" | "error";
-    onClick: () => void;
-    error: string | null;
+    refetchActiveJob: () => void;
+    // state: "idle" | "loading" | "success" | "error";
+    // error: string | null;
 }
 
 
 
 
-export default function JobCard({ activeJobId, getDecoByResourceType, job, activate, deactivate, state, onClick, error }: JobCardProps) {
+export default function JobCard({ selectedTokenId, activeJobId, job, refetchActiveJob }: JobCardProps) {
+
+    const { deploy } = useDeployment();
+    const { scenarios } = useScenarios();
+
+    const { data: activateJobHash, error: activateError, writeContract: activateJob } = useWriteJobSystemActivateJob();
+    const { isLoading: activateJobLoading, isSuccess: activateJobSucesss, data: activateJobData } = useWaitForTransactionReceipt({ hash: activateJobHash })
+    const { data: deactivateJobHash, error: deactivateError, writeContract: finishJob } = useWriteJobSystemFinishJob();
+    const { isLoading: deactivateJobLoading, isSuccess: deactivateJobSucesss, data: deactivateJobData } = useWaitForTransactionReceipt({ hash: deactivateJobHash })
 
     const isActive = activeJobId?.[0] === job.id;
+    const startedAt = activeJobId?.[1] || BigInt(0);
 
-    // const [xState, setXState] = useState<"idle" | "loading" | "success" | "error">("idle");
-    const [progress, setProgress] = useState(0)
-    const [cycles, setCycles] = useState(0)
+    const state = isActive ? "idle" : activateJobLoading ? "loading" : deactivateJobLoading ? "loading" : activateJobSucesss || deactivateJobSucesss ? "success" : activateError || deactivateError ? "error" : "idle";
+
+
+    const onClick = (jobId: number) => {
+        // setSelectedJobId(jobId);
+        if (activeJobId?.[0] === jobId) {
+            finishJob({ address: deploy.JobSystem, args: [scenarios[0], selectedTokenId] });
+        } else {
+            activateJob({ address: deploy.JobSystem, args: [scenarios[0], jobId, selectedTokenId] });
+        }
+    }
 
     useEffect(() => {
-        const interval = setInterval(() => {
-            setProgress((prevProgress) => {
+        if (activateJobSucesss || deactivateJobSucesss) {
+            refetchActiveJob();
+        }
+    }, [activateJobSucesss, deactivateJobSucesss, refetchActiveJob]);
 
-                if (prevProgress >= 100) {
-                    setCycles((prev) => prev + 1)
-                    return 0
-                }
-                return prevProgress + 1
-            })
-        }, 100) // Update every 100ms to complete in 10 seconds (100 * 100ms = 10000ms = 10s)
-
-        return () => clearInterval(interval)
-    }, [])
-
+    const getError = (): string | null => activateError ? shortHandError(activateError)
+        : deactivateError ? shortHandError(deactivateError)
+            : null;
 
     return (
         <Card
@@ -76,7 +76,7 @@ export default function JobCard({ activeJobId, getDecoByResourceType, job, activ
                     <div>
                         <CardTitle className="text-lg font-semibold text-white">{str(job.title)}</CardTitle>
                         <CardDescription className="text-white/80">{str(job.tokenName)}</CardDescription>
-                        <CardDescription className="text-white/80">{state}</CardDescription>
+                        {/* <CardDescription className="text-white/80">{state}</CardDescription> */}
                     </div>
                     <div className="p-2 rounded-full bg-black/20">
                         {getDecoByResourceType(job.tokenName).icon}
@@ -89,10 +89,13 @@ export default function JobCard({ activeJobId, getDecoByResourceType, job, activ
 
                 <div className=" justify-between items-center border-t border-border/40 pt-4">
                     {isActive && (
-                        <div className=''>
-                            <div className="text-muted-foreground pb-2">Earning {(cycles * (Number(job.amountPerCycle) / 1e18)).toFixed(4)} {str(job.tokenName)}</div>
-                            <Progress value={progress} className="h-2" aria-label="Progress timer" />
-                        </div>
+                        <JobProgress
+                            activeJob={activeJobId}
+                            tokenName={job.tokenName}
+                            amountPerCycle={job.amountPerCycle}
+                            cycleDuration={job.cycleDuration}
+                            isActive={isActive}
+                        />
                     )}
                     {!isActive && (
                         <div className="text-sm">
@@ -100,51 +103,30 @@ export default function JobCard({ activeJobId, getDecoByResourceType, job, activ
                             <div className="font-semibold">+{Number(job.amountPerCycle) / 1e18} per {job.cycleDuration} seconds</div>
                         </div>
                     )}
-
-
-
-
                 </div>
-                {/* <div className='py-4'> */}
-                {/* <TXButton
-                    callToAction={isActive ? "Deactivate" : "Activate"}
-                    onClick={onClick}
-                    state={state}
-                    error={error}
-                /> */}
-                {/* <CardFooter className='bg-white/10'> */}
-                {/* <div className=' w-full'>
-                     <TXButton
-                    callToAction={isActive ? "Deactivate" : "Activate"}
-                    onClick={onClick}
-                    state={state}
-                    error={error}
-                />
-                </div> */}
-                {/* </CardFooter> */}
-                {/* <TestTXButton  /> */}
-                {/* <Button
-                    variant={isActive ? "default" : "outline"}
-                    size="sm"
-                    onClick={() => isActive ? deactivate(job.id) : activate(job.id)}
-                >
-                    {isActive ? "Deactivate" : "Activate"}
-                </Button> */}
-
             </CardContent>
-
             <CardFooter className='pb-2'>
                 <div className=' w-full mx-4'>
-                    <TXButton
+                    {/* <TXButton
                         callToAction={isActive ? "Deactivate" : "Activate"}
-                        onClick={onClick}
+                        onClick={() => { onClick(job.id) }}
                         state={state}
-                        error={error}
+                        error={getError()}
+                    /> */}
+                    <TransactionButton
+                        onClick={() => { onClick(job.id) }}
+                        isLoading={activateJobLoading || deactivateJobLoading}
+                        isSuccess={activateJobSucesss || deactivateJobSucesss}
+                        // error={activateError || deactivateError}
+                        error={getError()}
+                        idleText={isActive ? "Deactivate" : "Activate"}
+                        loadingText="Processing Transaction..."
+                        successText="Success!"
+                        errorText="Something went wrong"
+                        className="w-full"
                     />
                 </div>
             </CardFooter>
         </Card>
-
     );
-
 }
