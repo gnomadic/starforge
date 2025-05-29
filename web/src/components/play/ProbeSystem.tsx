@@ -4,6 +4,9 @@ import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { Rocket, Zap, Shield, Target, Home, Heart } from 'lucide-react';
+import VerticalProgress from './VerticalProgress';
+import dynamic from 'next/dynamic';
+import { useWindowCenter } from '@/hooks/useWindowSize';
 
 interface ProbeSystemProps {
     planetX: number;
@@ -15,6 +18,9 @@ const ProbeSystem: React.FC<ProbeSystemProps> = ({ planetX, planetY }) => {
     const maxMiles = 100;
     const centerX = typeof window !== 'undefined' ? window.innerWidth / 2 : 200;
     const centerY = typeof window !== 'undefined' ? window.innerHeight / 2 : 300;
+
+    // const {centerX, centerY} = dynamic(() => import("@/hooks/useWindowSize") useWindowCenter, { ssr: false });
+
     
     
     const [isLaunched, setIsLaunched] = useState(false);
@@ -159,8 +165,11 @@ const ProbeSystem: React.FC<ProbeSystemProps> = ({ planetX, planetY }) => {
         <div className="relative w-full h-full">
             {/* Miles Progress Bar */}
             {isLaunched && (
-                <div className="fixed right-4 top-20 bottom-32 w-8 flex flex-col items-center">
-                    <div className="text-white text-xs mb-2 whitespace-nowrap">
+                <div className="fixed right-4 top-60 bottom-32 w-8 flex flex-col items-center">
+                    <VerticalProgress
+                    currentNumber={miles}
+                    />
+                    {/* <div className="text-white text-xs mb-2 whitespace-nowrap">
                         {miles} AU
                     </div>
                     <div className="flex-1 w-full">
@@ -172,7 +181,7 @@ const ProbeSystem: React.FC<ProbeSystemProps> = ({ planetX, planetY }) => {
                     </div>
                     <div className="text-white text-xs mt-2">
                         {maxMiles}
-                    </div>
+                    </div> */}
                 </div>
             )}
 
