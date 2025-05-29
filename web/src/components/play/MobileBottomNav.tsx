@@ -13,8 +13,8 @@ const MobileBottomNav: React.FC<MobileBottomNavProps> = ({ onOpenModal }) => {
     { id: 'home', icon: Home, label: 'Planet' },
     { id: 'jobs', icon: Briefcase, label: 'Jobs' },
     { id: 'upgrades', icon: TrendingUp, label: 'Upgrades' },
-    { id: 'combat', icon: Sword, label: 'Combat' },
-    { id: 'shop', icon: ShoppingBag, label: 'Shop' },
+    // { id: 'combat', icon: Sword, label: 'Combat' },
+    // { id: 'shop', icon: ShoppingBag, label: 'Shop' },
   ];
 
   return (

@@ -5,8 +5,6 @@ import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { Rocket, Zap, Shield, Target, Home, Heart } from 'lucide-react';
 import VerticalProgress from './VerticalProgress';
-import dynamic from 'next/dynamic';
-import { useWindowCenter } from '@/hooks/useWindowSize';
 
 interface ProbeSystemProps {
     planetX: number;
@@ -24,8 +22,8 @@ const ProbeSystem: React.FC<ProbeSystemProps> = ({ planetX, planetY }) => {
     
     
     const [isLaunched, setIsLaunched] = useState(false);
-    const [probePosition, setProbePosition] = useState({ x: centerX, y: planetY });
-    const [planetPosition, setPlanetPosition] = useState({ x: planetX, y: planetY });
+    // const [probePosition, setProbePosition] = useState({ x: centerX, y: planetY });
+    // const [planetPosition, setPlanetPosition] = useState({ x: planetX, y: planetY });
     const [miles, setMiles] = useState(0);
     const [progress, setProgress] = useState(0);
     const [showEnemy, setShowEnemy] = useState(false);
@@ -85,25 +83,25 @@ const ProbeSystem: React.FC<ProbeSystemProps> = ({ planetX, planetY }) => {
     }, [isLaunched, inCombat, centerX]);
 
     // Animate probe and planet positions (only when not in combat)
-    useEffect(() => {
-        if (!isLaunched || inCombat) return;
+    // useEffect(() => {
+    //     if (!isLaunched || inCombat) return;
 
-        const animationInterval = setInterval(() => {
-            // Move probe towards center
-            setProbePosition(prev => ({
-                x: prev.x + (centerX - prev.x) * 0.02,
-                y: prev.y + (centerY - prev.y) * 0.02
-            }));
+    //     // const animationInterval = setInterval(() => {
+    //     //     // Move probe towards center
+    //     //     // setProbePosition(prev => ({
+    //     //     //     x: prev.x + (centerX - prev.x) * 0.02,
+    //     //     //     y: prev.y + (centerY - prev.y) * 0.02
+    //     //     // }));
 
-            // Move planet down and off screen
-            setPlanetPosition(prev => ({
-                x: prev.x,
-                y: prev.y + 6
-            }));
-        }, 50);
+    //     //     // Move planet down and off screen
+    //     //     // setPlanetPosition(prev => ({
+    //     //     //     x: prev.x,
+    //     //     //     y: prev.y + 6
+    //     //     // }));
+    //     // }, 50);
 
-        return () => clearInterval(animationInterval);
-    }, [isLaunched, inCombat, centerX, centerY]);
+    //     return () => clearInterval(animationInterval);
+    // }, [isLaunched, inCombat, centerX, centerY]);
 
     const startCombat = () => {
         setInCombat(true);
@@ -150,8 +148,8 @@ const ProbeSystem: React.FC<ProbeSystemProps> = ({ planetX, planetY }) => {
 
     const returnHome = () => {
         setIsLaunched(false);
-        setProbePosition({ x: planetX, y: planetY });
-        setPlanetPosition({ x: planetX, y: planetY });
+        // setProbePosition({ x: planetX, y: planetY });
+        // setPlanetPosition({ x: planetX, y: planetY });
         setMiles(0);
         setProgress(0);
         setShowEnemy(false);
@@ -211,11 +209,12 @@ const ProbeSystem: React.FC<ProbeSystemProps> = ({ planetX, planetY }) => {
 
             {/* Planet */}
             <div
-                className="absolute w-64 h-64 transition-all duration-1000 ease-out"
+                className="absolute w-64 h-64 transition-all duration-1000 ease-out left-1/4 top-1/3"
                 style={{
-                    left: planetPosition.x - 128,
-                    top: planetPosition.y - 128,
-                    transform: isLaunched ? 'scale(0.6)' : 'scale(1)'
+                    // left: planetPosition.x - 128,
+                    // top: planetPosition.y - 128,
+                    top: isLaunched ? "100%" : '33%',
+                    transform: isLaunched ? 'scale(0)' : 'scale(1)'
                 }}
             >
                 <div className="w-full h-full rounded-full bg-gradient-to-br from-blue-500 via-purple-600 to-pink-500 animate-pulse-slow shadow-2xl shadow-purple-500/20">
@@ -230,11 +229,11 @@ const ProbeSystem: React.FC<ProbeSystemProps> = ({ planetX, planetY }) => {
             {/* Probe */}
             {isLaunched && (
                 <div
-                    className="absolute w-8 h-8 transition-all duration-100 ease-linear"
-                    style={{
-                        left: probePosition.x - 16,
-                        top: probePosition.y - 16
-                    }}
+                    className="absolute w-8 h-8 transition-all duration-100 ease-linear left-1/2 top-2/3"
+                    // style={{
+                    //     left: probePosition.x - 16,
+                    //     top: probePosition.y - 16
+                    // }}
                 >
                     <div className="w-full h-full bg-gradient-to-t from-yellow-400 to-orange-500 rounded-full animate-pulse shadow-lg shadow-yellow-400/50">
                         <div className="absolute inset-1 bg-white/30 rounded-full"></div>
@@ -245,11 +244,11 @@ const ProbeSystem: React.FC<ProbeSystemProps> = ({ planetX, planetY }) => {
             {/* Enemy */}
             {showEnemy && (
                 <div
-                    className="absolute w-12 h-12 transition-all duration-500 ease-out animate-pulse"
-                    style={{
-                        left: enemyPosition.x - 24,
-                        top: enemyPosition.y 
-                    }}
+                    className="absolute w-12 h-12 transition-all duration-1000 ease-out animate-pulse left-1/2 top-1/3"
+                    // style={{
+                    //     left: enemyPosition.x - 24,
+                    //     top: enemyPosition.y 
+                    // }}
                 >
                     <div className="w-full h-full bg-gradient-to-br from-red-500 to-red-700 transform rotate-45 shadow-lg shadow-red-500/50">
                         <div className="absolute inset-2 bg-red-300/50 transform rotate-45"></div>
