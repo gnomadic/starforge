@@ -3,24 +3,26 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
-import { Rocket, Zap, Shield, Target, Home, Heart } from 'lucide-react';
+import { Rocket, Zap, Shield, Target, Home, Heart, Backpack, ArrowBigDownDashIcon } from 'lucide-react';
 import VerticalProgress from './VerticalProgress';
 
 interface ProbeSystemProps {
     planetX: number;
     planetY: number;
+    onOpenModal: (modalType: string) => void;
+
 }
 
-const ProbeSystem: React.FC<ProbeSystemProps> = ({ planetX, planetY }) => {
-        
+const ProbeSystem: React.FC<ProbeSystemProps> = ({ planetX, planetY, onOpenModal }) => {
+
     const maxMiles = 100;
     const centerX = typeof window !== 'undefined' ? window.innerWidth / 2 : 200;
-    const centerY = typeof window !== 'undefined' ? window.innerHeight / 2 : 300;
+    // const centerY = typeof window !== 'undefined' ? window.innerHeight / 2 : 300;
 
     // const {centerX, centerY} = dynamic(() => import("@/hooks/useWindowSize") useWindowCenter, { ssr: false });
 
-    
-    
+
+
     const [isLaunched, setIsLaunched] = useState(false);
     // const [probePosition, setProbePosition] = useState({ x: centerX, y: planetY });
     // const [planetPosition, setPlanetPosition] = useState({ x: planetX, y: planetY });
@@ -165,7 +167,7 @@ const ProbeSystem: React.FC<ProbeSystemProps> = ({ planetX, planetY }) => {
             {isLaunched && (
                 <div className="fixed right-4 top-60 bottom-32 w-8 flex flex-col items-center">
                     <VerticalProgress
-                    currentNumber={miles}
+                        currentNumber={miles}
                     />
                     {/* <div className="text-white text-xs mb-2 whitespace-nowrap">
                         {miles} AU
@@ -230,10 +232,10 @@ const ProbeSystem: React.FC<ProbeSystemProps> = ({ planetX, planetY }) => {
             {isLaunched && (
                 <div
                     className="absolute w-8 h-8 transition-all duration-100 ease-linear left-1/2 top-2/3"
-                    // style={{
-                    //     left: probePosition.x - 16,
-                    //     top: probePosition.y - 16
-                    // }}
+                // style={{
+                //     left: probePosition.x - 16,
+                //     top: probePosition.y - 16
+                // }}
                 >
                     <div className="w-full h-full bg-gradient-to-t from-yellow-400 to-orange-500 rounded-full animate-pulse shadow-lg shadow-yellow-400/50">
                         <div className="absolute inset-1 bg-white/30 rounded-full"></div>
@@ -245,10 +247,10 @@ const ProbeSystem: React.FC<ProbeSystemProps> = ({ planetX, planetY }) => {
             {showEnemy && (
                 <div
                     className="absolute w-12 h-12 transition-all duration-1000 ease-out animate-pulse left-1/2 top-1/3"
-                    // style={{
-                    //     left: enemyPosition.x - 24,
-                    //     top: enemyPosition.y 
-                    // }}
+                // style={{
+                //     left: enemyPosition.x - 24,
+                //     top: enemyPosition.y 
+                // }}
                 >
                     <div className="w-full h-full bg-gradient-to-br from-red-500 to-red-700 transform rotate-45 shadow-lg shadow-red-500/50">
                         <div className="absolute inset-2 bg-red-300/50 transform rotate-45"></div>
@@ -258,7 +260,14 @@ const ProbeSystem: React.FC<ProbeSystemProps> = ({ planetX, planetY }) => {
 
             {/* Launch Button */}
             {!isLaunched && (
-                <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2">
+                <div className="absolute bottom-12 left-1/2 transform -translate-x-1/2">
+                    <Button
+                        onClick={() =>{onOpenModal('upgrades')}}
+                        className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-bold py-4 px-8 rounded-full shadow-lg shadow-blue-500/25 animate-pulse mb-12"
+                    >
+                        <Rocket className="mr-2 h-6 w-6" />
+                        Prepare Probe
+                    </Button>
                     <Button
                         onClick={launchProbe}
                         className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-bold py-4 px-8 rounded-full shadow-lg shadow-blue-500/25 animate-pulse"
@@ -270,7 +279,7 @@ const ProbeSystem: React.FC<ProbeSystemProps> = ({ planetX, planetY }) => {
             )}
 
             {/* Action Buttons */}
-            {showActionButtons && !inCombat && (
+            {/* {showActionButtons && !inCombat && (
                 <div className="fixed bottom-20 left-0 right-0 flex justify-around px-4 py-2 bg-black/50 backdrop-blur-sm">
                     <Button
                         onClick={startCombat}
@@ -311,7 +320,7 @@ const ProbeSystem: React.FC<ProbeSystemProps> = ({ planetX, planetY }) => {
                         <span className="text-xs">Return</span>
                     </Button>
                 </div>
-            )}
+            )} */}
 
             {/* Combat Actions */}
             {inCombat && isProbesTurn && (
@@ -330,31 +339,32 @@ const ProbeSystem: React.FC<ProbeSystemProps> = ({ planetX, planetY }) => {
                         className="flex flex-col items-center gap-1 text-red-400 hover:text-red-300 hover:bg-red-500/10"
                     >
                         <Target className="h-6 w-6" />
-                        <span className="text-xs">Attack</span>
+                        <span className="text-xs">Signal</span>
                     </Button>
                     <Button
                         onClick={attack}
                         variant="ghost"
                         className="flex flex-col items-center gap-1 text-red-400 hover:text-red-300 hover:bg-red-500/10"
                     >
-                        <Target className="h-6 w-6" />
-                        <span className="text-xs">Attack</span>
+                        {/* <Target className="h-6 w-6" /> */}
+                        <Shield className="h-6 w-6" />
+                        <span className="text-xs">Shield</span>
                     </Button>
                     <Button
                         onClick={attack}
                         variant="ghost"
                         className="flex flex-col items-center gap-1 text-red-400 hover:text-red-300 hover:bg-red-500/10"
                     >
-                        <Target className="h-6 w-6" />
-                        <span className="text-xs">Attack</span>
+                        <Backpack className="h-6 w-6" />
+                        <span className="text-xs">Scan</span>
                     </Button>
                     <Button
-                        onClick={attack}
+                        onClick={returnHome}
                         variant="ghost"
                         className="flex flex-col items-center gap-1 text-red-400 hover:text-red-300 hover:bg-red-500/10"
                     >
-                        <Target className="h-6 w-6" />
-                        <span className="text-xs">Attack</span>
+                        <ArrowBigDownDashIcon className="h-6 w-6" />
+                        <span className="text-xs">Extract</span>
                     </Button>
                 </div>
             )}

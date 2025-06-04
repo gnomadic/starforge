@@ -141,6 +141,12 @@ const UpgradeModal: React.FC<UpgradeModalProps> = ({ isOpen, onClose }) => {
             Cosmic Upgrades
           </DialogTitle>
         </DialogHeader>
+                
+        <div className="mt-6 p-3 rounded-lg bg-blue-500/10 border border-blue-500/20">
+          <p className="text-xs text-blue-300 text-center">
+            Temporarily upgrade your probe for the next exploration.
+          </p>
+        </div>
         
         <div className="mt-4 space-y-4">
           {AVAILABLE_UPGRADES.map((upgrade) => {
@@ -209,12 +215,7 @@ const UpgradeModal: React.FC<UpgradeModalProps> = ({ isOpen, onClose }) => {
             );
           })}
         </div>
-        
-        <div className="mt-6 p-3 rounded-lg bg-blue-500/10 border border-blue-500/20">
-          <p className="text-xs text-blue-300 text-center">
-            Upgrades permanently improve your cosmic operations
-          </p>
-        </div>
+
       </DialogContent>
     </Dialog>
   );

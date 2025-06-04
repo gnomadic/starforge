@@ -42,7 +42,7 @@ export default function VerticalProgress({ currentNumber }: VerticalProgressProp
     // Generate array of numbers to show (previous, current, next)
     const numbersToShow = []
     for (let i = currentNumber - 2; i <= currentNumber + 2; i++) {
-        if (i >= 0 && i <= 10) {
+        if (i >= 0) {
             numbersToShow.push(i)
         }
     }

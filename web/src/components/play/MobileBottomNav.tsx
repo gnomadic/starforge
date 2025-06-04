@@ -10,7 +10,7 @@ interface MobileBottomNavProps {
 
 const MobileBottomNav: React.FC<MobileBottomNavProps> = ({ onOpenModal }) => {
   const navItems = [
-    { id: 'home', icon: Home, label: 'Planet' },
+    { id: 'planet', icon: Home, label: 'Planet' },
     { id: 'jobs', icon: Briefcase, label: 'Jobs' },
     { id: 'upgrades', icon: TrendingUp, label: 'Upgrades' },
     // { id: 'combat', icon: Sword, label: 'Combat' },

@@ -4,8 +4,6 @@ pragma solidity ^0.8.24;
 import {ISystem, ISystemController} from "./interfaces/ISystem.sol";
 import {IScenario} from "../Scenario.sol";
 import {IStatsEntity} from "../entities/StatsEntity.sol";
-import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
-import {LibClone} from "solady/utils/LibClone.sol";
 
 // import {console} from "forge-std/console.sol";
 import {console} from "hardhat/console.sol";
@@ -28,28 +26,12 @@ interface IStatsSystem {
     ) external;
 }
 
-contract StatsSystem is ISystem, IStatsSystem, Ownable {
-    using LibClone for address;
-
+contract StatsSystem is ISystem, IStatsSystem {
     uint256 _nonce;
 
-    bool registered = false;
-    address private _systemController;
-    address public entityAddress;
-
-    constructor(address _entity) Ownable(msg.sender) {
+    constructor(address _entity) ISystem(_entity) {
         entityAddress = _entity;
     }
-
-    function registerSystem(address systemController) external {
-        if (registered) {
-            revert AlreadyRegistered();
-        }
-        registered = true;
-        _systemController = systemController;
-    }
-
-    error AlreadyRegistered();
 
     function calculateStatsForMint(
         IScenario scenario,
@@ -169,31 +151,17 @@ contract StatsSystem is ISystem, IStatsSystem, Ownable {
 
     function sync(uint256 tokenId) external override {}
 
+    function initEntity(IScenario scenario, address clone) internal override {
+        IStatsEntity(clone).initialize(scenario, address(this));
+    }
+
     function getNonce() internal returns (uint256) {
         uint256 current = _nonce;
         _nonce++;
         return current;
     }
 
-    function activateEntity(
-        IScenario scenario
-    ) external override returns (address) {
-        address current = scenario.getEntity(address(this));
-        if (current != address(0)) {
-            return current;
-        }
-
-        address clone = entityAddress.clone();
-
-        IStatsEntity(clone).initialize(scenario, address(this));
-        // console.log(
-        //     "PlanetStatsSystem: activateEntity: entityAddress: %s",
-        //     address(entityAddress)
-        // );
-        return clone;
-    }
-
-    function getId() external pure returns (string memory) {
+    function getId() external pure override returns (string memory) {
         return "STAT";
     }
 
@@ -233,22 +201,5 @@ contract StatsSystem is ISystem, IStatsSystem, Ownable {
         console.log("done Boosting skill ");
     }
 
-    function updateEntityAddress(address newEntityAddress) external onlyOwner {
-        entityAddress = newEntityAddress;
-    }
-
     error NotScenario();
-
-    modifier onlySystemAndAdmin(IScenario _scenario) {
-        if (
-            ISystemController(_systemController).isSystem(msg.sender) ==
-            false &&
-            msg.sender != _scenario.getAdmin()
-        ) {
-            revert NotSystem();
-        }
-        _;
-    }
-
-    error NotSystem();
 }

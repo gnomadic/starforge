@@ -11,6 +11,7 @@ import CombatModal from '@/components/play/CombatModal';
 import ShopModal from '@/components/play/ShopModal';
 import { useSupplies } from '@/components/supplies/SupplyContext';
 import UpgradeModal from '@/components/play/UpgradeModal';
+import PlanetModal from '@/components/play/PlanetModal';
 
 const Mobile: React.FC = () => {
   const [activeModal, setActiveModal] = useState<string | null>(null);
@@ -30,13 +31,19 @@ const Mobile: React.FC = () => {
       
       {/* Main Content Area */}
       <div className="pt-16 pb-20 px-4 h-screen">
-        <PlanetView />
+        <PlanetView
+        onOpenModal={openModal}
+         />
       </div>
       
       {/* Bottom Navigation */}
       <MobileBottomNav onOpenModal={openModal} />
       
       {/* Modals */}
+      <PlanetModal
+        isOpen={activeModal === 'planet'} 
+        onClose={closeModal} 
+      />
       <JobModal 
         isOpen={activeModal === 'jobs'} 
         onClose={closeModal} 

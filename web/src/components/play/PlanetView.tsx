@@ -8,7 +8,11 @@ import EnemySystem from './EnemySystem';
 import { useSupplies } from '../supplies/SupplyContext';
 import ProbeSystem from './ProbeSystem';
 
-const PlanetView: React.FC = () => {
+interface PlanetViewProps {
+   onOpenModal: (modalType: string) => void;
+}
+
+const PlanetView: React.FC<PlanetViewProps> = ({onOpenModal}) => {
 //   const { resources } = useResources();
 const {supplies} = useSupplies();
   const [activeElements, setActiveElements] = useState<string[]>([]);
@@ -32,6 +36,8 @@ const {supplies} = useSupplies();
       <ProbeSystem 
         planetX={planetX}
         planetY={planetY}
+        onOpenModal={onOpenModal}
+
       />
       
       {/* Planet info */}
