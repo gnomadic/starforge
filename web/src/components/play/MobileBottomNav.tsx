@@ -3,6 +3,7 @@
 import React from 'react';
 import { Briefcase, Sword, Target, ShoppingBag, Home, TrendingUp } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import WalletButton from '../WalletButton';
 
 interface MobileBottomNavProps {
   onOpenModal: (modalType: string) => void;
@@ -32,6 +33,9 @@ const MobileBottomNav: React.FC<MobileBottomNavProps> = ({ onOpenModal }) => {
             <span className="text-xs">{item.label}</span>
           </Button>
         ))}
+                 <div className="py-4">
+                    <WalletButton />
+                  </div>
       </div>
     </div>
   );

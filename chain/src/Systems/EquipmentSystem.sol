@@ -11,8 +11,6 @@ import {console} from "hardhat/console.sol";
 interface IEquipmentSystem {}
 
 contract EquipmentSystem is ISystem, IEquipmentSystem {
-    uint256 _nonce;
-
     constructor(address _entity) ISystem(_entity) {
         entityAddress = _entity;
     }
@@ -35,4 +33,39 @@ contract EquipmentSystem is ISystem, IEquipmentSystem {
     function getId() external pure override returns (string memory) {
         return "EQUIPMENT";
     }
+
+    function placeModule(
+        IScenario scenario,
+        uint256 tokenId,
+        uint256 moduleId
+    ) public {
+        IEquipmentEntity entity = IEquipmentEntity(
+            scenario.getEntity(address(this))
+        );
+
+        entity.setModule(tokenId, moduleId);
+    }
+
+    function getAllModules(
+        IScenario scenario
+    ) public view returns (IEquipmentEntity.Module[] memory) {
+        IEquipmentEntity entity = IEquipmentEntity(
+            scenario.getEntity(address(this))
+        );
+        return entity.getAllModules();
+    }
+
+    function getPlayerModules(
+        IScenario scenario,
+        uint256 tokenId
+    ) public view returns (IEquipmentEntity.Module[] memory) {
+        IEquipmentEntity entity = IEquipmentEntity(
+            scenario.getEntity(address(this))
+        );
+        return entity.getPlayerModules(tokenId);
+    }
+
+    function applyEffects(IScenario scenario, uint256 tokenId) public {}
+
+    function applyEffectsAndBurn(IScenario scenario, uint256 tokenId) public {}
 }

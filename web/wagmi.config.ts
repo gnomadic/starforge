@@ -32,6 +32,8 @@ export default defineConfig({
         'SupplyEntity.sol/**',
         'JobSystem.sol/**',
         'JobEntity.sol/**',
+        'EquipmentSystem.sol/**',
+        'EquipmentEntity.sol/**',
       ],
     }),
     react(),

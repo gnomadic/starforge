@@ -4,6 +4,11 @@ import React, { useState, useEffect } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Progress } from '@/components/ui/progress';
 import { Briefcase, CheckCircle, Clock } from 'lucide-react';
+import { useReadJobEntityGetActiveJob, useReadJobEntityGetAvailableJobs, useReadScenarioGetEntity } from '@/generated';
+import { useDeployment } from '@/hooks/useDeployment';
+import { useScenarios } from '../ScenarioContext';
+import { useSupplies } from '../supplies/SupplyContext';
+import { useAccount } from 'wagmi';
 
 
 interface JobModalProps {
@@ -56,6 +61,28 @@ const AVAILABLE_JOBS : JobModalData[] = [
 ];
 
 const JobModal: React.FC<JobModalProps> = ({ isOpen, onClose }) => {
+    const { deploy } = useDeployment();
+    const { scenarios } = useScenarios();
+    const { supplies } = useSupplies();
+    const { address } = useAccount();
+
+    const { data: whichEntity, isLoading, error } = useReadScenarioGetEntity({ args: [deploy.JobSystem], address: scenarios ? scenarios[0] : "0x0" })
+
+      const { data: allJobs } = useReadJobEntityGetAvailableJobs({
+          args: [],
+          address: whichEntity
+      })
+  
+
+  
+      // const { data: activeJob, refetch: refetchActiveJob } = useReadJobEntityGetActiveJob({
+      //     args: [selectedTokenId],
+      //     address: whichEntity,
+  
+      // })
+
+
+
   const [ activeJob, setActiveJob ] = useState<JobModalData | null>();
   const [progress, setProgress] = useState(0);
 

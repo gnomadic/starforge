@@ -8,6 +8,7 @@ import {ISupplyEntity} from "../entities/SupplyEntity.sol";
 import {SystemController} from "../systems/SystemController.sol";
 import {ISupplySystem} from "../systems/SupplySystem.sol";
 import {IJobEntity} from "../entities/JobEntity.sol";
+import {IEquipmentEntity} from "../entities/EquipmentEntity.sol";
 
 // import {console} from "hardhat/console.sol";
 
@@ -45,6 +46,32 @@ contract RegenScenario {
         loadSupply(scenario, controller);
         // console.log("loading jobs");
         loadJobs(scenario, controller);
+        // console.log("loading Equipment");
+        loadEquipment(scenario, controller);
+    }
+
+    function loadEquipment(
+        Scenario scenario,
+        SystemController controller
+    ) internal {
+        IEquipmentEntity equipmentEntity = IEquipmentEntity(
+            scenario.getEntity(address(controller.getSystem("EQUIPMENT")))
+        );
+        equipmentEntity.addModule(
+            "Solar Collector",
+            "Increases solar energy capture",
+            [1, 2, 0, 0]
+        );
+        equipmentEntity.addModule(
+            "Water Purifier",
+            "Removes impurities from water",
+            [1, 2, 0, 0]
+        );
+        equipmentEntity.addModule(
+            "Bio-Analyzer",
+            "Improve biomass processing",
+            [1, 2, 0, 0]
+        );
     }
 
     function loadJobs(Scenario scenario, SystemController controller) internal {

@@ -10,7 +10,313 @@ import {
   createWriteContract,
   createSimulateContract,
   createWatchContractEvent,
-} from 'wagmi/codegen'
+} from '@wagmi/core/codegen'
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// EquipmentEntity
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+export const equipmentEntityAbi = [
+  { type: 'error', inputs: [], name: 'NotScenarioAdmin' },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'name', internalType: 'bytes32', type: 'bytes32' },
+      { name: 'description', internalType: 'bytes32', type: 'bytes32' },
+      { name: 'tags', internalType: 'uint8[4]', type: 'uint8[4]' },
+    ],
+    name: 'addModule',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: 'planetId', internalType: 'uint256', type: 'uint256' }],
+    name: 'clearModules',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'getAllModules',
+    outputs: [
+      {
+        name: '',
+        internalType: 'struct IEquipmentEntity.Module[]',
+        type: 'tuple[]',
+        components: [
+          { name: 'id', internalType: 'uint32', type: 'uint32' },
+          { name: 'name', internalType: 'bytes32', type: 'bytes32' },
+          { name: 'description', internalType: 'bytes32', type: 'bytes32' },
+          { name: 'tags', internalType: 'uint8[4]', type: 'uint8[4]' },
+        ],
+      },
+    ],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: 'planetId', internalType: 'uint256', type: 'uint256' }],
+    name: 'getPlayerModules',
+    outputs: [
+      {
+        name: '',
+        internalType: 'struct IEquipmentEntity.Module[]',
+        type: 'tuple[]',
+        components: [
+          { name: 'id', internalType: 'uint32', type: 'uint32' },
+          { name: 'name', internalType: 'bytes32', type: 'bytes32' },
+          { name: 'description', internalType: 'bytes32', type: 'bytes32' },
+          { name: 'tags', internalType: 'uint8[4]', type: 'uint8[4]' },
+        ],
+      },
+    ],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'scenario', internalType: 'contract IScenario', type: 'address' },
+      { name: '_system', internalType: 'address', type: 'address' },
+    ],
+    name: 'initialize',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+    name: 'modules',
+    outputs: [
+      { name: 'id', internalType: 'uint32', type: 'uint32' },
+      { name: 'name', internalType: 'bytes32', type: 'bytes32' },
+      { name: 'description', internalType: 'bytes32', type: 'bytes32' },
+    ],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: '', internalType: 'uint256', type: 'uint256' },
+      { name: '', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'planetSlots',
+    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'planetId', internalType: 'uint256', type: 'uint256' },
+      { name: 'moduleId', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'setModule',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+] as const
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// EquipmentSystem
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+export const equipmentSystemAbi = [
+  {
+    type: 'constructor',
+    inputs: [{ name: '_entity', internalType: 'address', type: 'address' }],
+    stateMutability: 'nonpayable',
+  },
+  { type: 'error', inputs: [], name: 'AlreadyRegistered' },
+  { type: 'error', inputs: [], name: 'NotSystem' },
+  {
+    type: 'error',
+    inputs: [{ name: 'owner', internalType: 'address', type: 'address' }],
+    name: 'OwnableInvalidOwner',
+  },
+  {
+    type: 'error',
+    inputs: [{ name: 'account', internalType: 'address', type: 'address' }],
+    name: 'OwnableUnauthorizedAccount',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
+        name: 'previousOwner',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'newOwner',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+    ],
+    name: 'OwnershipTransferred',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'scenario', internalType: 'contract IScenario', type: 'address' },
+    ],
+    name: 'activateEntity',
+    outputs: [{ name: '', internalType: 'address', type: 'address' }],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'scenario', internalType: 'contract IScenario', type: 'address' },
+      { name: 'tokenId', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'applyEffects',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'scenario', internalType: 'contract IScenario', type: 'address' },
+      { name: 'tokenId', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'applyEffectsAndBurn',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'entityAddress',
+    outputs: [{ name: '', internalType: 'address', type: 'address' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'scenario', internalType: 'contract IScenario', type: 'address' },
+    ],
+    name: 'getAllModules',
+    outputs: [
+      {
+        name: '',
+        internalType: 'struct IEquipmentEntity.Module[]',
+        type: 'tuple[]',
+        components: [
+          { name: 'id', internalType: 'uint32', type: 'uint32' },
+          { name: 'name', internalType: 'bytes32', type: 'bytes32' },
+          { name: 'description', internalType: 'bytes32', type: 'bytes32' },
+          { name: 'tags', internalType: 'uint8[4]', type: 'uint8[4]' },
+        ],
+      },
+    ],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'getId',
+    outputs: [{ name: '', internalType: 'string', type: 'string' }],
+    stateMutability: 'pure',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'scenario', internalType: 'contract IScenario', type: 'address' },
+      { name: 'tokenId', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'getPlayerModules',
+    outputs: [
+      {
+        name: '',
+        internalType: 'struct IEquipmentEntity.Module[]',
+        type: 'tuple[]',
+        components: [
+          { name: 'id', internalType: 'uint32', type: 'uint32' },
+          { name: 'name', internalType: 'bytes32', type: 'bytes32' },
+          { name: 'description', internalType: 'bytes32', type: 'bytes32' },
+          { name: 'tags', internalType: 'uint8[4]', type: 'uint8[4]' },
+        ],
+      },
+    ],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      {
+        name: 'controller',
+        internalType: 'contract ISystemController',
+        type: 'address',
+      },
+      { name: 'scenario', internalType: 'contract IScenario', type: 'address' },
+      { name: 'tokenId', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'init',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'owner',
+    outputs: [{ name: '', internalType: 'address', type: 'address' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'scenario', internalType: 'contract IScenario', type: 'address' },
+      { name: 'tokenId', internalType: 'uint256', type: 'uint256' },
+      { name: 'moduleId', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'placeModule',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'systemController', internalType: 'address', type: 'address' },
+    ],
+    name: 'registerSystem',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'renounceOwnership',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: 'tokenId', internalType: 'uint256', type: 'uint256' }],
+    name: 'sync',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: 'newOwner', internalType: 'address', type: 'address' }],
+    name: 'transferOwnership',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'newEntityAddress', internalType: 'address', type: 'address' },
+    ],
+    name: 'updateEntityAddress',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+] as const
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // IERC20
@@ -41,6 +347,89 @@ export const ierc20Abi = [
       { name: 'amount', internalType: 'uint256', type: 'uint256' },
     ],
     name: 'mint',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+] as const
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// IEquipmentEntity
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+export const iEquipmentEntityAbi = [
+  {
+    type: 'function',
+    inputs: [
+      { name: 'name', internalType: 'bytes32', type: 'bytes32' },
+      { name: 'description', internalType: 'bytes32', type: 'bytes32' },
+      { name: 'tags', internalType: 'uint8[4]', type: 'uint8[4]' },
+    ],
+    name: 'addModule',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: 'planetId', internalType: 'uint256', type: 'uint256' }],
+    name: 'clearModules',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'getAllModules',
+    outputs: [
+      {
+        name: '',
+        internalType: 'struct IEquipmentEntity.Module[]',
+        type: 'tuple[]',
+        components: [
+          { name: 'id', internalType: 'uint32', type: 'uint32' },
+          { name: 'name', internalType: 'bytes32', type: 'bytes32' },
+          { name: 'description', internalType: 'bytes32', type: 'bytes32' },
+          { name: 'tags', internalType: 'uint8[4]', type: 'uint8[4]' },
+        ],
+      },
+    ],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: 'planetId', internalType: 'uint256', type: 'uint256' }],
+    name: 'getPlayerModules',
+    outputs: [
+      {
+        name: '',
+        internalType: 'struct IEquipmentEntity.Module[]',
+        type: 'tuple[]',
+        components: [
+          { name: 'id', internalType: 'uint32', type: 'uint32' },
+          { name: 'name', internalType: 'bytes32', type: 'bytes32' },
+          { name: 'description', internalType: 'bytes32', type: 'bytes32' },
+          { name: 'tags', internalType: 'uint8[4]', type: 'uint8[4]' },
+        ],
+      },
+    ],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'scenario', internalType: 'contract IScenario', type: 'address' },
+      { name: '_system', internalType: 'address', type: 'address' },
+    ],
+    name: 'initialize',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'planetId', internalType: 'uint256', type: 'uint256' },
+      { name: 'moduleId', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'setModule',
     outputs: [],
     stateMutability: 'nonpayable',
   },
@@ -604,6 +993,7 @@ export const jobSystemAbi = [
   { type: 'error', inputs: [], name: 'AlreadyRegistered' },
   { type: 'error', inputs: [], name: 'NoActiveJob' },
   { type: 'error', inputs: [], name: 'NoTimePassed' },
+  { type: 'error', inputs: [], name: 'NotSystem' },
   {
     type: 'error',
     inputs: [{ name: 'owner', internalType: 'address', type: 'address' }],
@@ -1787,6 +2177,7 @@ export const supplySystemAbi = [
   },
   { type: 'error', inputs: [], name: 'AlreadyRegistered' },
   { type: 'error', inputs: [], name: 'NotAdmin' },
+  { type: 'error', inputs: [], name: 'NotSystem' },
   {
     type: 'error',
     inputs: [{ name: 'owner', internalType: 'address', type: 'address' }],
@@ -2081,7 +2472,7 @@ export const systemControllerAbi = [
     type: 'function',
     inputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
     name: 'systems',
-    outputs: [{ name: '', internalType: 'contract ISystem', type: 'address' }],
+    outputs: [{ name: '', internalType: 'string', type: 'string' }],
     stateMutability: 'view',
   },
   {
@@ -2206,6 +2597,388 @@ export const erc20Abi = [
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link equipmentEntityAbi}__
+ */
+export const useReadEquipmentEntity = /*#__PURE__*/ createUseReadContract({
+  abi: equipmentEntityAbi,
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link equipmentEntityAbi}__ and `functionName` set to `"getAllModules"`
+ */
+export const useReadEquipmentEntityGetAllModules =
+  /*#__PURE__*/ createUseReadContract({
+    abi: equipmentEntityAbi,
+    functionName: 'getAllModules',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link equipmentEntityAbi}__ and `functionName` set to `"getPlayerModules"`
+ */
+export const useReadEquipmentEntityGetPlayerModules =
+  /*#__PURE__*/ createUseReadContract({
+    abi: equipmentEntityAbi,
+    functionName: 'getPlayerModules',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link equipmentEntityAbi}__ and `functionName` set to `"modules"`
+ */
+export const useReadEquipmentEntityModules =
+  /*#__PURE__*/ createUseReadContract({
+    abi: equipmentEntityAbi,
+    functionName: 'modules',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link equipmentEntityAbi}__ and `functionName` set to `"planetSlots"`
+ */
+export const useReadEquipmentEntityPlanetSlots =
+  /*#__PURE__*/ createUseReadContract({
+    abi: equipmentEntityAbi,
+    functionName: 'planetSlots',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link equipmentEntityAbi}__
+ */
+export const useWriteEquipmentEntity = /*#__PURE__*/ createUseWriteContract({
+  abi: equipmentEntityAbi,
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link equipmentEntityAbi}__ and `functionName` set to `"addModule"`
+ */
+export const useWriteEquipmentEntityAddModule =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: equipmentEntityAbi,
+    functionName: 'addModule',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link equipmentEntityAbi}__ and `functionName` set to `"clearModules"`
+ */
+export const useWriteEquipmentEntityClearModules =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: equipmentEntityAbi,
+    functionName: 'clearModules',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link equipmentEntityAbi}__ and `functionName` set to `"initialize"`
+ */
+export const useWriteEquipmentEntityInitialize =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: equipmentEntityAbi,
+    functionName: 'initialize',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link equipmentEntityAbi}__ and `functionName` set to `"setModule"`
+ */
+export const useWriteEquipmentEntitySetModule =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: equipmentEntityAbi,
+    functionName: 'setModule',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link equipmentEntityAbi}__
+ */
+export const useSimulateEquipmentEntity =
+  /*#__PURE__*/ createUseSimulateContract({ abi: equipmentEntityAbi })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link equipmentEntityAbi}__ and `functionName` set to `"addModule"`
+ */
+export const useSimulateEquipmentEntityAddModule =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: equipmentEntityAbi,
+    functionName: 'addModule',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link equipmentEntityAbi}__ and `functionName` set to `"clearModules"`
+ */
+export const useSimulateEquipmentEntityClearModules =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: equipmentEntityAbi,
+    functionName: 'clearModules',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link equipmentEntityAbi}__ and `functionName` set to `"initialize"`
+ */
+export const useSimulateEquipmentEntityInitialize =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: equipmentEntityAbi,
+    functionName: 'initialize',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link equipmentEntityAbi}__ and `functionName` set to `"setModule"`
+ */
+export const useSimulateEquipmentEntitySetModule =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: equipmentEntityAbi,
+    functionName: 'setModule',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link equipmentSystemAbi}__
+ */
+export const useReadEquipmentSystem = /*#__PURE__*/ createUseReadContract({
+  abi: equipmentSystemAbi,
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link equipmentSystemAbi}__ and `functionName` set to `"entityAddress"`
+ */
+export const useReadEquipmentSystemEntityAddress =
+  /*#__PURE__*/ createUseReadContract({
+    abi: equipmentSystemAbi,
+    functionName: 'entityAddress',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link equipmentSystemAbi}__ and `functionName` set to `"getAllModules"`
+ */
+export const useReadEquipmentSystemGetAllModules =
+  /*#__PURE__*/ createUseReadContract({
+    abi: equipmentSystemAbi,
+    functionName: 'getAllModules',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link equipmentSystemAbi}__ and `functionName` set to `"getId"`
+ */
+export const useReadEquipmentSystemGetId = /*#__PURE__*/ createUseReadContract({
+  abi: equipmentSystemAbi,
+  functionName: 'getId',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link equipmentSystemAbi}__ and `functionName` set to `"getPlayerModules"`
+ */
+export const useReadEquipmentSystemGetPlayerModules =
+  /*#__PURE__*/ createUseReadContract({
+    abi: equipmentSystemAbi,
+    functionName: 'getPlayerModules',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link equipmentSystemAbi}__ and `functionName` set to `"owner"`
+ */
+export const useReadEquipmentSystemOwner = /*#__PURE__*/ createUseReadContract({
+  abi: equipmentSystemAbi,
+  functionName: 'owner',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link equipmentSystemAbi}__
+ */
+export const useWriteEquipmentSystem = /*#__PURE__*/ createUseWriteContract({
+  abi: equipmentSystemAbi,
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link equipmentSystemAbi}__ and `functionName` set to `"activateEntity"`
+ */
+export const useWriteEquipmentSystemActivateEntity =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: equipmentSystemAbi,
+    functionName: 'activateEntity',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link equipmentSystemAbi}__ and `functionName` set to `"applyEffects"`
+ */
+export const useWriteEquipmentSystemApplyEffects =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: equipmentSystemAbi,
+    functionName: 'applyEffects',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link equipmentSystemAbi}__ and `functionName` set to `"applyEffectsAndBurn"`
+ */
+export const useWriteEquipmentSystemApplyEffectsAndBurn =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: equipmentSystemAbi,
+    functionName: 'applyEffectsAndBurn',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link equipmentSystemAbi}__ and `functionName` set to `"init"`
+ */
+export const useWriteEquipmentSystemInit = /*#__PURE__*/ createUseWriteContract(
+  { abi: equipmentSystemAbi, functionName: 'init' },
+)
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link equipmentSystemAbi}__ and `functionName` set to `"placeModule"`
+ */
+export const useWriteEquipmentSystemPlaceModule =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: equipmentSystemAbi,
+    functionName: 'placeModule',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link equipmentSystemAbi}__ and `functionName` set to `"registerSystem"`
+ */
+export const useWriteEquipmentSystemRegisterSystem =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: equipmentSystemAbi,
+    functionName: 'registerSystem',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link equipmentSystemAbi}__ and `functionName` set to `"renounceOwnership"`
+ */
+export const useWriteEquipmentSystemRenounceOwnership =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: equipmentSystemAbi,
+    functionName: 'renounceOwnership',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link equipmentSystemAbi}__ and `functionName` set to `"sync"`
+ */
+export const useWriteEquipmentSystemSync = /*#__PURE__*/ createUseWriteContract(
+  { abi: equipmentSystemAbi, functionName: 'sync' },
+)
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link equipmentSystemAbi}__ and `functionName` set to `"transferOwnership"`
+ */
+export const useWriteEquipmentSystemTransferOwnership =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: equipmentSystemAbi,
+    functionName: 'transferOwnership',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link equipmentSystemAbi}__ and `functionName` set to `"updateEntityAddress"`
+ */
+export const useWriteEquipmentSystemUpdateEntityAddress =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: equipmentSystemAbi,
+    functionName: 'updateEntityAddress',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link equipmentSystemAbi}__
+ */
+export const useSimulateEquipmentSystem =
+  /*#__PURE__*/ createUseSimulateContract({ abi: equipmentSystemAbi })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link equipmentSystemAbi}__ and `functionName` set to `"activateEntity"`
+ */
+export const useSimulateEquipmentSystemActivateEntity =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: equipmentSystemAbi,
+    functionName: 'activateEntity',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link equipmentSystemAbi}__ and `functionName` set to `"applyEffects"`
+ */
+export const useSimulateEquipmentSystemApplyEffects =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: equipmentSystemAbi,
+    functionName: 'applyEffects',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link equipmentSystemAbi}__ and `functionName` set to `"applyEffectsAndBurn"`
+ */
+export const useSimulateEquipmentSystemApplyEffectsAndBurn =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: equipmentSystemAbi,
+    functionName: 'applyEffectsAndBurn',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link equipmentSystemAbi}__ and `functionName` set to `"init"`
+ */
+export const useSimulateEquipmentSystemInit =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: equipmentSystemAbi,
+    functionName: 'init',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link equipmentSystemAbi}__ and `functionName` set to `"placeModule"`
+ */
+export const useSimulateEquipmentSystemPlaceModule =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: equipmentSystemAbi,
+    functionName: 'placeModule',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link equipmentSystemAbi}__ and `functionName` set to `"registerSystem"`
+ */
+export const useSimulateEquipmentSystemRegisterSystem =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: equipmentSystemAbi,
+    functionName: 'registerSystem',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link equipmentSystemAbi}__ and `functionName` set to `"renounceOwnership"`
+ */
+export const useSimulateEquipmentSystemRenounceOwnership =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: equipmentSystemAbi,
+    functionName: 'renounceOwnership',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link equipmentSystemAbi}__ and `functionName` set to `"sync"`
+ */
+export const useSimulateEquipmentSystemSync =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: equipmentSystemAbi,
+    functionName: 'sync',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link equipmentSystemAbi}__ and `functionName` set to `"transferOwnership"`
+ */
+export const useSimulateEquipmentSystemTransferOwnership =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: equipmentSystemAbi,
+    functionName: 'transferOwnership',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link equipmentSystemAbi}__ and `functionName` set to `"updateEntityAddress"`
+ */
+export const useSimulateEquipmentSystemUpdateEntityAddress =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: equipmentSystemAbi,
+    functionName: 'updateEntityAddress',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link equipmentSystemAbi}__
+ */
+export const useWatchEquipmentSystemEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({ abi: equipmentSystemAbi })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link equipmentSystemAbi}__ and `eventName` set to `"OwnershipTransferred"`
+ */
+export const useWatchEquipmentSystemOwnershipTransferredEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: equipmentSystemAbi,
+    eventName: 'OwnershipTransferred',
+  })
+
+/**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link ierc20Abi}__
  */
 export const useReadIerc20 = /*#__PURE__*/ createUseReadContract({
@@ -2265,6 +3038,116 @@ export const useSimulateIerc20Mint = /*#__PURE__*/ createUseSimulateContract({
   abi: ierc20Abi,
   functionName: 'mint',
 })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link iEquipmentEntityAbi}__
+ */
+export const useReadIEquipmentEntity = /*#__PURE__*/ createUseReadContract({
+  abi: iEquipmentEntityAbi,
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link iEquipmentEntityAbi}__ and `functionName` set to `"getAllModules"`
+ */
+export const useReadIEquipmentEntityGetAllModules =
+  /*#__PURE__*/ createUseReadContract({
+    abi: iEquipmentEntityAbi,
+    functionName: 'getAllModules',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link iEquipmentEntityAbi}__ and `functionName` set to `"getPlayerModules"`
+ */
+export const useReadIEquipmentEntityGetPlayerModules =
+  /*#__PURE__*/ createUseReadContract({
+    abi: iEquipmentEntityAbi,
+    functionName: 'getPlayerModules',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link iEquipmentEntityAbi}__
+ */
+export const useWriteIEquipmentEntity = /*#__PURE__*/ createUseWriteContract({
+  abi: iEquipmentEntityAbi,
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link iEquipmentEntityAbi}__ and `functionName` set to `"addModule"`
+ */
+export const useWriteIEquipmentEntityAddModule =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: iEquipmentEntityAbi,
+    functionName: 'addModule',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link iEquipmentEntityAbi}__ and `functionName` set to `"clearModules"`
+ */
+export const useWriteIEquipmentEntityClearModules =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: iEquipmentEntityAbi,
+    functionName: 'clearModules',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link iEquipmentEntityAbi}__ and `functionName` set to `"initialize"`
+ */
+export const useWriteIEquipmentEntityInitialize =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: iEquipmentEntityAbi,
+    functionName: 'initialize',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link iEquipmentEntityAbi}__ and `functionName` set to `"setModule"`
+ */
+export const useWriteIEquipmentEntitySetModule =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: iEquipmentEntityAbi,
+    functionName: 'setModule',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link iEquipmentEntityAbi}__
+ */
+export const useSimulateIEquipmentEntity =
+  /*#__PURE__*/ createUseSimulateContract({ abi: iEquipmentEntityAbi })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link iEquipmentEntityAbi}__ and `functionName` set to `"addModule"`
+ */
+export const useSimulateIEquipmentEntityAddModule =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: iEquipmentEntityAbi,
+    functionName: 'addModule',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link iEquipmentEntityAbi}__ and `functionName` set to `"clearModules"`
+ */
+export const useSimulateIEquipmentEntityClearModules =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: iEquipmentEntityAbi,
+    functionName: 'clearModules',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link iEquipmentEntityAbi}__ and `functionName` set to `"initialize"`
+ */
+export const useSimulateIEquipmentEntityInitialize =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: iEquipmentEntityAbi,
+    functionName: 'initialize',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link iEquipmentEntityAbi}__ and `functionName` set to `"setModule"`
+ */
+export const useSimulateIEquipmentEntitySetModule =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: iEquipmentEntityAbi,
+    functionName: 'setModule',
+  })
 
 /**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link iJobEntityAbi}__
@@ -4979,6 +5862,383 @@ export const useWatchErc20TransferEvent =
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link equipmentEntityAbi}__
+ */
+export const readEquipmentEntity = /*#__PURE__*/ createReadContract({
+  abi: equipmentEntityAbi,
+})
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link equipmentEntityAbi}__ and `functionName` set to `"getAllModules"`
+ */
+export const readEquipmentEntityGetAllModules =
+  /*#__PURE__*/ createReadContract({
+    abi: equipmentEntityAbi,
+    functionName: 'getAllModules',
+  })
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link equipmentEntityAbi}__ and `functionName` set to `"getPlayerModules"`
+ */
+export const readEquipmentEntityGetPlayerModules =
+  /*#__PURE__*/ createReadContract({
+    abi: equipmentEntityAbi,
+    functionName: 'getPlayerModules',
+  })
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link equipmentEntityAbi}__ and `functionName` set to `"modules"`
+ */
+export const readEquipmentEntityModules = /*#__PURE__*/ createReadContract({
+  abi: equipmentEntityAbi,
+  functionName: 'modules',
+})
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link equipmentEntityAbi}__ and `functionName` set to `"planetSlots"`
+ */
+export const readEquipmentEntityPlanetSlots = /*#__PURE__*/ createReadContract({
+  abi: equipmentEntityAbi,
+  functionName: 'planetSlots',
+})
+
+/**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link equipmentEntityAbi}__
+ */
+export const writeEquipmentEntity = /*#__PURE__*/ createWriteContract({
+  abi: equipmentEntityAbi,
+})
+
+/**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link equipmentEntityAbi}__ and `functionName` set to `"addModule"`
+ */
+export const writeEquipmentEntityAddModule = /*#__PURE__*/ createWriteContract({
+  abi: equipmentEntityAbi,
+  functionName: 'addModule',
+})
+
+/**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link equipmentEntityAbi}__ and `functionName` set to `"clearModules"`
+ */
+export const writeEquipmentEntityClearModules =
+  /*#__PURE__*/ createWriteContract({
+    abi: equipmentEntityAbi,
+    functionName: 'clearModules',
+  })
+
+/**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link equipmentEntityAbi}__ and `functionName` set to `"initialize"`
+ */
+export const writeEquipmentEntityInitialize = /*#__PURE__*/ createWriteContract(
+  { abi: equipmentEntityAbi, functionName: 'initialize' },
+)
+
+/**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link equipmentEntityAbi}__ and `functionName` set to `"setModule"`
+ */
+export const writeEquipmentEntitySetModule = /*#__PURE__*/ createWriteContract({
+  abi: equipmentEntityAbi,
+  functionName: 'setModule',
+})
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link equipmentEntityAbi}__
+ */
+export const simulateEquipmentEntity = /*#__PURE__*/ createSimulateContract({
+  abi: equipmentEntityAbi,
+})
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link equipmentEntityAbi}__ and `functionName` set to `"addModule"`
+ */
+export const simulateEquipmentEntityAddModule =
+  /*#__PURE__*/ createSimulateContract({
+    abi: equipmentEntityAbi,
+    functionName: 'addModule',
+  })
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link equipmentEntityAbi}__ and `functionName` set to `"clearModules"`
+ */
+export const simulateEquipmentEntityClearModules =
+  /*#__PURE__*/ createSimulateContract({
+    abi: equipmentEntityAbi,
+    functionName: 'clearModules',
+  })
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link equipmentEntityAbi}__ and `functionName` set to `"initialize"`
+ */
+export const simulateEquipmentEntityInitialize =
+  /*#__PURE__*/ createSimulateContract({
+    abi: equipmentEntityAbi,
+    functionName: 'initialize',
+  })
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link equipmentEntityAbi}__ and `functionName` set to `"setModule"`
+ */
+export const simulateEquipmentEntitySetModule =
+  /*#__PURE__*/ createSimulateContract({
+    abi: equipmentEntityAbi,
+    functionName: 'setModule',
+  })
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link equipmentSystemAbi}__
+ */
+export const readEquipmentSystem = /*#__PURE__*/ createReadContract({
+  abi: equipmentSystemAbi,
+})
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link equipmentSystemAbi}__ and `functionName` set to `"entityAddress"`
+ */
+export const readEquipmentSystemEntityAddress =
+  /*#__PURE__*/ createReadContract({
+    abi: equipmentSystemAbi,
+    functionName: 'entityAddress',
+  })
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link equipmentSystemAbi}__ and `functionName` set to `"getAllModules"`
+ */
+export const readEquipmentSystemGetAllModules =
+  /*#__PURE__*/ createReadContract({
+    abi: equipmentSystemAbi,
+    functionName: 'getAllModules',
+  })
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link equipmentSystemAbi}__ and `functionName` set to `"getId"`
+ */
+export const readEquipmentSystemGetId = /*#__PURE__*/ createReadContract({
+  abi: equipmentSystemAbi,
+  functionName: 'getId',
+})
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link equipmentSystemAbi}__ and `functionName` set to `"getPlayerModules"`
+ */
+export const readEquipmentSystemGetPlayerModules =
+  /*#__PURE__*/ createReadContract({
+    abi: equipmentSystemAbi,
+    functionName: 'getPlayerModules',
+  })
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link equipmentSystemAbi}__ and `functionName` set to `"owner"`
+ */
+export const readEquipmentSystemOwner = /*#__PURE__*/ createReadContract({
+  abi: equipmentSystemAbi,
+  functionName: 'owner',
+})
+
+/**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link equipmentSystemAbi}__
+ */
+export const writeEquipmentSystem = /*#__PURE__*/ createWriteContract({
+  abi: equipmentSystemAbi,
+})
+
+/**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link equipmentSystemAbi}__ and `functionName` set to `"activateEntity"`
+ */
+export const writeEquipmentSystemActivateEntity =
+  /*#__PURE__*/ createWriteContract({
+    abi: equipmentSystemAbi,
+    functionName: 'activateEntity',
+  })
+
+/**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link equipmentSystemAbi}__ and `functionName` set to `"applyEffects"`
+ */
+export const writeEquipmentSystemApplyEffects =
+  /*#__PURE__*/ createWriteContract({
+    abi: equipmentSystemAbi,
+    functionName: 'applyEffects',
+  })
+
+/**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link equipmentSystemAbi}__ and `functionName` set to `"applyEffectsAndBurn"`
+ */
+export const writeEquipmentSystemApplyEffectsAndBurn =
+  /*#__PURE__*/ createWriteContract({
+    abi: equipmentSystemAbi,
+    functionName: 'applyEffectsAndBurn',
+  })
+
+/**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link equipmentSystemAbi}__ and `functionName` set to `"init"`
+ */
+export const writeEquipmentSystemInit = /*#__PURE__*/ createWriteContract({
+  abi: equipmentSystemAbi,
+  functionName: 'init',
+})
+
+/**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link equipmentSystemAbi}__ and `functionName` set to `"placeModule"`
+ */
+export const writeEquipmentSystemPlaceModule =
+  /*#__PURE__*/ createWriteContract({
+    abi: equipmentSystemAbi,
+    functionName: 'placeModule',
+  })
+
+/**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link equipmentSystemAbi}__ and `functionName` set to `"registerSystem"`
+ */
+export const writeEquipmentSystemRegisterSystem =
+  /*#__PURE__*/ createWriteContract({
+    abi: equipmentSystemAbi,
+    functionName: 'registerSystem',
+  })
+
+/**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link equipmentSystemAbi}__ and `functionName` set to `"renounceOwnership"`
+ */
+export const writeEquipmentSystemRenounceOwnership =
+  /*#__PURE__*/ createWriteContract({
+    abi: equipmentSystemAbi,
+    functionName: 'renounceOwnership',
+  })
+
+/**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link equipmentSystemAbi}__ and `functionName` set to `"sync"`
+ */
+export const writeEquipmentSystemSync = /*#__PURE__*/ createWriteContract({
+  abi: equipmentSystemAbi,
+  functionName: 'sync',
+})
+
+/**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link equipmentSystemAbi}__ and `functionName` set to `"transferOwnership"`
+ */
+export const writeEquipmentSystemTransferOwnership =
+  /*#__PURE__*/ createWriteContract({
+    abi: equipmentSystemAbi,
+    functionName: 'transferOwnership',
+  })
+
+/**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link equipmentSystemAbi}__ and `functionName` set to `"updateEntityAddress"`
+ */
+export const writeEquipmentSystemUpdateEntityAddress =
+  /*#__PURE__*/ createWriteContract({
+    abi: equipmentSystemAbi,
+    functionName: 'updateEntityAddress',
+  })
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link equipmentSystemAbi}__
+ */
+export const simulateEquipmentSystem = /*#__PURE__*/ createSimulateContract({
+  abi: equipmentSystemAbi,
+})
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link equipmentSystemAbi}__ and `functionName` set to `"activateEntity"`
+ */
+export const simulateEquipmentSystemActivateEntity =
+  /*#__PURE__*/ createSimulateContract({
+    abi: equipmentSystemAbi,
+    functionName: 'activateEntity',
+  })
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link equipmentSystemAbi}__ and `functionName` set to `"applyEffects"`
+ */
+export const simulateEquipmentSystemApplyEffects =
+  /*#__PURE__*/ createSimulateContract({
+    abi: equipmentSystemAbi,
+    functionName: 'applyEffects',
+  })
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link equipmentSystemAbi}__ and `functionName` set to `"applyEffectsAndBurn"`
+ */
+export const simulateEquipmentSystemApplyEffectsAndBurn =
+  /*#__PURE__*/ createSimulateContract({
+    abi: equipmentSystemAbi,
+    functionName: 'applyEffectsAndBurn',
+  })
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link equipmentSystemAbi}__ and `functionName` set to `"init"`
+ */
+export const simulateEquipmentSystemInit = /*#__PURE__*/ createSimulateContract(
+  { abi: equipmentSystemAbi, functionName: 'init' },
+)
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link equipmentSystemAbi}__ and `functionName` set to `"placeModule"`
+ */
+export const simulateEquipmentSystemPlaceModule =
+  /*#__PURE__*/ createSimulateContract({
+    abi: equipmentSystemAbi,
+    functionName: 'placeModule',
+  })
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link equipmentSystemAbi}__ and `functionName` set to `"registerSystem"`
+ */
+export const simulateEquipmentSystemRegisterSystem =
+  /*#__PURE__*/ createSimulateContract({
+    abi: equipmentSystemAbi,
+    functionName: 'registerSystem',
+  })
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link equipmentSystemAbi}__ and `functionName` set to `"renounceOwnership"`
+ */
+export const simulateEquipmentSystemRenounceOwnership =
+  /*#__PURE__*/ createSimulateContract({
+    abi: equipmentSystemAbi,
+    functionName: 'renounceOwnership',
+  })
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link equipmentSystemAbi}__ and `functionName` set to `"sync"`
+ */
+export const simulateEquipmentSystemSync = /*#__PURE__*/ createSimulateContract(
+  { abi: equipmentSystemAbi, functionName: 'sync' },
+)
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link equipmentSystemAbi}__ and `functionName` set to `"transferOwnership"`
+ */
+export const simulateEquipmentSystemTransferOwnership =
+  /*#__PURE__*/ createSimulateContract({
+    abi: equipmentSystemAbi,
+    functionName: 'transferOwnership',
+  })
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link equipmentSystemAbi}__ and `functionName` set to `"updateEntityAddress"`
+ */
+export const simulateEquipmentSystemUpdateEntityAddress =
+  /*#__PURE__*/ createSimulateContract({
+    abi: equipmentSystemAbi,
+    functionName: 'updateEntityAddress',
+  })
+
+/**
+ * Wraps __{@link watchContractEvent}__ with `abi` set to __{@link equipmentSystemAbi}__
+ */
+export const watchEquipmentSystemEvent = /*#__PURE__*/ createWatchContractEvent(
+  { abi: equipmentSystemAbi },
+)
+
+/**
+ * Wraps __{@link watchContractEvent}__ with `abi` set to __{@link equipmentSystemAbi}__ and `eventName` set to `"OwnershipTransferred"`
+ */
+export const watchEquipmentSystemOwnershipTransferredEvent =
+  /*#__PURE__*/ createWatchContractEvent({
+    abi: equipmentSystemAbi,
+    eventName: 'OwnershipTransferred',
+  })
+
+/**
  * Wraps __{@link readContract}__ with `abi` set to __{@link ierc20Abi}__
  */
 export const readIerc20 = /*#__PURE__*/ createReadContract({ abi: ierc20Abi })
@@ -5034,6 +6294,113 @@ export const simulateIerc20Mint = /*#__PURE__*/ createSimulateContract({
   abi: ierc20Abi,
   functionName: 'mint',
 })
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link iEquipmentEntityAbi}__
+ */
+export const readIEquipmentEntity = /*#__PURE__*/ createReadContract({
+  abi: iEquipmentEntityAbi,
+})
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link iEquipmentEntityAbi}__ and `functionName` set to `"getAllModules"`
+ */
+export const readIEquipmentEntityGetAllModules =
+  /*#__PURE__*/ createReadContract({
+    abi: iEquipmentEntityAbi,
+    functionName: 'getAllModules',
+  })
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link iEquipmentEntityAbi}__ and `functionName` set to `"getPlayerModules"`
+ */
+export const readIEquipmentEntityGetPlayerModules =
+  /*#__PURE__*/ createReadContract({
+    abi: iEquipmentEntityAbi,
+    functionName: 'getPlayerModules',
+  })
+
+/**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link iEquipmentEntityAbi}__
+ */
+export const writeIEquipmentEntity = /*#__PURE__*/ createWriteContract({
+  abi: iEquipmentEntityAbi,
+})
+
+/**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link iEquipmentEntityAbi}__ and `functionName` set to `"addModule"`
+ */
+export const writeIEquipmentEntityAddModule = /*#__PURE__*/ createWriteContract(
+  { abi: iEquipmentEntityAbi, functionName: 'addModule' },
+)
+
+/**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link iEquipmentEntityAbi}__ and `functionName` set to `"clearModules"`
+ */
+export const writeIEquipmentEntityClearModules =
+  /*#__PURE__*/ createWriteContract({
+    abi: iEquipmentEntityAbi,
+    functionName: 'clearModules',
+  })
+
+/**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link iEquipmentEntityAbi}__ and `functionName` set to `"initialize"`
+ */
+export const writeIEquipmentEntityInitialize =
+  /*#__PURE__*/ createWriteContract({
+    abi: iEquipmentEntityAbi,
+    functionName: 'initialize',
+  })
+
+/**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link iEquipmentEntityAbi}__ and `functionName` set to `"setModule"`
+ */
+export const writeIEquipmentEntitySetModule = /*#__PURE__*/ createWriteContract(
+  { abi: iEquipmentEntityAbi, functionName: 'setModule' },
+)
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link iEquipmentEntityAbi}__
+ */
+export const simulateIEquipmentEntity = /*#__PURE__*/ createSimulateContract({
+  abi: iEquipmentEntityAbi,
+})
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link iEquipmentEntityAbi}__ and `functionName` set to `"addModule"`
+ */
+export const simulateIEquipmentEntityAddModule =
+  /*#__PURE__*/ createSimulateContract({
+    abi: iEquipmentEntityAbi,
+    functionName: 'addModule',
+  })
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link iEquipmentEntityAbi}__ and `functionName` set to `"clearModules"`
+ */
+export const simulateIEquipmentEntityClearModules =
+  /*#__PURE__*/ createSimulateContract({
+    abi: iEquipmentEntityAbi,
+    functionName: 'clearModules',
+  })
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link iEquipmentEntityAbi}__ and `functionName` set to `"initialize"`
+ */
+export const simulateIEquipmentEntityInitialize =
+  /*#__PURE__*/ createSimulateContract({
+    abi: iEquipmentEntityAbi,
+    functionName: 'initialize',
+  })
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link iEquipmentEntityAbi}__ and `functionName` set to `"setModule"`
+ */
+export const simulateIEquipmentEntitySetModule =
+  /*#__PURE__*/ createSimulateContract({
+    abi: iEquipmentEntityAbi,
+    functionName: 'setModule',
+  })
 
 /**
  * Wraps __{@link readContract}__ with `abi` set to __{@link iJobEntityAbi}__

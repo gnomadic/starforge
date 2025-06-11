@@ -16,6 +16,7 @@ export type Deployment = {
   PlanetStats: Address;
   SupplySystem: Address;
   JobSystem: Address
+  EquipmentSystem: Address;
   // UpgradesSystem: Address;
   // DungeonMaster: Address;
   // EnergyToken: Address;

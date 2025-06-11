@@ -9,8 +9,11 @@ import { Wallet, Coins, Home, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useDeployment } from '@/hooks/useDeployment';
 import { useAccount } from 'wagmi';
 import { zeroAddress } from 'viem';
-import { useReadPlanetVAlphaTokensOfOwner } from '@/generated';
+import { useReadPlanetVAlphaTokensOfOwner, useReadScenarioGetEntity, useReadStatsEntityGetStatSet, useReadStatsEntityGetStatSetNames } from '@/generated';
 import WalletButton from '../WalletButton';
+import { useScenarios } from '../ScenarioContext';
+import { safeb32 } from '@/lib/utils/utils';
+import PlanetStats from '../codex/PlanetStats';
 
 interface PlanetModalProps {
   isOpen: boolean;
@@ -37,6 +40,8 @@ const PlanetModal: React.FC<PlanetModalProps> = ({ isOpen, onClose }) => {
 
   const [selectedTokenId, setSelectedTokenId] = useState<bigint>(BigInt(0));
   const { data: held } = useReadPlanetVAlphaTokensOfOwner({ args: [address ? address : zeroAddress], address: deploy.Planet })
+
+
 
 
   useEffect(() => {
@@ -107,14 +112,22 @@ const PlanetModal: React.FC<PlanetModalProps> = ({ isOpen, onClose }) => {
     }
   };
 
+  const { scenarios } = useScenarios();
+
+
+  const { data: whichEntity, error: whichError } = useReadScenarioGetEntity({ args: [deploy.PlanetStats], address: scenarios ? scenarios[0] : "0x0" })
+  const { data: statSets } = useReadStatsEntityGetStatSetNames({ args: [], address: whichEntity })
+  const { data: rarity, error: rarityError } = useReadStatsEntityGetStatSet({ args: [selectedTokenId, safeb32("RARITY")], address: whichEntity })
+
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
+
       <DialogContent className="max-w-sm mx-auto max-h-[80vh] overflow-y-auto bg-gray-900 border-gray-700">
 
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2 text-xl font-bold">
             <Home className="h-5 w-5 text-blue-400" />
-            Your Cosmic Planets
+            CODEX {' // '} PLANETARY BODY
           </DialogTitle>
         </DialogHeader>
 
@@ -138,14 +151,17 @@ const PlanetModal: React.FC<PlanetModalProps> = ({ isOpen, onClose }) => {
 
           {/* Planet Navigation */}
           <div className="flex items-center justify-between">
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={handlePreviousPlanet}
-              className="text-white/70 hover:text-white hover:bg-white/10"
-            >
-              <ChevronLeft className="h-4 w-4" />
-            </Button>
+
+            {held && held.length > 0 && (
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={handlePreviousPlanet}
+                className="text-white/70 hover:text-white hover:bg-white/10"
+              >
+                <ChevronLeft className="h-4 w-4" />
+              </Button>
+            )}
             {/*             
             <div className="text-center">
               <h3 className="font-semibold text-lg">{currentPlanet.name}</h3>
@@ -165,15 +181,17 @@ const PlanetModal: React.FC<PlanetModalProps> = ({ isOpen, onClose }) => {
                 </SelectContent>
               </Select>
             )}
+            {held && held.length > 0 && (
 
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={handleNextPlanet}
-              className="text-white/70 hover:text-white hover:bg-white/10"
-            >
-              <ChevronRight className="h-4 w-4" />
-            </Button>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={handleNextPlanet}
+                className="text-white/70 hover:text-white hover:bg-white/10"
+              >
+                <ChevronRight className="h-4 w-4" />
+              </Button>
+            )}
           </div>
 
           {/* Planet Image */}
@@ -186,6 +204,18 @@ const PlanetModal: React.FC<PlanetModalProps> = ({ isOpen, onClose }) => {
               </div>
             </div>
           </div>
+
+          {whichEntity && statSets?.map((statSet, index) => (
+
+            <PlanetStats
+              key={index}
+              // stats={entityData}
+              statSetName={statSet}
+              selectedTokenId={selectedTokenId}
+              whichEntity={whichEntity}
+            />
+          )
+          )}
 
           {/* Planet Stats - Made Smaller */}
           <div className="space-y-2">
@@ -204,8 +234,10 @@ const PlanetModal: React.FC<PlanetModalProps> = ({ isOpen, onClose }) => {
             ))}
           </div>
 
+
+
           {/* Action Buttons */}
-          <div className="space-y-3 pt-2">
+          <div className=" pt-2">
             {/* <Button
               className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-medium py-3"
             >
@@ -213,7 +245,7 @@ const PlanetModal: React.FC<PlanetModalProps> = ({ isOpen, onClose }) => {
               Connect Wallet
             </Button> */}
 
-                <WalletButton />
+            {/* <WalletButton /> */}
 
             <Button
               className="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-medium py-3"

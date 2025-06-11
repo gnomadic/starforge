@@ -68,7 +68,7 @@ module.exports = async (hre) => {
     log: true,
     args: [PlanetRenderer.address, SystemController.address],
   });
-  
+
 
   const StatsEntity = await deploy("StatsEntity", {
     from: deployer,
@@ -81,7 +81,7 @@ module.exports = async (hre) => {
     args: [StatsEntity.address],
   });
 
-  
+
   const SupplyToken = await deploy("SupplyToken", {
     from: deployer,
     log: true,
@@ -94,6 +94,11 @@ module.exports = async (hre) => {
   });
 
   const SupplyEntity = await deploy("SupplyEntity", {
+    from: deployer,
+    log: true,
+  });
+
+  const EquipmentEntity = await deploy("EquipmentEntity", {
     from: deployer,
     log: true,
   });
@@ -114,6 +119,12 @@ module.exports = async (hre) => {
     from: deployer,
     log: true,
     args: [JobEntity.address]
+  });
+
+  const EquipmentSystem = await deploy("EquipmentSystem", {
+    from: deployer,
+    log: true,
+    args: [EquipmentEntity.address]
   });
 
 
@@ -158,6 +169,10 @@ module.exports = async (hre) => {
     console.log('five');
     tx = await deployedSysController.registerSystem(JobSystem.address);
     await tx.wait();
+
+    console.log('six');
+    tx = await deployedSysController.registerSystem(EquipmentSystem.address);
+    await tx.wait();
   }
 
   console.log("----- done")
@@ -186,7 +201,7 @@ module.exports = async (hre) => {
   console.log("----- configuring renderer")
 
   if (!redo) {
-console.log('one ');
+    console.log('one ');
     tx = await deployedRenderer.addStepRenderer(SkyRenderer.address);
     await tx.wait();
     console.log('two ');
@@ -216,6 +231,7 @@ console.log('one ');
   object.PlanetStats = PlanetStats.address;
   object.SupplySystem = SupplySystem.address;
   object.JobSystem = JobSystem.address;
+  object.EquipmentSystem = EquipmentSystem.address;
   // object.UpgradesSystem = UpgradesSystem.address;
 
 
@@ -234,16 +250,16 @@ console.log('one ');
     && hre.network.name !== "10143"
     && hre.network.name !== "143") {
 
-      console.log("verifing");
+    console.log("verifing");
 
-      await verify(hre, Planet.address, "PlanetVAlpha", "tokens/", [PlanetRenderer.address, SystemController.address]);
-      await verify(hre, SystemController.address, "SystemController", "systems/", []);
-      await verify(hre, ScenarioFactory.address, "ScenarioFactory", "", [SystemController.address]);
-      await verify(hre, Scenario.address, "Scenario", "", []);
-      await verify(hre, PlanetStats.address, "StatsSystem", "systems/", [StatsEntity.address]);
-      await verify(hre, SupplySystem.address, "SupplySystem", "systems/", [SupplyTokenFactory.address, SupplyEntity.address]);
-      await verify(hre, JobSystem.address, "JobSystem", "systems/", [JobEntity.address]);
-      // await verify(hre, "0xeDb12e94f8D3b2C30CeAfCE938C6B1B2806DbDc9", "JobEntity", "entities/", []);
+    await verify(hre, Planet.address, "PlanetVAlpha", "tokens/", [PlanetRenderer.address, SystemController.address]);
+    await verify(hre, SystemController.address, "SystemController", "systems/", []);
+    await verify(hre, ScenarioFactory.address, "ScenarioFactory", "", [SystemController.address]);
+    await verify(hre, Scenario.address, "Scenario", "", []);
+    await verify(hre, PlanetStats.address, "StatsSystem", "systems/", [StatsEntity.address]);
+    await verify(hre, SupplySystem.address, "SupplySystem", "systems/", [SupplyTokenFactory.address, SupplyEntity.address]);
+    await verify(hre, JobSystem.address, "JobSystem", "systems/", [JobEntity.address]);
+    // await verify(hre, "0xeDb12e94f8D3b2C30CeAfCE938C6B1B2806DbDc9", "JobEntity", "entities/", []);
 
 
   }
