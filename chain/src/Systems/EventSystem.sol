@@ -11,7 +11,9 @@ import {console} from "hardhat/console.sol";
 interface IEventSystem {}
 
 contract EventSystem is ISystem, IEventSystem {
-    constructor(address _entity) ISystem(_entity) {}
+    constructor(address _entity) ISystem(_entity) {
+        entityAddress = _entity;
+    }
 
     function init(
         ISystemController controller,
@@ -30,5 +32,57 @@ contract EventSystem is ISystem, IEventSystem {
 
     function getId() external pure override returns (string memory) {
         return "EVENT";
+    }
+
+    // --- EventEntity wrappers ---
+
+    function addEvent(
+        IScenario scenario,
+        bytes32 name,
+        bytes32 description,
+        uint8[4] memory tags,
+        bool positive,
+        uint8 result
+    ) public {
+        IEventEntity entity = IEventEntity(scenario.getEntity(address(this)));
+        entity.addEvent(name, description, tags, positive, result);
+    }
+
+    function activateEvent(
+        IScenario scenario,
+        uint256 planetId,
+        uint256 eventId
+    ) public {
+        IEventEntity entity = IEventEntity(scenario.getEntity(address(this)));
+        entity.activateEvent(planetId, eventId);
+    }
+
+    function deactivateEvent(
+        IScenario scenario,
+        uint256 planetId,
+        uint256 eventId
+    ) public {
+        IEventEntity entity = IEventEntity(scenario.getEntity(address(this)));
+        entity.deactivateEvent(planetId, eventId);
+    }
+
+    function getAllEvents(
+        IScenario scenario
+    ) public view returns (IEventEntity.Event[] memory) {
+        IEventEntity entity = IEventEntity(scenario.getEntity(address(this)));
+        return entity.getAllEvents();
+    }
+
+    function getActiveEvents(
+        IScenario scenario,
+        uint256 planetId
+    ) public view returns (IEventEntity.Event[] memory) {
+        IEventEntity entity = IEventEntity(scenario.getEntity(address(this)));
+        return entity.getActiveEvents(planetId);
+    }
+
+    function clearEvents(IScenario scenario, uint256 planetId) public {
+        IEventEntity entity = IEventEntity(scenario.getEntity(address(this)));
+        entity.clearEvents(planetId);
     }
 }
