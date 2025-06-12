@@ -83,7 +83,7 @@ const PlanetView: React.FC<PlanetViewProps> = ({ allModules }) => {
           <div className="bg-red-900/90 border border-red-500 rounded-lg p-6 text-center">
             <AlertTriangle className="h-12 w-12 text-red-400 mx-auto mb-4" />
             <h2 className="text-2xl font-bold text-white mb-2">Base Destroyed!</h2>
-            <p className="text-white/80 mb-4">Your base couldn't survive the harsh cosmic environment.</p>
+            <p className="text-white/80 mb-4">Your base couldn&apos;t survive the harsh cosmic environment.</p>
             <p className="text-white/60 text-sm">Turn: {turnNumber - 1}</p>
           </div>
         </div>

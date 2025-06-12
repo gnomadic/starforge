@@ -16,6 +16,8 @@ export const Deployments: { [key: string]: Deployment } = {
     "SupplySystem": "0x8B8d5318Bc87587938aBbE92ac4abb71CcDD4451",
     "JobSystem": "0x4803b165381796276C7C211cCa649174BA2df81f",
     "EquipmentSystem": "0x0",
+    "CityBuilderSystem": "0x0",
+    "EventSystem": "0x0",
 
     currency: 'base eth',
     chain: 'base',
@@ -33,6 +35,8 @@ export const Deployments: { [key: string]: Deployment } = {
     "SupplySystem": "0xD2b8397C4897A06E668aae469249277b17466a87",
     "JobSystem": "0x19d35Ff38805669A8af512054651636cF30C5C8E",
     "EquipmentSystem": "0x0",
+    "CityBuilderSystem": "0x0",
+    "EventSystem": "0x0",
 
 
 
@@ -53,6 +57,8 @@ export const Deployments: { [key: string]: Deployment } = {
     SupplySystem: "0xFE013E6184872Cf96D3356E351aaFEd58217a737",
     JobSystem: "0x193019873d03B80E75f79d0798f82ad4a7D95897",
     "EquipmentSystem": "0x0",
+    "CityBuilderSystem": "0x0",
+    "EventSystem": "0x0",
 
     currency: 'monad test eth',
     chain: 'Monad Testnet',
@@ -68,9 +74,11 @@ export const Deployments: { [key: string]: Deployment } = {
     "SystemController": "0x5FbDB2315678afecb367f032d93F642f64180aa3",
     "ScenarioFactory": "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0",
     "PlanetStats": "0x610178dA211FEF7D417bC0e6FeD39F05609AD788",
-    "SupplySystem": "0x9A676e781A523b5d0C0e43731313A708CB607508",
-    "JobSystem": "0x959922bE3CAee4b8Cd9a407cc3ac1C251C2007B1",
-    "EquipmentSystem": "0x68B1D87F95878fE05B998F19b66F4baba5De1aed",
+    "SupplySystem": "0x9A9f2CCfdE556A7E9Ff0848998Aa4a0CFD8863AE",
+    "JobSystem": "0x3Aa5ebB10DC797CAC828524e59A333d0A371443c",
+    "EquipmentSystem": "0xc6e7DF5E7b4f2A278906862b61205850344D4e7d",
+    "CityBuilderSystem": "0x59b670e9fA9D0A427751Af201D676719a970857b",
+    "EventSystem": "0x4ed7c70F96B99c776995fB64377f0d4aB3B0e1C1",
 
 
     currency: 'eth',
@@ -89,6 +97,8 @@ export const Deployments: { [key: string]: Deployment } = {
     SupplySystem: "0x0",
     JobSystem: "0x0",
     EquipmentSystem: "0x0",
+    "CityBuilderSystem": "0x0",
+    "EventSystem": "0x0",
 
 
     currency: 'eth',
