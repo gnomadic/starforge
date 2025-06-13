@@ -14,6 +14,7 @@ import WalletButton from '../WalletButton';
 import { useScenarios } from '../ScenarioContext';
 import { safeb32 } from '@/lib/utils/utils';
 import PlanetStats from '../codex/PlanetStats';
+import MintSection from '../home/MintSection';
 
 interface PlanetModalProps {
   isOpen: boolean;
@@ -130,29 +131,13 @@ const PlanetModal: React.FC<PlanetModalProps> = ({ isOpen, onClose }) => {
             CODEX {' // '} PLANETARY BODY
           </DialogTitle>
         </DialogHeader>
+        {held && held.length > 0 && (
+          <div className="space-y-6">
 
-        <div className="space-y-6">
-          {/* Planet Selection */}
-          {/* <div className="space-y-3"> */}
-          {/* <label className="text-sm text-white/80">Select Active Planet:</label> */}
-          {/* <Select value={currentPlanet.id} onValueChange={handlePlanetSelect}>
-              <SelectTrigger className="bg-white/10  text-white">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent className="bg-gray-900 border-white/20">
-                {planets.map((planet) => (
-                  <SelectItem key={planet.id} value={planet.id} className="text-white hover:bg-white/10">
-                    {planet.name} ({planet.id})
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select> */}
-          {/* </div> */}
+            <div className="flex items-center justify-between">
 
-          {/* Planet Navigation */}
-          <div className="flex items-center justify-between">
 
-            {held && held.length > 0 && (
+
               <Button
                 variant="ghost"
                 size="sm"
@@ -161,13 +146,7 @@ const PlanetModal: React.FC<PlanetModalProps> = ({ isOpen, onClose }) => {
               >
                 <ChevronLeft className="h-4 w-4" />
               </Button>
-            )}
-            {/*             
-            <div className="text-center">
-              <h3 className="font-semibold text-lg">{currentPlanet.name}</h3>
-              <p className="text-sm text-white/60">{currentPlanet.id}</p>
-            </div> */}
-            {held && (
+
               <Select value={currentPlanet.id} onValueChange={handlePlanetSelect}>
                 <SelectTrigger className="bg-white/10  text-white">
                   <SelectValue />
@@ -180,8 +159,7 @@ const PlanetModal: React.FC<PlanetModalProps> = ({ isOpen, onClose }) => {
                   ))}
                 </SelectContent>
               </Select>
-            )}
-            {held && held.length > 0 && (
+
 
               <Button
                 variant="ghost"
@@ -191,77 +169,85 @@ const PlanetModal: React.FC<PlanetModalProps> = ({ isOpen, onClose }) => {
               >
                 <ChevronRight className="h-4 w-4" />
               </Button>
-            )}
-          </div>
 
-          {/* Planet Image */}
-          <div className="flex justify-center">
-            <div className={`w-32 h-32 rounded-lg bg-gradient-to-br ${currentPlanet.gradient} animate-pulse-slow shadow-lg shadow-purple-500/20 relative overflow-hidden`}>
-              <div className="absolute inset-2 rounded-lg bg-gradient-to-br from-blue-600/30 via-purple-700/30 to-pink-600/30 backdrop-blur-sm">
-                <div className="absolute top-4 left-4 w-6 h-6 rounded-full bg-green-400/40 animate-pulse"></div>
-                <div className="absolute bottom-6 right-6 w-4 h-4 rounded-full bg-yellow-400/40 animate-pulse"></div>
-                <div className="absolute top-10 right-4 w-3 h-3 rounded-full bg-red-400/40 animate-pulse"></div>
+
+            </div>
+
+
+            {/* Planet Image */}
+            <div className="flex justify-center">
+              <div className={`w-32 h-32 rounded-lg bg-gradient-to-br ${currentPlanet.gradient} animate-pulse-slow shadow-lg shadow-purple-500/20 relative overflow-hidden`}>
+                <div className="absolute inset-2 rounded-lg bg-gradient-to-br from-blue-600/30 via-purple-700/30 to-pink-600/30 backdrop-blur-sm">
+                  <div className="absolute top-4 left-4 w-6 h-6 rounded-full bg-green-400/40 animate-pulse"></div>
+                  <div className="absolute bottom-6 right-6 w-4 h-4 rounded-full bg-yellow-400/40 animate-pulse"></div>
+                  <div className="absolute top-10 right-4 w-3 h-3 rounded-full bg-red-400/40 animate-pulse"></div>
+                </div>
               </div>
             </div>
-          </div>
 
-          {whichEntity && statSets?.map((statSet, index) => (
+            {whichEntity && statSets?.map((statSet, index) => (
 
-            <PlanetStats
-              key={index}
-              // stats={entityData}
-              statSetName={statSet}
-              selectedTokenId={selectedTokenId}
-              whichEntity={whichEntity}
-            />
-          )
-          )}
+              <PlanetStats
+                key={index}
+                // stats={entityData}
+                statSetName={statSet}
+                selectedTokenId={selectedTokenId}
+                whichEntity={whichEntity}
+              />
+            )
+            )}
 
-          {/* Planet Stats - Made Smaller */}
-          <div className="space-y-2">
-            {/* <h3 className="text-base font-semibold text-center">Planet Statistics</h3> */}
-            {currentPlanet.stats.map((stat, index) => (
-              <div key={stat.name} className="space-y-1">
-                <div className="flex justify-between text-xs">
-                  <span className="text-white/80">{stat.name}</span>
-                  <span className="text-white font-medium">{stat.value}%</span>
+            {/* Planet Stats - Made Smaller */}
+            <div className="space-y-2">
+              {/* <h3 className="text-base font-semibold text-center">Planet Statistics</h3> */}
+              {currentPlanet.stats.map((stat, index) => (
+                <div key={stat.name} className="space-y-1">
+                  <div className="flex justify-between text-xs">
+                    <span className="text-white/80">{stat.name}</span>
+                    <span className="text-white font-medium">{stat.value}%</span>
+                  </div>
+                  <Progress
+                    value={stat.value}
+                    className={`h-1.5 bg-white/10 [&>div]:bg-gradient-to-r [&>div]:${stat.color}`}
+                  />
                 </div>
-                <Progress
-                  value={stat.value}
-                  className={`h-1.5 bg-white/10 [&>div]:bg-gradient-to-r [&>div]:${stat.color}`}
-                />
-              </div>
-            ))}
+              ))}
+            </div>
+
+
+
+            <div className=" pt-2">
+
+              <Button
+                className="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-medium py-3"
+              >
+                <Coins className="mr-2 h-4 w-4" />
+                Mint Planet NFT
+              </Button>
+            </div>
+
+          </div>
+        )}
+        {held && held.length == 0 && (
+
+          <div className="mt-4 text-center text-white/60 text-sm">
+            <div className=" pt-2">
+              {/* <Button
+                className="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-medium py-3"
+              >
+                <Coins className="mr-2 h-4 w-4" />
+                Mint Planet NFT
+              </Button> */}
+            </div>
+            <MintSection
+              forceMobile={true}
+            />
           </div>
 
 
-
-          {/* Action Buttons */}
-          <div className=" pt-2">
-            {/* <Button
-              className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-medium py-3"
-            >
-              <Wallet className="mr-2 h-4 w-4" />
-              Connect Wallet
-            </Button> */}
-
-            {/* <WalletButton /> */}
-
-            <Button
-              className="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-medium py-3"
-            >
-              <Coins className="mr-2 h-4 w-4" />
-              Mint Planet NFT
-            </Button>
-          </div>
-
-          {/* Planet Info */}
-          {/* <div className="text-center text-xs text-white/60 pt-2 border-t border-white/10">
-            Planet ID: {currentPlanet.id} • Discovered: {currentPlanet.discovered}
-          </div> */}
-        </div>
+        )}
       </DialogContent>
-    </Dialog>
+    </Dialog >
   );
 };
 
