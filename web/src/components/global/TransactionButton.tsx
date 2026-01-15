@@ -90,11 +90,15 @@ export function TransactionButton({
     }
   }
 
+
+// <Button className="w-full bg-gradient-to-r from-primary to-accent hover:from-primary hover:to-accent/30 text-black font-medium py-3"
+
   return (
     <div className="flex flex-col items-center gap-2">
       <Button
         className={cn(
           "min-w-[200px] font-medium transition-all",
+          state == "idle" && "bg-gradient-to-r from-primary to-accent hover:from-primary hover:to-accent/30",
           state === "success" && "bg-green-600 hover:bg-green-700 text-white",
           state === "error" && "bg-red-600 hover:bg-red-700 text-white",
           className,

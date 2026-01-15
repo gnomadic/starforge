@@ -5,8 +5,6 @@ import {ISystem, ISystemController} from "./interfaces/ISystem.sol";
 import {IScenario} from "../Scenario.sol";
 import {ISupplyEntity, IERC20} from "../entities/SupplyEntity.sol";
 import {SupplyTokenFactory} from "../tokens/SupplyTokenFactory.sol";
-import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
-import {LibClone} from "solady/utils/LibClone.sol";
 
 import {console} from "hardhat/console.sol";
 
@@ -25,41 +23,18 @@ interface ISupplySystem {
     ) external returns (address);
 }
 
-contract SupplySystem is ISystem, ISupplySystem, Ownable {
-    using LibClone for address;
-
+contract SupplySystem is ISystem, ISupplySystem {
     struct Resource {
         address tokenAddress;
         string tokenName;
     }
 
     SupplyTokenFactory private _supplyTokenFactory;
-    address public entityAddress;
 
-    constructor(
-        address supplyTokenFactory,
-        address _entity
-    ) Ownable(msg.sender) {
+    constructor(address supplyTokenFactory, address _entity) ISystem(_entity) {
         entityAddress = _entity;
         _supplyTokenFactory = SupplyTokenFactory(supplyTokenFactory);
     }
-
-    bool registered = false;
-    address private _systemController;
-
-    function registerSystem(address systemController) external {
-        if (registered) {
-            revert AlreadyRegistered();
-        }
-        registered = true;
-        _systemController = systemController;
-        // console.log(
-        //     "SupplySystem: registerSystem: systemController: %s",
-        //     _systemController
-        // );
-    }
-
-    error AlreadyRegistered();
 
     function init(
         ISystemController /*controller*/,
@@ -69,18 +44,8 @@ contract SupplySystem is ISystem, ISupplySystem, Ownable {
 
     function sync(uint256 /*tokenId*/) external override {}
 
-    function activateEntity(
-        IScenario scenario
-    ) external override returns (address) {
-        address current = scenario.getEntity(address(this));
-        if (current != address(0)) {
-            return current;
-        }
-        address clone = entityAddress.clone();
-
+    function initEntity(IScenario scenario, address clone) internal override {
         ISupplyEntity(clone).initialize(scenario, address(this));
-
-        return clone;
     }
 
     function mint(
@@ -145,7 +110,7 @@ contract SupplySystem is ISystem, ISupplySystem, Ownable {
         return newToken;
     }
 
-    function getId() external pure returns (string memory) {
+    function getId() external pure override returns (string memory) {
         return "SUPPLY";
     }
 
@@ -161,10 +126,6 @@ contract SupplySystem is ISystem, ISupplySystem, Ownable {
             bytesArray[j] = _bytes32[j];
         }
         return string(bytesArray);
-    }
-
-    function updateEntityAddress(address newEntityAddress) external onlyOwner {
-        entityAddress = newEntityAddress;
     }
 
     error NotAdmin();

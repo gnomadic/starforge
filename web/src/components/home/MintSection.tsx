@@ -11,12 +11,15 @@ import MintPreview from '../mint/MintPreview';
 import { extractDope, replaceDope } from '@/services/SVGCombiner';
 import { toast } from 'react-toastify';
 import { Badge } from '../ui/badge';
+import { TransactionButton } from '../global/TransactionButton';
+import { shortHandError } from '@/lib/utils/utils';
 
 interface MintSectionProps {
   className?: string;
+  forceMobile?: boolean;
 }
 
-const MintSection: React.FC<MintSectionProps> = ({ className }) => {
+const MintSection: React.FC<MintSectionProps> = ({ className, forceMobile = false }) => {
   const [mintAmount, setMintAmount] = useState(1);
   const price = 0.08;
 
@@ -76,19 +79,19 @@ const MintSection: React.FC<MintSectionProps> = ({ className }) => {
   }, [image]);
 
 
-  useEffect(() => {
-    if (writeError) {
-      toast.error(writeError.message)
-    }
-    if (isLoading) {
-      toast.info("Transaction is pending");
+  // useEffect(() => {
+  //   if (writeError) {
+  //     toast.error(writeError.message)
+  //   }
+  //   if (isLoading) {
+  //     toast.info("Transaction is pending");
 
-    }
-    if (isSuccess) {
-      toast.success("Transaction is successful");
-    }
-  }
-    , [writeError, isLoading, isSuccess])
+  //   }
+  //   if (isSuccess) {
+  //     toast.success("Transaction is successful");
+  //   }
+  // }
+  //   , [writeError, isLoading, isSuccess])
 
 
   // function planetColorChange(colorOne: number, two: number, three: number) {
@@ -104,17 +107,19 @@ const MintSection: React.FC<MintSectionProps> = ({ className }) => {
 
   // }
 
+  const getError = (): string | null => writeError ? shortHandError(writeError) : null;
+
   return (
     <section id="mint" className={cn("relative min-h-screen flex flex-col items-center justify-center px-6", className)}>
       {/* <div className="absolute inset-0 -z-10 bg-gradient-to-b from-background/0 via-background to-background/10" /> */}
       {/* <div className="absolute inset-0 -z-10 bg-gradient-to-b from-background/10 via-background to-background/0" /> */}
 
       <div className="w-full max-w-5xl mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          <div className="reveal-on-scroll glass rounded-lg p-6 order-2 lg:order-1">
+        <div className={cn("grid", forceMobile ? "grid-cols-1" : "grid-cols-1 lg:grid-cols-2", "gap-12 items-center")}>
+          <div className="reveal-on-scroll glass rounded-lg p-6 text-start">
             {/* <span className="px-3 py-1 text-xs font-medium tracking-wider uppercase bg-primary/30 text-primary rounded-full">Unlimited Collection</span> */}
             <Badge variant="info">Unlimited Collection</Badge>
-            <h2 className="mt-6 text-4xl md:text-5xl font-mono font-bold leading-tight">
+            <h2 className={cn("mt-6  font-mono font-bold leading-tight", forceMobile ? "text-4xl" : "text-4xl md:text-5xl")}>
               Scan for a new planet
             </h2>
             <p className="mt-6 text-lg text-white/70 leading-relaxed font-signika">
@@ -123,7 +128,7 @@ const MintSection: React.FC<MintSectionProps> = ({ className }) => {
 
             <div className="mt-6 text-lg text-white/70 leading-relaxed font-signika">
               During the alpha test:
-              <ul className="list-disc list-inside">
+              <ul className="list-disc list-inside  text-sm">
                 <li>Minting is free</li>
                 <li>Nothing is permanent</li>
               </ul>
@@ -235,17 +240,36 @@ const MintSection: React.FC<MintSectionProps> = ({ className }) => {
 
 
 
-              <Button className="w-full"
+
+              {/* className="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-medium py-3" */}
+
+              {/* <Button className="w-full bg-gradient-to-r from-primary to-accent hover:from-primary hover:to-accent/30 text-black font-medium py-3"
                 onClick={() => {
                   console.log("Accept Assignment button clicked");
                   writeContract({ address: deploy.Planet, args: [address!] });
                 }}
-                
-              >Mint Now</Button>
 
-              {/* <p className="mt-4 text-center text-xs text-white/50">
-                By minting, you agree to our terms and conditions
-              </p> */}
+              >Mint Now</Button> */}
+
+              <TransactionButton
+
+                onClick={() => {
+                  console.log("Accept Assignment button clicked");
+                  writeContract({ address: deploy.Planet, args: [address!] });
+                }}
+                isLoading={isLoading}
+                isSuccess={isSuccess}
+                // error={activateError || deactivateError}
+                error={getError()}
+                idleText={"Mint Now"}
+                loadingText="Processing Transaction..."
+                successText="Success!"
+                errorText="Something went wrong"
+                className="w-full"
+
+              />
+
+
             </div>
           </div>
         </div>

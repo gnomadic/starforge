@@ -1,8 +1,9 @@
 "use client";
 
 import React from 'react';
-import { Briefcase, Sword, Target, ShoppingBag, Home } from 'lucide-react';
+import { Briefcase, Sword, Target, ShoppingBag, Home, TrendingUp } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import WalletButton from '../WalletButton';
 
 interface MobileBottomNavProps {
   onOpenModal: (modalType: string) => void;
@@ -10,11 +11,11 @@ interface MobileBottomNavProps {
 
 const MobileBottomNav: React.FC<MobileBottomNavProps> = ({ onOpenModal }) => {
   const navItems = [
-    { id: 'home', icon: Home, label: 'Planet' },
+    { id: 'planet', icon: Home, label: 'Planet' },
     { id: 'jobs', icon: Briefcase, label: 'Jobs' },
-    { id: 'quests', icon: Target, label: 'Quests' },
-    { id: 'combat', icon: Sword, label: 'Combat' },
-    { id: 'shop', icon: ShoppingBag, label: 'Shop' },
+    { id: 'upgrades', icon: TrendingUp, label: 'Upgrades' },
+    // { id: 'combat', icon: Sword, label: 'Combat' },
+    // { id: 'shop', icon: ShoppingBag, label: 'Shop' },
   ];
 
   return (
@@ -32,6 +33,9 @@ const MobileBottomNav: React.FC<MobileBottomNavProps> = ({ onOpenModal }) => {
             <span className="text-xs">{item.label}</span>
           </Button>
         ))}
+                 <div className="py-4">
+                    <WalletButton />
+                  </div>
       </div>
     </div>
   );

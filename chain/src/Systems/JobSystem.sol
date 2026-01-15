@@ -6,33 +6,15 @@ import {IScenario} from "../Scenario.sol";
 import {IJobEntity, Job} from "../entities/JobEntity.sol";
 import {ISupplySystem} from "./SupplySystem.sol";
 import {IStatsSystem} from "./StatsSystem.sol";
-import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
-import {LibClone} from "solady/utils/LibClone.sol";
 
 import {console} from "hardhat/console.sol";
 
 // import {console} from "forge-std/console.sol";
 
-contract JobSystem is ISystem, Ownable {
-    using LibClone for address;
-
-    bool registered = false;
-    ISystemController private _systemController;
-    address public entityAddress;
-
-    constructor(address _entity) Ownable(msg.sender) {
+contract JobSystem is ISystem {
+    constructor(address _entity) ISystem(_entity) {
         entityAddress = _entity;
     }
-
-    function registerSystem(address systemController) external {
-        if (registered) {
-            revert AlreadyRegistered();
-        }
-        registered = true;
-        _systemController = ISystemController(systemController);
-    }
-
-    error AlreadyRegistered();
 
     function init(
         ISystemController /*controller*/,
@@ -98,15 +80,15 @@ contract JobSystem is ISystem, Ownable {
         uint256 tokenId,
         Job memory job
     ) internal view returns (bool) {
+        ISystemController controller = ISystemController(_systemController);
         return
-            IStatsSystem(address(_systemController.getSystem("STAT")))
-                .checkSkill(
-                    scenario,
-                    tokenId,
-                    job.skillSetName,
-                    job.skillSetIndex,
-                    job.skillSetRequirement
-                );
+            IStatsSystem(address(controller.getSystem("STAT"))).checkSkill(
+                scenario,
+                tokenId,
+                job.skillSetName,
+                job.skillSetIndex,
+                job.skillSetRequirement
+            );
     }
 
     function finishJob(IScenario scenario, uint256 tokenId) public {
@@ -134,9 +116,10 @@ contract JobSystem is ISystem, Ownable {
         uint16 cyclesCompleted = uint16(secondsLive / job.cycleDuration);
 
         uint256 amount = cyclesCompleted * job.amountPerCycle;
+        ISystemController controller = ISystemController(_systemController);
 
         console.log("step one");
-        IStatsSystem(address(_systemController.getSystem("STAT"))).boostSkill(
+        IStatsSystem(address(controller.getSystem("STAT"))).boostSkill(
             scenario,
             tokenId,
             job.skillSetName,
@@ -144,7 +127,7 @@ contract JobSystem is ISystem, Ownable {
             job.skillSetBoost
         );
         console.log("step two");
-        ISupplySystem(address(_systemController.getSystem("SUPPLY"))).mint(
+        ISupplySystem(address(controller.getSystem("SUPPLY"))).mint(
             scenario,
             msg.sender,
             job.tokenName,
@@ -155,27 +138,12 @@ contract JobSystem is ISystem, Ownable {
         console.log("step four");
     }
 
-    function activateEntity(
-        IScenario scenario
-    ) external override returns (address) {
-        address current = scenario.getEntity(address(this));
-        if (current != address(0)) {
-            return current;
-        }
-
-        address clone = entityAddress.clone();
-
+    function initEntity(IScenario scenario, address clone) internal override {
         IJobEntity(clone).initialize(scenario, address(this));
-
-        return clone;
     }
 
-    function getId() external pure returns (string memory) {
+    function getId() external pure override returns (string memory) {
         return "JOB";
-    }
-
-    function updateEntityAddress(address newEntityAddress) external onlyOwner {
-        entityAddress = newEntityAddress;
     }
 
     error NoTimePassed();
